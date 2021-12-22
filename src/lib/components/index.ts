@@ -5,6 +5,9 @@ export { default as FreeCamera } from './Cameras/FreeCamera.svelte'
 
 // Lights
 export { default as HemisphericLight } from './Lights/HemisphericLight.svelte'
+export { default as PointLight } from './Lights/PointLight.svelte'
+export { default as DirectionalLight } from './Lights/DirectionalLight.svelte'
+export { default as SpotLight } from './Lights/SpotLight.svelte'
 
 // Objects
 export { default as Box } from './Objects/Box.svelte'
