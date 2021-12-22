@@ -8,7 +8,7 @@
 
   export let name: string = 'FreeCamera'
   export let position = BABYLON.Vector3.Zero()
-  // export let target = BABYLON.Vector3.Zero()
+  export let target = BABYLON.Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
   export const camera = root.cameras[name]
 
@@ -24,6 +24,8 @@
         root.scene,
         setActiveOnSceneIfNoneActive,
       )
+
+      root.cameras[name].setTarget(target)
       root.cameras[name].attachControl(root.canvas.element, false)
 
       root.engine.runRenderLoop(() => {

@@ -10,11 +10,7 @@
   export let receiveShadows = false
   export let options = {}
 
-  export let position = {
-    x: 0,
-    y: 0,
-    z: 0,
-  }
+  export let position = new BABYLON.Vector3(0, 0, 0)
 
   export const object = root.objects[name]
 
