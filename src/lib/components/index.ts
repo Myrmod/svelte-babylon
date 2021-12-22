@@ -1,12 +1,16 @@
 export { default as Canvas } from './Canvas.svelte'
 
 // Cameras
+export { default as ArcFollowCamera } from './Cameras/ArcFollowCamera.svelte'
+export { default as ArcRotateCamera } from './Cameras/ArcRotateCamera.svelte'
+export { default as FlyCamera } from './Cameras/FlyCamera.svelte'
+export { default as FollowCamera } from './Cameras/FollowCamera.svelte'
 export { default as FreeCamera } from './Cameras/FreeCamera.svelte'
 
 // Lights
+export { default as DirectionalLight } from './Lights/DirectionalLight.svelte'
 export { default as HemisphericLight } from './Lights/HemisphericLight.svelte'
 export { default as PointLight } from './Lights/PointLight.svelte'
-export { default as DirectionalLight } from './Lights/DirectionalLight.svelte'
 export { default as SpotLight } from './Lights/SpotLight.svelte'
 
 // Objects
