@@ -24,7 +24,7 @@
   {/each}
 </ul>
 
-<style lang="sass">
+<style lang="stylus">
   ul
-    list-style: none
+    list-style none
 </style>
