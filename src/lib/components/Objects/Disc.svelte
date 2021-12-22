@@ -3,6 +3,7 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
+  import { createObjectcontext } from './createObjectContext'
 
   const root = getRoot()
 
@@ -10,17 +11,15 @@
   export let receiveShadows = false
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateDisc>[1]
 
+  const context = createObjectcontext(BABYLON.MeshBuilder.CreateDisc(name, options, root.scene))
+
   export let position = new BABYLON.Vector3(0, 0, 0)
 
-  export const object = root.objects[name]
+  export const object = root.objects[context.self.id]
 
   onMount(() => {
     try {
-      if (root.objects[name]) {
-        throw new Error(`Object named ${name} already exists.`)
-      }
-      root.objects[name] = BABYLON.MeshBuilder.CreateDisc(name, options, root.scene)
-
+      root.objects[context.self.id] = context
       root.scene.render()
     } catch (error) {
       console.error(error)
@@ -28,10 +27,10 @@
   })
 
   onDestroy(() => {
-    root.objects[name] = null
+    root.objects[context.self.id] = null
   })
 
-  $: if (root.objects[name]) {
+  $: if (root.objects[context.self.id]) {
     root.objects[name].position.x = position.x
     root.objects[name].position.y = position.y
     root.objects[name].position.z = position.z

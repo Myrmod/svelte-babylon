@@ -1,0 +1,44 @@
+<script lang="ts">
+  import { getRoot } from '$lib/utils/context'
+
+  import * as BABYLON from 'babylonjs'
+  import { onDestroy, onMount } from 'svelte'
+  import getParent from './getParent'
+
+  const root = getRoot()
+
+  export let name: string = 'StandardMaterial'
+  export let ambientColor: BABYLON.Color3 = undefined
+  export let emissiveColor: BABYLON.Color3 = undefined
+  export let diffuseColor: BABYLON.Color3 = undefined
+  export let specularColor: BABYLON.Color3 = undefined
+
+  export const object = root.objects[name]
+
+  const context = getParent()
+  const material = new BABYLON.StandardMaterial(name, root.scene)
+
+  onMount(() => {
+    try {
+      if (context.self.material) {
+        console.warn(`Previous material on ${context.self.id} will be overwritten`)
+      }
+
+      context.self.material = material
+      root.scene.render()
+    } catch (error) {
+      console.error(error)
+    }
+  })
+
+  onDestroy(() => {
+    context.self.material = null
+  })
+
+  $: if (material) {
+    if (specularColor) material.specularColor = specularColor
+    if (ambientColor) material.ambientColor = ambientColor
+    if (diffuseColor) material.diffuseColor = diffuseColor
+    if (emissiveColor) material.emissiveColor = emissiveColor
+  }
+</script>

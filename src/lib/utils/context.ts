@@ -7,7 +7,8 @@ export function getRoot(): RootContext {
   return getContext(ROOT)
 }
 
-export function set_root(context: RootContext) {
+export function setRoot(context: RootContext): RootContext {
   setContext(ROOT, context)
+
   return context
 }

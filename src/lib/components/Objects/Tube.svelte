@@ -3,6 +3,7 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
+  import { createObjectcontext } from './createObjectContext'
 
   const root = getRoot()
 
@@ -10,17 +11,15 @@
   export let receiveShadows = false
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateTube>[1]
 
+  const context = createObjectcontext(BABYLON.MeshBuilder.CreateTube(name, options, root.scene))
+
   export let position = new BABYLON.Vector3(0, 0, 0)
 
-  export const object = root.objects[name]
+  export const object = root.objects[context.self.id]
 
   onMount(() => {
     try {
-      if (root.objects[name]) {
-        throw new Error(`Object named ${name} already exists.`)
-      }
-      root.objects[name] = BABYLON.MeshBuilder.CreateTube(name, options, root.scene)
-
+      root.objects[context.self.id] = context
       root.scene.render()
     } catch (error) {
       console.error(error)
@@ -28,14 +27,14 @@
   })
 
   onDestroy(() => {
-    root.objects[name] = null
+    root.objects[context.self.id] = null
   })
 
-  $: if (root.objects[name]) {
-    root.objects[name].position.x = position.x
-    root.objects[name].position.y = position.y
-    root.objects[name].position.z = position.z
-    root.objects[name].receiveShadows = receiveShadows
+  $: if (root.objects[context.self.id]) {
+    context.self.position.x = position.x
+    context.self.position.y = position.y
+    context.self.position.z = position.z
+    context.self.receiveShadows = receiveShadows
 
     root.scene.render()
   }

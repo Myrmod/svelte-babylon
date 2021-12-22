@@ -2,7 +2,7 @@
   import * as BABYLON from 'babylonjs'
   import type RootContext from '$lib/types'
   import { onMount } from 'svelte'
-  import { set_root } from '../utils/context'
+  import { setRoot } from '../utils/context'
 
   // settings
   export let antialiasing = false
@@ -12,7 +12,7 @@
   let container: HTMLElement
   let canvas: HTMLCanvasElement = undefined
 
-  export let root = set_root({
+  export let root = setRoot({
     canvas: {
       element: canvas,
       pixelRatio: typeof devicePixelRatio !== 'undefined' ? devicePixelRatio : 1,
