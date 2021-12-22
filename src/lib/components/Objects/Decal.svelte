@@ -6,9 +6,13 @@
 
   const root = getRoot()
 
-  export let name: string = 'Ground'
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateGround>[1]
+  export let name: string = 'Decal'
   export let receiveShadows = false
+  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateDecal>[1]
+  export let sourceMesh: BABYLON.AbstractMesh
+
+  export let position = new BABYLON.Vector3(0, 0, 0)
+
   export const object = root.objects[name]
 
   onMount(() => {
@@ -16,7 +20,7 @@
       if (root.objects[name]) {
         throw new Error(`Object named ${name} already exists.`)
       }
-      root.objects[name] = BABYLON.MeshBuilder.CreateGround(name, options, root.scene)
+      root.objects[name] = BABYLON.MeshBuilder.CreateDecal(name, sourceMesh, options)
 
       root.scene.render()
     } catch (error) {
@@ -29,6 +33,11 @@
   })
 
   $: if (root.objects[name]) {
+    root.objects[name].position.x = position.x
+    root.objects[name].position.y = position.y
+    root.objects[name].position.z = position.z
     root.objects[name].receiveShadows = receiveShadows
+
+    root.scene.render()
   }
 </script>

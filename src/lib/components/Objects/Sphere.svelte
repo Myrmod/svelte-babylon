@@ -8,7 +8,7 @@
 
   export let name: string = 'Sphere'
   export let receiveShadows = false
-  export let options = {}
+  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateSphere>[1]
 
   export let position = new BABYLON.Vector3(0, 0, 0)
 
@@ -16,6 +16,9 @@
 
   onMount(() => {
     try {
+      if (root.objects[name]) {
+        throw new Error(`Object named ${name} already exists.`)
+      }
       root.objects[name] = BABYLON.MeshBuilder.CreateSphere(name, options, root.scene)
 
       root.scene.render()
