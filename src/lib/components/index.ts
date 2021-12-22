@@ -1,0 +1,5 @@
+export { default as Canvas } from './Canvas.svelte'
+export { default as FreeCamera } from './Cameras/FreeCamera.svelte'
+export { default as HemisphericLight } from './Lights/HemisphericLight.svelte'
+export { default as Sphere } from './Objects/Sphere.svelte'
+export { default as Ground } from './Objects/Ground.svelte'
