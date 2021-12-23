@@ -6,7 +6,7 @@
     DirectionalLight,
     Sphere,
     Ground,
-    NormalMaterial,
+    StandardMaterial,
   } from '$lib/components'
 
   const spherePosition = new BABYLON.Vector3(0, 2, 0)
@@ -26,7 +26,7 @@
     position={spherePosition}
     receiveShadows
   >
-    <NormalMaterial diffuseColor={new BABYLON.Color3(1)} />
+    <StandardMaterial diffuseColor={new BABYLON.Color3(1)} />
   </Sphere>
   <Ground options={{ width: 6, height: 6, subdivisions: 2, updatable: false }} receiveShadows />
 </Canvas>

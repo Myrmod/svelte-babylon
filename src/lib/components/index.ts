@@ -45,7 +45,7 @@ export { default as GradientMaterial } from './Materials/GradientMaterial.svelte
 export { default as GridMaterial } from './Materials/GridMaterial.svelte'
 export { default as LavaMaterial } from './Materials/LavaMaterial.svelte'
 export { default as MixMaterial } from './Materials/MixMaterial.svelte'
-export { default as NormalMaterial } from './Materials/NormalMaterial.svelte'
+export { default as StandardMaterial } from './Materials/StandardMaterial.svelte'
 export { default as ShadowOnlyMaterial } from './Materials/ShadowOnlyMaterial.svelte'
 export { default as SkyMaterial } from './Materials/SkyMaterial.svelte'
 export { default as TriPlanarMappingMaterial } from './Materials/TriPlanarMappingMaterial.svelte'
