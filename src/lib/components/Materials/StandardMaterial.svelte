@@ -13,6 +13,11 @@
   export let emissiveColor: BABYLON.Color3 = undefined
   export let diffuseColor: BABYLON.Color3 = undefined
   export let specularColor: BABYLON.Color3 = undefined
+  export let roughness = 1
+  export let separateCullingPass = false
+  export let invertNormalMapX = false
+  export let invertNormalMapY = false
+  export let invertRefractionY = false
 
   export const material = new BABYLON.StandardMaterial(name, root.scene)
 
@@ -45,6 +50,14 @@
     if (emissiveColor) material.emissiveColor = emissiveColor
 
     root.scene.render()
+  }
+
+  $: if (root.objects[context.self.id]?.self?.material) {
+    material.roughness = roughness
+    material.separateCullingPass = separateCullingPass
+    material.invertNormalMapX = invertNormalMapX
+    material.invertNormalMapY = invertNormalMapY
+    material.invertRefractionY = invertRefractionY
   }
 </script>
 
