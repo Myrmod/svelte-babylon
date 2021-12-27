@@ -37,7 +37,13 @@
     <StandardMaterial>
       <DiffuseTexture url="/assets/textures/metal/metal_diffuse.jpg" uScale={4} vScale={4} />
       <AmbientTexture url="/assets/textures/metal/metal_ao.jpg" uScale={4} vScale={4} />
-      <BumpTexture url="/assets/textures/metal/metal_normal.jpg" uScale={4} vScale={4} />
+      <BumpTexture
+        url="/assets/textures/metal/metal_normal.jpg"
+        uScale={4}
+        vScale={4}
+        invertY
+        invertZ
+      />
       <SpecularTexture url="/assets/textures/metal/metal_specular.jpg" uScale={4} vScale={4} />
     </StandardMaterial>
   </Ground>

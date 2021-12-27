@@ -11,6 +11,7 @@
   export let url: string
   export let noMipmap: boolean = undefined
   export let invertY: boolean = undefined
+  export let invertZ: boolean = undefined
   export let samplingMode: number = undefined
   export let onLoad: Nullable<() => void> = undefined
   export let onError: Nullable<(message: string, exception: any) => void> = undefined
@@ -74,6 +75,7 @@
     texture.wrapR = wrapR
     texture.wrapU = wrapU
     texture.wrapV = wrapV
+    texture.invertZ = invertZ
   }
 </script>
 
