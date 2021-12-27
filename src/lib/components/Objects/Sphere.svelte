@@ -3,7 +3,7 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
-  import { createObjectcontext } from './createObjectContext'
+  import { createObjectContext } from './createObjectContext'
 
   const root = getRoot()
 
@@ -11,7 +11,7 @@
   export let receiveShadows = false
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateSphere>[1]
 
-  const context = createObjectcontext(BABYLON.MeshBuilder.CreateSphere(name, options, root.scene))
+  const context = createObjectContext(BABYLON.MeshBuilder.CreateSphere(name, options, root.scene))
 
   export let position = new BABYLON.Vector3(0, 0, 0)
 

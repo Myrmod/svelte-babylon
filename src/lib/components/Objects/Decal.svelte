@@ -3,7 +3,7 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
-  import { createObjectcontext } from './createObjectContext'
+  import { createObjectContext } from './createObjectContext'
 
   const root = getRoot()
 
@@ -12,7 +12,7 @@
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateDecal>[1]
   export let sourceMesh: BABYLON.AbstractMesh
 
-  const context = createObjectcontext(BABYLON.MeshBuilder.CreateDecal(name, sourceMesh, options))
+  const context = createObjectContext(BABYLON.MeshBuilder.CreateDecal(name, sourceMesh, options))
 
   export let position = new BABYLON.Vector3(0, 0, 0)
 
@@ -40,3 +40,5 @@
     root.scene.render()
   }
 </script>
+
+<slot />

@@ -7,6 +7,10 @@
     Sphere,
     Ground,
     StandardMaterial,
+    DiffuseTexture,
+    AmbientTexture,
+    BumpTexture,
+    SpecularTexture,
   } from '$lib/components'
 
   const spherePosition = new BABYLON.Vector3(0, 2, 0)
@@ -28,5 +32,13 @@
   >
     <StandardMaterial diffuseColor={new BABYLON.Color3(1)} />
   </Sphere>
-  <Ground options={{ width: 6, height: 6, subdivisions: 2, updatable: false }} receiveShadows />
+
+  <Ground options={{ width: 6, height: 6, subdivisions: 2, updatable: false }} receiveShadows>
+    <StandardMaterial>
+      <DiffuseTexture url="/assets/textures/metal/metal_diffuse.jpg" uScale={4} vScale={4} />
+      <AmbientTexture url="/assets/textures/metal/metal_ao.jpg" uScale={4} vScale={4} />
+      <BumpTexture url="/assets/textures/metal/metal_normal.jpg" uScale={4} vScale={4} />
+      <SpecularTexture url="/assets/textures/metal/metal_specular.jpg" uScale={4} vScale={4} />
+    </StandardMaterial>
+  </Ground>
 </Canvas>

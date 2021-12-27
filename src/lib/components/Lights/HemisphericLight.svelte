@@ -9,11 +9,12 @@
   export let name: string = 'HemisphericLight'
   export let direction = BABYLON.Vector3.Zero()
   export let shadowEnabled = true
-  export const camera = root.lights[name]
+  export let intensity = 1
+  export const light = new BABYLON.HemisphericLight(name, direction, root.scene)
 
   onMount(() => {
     try {
-      root.lights[name] = new BABYLON.HemisphericLight(name, direction, root.scene)
+      root.lights[light.id] = light
 
       root.scene.render()
     } catch (error) {
@@ -22,10 +23,13 @@
   })
 
   onDestroy(() => {
-    root.lights[name] = null
+    root.lights[light.id] = null
   })
 
-  $: if (root.lights[name]) {
-    root.lights[name].shadowEnabled = shadowEnabled
+  $: if (root.lights[light.id]) {
+    light.shadowEnabled = shadowEnabled
+    light.intensity = intensity
+
+    root.scene.render()
   }
 </script>

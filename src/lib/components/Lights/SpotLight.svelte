@@ -12,18 +12,12 @@
   export let angle = Math.PI / 3
   export let exponent = 2
   export let shadowEnabled = true
-  export const camera = root.lights[name]
+  export let intensity = 1
+  export const light = new BABYLON.SpotLight(name, position, direction, angle, exponent, root.scene)
 
   onMount(() => {
     try {
-      root.lights[name] = new BABYLON.SpotLight(
-        name,
-        position,
-        direction,
-        angle,
-        exponent,
-        root.scene,
-      )
+      root.lights[light.id] = light
 
       root.scene.render()
     } catch (error) {
@@ -32,10 +26,13 @@
   })
 
   onDestroy(() => {
-    root.lights[name] = null
+    root.lights[light.id] = null
   })
 
-  $: if (root.lights[name]) {
-    root.lights[name].shadowEnabled = shadowEnabled
+  $: if (root.lights[light.id]) {
+    light.shadowEnabled = shadowEnabled
+    light.intensity = intensity
+
+    root.scene.render()
   }
 </script>

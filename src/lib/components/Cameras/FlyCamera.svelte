@@ -10,23 +10,23 @@
   export let position = BABYLON.Vector3.Zero()
   export let target = BABYLON.Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
-  export const camera = root.cameras[name]
+  export let speed = 1
+  export const camera = new BABYLON.FlyCamera(
+    name,
+    position,
+    root.scene,
+    setActiveOnSceneIfNoneActive,
+  )
 
   onMount(() => {
     try {
-      if (root.cameras[name]) {
+      if (root.cameras[camera.id]) {
         throw new Error('There can only be one camera with the same name')
       }
 
-      root.cameras[name] = new BABYLON.FlyCamera(
-        name,
-        position,
-        root.scene,
-        setActiveOnSceneIfNoneActive,
-      )
+      root.cameras[camera.id] = camera
 
-      root.cameras[name].setTarget(target)
-      root.cameras[name].attachControl(root.canvas.element, false)
+      root.cameras[camera.id].attachControl(root.canvas.element, false)
 
       root.engine.runRenderLoop(() => {
         root.scene.render()
@@ -37,6 +37,11 @@
   })
 
   onDestroy(() => {
-    root.cameras[name] = null
+    root.cameras[camera.id] = null
   })
+
+  $: if (root.cameras[camera.id]) {
+    camera.speed = speed
+    camera.setTarget(target)
+  }
 </script>

@@ -12,25 +12,26 @@
   export let beta = Math.PI / 2
   export let radius = 300
   export let setActiveOnSceneIfNoneActive = true
-  export const camera = root.cameras[name]
+  export let speed = 1
+  export const camera = new BABYLON.ArcRotateCamera(
+    name,
+    alpha,
+    beta,
+    radius,
+    target,
+    root.scene,
+    setActiveOnSceneIfNoneActive,
+  )
 
   onMount(() => {
     try {
-      if (root.cameras[name]) {
+      if (root.cameras[camera.id]) {
         throw new Error('There can only be one camera with the same name')
       }
 
-      root.cameras[name] = new BABYLON.ArcRotateCamera(
-        name,
-        alpha,
-        beta,
-        radius,
-        target,
-        root.scene,
-        setActiveOnSceneIfNoneActive,
-      )
+      root.cameras[camera.id] = camera
 
-      root.cameras[name].attachControl(root.canvas.element, false)
+      root.cameras[camera.id].attachControl(root.canvas.element, false)
 
       root.engine.runRenderLoop(() => {
         root.scene.render()
@@ -41,6 +42,12 @@
   })
 
   onDestroy(() => {
-    root.cameras[name] = null
+    root.cameras[camera.id] = null
   })
+
+  $: if (root.cameras[camera.id]) {
+    camera.speed = speed
+
+    root.scene.render()
+  }
 </script>

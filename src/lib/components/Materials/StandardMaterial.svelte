@@ -3,6 +3,7 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
+  import { createMaterialContext } from './createMaterialContext'
   import getParent from './getParent'
 
   const root = getRoot()
@@ -13,10 +14,11 @@
   export let diffuseColor: BABYLON.Color3 = undefined
   export let specularColor: BABYLON.Color3 = undefined
 
-  export const object = root.objects[name]
+  export const material = new BABYLON.StandardMaterial(name, root.scene)
+
+  createMaterialContext(material)
 
   const context = getParent()
-  const material = new BABYLON.StandardMaterial(name, root.scene)
 
   onMount(() => {
     try {
@@ -25,6 +27,7 @@
       }
 
       context.self.material = material
+
       root.scene.render()
     } catch (error) {
       console.error(error)
@@ -35,10 +38,14 @@
     context.self.material = null
   })
 
-  $: if (material) {
+  $: if (root.objects[context.self.id]?.self?.material) {
     if (specularColor) material.specularColor = specularColor
     if (ambientColor) material.ambientColor = ambientColor
     if (diffuseColor) material.diffuseColor = diffuseColor
     if (emissiveColor) material.emissiveColor = emissiveColor
+
+    root.scene.render()
   }
 </script>
+
+<slot />

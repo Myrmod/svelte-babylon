@@ -10,16 +10,10 @@ export default interface RootContext {
   scene: BABYLON.Scene
   engine: BABYLON.Engine
   cameras: {
-    [key: string]: {
-      self: BABYLON.TargetCamera
-      [key: string]: unknown
-    }
+    [key: string]: BABYLON.TargetCamera
   }
   lights: {
-    [key: string]: {
-      self: BABYLON.Light
-      [key: string]: unknown
-    }
+    [key: string]: BABYLON.Light
   }
   objects: {
     [key: string]: {

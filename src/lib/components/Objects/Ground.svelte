@@ -3,14 +3,14 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
-  import { createObjectcontext } from './createObjectContext'
+  import { createObjectContext } from './createObjectContext'
 
   const root = getRoot()
 
   export let name: string = 'Ground'
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateGround>[1]
 
-  const context = createObjectcontext(BABYLON.MeshBuilder.CreateGround(name, options, root.scene))
+  const context = createObjectContext(BABYLON.MeshBuilder.CreateGround(name, options, root.scene))
 
   export let receiveShadows = false
   export const object = root.objects[context.self.id]
@@ -32,3 +32,5 @@
     context.self.receiveShadows = receiveShadows
   }
 </script>
+
+<slot />

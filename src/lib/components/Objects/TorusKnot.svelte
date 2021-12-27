@@ -3,7 +3,7 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
-  import { createObjectcontext } from './createObjectContext'
+  import { createObjectContext } from './createObjectContext'
 
   const root = getRoot()
 
@@ -11,7 +11,7 @@
   export let receiveShadows = false
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateTorusKnot>[1]
 
-  const context = createObjectcontext(
+  const context = createObjectContext(
     BABYLON.MeshBuilder.CreateTorusKnot(name, options, root.scene),
   )
 
@@ -41,3 +41,5 @@
     root.scene.render()
   }
 </script>
+
+<slot />

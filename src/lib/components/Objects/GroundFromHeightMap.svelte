@@ -3,7 +3,7 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
-  import { createObjectcontext } from './createObjectContext'
+  import { createObjectContext } from './createObjectContext'
 
   const root = getRoot()
 
@@ -12,7 +12,7 @@
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateGroundFromHeightMap>[2]
   export let url: string
 
-  const context = createObjectcontext(
+  const context = createObjectContext(
     BABYLON.MeshBuilder.CreateGroundFromHeightMap(name, url, options, root.scene),
   )
 
@@ -42,3 +42,5 @@
     root.scene.render()
   }
 </script>
+
+<slot />
