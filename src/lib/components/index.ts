@@ -16,6 +16,7 @@ export { default as SpotLight } from './Lights/SpotLight.svelte'
 // Objects
 export { default as Box } from './Objects/Box.svelte'
 export { default as Capsule } from './Objects/Capsule.svelte'
+export { default as Custom } from './Objects/Custom.svelte'
 export { default as Cylinder } from './Objects/Cylinder.svelte'
 export { default as DashedLines } from './Objects/DashedLines.svelte'
 export { default as Decal } from './Objects/Decal.svelte'

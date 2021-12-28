@@ -9,7 +9,7 @@
   export let engineOptions: BABYLON.EngineOptions = undefined
   export let clearColor: BABYLON.Color4 = new BABYLON.Color4(0, 0, 0)
 
-  let container: HTMLElement
+  let wrapper: HTMLElement
   let canvas: HTMLCanvasElement = undefined
 
   export let root = setRoot({
@@ -36,8 +36,8 @@
   })
 
   function resize() {
-    root.canvas.width = container.clientWidth / root.canvas.pixelRatio
-    root.canvas.height = container.clientHeight / root.canvas.pixelRatio
+    root.canvas.width = wrapper.clientWidth / root.canvas.pixelRatio
+    root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
   }
 
   $: if (root.scene && root.scene.cameras.length) {
@@ -48,7 +48,7 @@
 
 <svelte:window on:resize={resize} />
 
-<div class="container" bind:this={container}>
+<div class="wrapper" bind:this={wrapper}>
   <canvas bind:this={canvas} />
 
   {#if root.scene}
@@ -57,7 +57,7 @@
 </div>
 
 <style>
-  .container,
+  .wrapper,
   canvas {
     position: absolute;
     width: 100%;

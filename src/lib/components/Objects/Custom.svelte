@@ -1,0 +1,46 @@
+<script lang="ts">
+  import { getRoot } from '$lib/utils/context'
+
+  import * as BABYLON from 'babylonjs'
+  import * as loaders from '@babylonjs/loaders'
+  import { onDestroy, onMount } from 'svelte'
+  import { createObjectContext } from './createObjectContext'
+
+  const root = getRoot()
+
+  console.log(loaders)
+
+  export let name: string = 'Box'
+  export let receiveShadows = false
+  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateBox>[1]
+
+  const context = createObjectContext(BABYLON.MeshBuilder.CreateBox(name, options, root.scene))
+
+  export let position = new BABYLON.Vector3(0, 0, 0)
+
+  export const object = root.objects[context.self.id]
+
+  onMount(() => {
+    try {
+      root.objects[context.self.id] = context
+      root.scene.render()
+    } catch (error) {
+      console.error(error)
+    }
+  })
+
+  onDestroy(() => {
+    root.objects[context.self.id] = null
+  })
+
+  $: if (root.objects[context.self.id]) {
+    context.self.position.x = position.x
+    context.self.position.y = position.y
+    context.self.position.z = position.z
+    context.self.receiveShadows = receiveShadows
+
+    root.scene.render()
+  }
+</script>
+
+<slot />

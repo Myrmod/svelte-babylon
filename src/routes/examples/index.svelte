@@ -23,8 +23,3 @@
     </li>
   {/each}
 </ul>
-
-<style lang="stylus">
-  ul
-    list-style none
-</style>
