@@ -25,7 +25,7 @@
   })
 
   onDestroy(() => {
-    root.objects[context.self.id] = null
+    delete root.objects[context.self.id]
   })
 
   $: if (root.objects[context.self.id]) {

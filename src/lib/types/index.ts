@@ -17,8 +17,11 @@ export default interface RootContext {
   }
   objects: {
     [key: string]: {
-      self: BABYLON.Mesh
+      self: BABYLON.Mesh | BABYLON.AbstractMesh
       [key: string]: unknown
     }
+  }
+  meshes: {
+    [key: string]: BABYLON.AbstractMesh
   }
 }

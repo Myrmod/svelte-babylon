@@ -13,6 +13,8 @@
   let canvas: HTMLCanvasElement = undefined
 
   export let root = setRoot({
+    engine: undefined,
+    scene: undefined,
     canvas: {
       element: canvas,
       pixelRatio: typeof devicePixelRatio !== 'undefined' ? devicePixelRatio : 1,
@@ -20,6 +22,7 @@
     cameras: {},
     lights: {},
     objects: {},
+    meshes: {},
   } as RootContext)
 
   onMount(() => {
