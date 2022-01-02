@@ -6,7 +6,7 @@
     DirectionalLight,
     HemisphericLight,
     CustomSingle,
-  } from '$lib/components'
+  } from 'svelte-babylon'
 
   const objectPosition = new BABYLON.Vector3(0, 2, 0)
 </script>

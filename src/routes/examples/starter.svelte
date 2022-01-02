@@ -11,7 +11,7 @@
     AmbientTexture,
     BumpTexture,
     SpecularTexture,
-  } from '$lib/components'
+  } from 'svelte-babylon'
 
   const spherePosition = new BABYLON.Vector3(0, 2, 0)
 </script>
