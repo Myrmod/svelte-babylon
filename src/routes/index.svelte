@@ -1,43 +1,32 @@
-<script lang="ts">
-  import * as BABYLON from 'babylonjs'
-  import {
-    Canvas,
-    FreeCamera,
-    DirectionalLight,
-    HemisphericLight,
-    CustomSingle,
-  } from '$lib/components'
+<script lang="ts" context="module">
+  export async function load() {
+    const files = import.meta.glob('/src/lib/components/**/Doc.svelte')
 
-  const objectPosition = new BABYLON.Vector3(0, 2, 0)
+    return {
+      status: 200,
+      props: { files },
+    }
+  }
+</script>
+
+<script lang="ts">
+  export let files: Record<
+    string,
+    () => Promise<{
+      [key: string]: any
+    }>
+  >
 </script>
 
 <h1>Svelte Babylon</h1>
-<div class="scene">
-  <Canvas
-    antialiasing
-    engineOptions={{
-      preserveDrawingBuffer: true,
-      stencil: true,
-    }}
-  >
-    <FreeCamera position={new BABYLON.Vector3(-4, 5, -4)} target={objectPosition} />
-    <DirectionalLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)} intensity={0.5} />
-    <HemisphericLight shadowEnabled intensity={0.25} />
-    <CustomSingle
-      name="Logo"
-      rotation={new BABYLON.Vector3(1.61, 3.61, 1.39)}
-      position={objectPosition}
-      fileName="logo.glb"
-    />
-  </Canvas>
-</div>
+
+{#each Object.values(files) as promise}
+  {#await promise() then value}
+    <svelte:component this={value.default} />
+  {/await}
+{/each}
 
 <style>
-  .scene {
-    position: relative;
-    height: calc(100vh - 10rem);
-    width: 100vw;
-  }
   h1 {
     display: none;
   }

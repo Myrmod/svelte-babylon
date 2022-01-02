@@ -1,4 +1,4 @@
-export { default as Canvas } from './Canvas.svelte'
+export { default as Canvas } from './Canvas/index.svelte'
 
 // Cameras
 export { default as ArcFollowCamera } from './Cameras/ArcFollowCamera.svelte'
@@ -39,7 +39,7 @@ export { default as TorusKnot } from './Objects/TorusKnot.svelte'
 export { default as Tube } from './Objects/Tube.svelte'
 
 // Materials
-export { default as StandardMaterial } from './Materials/StandardMaterial.svelte'
+export { default as StandardMaterial } from './Materials/StandardMaterial/index.svelte'
 
 // Textures
 export { default as AmbientTexture } from './Textures/AmbientTexture.svelte'

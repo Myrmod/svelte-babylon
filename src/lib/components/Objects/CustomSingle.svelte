@@ -13,7 +13,6 @@
   export let rootUrl: string = '/assets/models/'
   export let onProgress: (event: BABYLON.ISceneLoaderProgressEvent) => void = undefined
   export let receiveShadows = false
-  // export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateBox>[1]
 
   export let context: {
     self: BABYLON.AbstractMesh

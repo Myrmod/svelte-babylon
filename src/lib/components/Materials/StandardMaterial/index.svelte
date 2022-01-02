@@ -3,8 +3,8 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
-  import { createMaterialContext } from './createMaterialContext'
-  import getParent from './getParent'
+  import { createMaterialContext } from '../createMaterialContext'
+  import getParent from '../getParent'
 
   const root = getRoot()
 

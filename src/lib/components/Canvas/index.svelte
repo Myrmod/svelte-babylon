@@ -2,7 +2,7 @@
   import * as BABYLON from 'babylonjs'
   import type RootContext from '$lib/types'
   import { onMount } from 'svelte'
-  import { setRoot } from '../utils/context'
+  import { setRoot } from '../../utils/context'
 
   // settings
   export let antialiasing = false
