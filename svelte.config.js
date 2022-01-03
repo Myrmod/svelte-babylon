@@ -17,7 +17,7 @@ const config = {
     target: '#svelte',
     vite: {
       optimizeDeps: {
-        include: ['babylonjs-loaders'],
+        include: ['babylonjs-loaders/babylonjs.loaders'],
       },
       resolve: {
         alias: {

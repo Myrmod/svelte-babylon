@@ -10,7 +10,7 @@
   export let fileName: string | File
   export let name: string = String(fileName)
   export let pluginExtension: string = undefined
-  export let rootUrl: string = '/assets/models/'
+  export let rootUrl: string = '/'
   export let onProgress: (event: BABYLON.ISceneLoaderProgressEvent) => void = undefined
   export let receiveShadows = false
 

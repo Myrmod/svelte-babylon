@@ -21,7 +21,7 @@ export default interface RootContext {
       [key: string]: unknown
     }
   }
-  meshes: {
-    [key: string]: BABYLON.AbstractMesh
+  imports: {
+    [key: string]: BABYLON.ISceneLoaderAsyncResult
   }
 }

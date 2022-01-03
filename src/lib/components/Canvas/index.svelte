@@ -22,7 +22,7 @@
     cameras: {},
     lights: {},
     objects: {},
-    meshes: {},
+    imports: {},
   } as RootContext)
 
   onMount(() => {

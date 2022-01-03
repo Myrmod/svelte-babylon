@@ -1,6 +1,6 @@
 {
   "name": "svelte-babylon",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -33,6 +33,6 @@
   "type": "module",
   "dependencies": {
     "babylonjs": "^5.0.0-alpha.65",
-    "babylonjs-loaders": "^4.2.0"
+    "babylonjs-loaders": "^5.0.0-alpha.65"
   }
 }
