@@ -18,13 +18,14 @@
   export let rotation = new BABYLON.Vector3(0, 0, 0)
   export let rotationQuaternion: BABYLON.Quaternion = null
   let __root__: BABYLON.AbstractMesh = undefined
+  export let imports: BABYLON.ISceneLoaderAsyncResult = undefined
 
   onMount(async () => {
     try {
       if (root.imports[name]) {
         throw new Error(`"${name} has already exists."`)
       }
-      const result = await BABYLON.SceneLoader.ImportMeshAsync(
+      imports = await BABYLON.SceneLoader.ImportMeshAsync(
         meshesNames,
         rootUrl,
         fileName,
@@ -33,8 +34,8 @@
         pluginExtension,
       )
 
-      __root__ = result.meshes.find(mesh => mesh.id === '__root__')
-      root.imports[name] = result
+      __root__ = imports.meshes.find(mesh => mesh.id === '__root__')
+      root.imports[name] = imports
 
       root.scene.render()
     } catch (error) {
