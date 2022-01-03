@@ -11,7 +11,7 @@
 
   export let name: string = 'Skybox'
   export let files: Array<string> = undefined
-  export let rootUrl = '/'
+  export let rootUrl = undefined
   export let receiveShadows = false
   export let options = {
     size: 1000,
@@ -49,12 +49,14 @@
 </script>
 
 <StandardMaterial backfaceCulling={false} {diffuseColor} {specularColor}>
-  <CubeTexture
-    textureTarget={TextureTargets.REFLECTION}
-    coordinatesMode={BABYLON.Texture.SKYBOX_MODE}
-    {files}
-    {rootUrl}
-  />
+  {#if rootUrl || files?.length}
+    <CubeTexture
+      textureTarget={TextureTargets.REFLECTION}
+      coordinatesMode={BABYLON.Texture.SKYBOX_MODE}
+      {files}
+      {rootUrl}
+    />
+  {/if}
 </StandardMaterial>
 
 <slot />
