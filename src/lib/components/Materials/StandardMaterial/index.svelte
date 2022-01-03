@@ -18,6 +18,7 @@
   export let invertNormalMapX = false
   export let invertNormalMapY = false
   export let invertRefractionY = false
+  export let backfaceCulling = false
 
   export const material = new BABYLON.StandardMaterial(name, root.scene)
 
@@ -58,6 +59,7 @@
     material.invertNormalMapX = invertNormalMapX
     material.invertNormalMapY = invertNormalMapY
     material.invertRefractionY = invertRefractionY
+    material.backFaceCulling = backfaceCulling
   }
 </script>
 

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { TextureTargets } from '$lib/types/enums/TextureTargets'
+
   import { getRoot } from '$lib/utils/context'
   import type { Nullable } from 'babylonjs'
 
@@ -9,6 +11,7 @@
   const root = getRoot()
 
   export let url: string
+  export let textureTarget: TextureTargets
   export let noMipmap: boolean = undefined
   export let invertY: boolean = undefined
   export let invertZ: boolean = undefined
@@ -36,6 +39,7 @@
   export let wrapR = 1
   export let wrapU = 1
   export let wrapV = 1
+  export let coordinatesMode: number = BABYLON.Texture.EXPLICIT_MODE
 
   const context = getParent()
   export const texture = new BABYLON.Texture(
@@ -54,14 +58,14 @@
   )
 
   onMount(() => {
-    context.self.opacityTexture = texture
+    context.self[textureTarget] = texture
   })
 
   onDestroy(() => {
-    context.self.opacityTexture = null
+    context.self[textureTarget] = null
   })
 
-  $: if (texture && context.self?.opacityTexture) {
+  $: if (texture && context.self && context.self[textureTarget]) {
     texture.uAng = uAng
     texture.uOffset = uOffset
     texture.uRotationCenter = uRotationCenter
@@ -76,6 +80,7 @@
     texture.wrapU = wrapU
     texture.wrapV = wrapV
     texture.invertZ = invertZ
+    texture.coordinatesMode = coordinatesMode
   }
 </script>
 

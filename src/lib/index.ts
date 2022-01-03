@@ -1,4 +1,5 @@
 export { default as Canvas } from './components/Canvas/index.svelte'
+export { default as Skybox } from './components/Objects/Skybox/index.svelte'
 
 // Cameras
 export { default as ArcFollowCamera } from './components/Cameras/ArcFollowCamera.svelte'
@@ -42,12 +43,5 @@ export { default as Tube } from './components/Objects/Tube.svelte'
 export { default as StandardMaterial } from './components/Materials/StandardMaterial/index.svelte'
 
 // Textures
-export { default as AmbientTexture } from './components/Textures/AmbientTexture.svelte'
-export { default as BumpTexture } from './components/Textures/BumpTexture.svelte'
-export { default as DiffuseTexture } from './components/Textures/DiffuseTexture.svelte'
-export { default as EmissiveTexture } from './components/Textures/EmissiveTexture.svelte'
-export { default as LightmapTexture } from './components/Textures/LightmapTexture.svelte'
-export { default as OpacityTexture } from './components/Textures/OpacityTexture.svelte'
-export { default as ReflectionTexture } from './components/Textures/ReflectionTexture.svelte'
-export { default as RefractionTexture } from './components/Textures/RefractionTexture.svelte'
-export { default as SpecularTexture } from './components/Textures/SpecularTexture.svelte'
+export { default as StandardTexture } from './components/Textures/Standard.svelte'
+export { default as CubeTexture } from './components/Textures/CubeTexture.svelte'

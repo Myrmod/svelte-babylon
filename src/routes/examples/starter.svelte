@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { TextureTargets } from '$lib/types/enums/TextureTargets'
+
   import * as BABYLON from 'babylonjs'
   import {
     Canvas,
@@ -7,13 +9,18 @@
     Sphere,
     Ground,
     StandardMaterial,
-    DiffuseTexture,
-    AmbientTexture,
-    BumpTexture,
-    SpecularTexture,
+    StandardTexture,
+    Skybox,
   } from 'svelte-babylon'
 
   const spherePosition = new BABYLON.Vector3(0, 2, 0)
+
+  const textures = [
+    { url: '/assets/textures/metal/metal_diffuse.jpg', textureTarget: TextureTargets.DIFFUSE },
+    { url: '/assets/textures/metal/metal_ao.jpg', textureTarget: TextureTargets.AMBIENT },
+    { url: '/assets/textures/metal/metal_normal.jpg', textureTarget: TextureTargets.BUMP },
+    { url: '/assets/textures/metal/metal_specular.jpg', textureTarget: TextureTargets.SPECULAR },
+  ]
 </script>
 
 <Canvas
@@ -23,6 +30,7 @@
     stencil: true,
   }}
 >
+  <Skybox rootUrl="/assets/textures/skybox/sky" />
   <FreeCamera position={new BABYLON.Vector3(-4, 5, -4)} target={spherePosition} />
   <DirectionalLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)} />
   <Sphere
@@ -35,16 +43,9 @@
 
   <Ground options={{ width: 6, height: 6, subdivisions: 2, updatable: false }} receiveShadows>
     <StandardMaterial>
-      <DiffuseTexture url="/assets/textures/metal/metal_diffuse.jpg" uScale={4} vScale={4} />
-      <AmbientTexture url="/assets/textures/metal/metal_ao.jpg" uScale={4} vScale={4} />
-      <BumpTexture
-        url="/assets/textures/metal/metal_normal.jpg"
-        uScale={4}
-        vScale={4}
-        invertY
-        invertZ
-      />
-      <SpecularTexture url="/assets/textures/metal/metal_specular.jpg" uScale={4} vScale={4} />
+      {#each textures as { url, textureTarget }}
+        <StandardTexture {url} uScale={4} vScale={4} {textureTarget} />
+      {/each}
     </StandardMaterial>
   </Ground>
 </Canvas>

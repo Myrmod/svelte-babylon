@@ -32,7 +32,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
-    "babylonjs": "^4.2.0",
+    "babylonjs": "^5.0.0-alpha.65",
     "babylonjs-loaders": "^4.2.0"
   }
 }
