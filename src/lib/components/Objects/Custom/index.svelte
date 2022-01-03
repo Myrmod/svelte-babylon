@@ -12,6 +12,7 @@
   export let rootUrl: string = '/'
   export let onProgress: (event: BABYLON.ISceneLoaderProgressEvent) => void = undefined
   export let receiveShadows = false
+  export let scaling = new BABYLON.Vector3(1, 1, 1)
 
   export let position = new BABYLON.Vector3(0, 0, 0)
   export let rotation = new BABYLON.Vector3(0, 0, 0)
@@ -54,6 +55,7 @@
     __root__.rotation.x = rotation.x
     __root__.rotation.y = rotation.y
     __root__.rotation.z = rotation.z
+    __root__.scaling = scaling
 
     root.scene.render()
   }
