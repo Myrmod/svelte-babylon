@@ -1,3 +1,13 @@
+<script lang="ts">
+  import libraryElementStore from './libraryElementStore'
+
+  let searchValue: string
+  function handleSubmit() {
+    document.getElementById(searchValue).scrollIntoView()
+    window.location.hash = searchValue
+  }
+</script>
+
 <header>
   <nav>
     <ul>
@@ -9,10 +19,24 @@
 
       <div class="center">
         <li>
-          <a href="/docs"> Documentation </a>
+          <a href="/examples"> Examples </a>
         </li>
         <li>
-          <a href="/examples"> Examples </a>
+          <form on:submit|preventDefault={handleSubmit}>
+            <label for="libraryElement">Search documentation:</label>
+            <input
+              bind:value={searchValue}
+              list="libraryElements"
+              name="libraryElement"
+              id="libraryElement"
+            />
+
+            <datalist id="libraryElements">
+              {#each $libraryElementStore as item}
+                <option value={item} />
+              {/each}
+            </datalist>
+          </form>
         </li>
       </div>
 

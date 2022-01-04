@@ -1,6 +1,14 @@
 <script lang="ts" context="module">
+  import libraryElementStore from '$lib/site/libraryElementStore'
+
   export async function load() {
     const files = import.meta.glob('/src/lib/components/**/Doc.svelte')
+
+    const fileNames = Object.keys(files).map(file =>
+      file.replace('/Doc.svelte', '').replace('/src/lib/components/', ''),
+    )
+
+    libraryElementStore.set(fileNames)
 
     return {
       status: 200,
