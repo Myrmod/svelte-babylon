@@ -20,14 +20,25 @@
 
 <h1>Svelte Babylon</h1>
 
-{#each Object.values(files) as promise}
+{#each Object.entries(files) as [name, promise]}
   {#await promise() then value}
-    <svelte:component this={value.default} />
+    <section id={name.replace('/Doc.svelte', '').replace('/src/lib/components/', '')}>
+      <svelte:component this={value.default} />
+    </section>
   {/await}
 {/each}
 
 <style>
   h1 {
     display: none;
+  }
+
+  :global(section .canvas) {
+    position: relative;
+    width: 640px;
+    height: 480px;
+    max-width: 100vw;
+    max-height: 100vh;
+    aspect-ratio: 640/480;
   }
 </style>

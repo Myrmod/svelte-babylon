@@ -10,7 +10,7 @@
   export let target = BABYLON.Vector3.Zero()
   export let alpha = -Math.PI / 2
   export let beta = Math.PI / 2
-  export let radius = 300
+  export let radius = 5
   export let setActiveOnSceneIfNoneActive = true
   export let speed = 1
   export const camera = new BABYLON.ArcRotateCamera(
