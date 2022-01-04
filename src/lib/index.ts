@@ -3,10 +3,10 @@ export { default as Skybox } from './components/Objects/Skybox/index.svelte'
 
 // Cameras
 export { default as ArcFollowCamera } from './components/Cameras/ArcFollowCamera.svelte'
-export { default as ArcRotateCamera } from './components/Cameras/ArcRotateCamera.svelte'
+export { default as ArcRotateCamera } from './components/Cameras/ArcRotateCamera/index.svelte'
 export { default as FlyCamera } from './components/Cameras/FlyCamera.svelte'
 export { default as FollowCamera } from './components/Cameras/FollowCamera.svelte'
-export { default as FreeCamera } from './components/Cameras/FreeCamera.svelte'
+export { default as FreeCamera } from './components/Cameras/FreeCamera/index.svelte'
 
 // Lights
 export { default as DirectionalLight } from './components/Lights/DirectionalLight.svelte'

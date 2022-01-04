@@ -18,7 +18,9 @@
   >
 </script>
 
-<h1>Svelte Babylon</h1>
+<svelte:head>
+  <title>Svelte Babylon</title>
+</svelte:head>
 
 {#each Object.entries(files) as [name, promise]}
   {#await promise() then value}
@@ -29,10 +31,6 @@
 {/each}
 
 <style>
-  h1 {
-    display: none;
-  }
-
   :global(section .canvas) {
     position: relative;
     width: 640px;
