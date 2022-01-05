@@ -8,6 +8,8 @@
   export let antialiasing = false
   export let engineOptions: BABYLON.EngineOptions = undefined
   export let clearColor: BABYLON.Color4 = new BABYLON.Color4(0, 0, 0)
+  export let lazyload = true
+  export let initialized = false
 
   let wrapper: HTMLElement
   let canvas: HTMLCanvasElement = undefined
@@ -26,6 +28,17 @@
   } as RootContext)
 
   onMount(() => {
+    if (!lazyload) {
+      init()
+    }
+  })
+
+  function resize() {
+    root.canvas.width = wrapper.clientWidth / root.canvas.pixelRatio
+    root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
+  }
+
+  function init() {
     try {
       root.engine = new BABYLON.Engine(canvas, antialiasing, engineOptions)
       root.scene = new BABYLON.Scene(root.engine)
@@ -33,14 +46,11 @@
       window.addEventListener('resize', () => {
         root.engine.resize()
       })
+
+      initialized = true
     } catch (error) {
       console.error(error)
     }
-  })
-
-  function resize() {
-    root.canvas.width = wrapper.clientWidth / root.canvas.pixelRatio
-    root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
   }
 
   $: if (root.scene && root.scene.cameras.length) {
@@ -51,11 +61,22 @@
 
 <svelte:window on:resize={resize} />
 
-<div class="wrapper" bind:this={wrapper}>
-  <canvas bind:this={canvas} />
+<div
+  class="wrapper"
+  data-loaded={!lazyload}
+  bind:this={wrapper}
+  on:click={() => {
+    if (lazyload && !initialized) {
+      init()
+    }
+  }}
+>
+  {#if lazyload}
+    <canvas bind:this={canvas} />
 
-  {#if root.scene}
-    <slot />
+    {#if root.scene}
+      <slot />
+    {/if}
   {/if}
 </div>
 
@@ -67,5 +88,10 @@
     height: 100%;
     left: 0;
     top: 0;
+  }
+
+  .wrapper[data-loaded='false'] {
+    background-color: #333;
+    cursor: pointer;
   }
 </style>
