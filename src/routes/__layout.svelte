@@ -1,6 +1,7 @@
 <script lang="ts">
   import Header from '$lib/site/Header.svelte'
   import 'babylonjs-loaders'
+  import '$lib/site/styles/app.css'
 </script>
 
 <Header />

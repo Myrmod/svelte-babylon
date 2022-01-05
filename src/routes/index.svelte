@@ -30,13 +30,15 @@
   <title>Svelte Babylon</title>
 </svelte:head>
 
-{#each Object.entries(files) as [name, promise]}
-  {#await promise() then value}
-    <section id={name.replace('/Doc.svelte', '').replace('/src/lib/components/', '')}>
-      <svelte:component this={value.default} />
-    </section>
-  {/await}
-{/each}
+<div>
+  {#each Object.entries(files) as [name, promise]}
+    {#await promise() then value}
+      <section id={name.replace('/Doc.svelte', '').replace('/src/lib/components/', '')}>
+        <svelte:component this={value.default} />
+      </section>
+    {/await}
+  {/each}
+</div>
 
 <style>
   :global(section .canvas) {
@@ -46,5 +48,9 @@
     max-width: 100vw;
     max-height: 100vh;
     aspect-ratio: 640/480;
+  }
+
+  div {
+    padding: 0 2rem;
   }
 </style>
