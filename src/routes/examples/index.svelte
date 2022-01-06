@@ -13,8 +13,6 @@
 
 <script lang="ts">
   export let files: Array<string>
-
-  console.log(files)
 </script>
 
 <h1>Examples</h1>

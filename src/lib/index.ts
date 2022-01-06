@@ -9,10 +9,10 @@ export { default as FollowCamera } from './components/Cameras/FollowCamera.svelt
 export { default as FreeCamera } from './components/Cameras/FreeCamera/index.svelte'
 
 // Lights
-export { default as DirectionalLight } from './components/Lights/DirectionalLight.svelte'
-export { default as HemisphericLight } from './components/Lights/HemisphericLight.svelte'
-export { default as PointLight } from './components/Lights/PointLight.svelte'
-export { default as SpotLight } from './components/Lights/SpotLight.svelte'
+export { default as DirectionalLight } from './components/Lights/DirectionalLight/index.svelte'
+export { default as HemisphericLight } from './components/Lights/HemisphericLight/index.svelte'
+export { default as PointLight } from './components/Lights/PointLight/index.svelte'
+export { default as SpotLight } from './components/Lights/SpotLight/index.svelte'
 
 // Objects
 export { default as Box } from './components/Objects/Box/index.svelte'
