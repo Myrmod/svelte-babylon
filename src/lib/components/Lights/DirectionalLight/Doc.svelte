@@ -1,15 +1,8 @@
 <script lang="ts">
   import * as BABYLON from 'babylonjs'
-  import {
-    Canvas,
-    ArcRotateCamera,
-    DirectionalLight,
-    Box,
-    Ground,
-    StandardMaterial,
-  } from 'svelte-babylon'
+  import { Canvas, ArcRotateCamera, DirectionalLight, Custom, LightGizmo } from 'svelte-babylon'
 
-  const objectPosition = new BABYLON.Vector3(0, 2, 0)
+  const objectPosition = new BABYLON.Vector3(0, 3, 0)
 </script>
 
 <h1>DirectionalLight</h1>
@@ -23,13 +16,14 @@
     }}
   >
     <ArcRotateCamera target={objectPosition} />
-    <DirectionalLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)} />
-    <Box position={objectPosition} receiveShadows>
-      <StandardMaterial diffuseColor={new BABYLON.Color3(1)} />
-    </Box>
-
-    <Ground options={{ width: 6, height: 6, subdivisions: 2, updatable: false }} receiveShadows>
-      <StandardMaterial diffuseColor={BABYLON.Color3.Teal()} />
-    </Ground>
+    <DirectionalLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)}>
+      <LightGizmo />
+    </DirectionalLight>
+    <Custom
+      name="LightingScene"
+      fileName="assets/models/LightingScene.glb"
+      scaling={new BABYLON.Vector3(1.5, 1.5, 1.5)}
+      receiveShadows
+    />
   </Canvas>
 </div>

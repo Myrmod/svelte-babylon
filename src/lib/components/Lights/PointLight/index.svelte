@@ -3,6 +3,7 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
+  import { createLightContext } from '../createLightContext'
 
   const root = getRoot()
 
@@ -10,7 +11,7 @@
   export let position = BABYLON.Vector3.Zero()
   export let shadowEnabled = true
   export let intensity = 1
-  export const light = new BABYLON.PointLight(name, position, root.scene)
+  export const light = createLightContext(new BABYLON.PointLight(name, position, root.scene))
 
   onMount(() => {
     try {

@@ -3,6 +3,7 @@
 
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
+  import { createLightContext } from '../createLightContext'
 
   const root = getRoot()
 
@@ -11,7 +12,7 @@
   export let shadowEnabled = true
   export let intensity = 1
 
-  export const light = new BABYLON.DirectionalLight(name, direction, root.scene)
+  export const light = createLightContext(new BABYLON.DirectionalLight(name, direction, root.scene))
 
   onMount(() => {
     try {
@@ -36,3 +37,5 @@
     root.scene.render()
   }
 </script>
+
+<slot />

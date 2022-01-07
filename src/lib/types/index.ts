@@ -24,4 +24,7 @@ export default interface RootContext {
   imports: {
     [key: string]: BABYLON.ISceneLoaderAsyncResult
   }
+  gizmos: {
+    [key: string]: BABYLON.Gizmo | BABYLON.GizmoManager
+  }
 }

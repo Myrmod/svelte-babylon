@@ -24,6 +24,7 @@
     lights: {},
     objects: {},
     imports: {},
+    gizmos: {},
   } as RootContext)
 
   onMount(() => {

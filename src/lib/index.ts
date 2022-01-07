@@ -46,3 +46,15 @@ export { default as StandardMaterial } from './components/Materials/StandardMate
 // Textures
 export { default as StandardTexture } from './components/Textures/Standard.svelte'
 export { default as CubeTexture } from './components/Textures/CubeTexture.svelte'
+
+// Gizmos
+export { default as AxisDragGizmo } from './components/Gizmos/AxisDragGizmo/index.svelte'
+export { default as AxisScaleGizmo } from './components/Gizmos/AxisScaleGizmo/index.svelte'
+export { default as BoundingBoxGizmo } from './components/Gizmos/BoundingBoxGizmo/index.svelte'
+export { default as CameraGizmo } from './components/Gizmos/CameraGizmo/index.svelte'
+export { default as LightGizmo } from './components/Gizmos/LightGizmo/index.svelte'
+export { default as PlaneDragGizmo } from './components/Gizmos/PlaneDragGizmo/index.svelte'
+export { default as PlaneRotationGizmo } from './components/Gizmos/PlaneRotationGizmo/index.svelte'
+export { default as PositionGizmo } from './components/Gizmos/PositionGizmo/index.svelte'
+export { default as RotationGizmo } from './components/Gizmos/RotationGizmo/index.svelte'
+export { default as ScaleGizmo } from './components/Gizmos/ScaleGizmo/index.svelte'
