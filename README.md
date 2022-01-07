@@ -18,4 +18,4 @@ Run `npm run dev -- --open` to launch the demo site.
 
 ## License
 
-[MIT](LICENSE)
+[MIT (modified)](LICENSE)
