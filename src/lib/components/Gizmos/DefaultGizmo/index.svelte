@@ -5,7 +5,9 @@
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
-  const parent = getContext('object') as BABYLON.AbstractMesh | BABYLON.Mesh
+  const parent = getContext('object') as {
+    self: BABYLON.AbstractMesh | BABYLON.Mesh
+  }
 
   export let name: string = 'GizmoManager'
   export let thickness: number = undefined
@@ -33,7 +35,7 @@
       }
       if (root.gizmos[name]) return
 
-      gizmo.attachToMesh(parent)
+      gizmo.attachToMesh(parent.self)
       root.gizmos[name] = gizmo
 
       root.scene.render()
