@@ -3,10 +3,11 @@
   import {
     Canvas,
     ArcRotateCamera,
-    DirectionalLight,
+    HemisphericLight,
     Box,
     Ground,
     StandardMaterial,
+    LightGizmo,
   } from 'svelte-babylon'
 
   const objectPosition = new BABYLON.Vector3(0, 2, 0)
@@ -23,7 +24,13 @@
     }}
   >
     <ArcRotateCamera target={objectPosition} />
-    <DirectionalLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)} />
+    <HemisphericLight
+      shadowEnabled
+      direction={new BABYLON.Vector3(0, 1, 0)}
+      groundColor={BABYLON.Color3.Blue()}
+    >
+      <LightGizmo scaleRatio={4} />
+    </HemisphericLight>
     <Box position={objectPosition} receiveShadows>
       <StandardMaterial diffuseColor={new BABYLON.Color3(1)} />
     </Box>

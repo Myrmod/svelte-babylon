@@ -3,10 +3,11 @@
   import {
     Canvas,
     ArcRotateCamera,
-    DirectionalLight,
+    SpotLight,
     Box,
     Ground,
     StandardMaterial,
+    LightGizmo,
   } from 'svelte-babylon'
 
   const objectPosition = new BABYLON.Vector3(0, 2, 0)
@@ -23,7 +24,9 @@
     }}
   >
     <ArcRotateCamera target={objectPosition} />
-    <DirectionalLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)} />
+    <SpotLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)}>
+      <LightGizmo />
+    </SpotLight>
     <Box position={objectPosition} receiveShadows>
       <StandardMaterial diffuseColor={new BABYLON.Color3(1)} />
     </Box>

@@ -5,7 +5,7 @@
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
-  const parent = getContext('object') as BABYLON.AbstractMesh
+  const parent = getContext('object') as BABYLON.AbstractMesh | BABYLON.Mesh
 
   export let name: string = 'GizmoManager'
   export let thickness: number = undefined
@@ -15,6 +15,7 @@
   export let rotationGizmoEnabled = true
   export let scaleGizmoEnabled = true
   export let boundingBoxGizmoEnabled = true
+  export let usePointerToAttachGizmos = false
 
   export const gizmo = new BABYLON.GizmoManager(
     root.scene,
@@ -25,8 +26,14 @@
 
   onMount(() => {
     try {
+      if (!parent) {
+        console.error('no parent found')
+
+        return
+      }
       if (root.gizmos[name]) return
 
+      gizmo.attachToMesh(parent)
       root.gizmos[name] = gizmo
 
       root.scene.render()
@@ -37,6 +44,7 @@
 
   onDestroy(() => {
     delete root.gizmos[name]
+    gizmo.dispose()
   })
 
   $: if (root.gizmos[name]) {
@@ -44,6 +52,7 @@
     gizmo.rotationGizmoEnabled = rotationGizmoEnabled
     gizmo.scaleGizmoEnabled = scaleGizmoEnabled
     gizmo.boundingBoxGizmoEnabled = boundingBoxGizmoEnabled
+    gizmo.usePointerToAttachGizmos = usePointerToAttachGizmos
 
     root.scene.render()
   }

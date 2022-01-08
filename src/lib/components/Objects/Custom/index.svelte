@@ -2,6 +2,7 @@
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
+  import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
 
@@ -17,8 +18,9 @@
   export let position = new BABYLON.Vector3(0, 0, 0)
   export let rotation = new BABYLON.Vector3(0, 0, 0)
   export let rotationQuaternion: BABYLON.Quaternion = null
-  let __root__: BABYLON.AbstractMesh = undefined
+  export let __root__: BABYLON.AbstractMesh = undefined
   export let imports: BABYLON.ISceneLoaderAsyncResult = undefined
+  export const context = createObjectContext(__root__)
 
   onMount(async () => {
     try {
