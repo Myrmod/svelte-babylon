@@ -20,8 +20,8 @@
       <LightGizmo />
     </DirectionalLight>
     <Custom
-      name="LightingScene"
-      fileName="assets/models/LightingScene.glb"
+      name="campfire"
+      fileName="assets/models/campfire.glb"
       scaling={new BABYLON.Vector3(1.5, 1.5, 1.5)}
       receiveShadows
     />
