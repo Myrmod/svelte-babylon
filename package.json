@@ -1,6 +1,6 @@
 {
   "name": "svelte-babylon",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -29,7 +29,7 @@
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },
-  "license": "MIT",
+  "license": "MIT (modified)",
   "type": "module",
   "dependencies": {
     "babylonjs": "^5.0.0-alpha.65",
