@@ -16,7 +16,7 @@
 
   export let context: {
     self: BABYLON.AbstractMesh
-  } = createObjectContext(undefined as BABYLON.Mesh)
+  } = createObjectContext(undefined)
   export let position = new BABYLON.Vector3(0, 0, 0)
   export let rotation = new BABYLON.Vector3(0, 0, 0)
   export let rotationQuaternion: BABYLON.Quaternion = null

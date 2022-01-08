@@ -26,6 +26,7 @@
 
   onDestroy(() => {
     delete root.gizmos[name]
+    gizmo.dispose()
   })
 
   $: if (root.gizmos[name]) {

@@ -39,3 +39,5 @@
     root.scene.render()
   }
 </script>
+
+<slot />
