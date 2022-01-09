@@ -9,8 +9,10 @@
 
   export let name: string = 'DirectionalLight'
   export let direction = BABYLON.Vector3.Zero()
-  export let shadowEnabled = true
+  export let shadowEnabled = false
   export let intensity = 1
+  export let diffuse: BABYLON.Color3 = BABYLON.Color3.White()
+  export let specular: BABYLON.Color3 = BABYLON.Color3.White()
 
   export const light = createLightContext(new BABYLON.DirectionalLight(name, direction, root.scene))
 
@@ -33,6 +35,8 @@
   $: if (root.lights[light.id]) {
     light.shadowEnabled = shadowEnabled
     light.intensity = intensity
+    light.diffuse = diffuse
+    light.specular = specular
 
     root.scene.render()
   }

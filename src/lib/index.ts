@@ -1,5 +1,4 @@
 export { default as Canvas } from './components/Canvas/index.svelte'
-export { default as Skybox } from './components/Objects/Skybox/index.svelte'
 
 // Cameras
 export { default as ArcFollowCamera } from './components/Cameras/ArcFollowCamera.svelte'
@@ -12,6 +11,7 @@ export { default as FreeCamera } from './components/Cameras/FreeCamera/index.sve
 export { default as DirectionalLight } from './components/Lights/DirectionalLight/index.svelte'
 export { default as HemisphericLight } from './components/Lights/HemisphericLight/index.svelte'
 export { default as PointLight } from './components/Lights/PointLight/index.svelte'
+export { default as ShadowGenerator } from './components/Lights/ShadowGenerator/index.svelte'
 export { default as SpotLight } from './components/Lights/SpotLight/index.svelte'
 
 // Objects
@@ -32,6 +32,7 @@ export { default as Lines } from './components/Objects/Lines/index.svelte'
 export { default as Polygon } from './components/Objects/Polygon/index.svelte'
 export { default as Polyhedron } from './components/Objects/Polyhedron/index.svelte'
 export { default as Ribbon } from './components/Objects/Ribbon/index.svelte'
+export { default as Skybox } from './components/Objects/Skybox/index.svelte'
 export { default as Sphere } from './components/Objects/Sphere/index.svelte'
 export { default as TiledBox } from './components/Objects/TiledBox/index.svelte'
 export { default as TiledGround } from './components/Objects/TiledGround/index.svelte'

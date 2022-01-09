@@ -24,11 +24,7 @@
     }}
   >
     <ArcRotateCamera target={objectPosition} />
-    <HemisphericLight
-      shadowEnabled
-      direction={new BABYLON.Vector3(0, 1, 0)}
-      groundColor={BABYLON.Color3.Blue()}
-    >
+    <HemisphericLight shadowEnabled direction={new BABYLON.Vector3(0, 1, 0)}>
       <LightGizmo scaleRatio={4} />
     </HemisphericLight>
     <Box position={objectPosition} receiveShadows>

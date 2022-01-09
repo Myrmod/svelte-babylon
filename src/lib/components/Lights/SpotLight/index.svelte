@@ -10,10 +10,13 @@
   export let name: string = 'SpotLight'
   export let direction = BABYLON.Vector3.Zero()
   export let position = BABYLON.Vector3.Zero()
-  export let angle = Math.PI / 3
-  export let exponent = 2
+  export let angle = Math.PI / 2 // 90deg
+  export let exponent = 10
   export let shadowEnabled = true
   export let intensity = 1
+  export let diffuse: BABYLON.Color3 = BABYLON.Color3.White()
+  export let specular: BABYLON.Color3 = BABYLON.Color3.White()
+
   export const light = createLightContext(
     new BABYLON.SpotLight(name, position, direction, angle, exponent, root.scene),
   )
@@ -35,6 +38,8 @@
   $: if (root.lights[light.id]) {
     light.shadowEnabled = shadowEnabled
     light.intensity = intensity
+    light.diffuse = diffuse
+    light.specular = specular
 
     root.scene.render()
   }

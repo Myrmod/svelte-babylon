@@ -24,7 +24,11 @@
     }}
   >
     <ArcRotateCamera target={objectPosition} />
-    <PointLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)}>
+    <PointLight
+      shadowEnabled
+      position={new BABYLON.Vector3(0, 1, 0)}
+      direction={new BABYLON.Vector3(0, -1, 0)}
+    >
       <LightGizmo />
     </PointLight>
     <Box position={objectPosition} receiveShadows>

@@ -11,6 +11,15 @@
   } from 'svelte-babylon'
 
   const objectPosition = new BABYLON.Vector3(0, 2, 0)
+  let root
+  let shadowCastingObjects = []
+  $: if (root?.objects) {
+    console.log('here', root.objects, Object.values(root.objects).length)
+
+    shadowCastingObjects = Object.values(root?.objects).map(({ self }) => self)
+  }
+
+  $: if (root?.objects) console.log(Object.entries(root?.objects))
 </script>
 
 <h1>SpotLight</h1>
@@ -22,11 +31,18 @@
       preserveDrawingBuffer: true,
       stencil: true,
     }}
+    bind:root
   >
     <ArcRotateCamera target={objectPosition} />
-    <SpotLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)}>
-      <LightGizmo />
-    </SpotLight>
+    {#if shadowCastingObjects.length}
+      <SpotLight
+        {shadowCastingObjects}
+        position={new BABYLON.Vector3(0, 4, 2)}
+        direction={new BABYLON.Vector3(0, -1, -0.5)}
+      >
+        <LightGizmo />
+      </SpotLight>
+    {/if}
     <Box position={objectPosition} receiveShadows>
       <StandardMaterial diffuseColor={new BABYLON.Color3(1)} />
     </Box>
