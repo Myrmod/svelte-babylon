@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type RootContext from '$lib/types'
+
   import * as BABYLON from 'babylonjs'
   import {
     Canvas,
@@ -6,14 +8,27 @@
     DirectionalLight,
     Box,
     Ground,
-    StandardMaterial,
     LightGizmo,
   } from 'svelte-babylon'
 
+  let root: RootContext
   const objectPosition = new BABYLON.Vector3(0, 3, 0)
+
+  let box: {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+
+  let shadowObjects: Array<typeof box['self']>
+  $: {
+    const temp: typeof shadowObjects = []
+    if (box?.self) {
+      temp.push(box.self)
+    }
+    shadowObjects = temp
+  }
 </script>
 
-<h1>DirectionalLight</h1>
+<h1>ShadowGenerator</h1>
 
 <div class="canvas">
   <Canvas
@@ -22,17 +37,18 @@
       preserveDrawingBuffer: true,
       stencil: true,
     }}
+    bind:root
   >
-    <ArcRotateCamera target={objectPosition} />
-    <DirectionalLight shadowEnabled direction={new BABYLON.Vector3(0, -1, 0)}>
+    <DirectionalLight
+      direction={new BABYLON.Vector3(-10, -20, -10)}
+      castShadowOf={shadowObjects}
+      intensity={0.5}
+      position={new BABYLON.Vector3(2, 6, 2)}
+    >
       <LightGizmo />
     </DirectionalLight>
-    <Box position={objectPosition} receiveShadows>
-      <StandardMaterial diffuseColor={new BABYLON.Color3(1)} />
-    </Box>
-
-    <Ground options={{ width: 6, height: 6, subdivisions: 2, updatable: false }} receiveShadows>
-      <StandardMaterial diffuseColor={BABYLON.Color3.Teal()} />
-    </Ground>
+    <ArcRotateCamera target={objectPosition} />
+    <Box receiveShadows bind:object={box} y={2} />
+    <Ground options={{ width: 6, height: 6, subdivisions: 2, updatable: false }} receiveShadows />
   </Canvas>
 </div>

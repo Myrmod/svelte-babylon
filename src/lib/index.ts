@@ -11,7 +11,6 @@ export { default as FreeCamera } from './components/Cameras/FreeCamera/index.sve
 export { default as DirectionalLight } from './components/Lights/DirectionalLight/index.svelte'
 export { default as HemisphericLight } from './components/Lights/HemisphericLight/index.svelte'
 export { default as PointLight } from './components/Lights/PointLight/index.svelte'
-export { default as ShadowGenerator } from './components/Lights/ShadowGenerator/index.svelte'
 export { default as SpotLight } from './components/Lights/SpotLight/index.svelte'
 
 // Objects

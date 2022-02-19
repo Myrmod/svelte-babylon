@@ -15,8 +15,11 @@
   export let receiveShadows = false
   export let scaling = new BABYLON.Vector3(1, 1, 1)
 
-  export let position = new BABYLON.Vector3(0, 0, 0)
-  export let rotation = new BABYLON.Vector3(0, 0, 0)
+  export let position = BABYLON.Vector3.Zero()
+  export let x: number = undefined
+  export let y: number = undefined
+  export let z: number = undefined
+  export let rotation = BABYLON.Vector3.Zero()
   export let rotationQuaternion: BABYLON.Quaternion = null
   export let __root__: BABYLON.AbstractMesh = undefined
   export let imports: BABYLON.ISceneLoaderAsyncResult = undefined
@@ -46,13 +49,14 @@
   })
 
   onDestroy(() => {
+    context.self.dispose()
     delete root.imports[name]
   })
 
   $: if (root.imports[name]) {
-    __root__.position.x = position.x
-    __root__.position.y = position.y
-    __root__.position.z = position.z
+    __root__.position.x = x || position.x
+    __root__.position.y = y || position.y
+    __root__.position.z = z || position.z
     __root__.receiveShadows = receiveShadows
     __root__.rotationQuaternion = rotationQuaternion
     __root__.rotation.x = rotation.x

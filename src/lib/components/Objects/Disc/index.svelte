@@ -13,7 +13,10 @@
 
   const context = createObjectContext(BABYLON.MeshBuilder.CreateDisc(name, options, root.scene))
 
-  export let position = new BABYLON.Vector3(0, 0, 0)
+  export let position = BABYLON.Vector3.Zero()
+  export let x: number = undefined
+  export let y: number = undefined
+  export let z: number = undefined
 
   export const object = root.objects[context.self.id]
 
@@ -27,13 +30,14 @@
   })
 
   onDestroy(() => {
+    context.self.dispose()
     delete root.objects[context.self.id]
   })
 
   $: if (root.objects[context.self.id]) {
-    root.objects[name].position.x = position.x
-    root.objects[name].position.y = position.y
-    root.objects[name].position.z = position.z
+    context.self.position.x = x || position.x
+    context.self.position.y = y || position.y
+    context.self.position.z = z || position.z
     root.objects[name].receiveShadows = receiveShadows
 
     root.scene.render()
