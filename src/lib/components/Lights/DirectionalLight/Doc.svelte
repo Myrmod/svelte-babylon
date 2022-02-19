@@ -28,7 +28,7 @@
   }
 </script>
 
-<h1>ShadowGenerator</h1>
+<h1>DirectionalLight</h1>
 
 <div class="canvas">
   <Canvas
@@ -49,6 +49,6 @@
     </DirectionalLight>
     <ArcRotateCamera target={objectPosition} />
     <Box receiveShadows bind:object={box} y={2} />
-    <Ground options={{ width: 6, height: 6, subdivisions: 2, updatable: false }} receiveShadows />
+    <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows />
   </Canvas>
 </div>

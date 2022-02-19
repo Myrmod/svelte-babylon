@@ -18,7 +18,7 @@
   const context = createObjectContext(BABYLON.MeshBuilder.CreateGround(name, options, root.scene))
 
   export let receiveShadows = false
-  export const object = root.objects[context.self.id]
+  export let object = root.objects[context.self.id]
 
   onMount(() => {
     try {

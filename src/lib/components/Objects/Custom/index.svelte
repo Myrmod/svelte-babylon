@@ -64,6 +64,7 @@
     __root__.rotation.z = rotation.z
     __root__.scaling = scaling
 
+    object = context
     root.scene.render()
   }
 </script>

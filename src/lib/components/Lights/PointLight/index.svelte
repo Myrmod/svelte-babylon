@@ -8,7 +8,6 @@
   const root = getRoot()
 
   export let name: string = 'PointLight'
-  export let shadowEnabled = true
   export let intensity = 1
   export let diffuse: BABYLON.Color3 = BABYLON.Color3.White()
   export let specular: BABYLON.Color3 = BABYLON.Color3.White()
@@ -16,6 +15,8 @@
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
+  export let shadowMaxZ = undefined
+  export let shadowMinZ = undefined
 
   // shadow
   export let castShadowOf: Array<BABYLON.Mesh | BABYLON.AbstractMesh> = undefined
@@ -49,7 +50,7 @@
 
   onDestroy(() => {
     root.lights[light.id].dispose()
-    root.lights[light.id] = null
+    delete root.lights[light.id]
 
     if (shadowGenerator) {
       shadowGenerator.dispose()
@@ -57,13 +58,14 @@
   })
 
   $: if (light) {
-    light.shadowEnabled = shadowEnabled
     light.intensity = intensity
     light.diffuse = diffuse
     light.specular = specular
     light.position.x = x || position.x
     light.position.y = y || position.y
     light.position.z = z || position.z
+    light.shadowMaxZ = shadowMaxZ
+    light.shadowMinZ = shadowMinZ
 
     root.scene.render()
   }

@@ -59,6 +59,7 @@
     context.self.rotation.y = rotation.y
     context.self.rotation.z = rotation.z
 
+    object = context
     root.scene.render()
   }
 </script>

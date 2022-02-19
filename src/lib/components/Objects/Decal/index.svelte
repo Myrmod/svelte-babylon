@@ -19,7 +19,7 @@
   export let y: number = undefined
   export let z: number = undefined
 
-  export const object = root.objects[context.self.id]
+  export let object = root.objects[context.self.id]
 
   onMount(() => {
     try {
@@ -41,6 +41,7 @@
     context.self.position.z = z || position.z
     context.self.receiveShadows = receiveShadows
 
+    object = context
     root.scene.render()
   }
 </script>

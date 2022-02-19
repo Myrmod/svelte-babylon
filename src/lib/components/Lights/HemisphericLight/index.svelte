@@ -34,7 +34,7 @@
   })
 
   onDestroy(() => {
-    root.lights[light.id] = null
+    delete root.lights[light.id]
   })
 
   $: if (root.lights[light.id]) {
