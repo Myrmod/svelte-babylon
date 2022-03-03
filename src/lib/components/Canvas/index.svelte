@@ -1,6 +1,6 @@
 <script lang="ts">
-  import * as BABYLON from 'babylonjs'
   import type RootContext from '$lib/types'
+  import * as BABYLON from 'babylonjs'
   import { onMount } from 'svelte'
   import { setRoot } from '../../utils/context'
 

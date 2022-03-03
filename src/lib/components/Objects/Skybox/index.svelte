@@ -1,11 +1,11 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
   import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
-  import { onDestroy, onMount } from 'svelte'
-  import { createObjectContext } from '../createObjectContext'
   import CubeTexture from '$lib/components/Textures/CubeTexture.svelte'
   import { TextureTargets } from '$lib/types/enums/TextureTargets'
+  import { getRoot } from '$lib/utils/context'
+  import * as BABYLON from 'babylonjs'
+  import { onDestroy, onMount } from 'svelte'
+  import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
 
