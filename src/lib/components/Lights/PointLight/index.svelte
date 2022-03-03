@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
   import { createLightContext } from '../createLightContext'
@@ -67,7 +66,9 @@
     light.shadowMaxZ = shadowMaxZ
     light.shadowMinZ = shadowMinZ
 
-    root.scene.render()
+    if (Object.keys(root.cameras).length) {
+      root.scene.render()
+    }
   }
 
   let shadowGenerator: BABYLON.ShadowGenerator
