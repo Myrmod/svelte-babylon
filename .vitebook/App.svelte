@@ -1,5 +1,5 @@
 <script>
-  export let component;
+  export let component
 </script>
 
 <svelte:component this={component} />
