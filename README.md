@@ -7,6 +7,14 @@ This library is a wrok in progress. It has not been tested in its entirety and t
 
 If you find anything not working as expected, it would be great for you to open an issue.
 
+## Documentation
+To see the component library follow these steps:
+```bash
+git clone git@github.com:Myrmod/svelte-babylon.git && cd svelte-babylon
+npm ci
+npm run vitebook:dev
+```
+
 ## Installation
 
 ```
