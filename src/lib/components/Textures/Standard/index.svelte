@@ -1,12 +1,10 @@
 <script lang="ts">
   import type { TextureTargets } from '$lib/types/enums/TextureTargets'
-
   import { getRoot } from '$lib/utils/context'
   import type { Nullable } from 'babylonjs'
-
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
-  import getParent from './getParent'
+  import getParent from '../getParent'
 
   const root = getRoot()
 
