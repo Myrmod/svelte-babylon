@@ -22,15 +22,31 @@
   export let rotation = BABYLON.Vector3.Zero()
   export let rotationQuaternion: BABYLON.Quaternion = null
   export let __root__: BABYLON.AbstractMesh = undefined
-  export let imports: BABYLON.ISceneLoaderAsyncResult = undefined
   export const context = createObjectContext(__root__)
+
+  export let imports: BABYLON.ISceneLoaderAsyncResult = undefined
+  export let animationGroups: typeof imports['animationGroups'] = undefined
+  export let geometries: typeof imports['geometries'] = undefined
+  export let lights: typeof imports['lights'] = undefined
+  export let meshes: typeof imports['meshes'] = undefined
+  export let particleSystems: typeof imports['particleSystems'] = undefined
+  export let skeletons: typeof imports['skeletons'] = undefined
+  export let transformNodes: typeof imports['transformNodes'] = undefined
 
   onMount(async () => {
     try {
       if (root.imports[name]) {
         throw new Error(`"${name} has already exists."`)
       }
-      imports = await BABYLON.SceneLoader.ImportMeshAsync(
+      imports = {
+        animationGroups,
+        geometries,
+        lights,
+        meshes,
+        particleSystems,
+        skeletons,
+        transformNodes,
+      } = await BABYLON.SceneLoader.ImportMeshAsync(
         meshesNames,
         rootUrl,
         fileName,
@@ -49,10 +65,12 @@
   })
 
   onDestroy(() => {
-    if (context.self.actionManager) {
-      context.self.actionManager.dispose()
-    }
-    context.self.dispose()
+    meshes?.forEach(mesh => {
+      if (mesh.actionManager) {
+        mesh.actionManager?.dispose()
+      }
+    })
+    context.self?.dispose()
     delete root.imports[name]
   })
 
@@ -135,223 +153,239 @@
   export let onKeyUpCondition: BABYLON.Condition = undefined
   let onKeyUpIAction: BABYLON.IAction
 
-  $: if (
-    onPick ||
-    onLeftPick ||
-    onRightPick ||
-    onCenterPick ||
-    onPickDown ||
-    onDoublePick ||
-    onPickUp ||
-    onPickOut ||
-    onLongPress ||
-    onPointerOver ||
-    onPointerOut ||
-    onEveryFrame ||
-    onIntersectionEnter ||
-    onIntersectionExit ||
-    onKeyDown ||
-    onKeyUp
-  ) {
-    context.self.actionManager = new BABYLON.ActionManager(root.scene)
-  } else if (context.self.actionManager) {
-    context.self.actionManager.dispose()
-  }
+  $: if (meshes) {
+    meshes.forEach(mesh => {
+      if (
+        onPick ||
+        onLeftPick ||
+        onRightPick ||
+        onCenterPick ||
+        onPickDown ||
+        onDoublePick ||
+        onPickUp ||
+        onPickOut ||
+        onLongPress ||
+        onPointerOver ||
+        onPointerOut ||
+        onEveryFrame ||
+        onIntersectionEnter ||
+        onIntersectionExit ||
+        onKeyDown ||
+        onKeyUp
+      ) {
+        mesh.actionManager = new BABYLON.ActionManager(root.scene)
+      } else if (mesh?.actionManager) {
+        mesh.actionManager.dispose()
+      }
 
-  $: if (onPick) {
-    onPickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, onPick, onPickCondition),
-    )
-  } else if (context.self.actionManager?.actions.includes(onPickIAction)) {
-    context.self.actionManager.unregisterAction(onPickIAction)
-    onPickIAction = null
-  }
+      if (onPick) {
+        onPickIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onPickCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onPickIAction)) {
+        mesh.actionManager.unregisterAction(onPickIAction)
+        onPickIAction = null
+      }
 
-  $: if (onLeftPick) {
-    onLeftPickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onLeftPickCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onLeftPickIAction)) {
-    context.self.actionManager.unregisterAction(onLeftPickIAction)
-    onLeftPickIAction = null
-  }
+      if (onLeftPick) {
+        onLeftPickIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onLeftPickCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onLeftPickIAction)) {
+        mesh.actionManager.unregisterAction(onLeftPickIAction)
+        onLeftPickIAction = null
+      }
 
-  $: if (onRightPick) {
-    onRightPickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onRightPickCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onRightPickIAction)) {
-    context.self.actionManager.unregisterAction(onRightPickIAction)
-    onRightPickIAction = null
-  }
+      if (onRightPick) {
+        onRightPickIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onRightPickCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onRightPickIAction)) {
+        mesh.actionManager.unregisterAction(onRightPickIAction)
+        onRightPickIAction = null
+      }
 
-  $: if (onCenterPick) {
-    onCenterPickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onCenterPickCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onCenterPickIAction)) {
-    context.self.actionManager.unregisterAction(onCenterPickIAction)
-    onCenterPickIAction = null
-  }
+      if (onCenterPick) {
+        onCenterPickIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onCenterPickCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onCenterPickIAction)) {
+        mesh.actionManager.unregisterAction(onCenterPickIAction)
+        onCenterPickIAction = null
+      }
 
-  $: if (onPickDown) {
-    onPickDownIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onPickDownCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onPickDownIAction)) {
-    context.self.actionManager.unregisterAction(onPickDownIAction)
-    onPickDownIAction = null
-  }
+      if (onPickDown) {
+        onPickDownIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onPickDownCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onPickDownIAction)) {
+        mesh.actionManager.unregisterAction(onPickDownIAction)
+        onPickDownIAction = null
+      }
 
-  $: if (onDoublePick) {
-    onDoublePickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onDoublePickCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onDoublePickIAction)) {
-    context.self.actionManager.unregisterAction(onDoublePickIAction)
-    onDoublePickIAction = null
-  }
+      if (onDoublePick) {
+        onDoublePickIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onDoublePickCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onDoublePickIAction)) {
+        mesh.actionManager.unregisterAction(onDoublePickIAction)
+        onDoublePickIAction = null
+      }
 
-  $: if (onPickUp) {
-    onPickUpIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, onPick, onPickUpCondition),
-    )
-  } else if (context.self.actionManager?.actions.includes(onPickUpIAction)) {
-    context.self.actionManager.unregisterAction(onPickUpIAction)
-    onPickUpIAction = null
-  }
+      if (onPickUp) {
+        onPickUpIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onPickUpCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onPickUpIAction)) {
+        mesh.actionManager.unregisterAction(onPickUpIAction)
+        onPickUpIAction = null
+      }
 
-  $: if (onPickOut) {
-    onPickOutIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onPickOutCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onPickOutIAction)) {
-    context.self.actionManager.unregisterAction(onPickOutIAction)
-    onPickOutIAction = null
-  }
+      if (onPickOut) {
+        onPickOutIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onPickOutCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onPickOutIAction)) {
+        mesh.actionManager.unregisterAction(onPickOutIAction)
+        onPickOutIAction = null
+      }
 
-  $: if (onLongPress) {
-    onLongPressIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onLongPressCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onLongPressIAction)) {
-    context.self.actionManager.unregisterAction(onLongPressIAction)
-    onLongPressIAction = null
-  }
+      if (onLongPress) {
+        onLongPressIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onLongPressCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onLongPressIAction)) {
+        mesh.actionManager.unregisterAction(onLongPressIAction)
+        onLongPressIAction = null
+      }
 
-  $: if (onPointerOver) {
-    onPointerOverIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onPointerOverCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onPointerOverIAction)) {
-    context.self.actionManager.unregisterAction(onPointerOverIAction)
-    onPointerOverIAction = null
-  }
+      if (onPointerOver) {
+        onPointerOverIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onPointerOverCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onPointerOverIAction)) {
+        mesh.actionManager.unregisterAction(onPointerOverIAction)
+        onPointerOverIAction = null
+      }
 
-  $: if (onPointerOut) {
-    onPointerOutIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onPointerOutCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onPointerOutIAction)) {
-    context.self.actionManager.unregisterAction(onPointerOutIAction)
-    onPointerOutIAction = null
-  }
+      if (onPointerOut) {
+        onPointerOutIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onPointerOutCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onPointerOutIAction)) {
+        mesh.actionManager.unregisterAction(onPointerOutIAction)
+        onPointerOutIAction = null
+      }
 
-  $: if (onEveryFrame) {
-    onEveryFrameIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onEveryFrameCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onEveryFrameIAction)) {
-    context.self.actionManager.unregisterAction(onEveryFrameIAction)
-    onEveryFrameIAction = null
-  }
+      if (onEveryFrame) {
+        onEveryFrameIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onEveryFrameCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onEveryFrameIAction)) {
+        mesh.actionManager.unregisterAction(onEveryFrameIAction)
+        onEveryFrameIAction = null
+      }
 
-  $: if (onIntersectionEnter) {
-    onIntersectionEnterIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onIntersectionEnterCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onIntersectionEnterIAction)) {
-    context.self.actionManager.unregisterAction(onIntersectionEnterIAction)
-    onIntersectionEnterIAction = null
-  }
+      if (onIntersectionEnter) {
+        onIntersectionEnterIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onIntersectionEnterCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onIntersectionEnterIAction)) {
+        mesh.actionManager.unregisterAction(onIntersectionEnterIAction)
+        onIntersectionEnterIAction = null
+      }
 
-  $: if (onIntersectionExit) {
-    onIntersectionExitIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onIntersectionExitCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onIntersectionExitIAction)) {
-    context.self.actionManager.unregisterAction(onIntersectionExitIAction)
-    onIntersectionExitIAction = null
-  }
+      if (onIntersectionExit) {
+        onIntersectionExitIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onIntersectionExitCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onIntersectionExitIAction)) {
+        mesh.actionManager.unregisterAction(onIntersectionExitIAction)
+        onIntersectionExitIAction = null
+      }
 
-  $: if (onKeyDown) {
-    onKeyDownIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onKeyDownCondition,
-      ),
-    )
-  } else if (context.self.actionManager?.actions.includes(onKeyDownIAction)) {
-    context.self.actionManager.unregisterAction(onKeyDownIAction)
-    onKeyDownIAction = null
-  }
+      if (onKeyDown) {
+        onKeyDownIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onKeyDownCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onKeyDownIAction)) {
+        mesh.actionManager.unregisterAction(onKeyDownIAction)
+        onKeyDownIAction = null
+      }
 
-  $: if (onKeyUp) {
-    onKeyUpIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, onPick, onKeyUpCondition),
-    )
-  } else if (context.self.actionManager?.actions.includes(onKeyUpIAction)) {
-    context.self.actionManager.unregisterAction(onKeyUpIAction)
-    onKeyUpIAction = null
+      if (onKeyUp) {
+        onKeyUpIAction = mesh.actionManager.registerAction(
+          new BABYLON.ExecuteCodeAction(
+            BABYLON.ActionManager.OnPickTrigger,
+            onPick,
+            onKeyUpCondition,
+          ),
+        )
+      } else if (mesh?.actionManager?.actions.includes(onKeyUpIAction)) {
+        mesh.actionManager.unregisterAction(onKeyUpIAction)
+        onKeyUpIAction = null
+      }
+    })
   }
 </script>
 
