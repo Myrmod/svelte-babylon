@@ -28,7 +28,6 @@ export { default as StandardMaterial } from './components/Materials/StandardMate
 export { default as Box } from './components/Objects/Box/index.svelte'
 export { default as Capsule } from './components/Objects/Capsule/index.svelte'
 export { default as Custom } from './components/Objects/Custom/index.svelte'
-export { default as CustomSingle } from './components/Objects/CustomSingle/index.svelte'
 export { default as Cylinder } from './components/Objects/Cylinder/index.svelte'
 export { default as DashedLines } from './components/Objects/DashedLines/index.svelte'
 export { default as Decal } from './components/Objects/Decal/index.svelte'

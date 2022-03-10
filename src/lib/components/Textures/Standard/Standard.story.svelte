@@ -12,10 +12,6 @@
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
   import * as BABYLON from 'babylonjs'
-  import aoTextureImage from '../../../../../static/assets/textures/metal/metal_ao.jpg'
-  import diffuseTextureImage from '../../../../../static/assets/textures/metal/metal_diffuse.jpg'
-  import normalTextureImage from '../../../../../static/assets/textures/metal/metal_normal.jpg'
-  import specularTextureImage from '../../../../../static/assets/textures/metal/metal_specular.jpg'
 
   export const __pageMeta: PageMeta = {
     title: 'StandardTexture',
@@ -77,7 +73,7 @@
     >
       {#if diffuseTexture}
         <StandardTexture
-          url={diffuseTextureImage}
+          url="/assets/textures/metal/metal_diffuse.jpg"
           uScale={2}
           vScale={2}
           textureTarget={TextureTargets.DIFFUSE}
@@ -85,7 +81,7 @@
       {/if}
       {#if specularTexture}
         <StandardTexture
-          url={specularTextureImage}
+          url="/assets/textures/metal/metal_specular.jpg"
           uScale={2}
           vScale={2}
           textureTarget={TextureTargets.SPECULAR}
@@ -93,7 +89,7 @@
       {/if}
       {#if aoTexture}
         <StandardTexture
-          url={aoTextureImage}
+          url="/assets/textures/metal/metal_ao.jpg"
           uScale={2}
           vScale={2}
           textureTarget={TextureTargets.AMBIENT}
@@ -101,7 +97,7 @@
       {/if}
       {#if normalTexture}
         <StandardTexture
-          url={normalTextureImage}
+          url="/assets/textures/metal/metal_normal.jpg"
           uScale={2}
           vScale={2}
           textureTarget={TextureTargets.BUMP}

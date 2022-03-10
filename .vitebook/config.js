@@ -1,7 +1,7 @@
-import { svelte } from '@sveltejs/vite-plugin-svelte';
-import { clientPlugin, defineConfig } from '@vitebook/client/node';
-import { defaultThemePlugin } from '@vitebook/theme-default/node';
-import preprocess from 'svelte-preprocess';
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+import { clientPlugin, defineConfig } from '@vitebook/client/node'
+import { defaultThemePlugin } from '@vitebook/theme-default/node'
+import preprocess from 'svelte-preprocess'
 
 export default defineConfig({
   include: ['src/**/*.story.svelte'],
@@ -14,7 +14,7 @@ export default defineConfig({
     defaultThemePlugin(),
     svelte({
       compilerOptions: {
-        hydratable: true
+        hydratable: true,
       },
       extensions: ['.svelte'],
       // Consult https://github.com/sveltejs/svelte-preprocess for more information
@@ -22,10 +22,19 @@ export default defineConfig({
       preprocess: preprocess(),
     }),
   ],
+  vite: {
+    optimizeDeps: {
+      include: ['babylonjs-loaders/babylonjs.loaders'],
+    },
+  },
   site: {
     title: 'Svelte Babylon',
     description: 'A wrapper around BabylonJS written in Svelte',
     /** @type {(import('@vitebook/theme-default/node').DefaultThemeConfig} */
-    theme: {},
+    theme: {
+      darkMode: {
+        enabled: true,
+      },
+    },
   },
-});
+})

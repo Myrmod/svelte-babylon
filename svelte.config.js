@@ -17,7 +17,7 @@ const config = {
     target: '#svelte',
     vite: {
       optimizeDeps: {
-        include: ['babylonjs-loaders/babylonjs.loaders'],
+        include: ['babylonjs-loaders/babylonjs.loaders.min'],
       },
       resolve: {
         alias: {
@@ -26,7 +26,7 @@ const config = {
       },
     },
     package: {
-      files: id => !id.startsWith('site/') && !id.includes('Doc'),
+      files: id => !id.startsWith('site/') && !id.includes('Doc') && !id.includes('.story.svelte'),
     },
   },
 }
