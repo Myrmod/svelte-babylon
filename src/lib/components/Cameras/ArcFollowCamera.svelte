@@ -1,6 +1,5 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
 
@@ -12,6 +11,8 @@
   export let beta = Math.PI / 2
   export let radius = 5
   export let speed = 1
+  export const getFacingDirection = () =>
+    BABYLON.Vector3.Normalize(camera.target.subtract(camera.position))
   export const camera = new BABYLON.ArcFollowCamera(name, alpha, beta, radius, target, root.scene)
 
   onMount(() => {
