@@ -41,6 +41,7 @@
   "type": "module",
   "dependencies": {
     "babylonjs": "^5.0.0-alpha.65",
+    "babylonjs-gui": "^5.0.0-alpha.65",
     "babylonjs-loaders": "^5.0.0-alpha.65"
   }
 }

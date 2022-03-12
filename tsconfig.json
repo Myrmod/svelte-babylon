@@ -27,7 +27,11 @@
       "$lib/*": ["src/lib/*"],
       "svelte-babylon": ["src/lib"]
     },
-    "types": ["babylonjs", "babylonjs-loaders"]
+    "types": [
+      "babylonjs",
+      "babylonjs-loaders",
+      "babylonjs-gui"
+    ]
   },
   "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
 }

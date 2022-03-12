@@ -1,4 +1,5 @@
 import type * as BABYLON from 'babylonjs'
+import * as GUI from 'babylonjs-gui'
 
 export default interface RootContext {
   canvas: {
@@ -19,6 +20,14 @@ export default interface RootContext {
     [key: string]: {
       self: BABYLON.Mesh | BABYLON.AbstractMesh
       [key: string]: unknown
+    }
+  }
+  gui: {
+    [key: string]: {
+      self: GUI.AdvancedDynamicTexture
+      controls: {
+        [key: string]: GUI.Control
+      }
     }
   }
   imports: {

@@ -25,6 +25,7 @@
     objects: {},
     imports: {},
     gizmos: {},
+    gui: {},
   } as RootContext)
 
   onMount(() => {

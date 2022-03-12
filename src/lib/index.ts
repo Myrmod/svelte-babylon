@@ -17,6 +17,9 @@ export { default as PlaneRotationGizmo } from './components/Gizmos/PlaneRotation
 export { default as PositionGizmo } from './components/Gizmos/PositionGizmo/index.svelte'
 export { default as RotationGizmo } from './components/Gizmos/RotationGizmo/index.svelte'
 export { default as ScaleGizmo } from './components/Gizmos/ScaleGizmo/index.svelte'
+// GUI
+export { default as Button } from './components/GUI/Button/index.svelte'
+export { default as GUI } from './components/GUI/index.svelte'
 // Lights
 export { default as DirectionalLight } from './components/Lights/DirectionalLight/index.svelte'
 export { default as HemisphericLight } from './components/Lights/HemisphericLight/index.svelte'
