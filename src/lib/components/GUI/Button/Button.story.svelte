@@ -19,6 +19,12 @@
 </script>
 
 <script lang="ts">
+  // Functionality
+  function handleClick() {
+    console.log('clicked button')
+  }
+
+  // Scene
   const objectPosition = new BABYLON.Vector3(0, 3, 0)
 
   let object: {
@@ -53,6 +59,6 @@
   <Box y={3} bind:object />
   <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
   <GUI>
-    <Button />
+    <Button onPointerClick={handleClick} />
   </GUI>
 </Canvas>
