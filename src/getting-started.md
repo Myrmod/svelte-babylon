@@ -1,0 +1,227 @@
+---
+description: A short introduction with tutorial and explanation for Svelte-Babylon.
+---
+
+# Getting Started
+
+## Description
+Svelte-Babylon is a [BabylonJS](https://www.babylonjs.com/) component library for [Svelte](https://svelte.dev/). It is highly inspired by [svelte-cubed](https://svelte-cubed.vercel.app/), a component library for building [Three.js](https://threejs.org/) scene graphs in Svelte apps.
+
+**This library is a work in progress**. It has not been tested in its entirety and there are surely bugs, that haven't been fixed or even been identified.
+
+If you find anything not working as expected, it would be great for you to open an [issue](https://github.com/Myrmod/svelte-babylon/issues).
+
+## Creating a project
+
+```:no-line-numbers
+npm init svelte@next my-new-app
+cd my-new-app
+npm install
+npm run dev
+```
+
+Then install BabylonJS and Svelte-Babylon:
+```bash:no-line-numbers
+npm install babylonjs svelte-babylon
+```
+
+if you want to load custom objects eg. .glb files
+```bash:no-line-numbers
+npm install babylonjs-loaders
+```
+You might need to add this to your `svelte.config.js`s kit property
+```js:no-line-numbers
+...
+vite: {
+  optimizeDeps: {
+    include: ['babylonjs-loaders/babylonjs.loaders.min'],
+  },
+}
+...
+```
+
+Now you're set up to build your own 3D scenes.
+
+## Your first scene
+```svelte
+<script lang="ts">
+  import {
+    ArcRotateCamera,
+    Box,
+    Canvas,
+    HemisphericLight,
+  } from "svelte-babylon"
+</script>
+
+<Canvas>
+  <HemisphericLight />
+  <ArcRotateCamera />
+  <Box />
+</Canvas>
+```
+As Svelte-Babylon is a libray that implements BabylonJS in a component driven manner, we can create a very simple scene using only our Svelte knowledge with barely any regard to BabylonJS itself.
+
+Our `Canvas` component is the wrapper of a scene. It created an `HTMLCanvasElement`, an [engine](https://doc.babylonjs.com/typedoc/classes/babylon.engine) and a [scene](https://doc.babylonjs.com/typedoc/classes/babylon.scene).
+Furthermore the `Canvas` component creates a [svelte context](https://svelte.dev/tutorial/context-api) which holds all components BabylonJS implementations, as well as their children.
+This context is bindable via `<Canvas bind:root>`. This allows you to use BabylonJS with all of its features, even if implementations are missing. You have to refer to the [BabylonJS documentation](https://doc.babylonjs.com/) though.
+
+Let's add `Ground` and adjust the positions of the box. We also add some settings to the `Canvas` to make the scene look a little sharper.
+```diff
+<script lang="ts">
++  import * as BABYLON from "babylonjs"
+  import {
+    ArcRotateCamera,
+    Box,
+    Canvas,
++    Ground,
+    HemisphericLight,
+  } from "svelte-babylon"
++  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+
++  let object: {
++    self: BABYLON.Mesh | BABYLON.AbstractMesh
++  }
+
+</script>
+
+- <Canvas>
++ <Canvas
++  antialiasing
++  engineOptions={{
++    preserveDrawingBuffer: true,
++    stencil: true,
++  }}
++ >
+  <HemisphericLight />
+-  <ArcRotateCamera />
++  <ArcRotateCamera target={objectPosition} />
+-  <Box />
++  <Box y={objectPosition.y} bind:object />
++  <Ground
++    options={{ width: 6, height: 6 }}
++    y={objectPosition.y - 2}
++  />
+</Canvas>
+```
+
+For the `Ground` we set it's width and height. For the `Ground` as well as the `Box` we set their `y-position` to have a better look at them.
+Furthermore we bind the `Box` components object property to a variable. Since component objects can have additional properties we have the actual BabylonJS object nested in `object.self`.
+
+Using BabylonJS itself we can create a 3D-Vector (a point in the 3D space) which we can pass as a whole to the `target` property of the `ArcRotateCamera` for it to focus on the position where the `Box` is initially placed. Since we bound to the `Box` components object we could've also used `object.self.position` to archive a similar result. However we would need to make sure, that the `Box` component has mounted before the `ArcRotateCamera`.
+
+Now we can add some shadow
+
+```diff
+<script lang="ts">
+  import * as BABYLON from 'babylonjs'
+  import {
+    ArcRotateCamera,
+    Box,
+    Canvas,
++   DirectionalLight,
+    Ground,
+    HemisphericLight,
+  } from '$lib'
+  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+
+  let object: {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+
++  let shadowObjects: Array<typeof object['self']>
++  $: {
++    const temp: typeof shadowObjects = []
++    if (object?.self) {
++      temp.push(object.self)
++    }
++    shadowObjects = temp
++  }
+</script>
+
+<Canvas
+  antialiasing
+  engineOptions={{
+    preserveDrawingBuffer: true,
+    stencil: true,
+  }}
+>
+-  <HemisphericLight />
++  <HemisphericLight intensity={0.5} />
++  <DirectionalLight
++    intensity={0.25}
++    direction={new BABYLON.Vector3(-10, -20, -10)}
++    position={new BABYLON.Vector3(2, 6, 2)}
++    castShadowOf={shadowObjects}
++  />
+  <ArcRotateCamera target={objectPosition} />
+  <Box y={3} bind:object />
+
+  <Ground
+    options={{ width: 6, height: 6 }}
+    y={1}
++    receiveShadows
+  />
+</Canvas>
+```
+
+Shadows are somewhat tricky to handle. A light needs to know what objects it should cast a shadow from. So we need to provide it an array of references to the objects, which should have a shadow.
+
+Objects like our `Ground` components' have to know, that there might be a shadow to be cast on them. So we have to add the `receiveShadows` attribute to them.
+
+And that's it. Your first scene using Svelte Babylon. Here is the whole code:
+```svelte
+<script lang="ts">
+  import * as BABYLON from 'babylonjs'
+  import {
+    ArcRotateCamera,
+    Box,
+    Canvas,
+   DirectionalLight,
+    Ground,
+    HemisphericLight,
+  } from '$lib'
+  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+
+  let object: {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+
+  let shadowObjects: Array<typeof object['self']>
+  $: {
+    const temp: typeof shadowObjects = []
+    if (object?.self) {
+      temp.push(object.self)
+    }
+    shadowObjects = temp
+  }
+</script>
+
+<Canvas
+  antialiasing
+  engineOptions={{
+    preserveDrawingBuffer: true,
+    stencil: true,
+  }}
+>
+  <HemisphericLight intensity={0.5} />
+  <DirectionalLight
+    intensity={0.25}
+    direction={new BABYLON.Vector3(-10, -20, -10)}
+    position={new BABYLON.Vector3(2, 6, 2)}
+    castShadowOf={shadowObjects}
+  />
+  <ArcRotateCamera target={objectPosition} />
+  <Box y={3} bind:object />
+
+  <Ground
+    options={{ width: 6, height: 6 }}
+    y={1}
+    receiveShadows
+  />
+</Canvas>
+```
+
+If there're any svelte specific question you can ask via [discord](https://discord.com/channels/457912077277855764/), questions for BabylonJS can go to the [forum](https://forum.babylonjs.com/).
+In both cases you can use `@myrmod` to give a shoutout for me, since there is only one developer for now :).
+
+Issues and feature requests can be place in [GitHub](https://github.com/Myrmod/svelte-babylon/issues).
