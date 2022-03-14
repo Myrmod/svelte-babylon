@@ -21,7 +21,7 @@
 <script lang="ts">
   // Functionality
   function handleClick() {
-    console.log('clicked button')
+    alert('clicked button')
   }
 
   // Scene
@@ -59,6 +59,6 @@
   <Box y={3} bind:object />
   <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
   <GUI>
-    <Button onPointerClick={handleClick} />
+    <Button onPointerUp={handleClick} />
   </GUI>
 </Canvas>
