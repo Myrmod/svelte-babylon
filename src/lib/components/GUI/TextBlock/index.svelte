@@ -6,23 +6,25 @@
 
   const root = getRoot()
 
-  export let name = 'Button'
-  export let text = 'Click Me'
-  export let width: GUI.Button['width'] = '150px'
-  export let height: GUI.Button['height'] = '40px'
-  export let color: GUI.Button['color'] = 'white'
-  export let cornerRadius: GUI.Button['cornerRadius'] = 20
-  export let background: GUI.Button['background'] = 'green'
-  export let paddingBottom: GUI.Button['paddingBottom'] = '0px'
-  export let paddingTop: GUI.Button['paddingTop'] = '0px'
-  export let paddingLeft: GUI.Button['paddingLeft'] = '0px'
-  export let paddingRight: GUI.Button['paddingRight'] = '0px'
-  export let top: GUI.Button['top'] = 0
-  export let left: GUI.Button['left'] = 0
+  export let name = 'TextBlock'
+  export let text = 'Hello Svelte-Babylon'
+  export let color: GUI.TextBlock['color'] = 'white'
+  export let fontSize: GUI.TextBlock['fontSize'] = 24
+  export let fontFamily: GUI.TextBlock['fontFamily'] = 'Arial'
+  export let fontStyle: GUI.TextBlock['fontStyle'] = 'normal'
+  export let fontWeight: GUI.TextBlock['fontWeight'] = '600'
+  export let fontSizeInPixels: GUI.TextBlock['fontSizeInPixels'] = undefined
+  export let fontOffset: GUI.TextBlock['fontOffset'] = undefined
+  export let paddingBottom: GUI.TextBlock['paddingBottom'] = '0px'
+  export let paddingTop: GUI.TextBlock['paddingTop'] = '0px'
+  export let paddingLeft: GUI.TextBlock['paddingLeft'] = '0px'
+  export let paddingRight: GUI.TextBlock['paddingRight'] = '0px'
+  export let top: GUI.TextBlock['top'] = 0
+  export let left: GUI.TextBlock['left'] = 0
 
   const context = getContext('gui') as GUI.AdvancedDynamicTexture
 
-  export let guiElement = GUI.Button.CreateSimpleButton(name, text)
+  export let guiElement = new GUI.TextBlock(name, text)
 
   onMount(() => {
     try {
@@ -75,13 +77,15 @@
   }
 
   $: if (guiElement) {
-    guiElement.name = name
-    guiElement.width = width
-    guiElement.height = height
     guiElement.color = color
-    guiElement.cornerRadius = cornerRadius
-    guiElement.background = background
-    guiElement.textBlock.text = text
+    guiElement.fontFamily = fontFamily
+    guiElement.fontOffset = fontOffset
+    guiElement.fontSize = fontSize
+    guiElement.fontSizeInPixels = fontSizeInPixels
+    guiElement.fontStyle = fontStyle
+    guiElement.fontWeight = fontWeight
+    guiElement.name = name
+    guiElement.text = text
     guiElement.paddingBottom = paddingBottom
     guiElement.paddingTop = paddingTop
     guiElement.paddingLeft = paddingLeft

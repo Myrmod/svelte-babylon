@@ -20,6 +20,7 @@ export { default as ScaleGizmo } from './components/Gizmos/ScaleGizmo/index.svel
 // GUI
 export { default as Button } from './components/GUI/Button/index.svelte'
 export { default as GUI } from './components/GUI/index.svelte'
+export { default as TextBlock } from './components/GUI/TextBlock/index.svelte'
 // Lights
 export { default as DirectionalLight } from './components/Lights/DirectionalLight/index.svelte'
 export { default as HemisphericLight } from './components/Lights/HemisphericLight/index.svelte'

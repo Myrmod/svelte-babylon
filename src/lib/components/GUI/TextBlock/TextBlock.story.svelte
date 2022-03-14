@@ -2,30 +2,24 @@
   import {
     ArcRotateCamera,
     Box,
-    Button,
     Canvas,
     DirectionalLight,
     Ground,
     GUI,
     HemisphericLight,
+    TextBlock,
   } from '$lib'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
   import * as BABYLON from 'babylonjs'
 
   export const __pageMeta: PageMeta = {
-    title: 'Button',
+    title: 'TextBlock',
     description: '',
   }
 </script>
 
 <script lang="ts">
-  // Functionality
-  function handleClick() {
-    alert('clicked button')
-  }
-
-  // Scene
   const objectPosition = new BABYLON.Vector3(0, 3, 0)
 
   let object: {
@@ -41,12 +35,12 @@
     shadowObjects = temp
   }
 
-  let width = '150px'
-  let height = '40px'
+  let text = 'Hello Svelte-Babylon'
   let color = '#ffffff'
-  let cornerRadius = 20
-  let background = '#aaaa00'
-  let text = 'Click Me'
+  let fontSize = 24
+  let fontFamily = 'Arial'
+  let fontStyle = 'normal'
+  let fontWeight = '600'
 </script>
 
 <Canvas
@@ -67,7 +61,7 @@
   <Box y={3} bind:object />
   <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
   <GUI>
-    <Button onPointerUp={handleClick} {width} {height} {color} {cornerRadius} {background} {text} />
+    <TextBlock {text} {color} {fontSize} {fontFamily} {fontStyle} {fontWeight} />
   </GUI>
 </Canvas>
 
@@ -78,16 +72,19 @@
   <label style="margin-top: 24px;display:block;">
     color <input type="color" bind:value={color} />
   </label>
-  <label style="margin-top: 24px;display:block;">
-    background <input type="color" bind:value={background} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    width <input type="string" bind:value={width} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    height <input type="string" bind:value={height} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    cornerRadius <input type="number" bind:value={cornerRadius} />
-  </label>
+  <fieldset style="margin-top: 24px;display:block;">
+    <legend>Font</legend>
+    <label style="margin-top: 24px;display:block;">
+      fontSize <input type="text" bind:value={fontSize} />
+    </label>
+    <label style="margin-top: 24px;display:block;">
+      fontFamily <input type="text" bind:value={fontFamily} />
+    </label>
+    <label style="margin-top: 24px;display:block;">
+      fontStyle <input type="text" bind:value={fontStyle} />
+    </label>
+    <label style="margin-top: 24px;display:block;">
+      fontWeight <input type="text" bind:value={fontWeight} />
+    </label>
+  </fieldset>
 </ControlsAddon>
