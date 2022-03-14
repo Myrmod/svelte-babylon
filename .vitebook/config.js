@@ -58,7 +58,6 @@ export default defineConfig({
         //     body: 'On demand file serving over native ESM, no bundling required!',
         //   },
         // ],
-        footer: `MIT Licensed (modified) | Copyright © ${new Date().getFullYear()}`,
       },
       sidebar: {
         toggleAriaLabel: 'Toggle sidebar menu',
