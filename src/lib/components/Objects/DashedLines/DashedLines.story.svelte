@@ -1,0 +1,67 @@
+<script lang="ts" context="module">
+  import {
+    ArcRotateCamera,
+    Canvas,
+    DashedLines,
+    DirectionalLight,
+    Ground,
+    HemisphericLight,
+  } from '$lib'
+  import type { PageMeta } from '@vitebook/client'
+  import * as BABYLON from 'babylonjs'
+
+  export const __pageMeta: PageMeta = {
+    title: 'DashedLines',
+    description: 'https://doc.babylonjs.com/divingDeeper/mesh/creation/param/dashed',
+  }
+</script>
+
+<script lang="ts">
+  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+
+  let object: {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+
+  let shadowObjects: Array<typeof object['self']>
+  $: {
+    const temp: typeof shadowObjects = []
+    if (object?.self) {
+      temp.push(object.self)
+    }
+    shadowObjects = temp
+  }
+</script>
+
+<Canvas
+  antialiasing={true}
+  engineOptions={{
+    preserveDrawingBuffer: true,
+    stencil: true,
+  }}
+>
+  <HemisphericLight intensity={0.5} />
+  <DirectionalLight
+    intensity={0.25}
+    direction={new BABYLON.Vector3(-10, -20, -10)}
+    position={new BABYLON.Vector3(2, 6, 2)}
+    castShadowOf={shadowObjects}
+  />
+  <ArcRotateCamera target={objectPosition} />
+  <DashedLines
+    y={3}
+    bind:object
+    options={{
+      points: [
+        new BABYLON.Vector3(-2, -1, 0),
+        new BABYLON.Vector3(0, 1, 0),
+        new BABYLON.Vector3(2, -1, 0),
+        new BABYLON.Vector3(3, 2, 0),
+      ],
+      dashSize: 1000,
+      gapSize: 500,
+      dashNb: 16,
+    }}
+  />
+  <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
+</Canvas>

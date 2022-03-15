@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
+  import type { LinesMesh } from 'babylonjs'
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
@@ -7,19 +8,20 @@
   const root = getRoot()
 
   export let name: string = 'DashedLines'
-  export let receiveShadows = false
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateDashedLines>[1]
+  export let options: Parameters<typeof BABYLON.MeshBuilder.CreateDashedLines>[1]
 
   const context = createObjectContext(
     BABYLON.MeshBuilder.CreateDashedLines(name, options, root.scene),
-  )
+  ) as {
+    self: LinesMesh
+  }
 
   export let position = BABYLON.Vector3.Zero()
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
 
-  export let object = root.objects[context.self.id]
+  export const object = root.objects[context.self.id]
 
   onMount(() => {
     try {
@@ -42,10 +44,6 @@
     context.self.position.x = x || position.x
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
-    context.self.receiveShadows = receiveShadows
-
-    object = context
-    root.scene.render()
   }
 
   // event handling
