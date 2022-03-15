@@ -6,14 +6,26 @@
 
   export const __pageMeta: PageMeta = {
     title: 'Room',
-    description: 'https://playground.babylonjs.com/#4GBWI5#266',
+    description:
+      'It\'s build according to https://playground.babylonjs.com/#4GBWI5#266. It is planneds to implement an "easy" way to create interconnected rooms.',
   }
 </script>
 
 <script lang="ts">
   let root: RootContext
+  /**
+   * This thing is called a footprint. A footprint is a sequence of consecutive corners in counter clockwise order. Each corner is a Vector3 in the form (x, y, 0)
+   */
   const baseData = [-5, 0, 5, 0, 5, 6, 2, 6, 2, 9, -5, 9]
+
+  /**
+   * This represents the width of the walls
+   */
   const ply = 0.3
+
+  /**
+   * This represents the height of the walls
+   */
   const height = 5
 
   const corners = []
