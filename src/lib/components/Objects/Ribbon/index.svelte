@@ -8,7 +8,7 @@
 
   export let name: string = 'Ribbon'
   export let receiveShadows = false
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateRibbon>[1]
+  export let options: Parameters<typeof BABYLON.MeshBuilder.CreateRibbon>[1]
 
   const context = createObjectContext(BABYLON.MeshBuilder.CreateRibbon(name, options, root.scene))
 
