@@ -8,7 +8,7 @@
 
   export let name: string = 'TiledGround'
   export let receiveShadows = false
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateTiledGround>[1]
+  export let options: Parameters<typeof BABYLON.MeshBuilder.CreateTiledGround>[1]
 
   const context = createObjectContext(
     BABYLON.MeshBuilder.CreateTiledGround(name, options, root.scene),

@@ -2,23 +2,22 @@
   import {
     ArcRotateCamera,
     Canvas,
-    DirectionalLight,
-    Ground,
     HemisphericLight,
+    StandardMaterial,
+    StandardTexture,
     TiledBox,
   } from '$lib'
+  import { TextureTargets } from '$lib/types/enums/TextureTargets'
   import type { PageMeta } from '@vitebook/client'
   import * as BABYLON from 'babylonjs'
 
   export const __pageMeta: PageMeta = {
     title: 'TiledBox',
-    description: '',
+    description: 'https://doc.babylonjs.com/divingDeeper/mesh/creation/set/tiled_box',
   }
 </script>
 
 <script lang="ts">
-  const objectPosition = new BABYLON.Vector3(0, 3, 0)
-
   let object: {
     self: BABYLON.Mesh | BABYLON.AbstractMesh
   }
@@ -40,14 +39,44 @@
     stencil: true,
   }}
 >
-  <HemisphericLight intensity={0.5} />
-  <DirectionalLight
-    intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
-    castShadowOf={shadowObjects}
-  />
-  <ArcRotateCamera target={objectPosition} />
-  <TiledBox y={3} bind:object />
-  <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
+  <HemisphericLight />
+  <ArcRotateCamera alpha={1.8} radius={3} />
+  <TiledBox
+    bind:object
+    options={{
+      sideOrientation: BABYLON.Mesh.DOUBLESIDE,
+      pattern: BABYLON.Mesh.NO_FLIP,
+      width: 2,
+      height: 2,
+      tileSize: 0.5,
+      tileWidth: 0.5,
+    }}
+  >
+    <StandardMaterial>
+      <StandardTexture
+        url="/assets/textures/metal/metal_diffuse.jpg"
+        uScale={2}
+        vScale={2}
+        textureTarget={TextureTargets.DIFFUSE}
+      />
+      <StandardTexture
+        url="/assets/textures/metal/metal_specular.jpg"
+        uScale={2}
+        vScale={2}
+        textureTarget={TextureTargets.SPECULAR}
+      />
+      <StandardTexture
+        url="/assets/textures/metal/metal_ao.jpg"
+        uScale={2}
+        vScale={2}
+        textureTarget={TextureTargets.AMBIENT}
+      />
+      <StandardTexture
+        url="/assets/textures/metal/metal_normal.jpg"
+        uScale={2}
+        vScale={2}
+        textureTarget={TextureTargets.BUMP}
+      />
+    </StandardMaterial>
+  </TiledBox>
 </Canvas>
