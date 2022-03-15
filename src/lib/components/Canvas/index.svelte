@@ -1,6 +1,7 @@
 <script lang="ts">
   import type RootContext from '$lib/types'
   import * as BABYLON from 'babylonjs'
+  import { Vector3 } from 'babylonjs'
   import { onMount } from 'svelte'
   import { setRoot } from '../../utils/context'
 
@@ -10,6 +11,10 @@
   export let clearColor: BABYLON.Color4 = new BABYLON.Color4(0, 0, 0)
   export let initialized = false
   export let displayLoadingUI = false
+  export let enablePointerLockOnClick = false
+  export let gravity = -9.81
+  export let framesPerSecond = 60
+  export let collisionsEnabled = false
 
   let wrapper: HTMLElement
   let canvas: HTMLCanvasElement = undefined
@@ -55,6 +60,9 @@
 
   $: if (root.scene && root.scene.cameras.length) {
     root.scene.clearColor = clearColor
+    root.scene.gravity = new Vector3(0, gravity / framesPerSecond, 0)
+    root.scene.collisionsEnabled = collisionsEnabled
+
     root.scene.render()
   }
   $: if (root.engine) {
@@ -62,6 +70,12 @@
       root.engine.displayLoadingUI()
     } else {
       root.engine.hideLoadingUI()
+    }
+  }
+
+  $: if (root?.scene && enablePointerLockOnClick) {
+    root.scene.onPointerDown = e => {
+      if (e.button === 0) root.engine.enterPointerlock()
     }
   }
 </script>

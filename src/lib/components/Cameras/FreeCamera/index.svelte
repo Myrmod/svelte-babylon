@@ -10,6 +10,10 @@
   export let target = BABYLON.Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
   export let speed = 1
+  export let disableControl = false
+  export let applyGravity = false
+  export let checkCollisions = false
+  export let ellipsoid: BABYLON.Vector3 = undefined
   export const getFacingDirection = () =>
     BABYLON.Vector3.Normalize(camera.target.subtract(camera.position))
   export const camera = new BABYLON.FreeCamera(
@@ -28,7 +32,6 @@
       root.cameras[camera.id] = camera
 
       root.cameras[camera.id].setTarget(target)
-      root.cameras[camera.id].attachControl(root.canvas.element, false)
 
       root.engine.runRenderLoop(() => {
         root.scene.render()
@@ -44,6 +47,16 @@
 
   $: if (root.cameras[camera.id]) {
     camera.speed = speed
+
+    if (disableControl) {
+      camera.detachControl()
+    } else {
+      camera.attachControl()
+    }
+
+    camera.applyGravity = applyGravity
+    camera.checkCollisions = checkCollisions
+    camera.ellipsoid = ellipsoid
 
     root.scene.render()
   }
