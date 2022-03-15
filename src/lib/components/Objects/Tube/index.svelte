@@ -8,7 +8,7 @@
 
   export let name: string = 'Tube'
   export let receiveShadows = false
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateTube>[1]
+  export let options: Parameters<typeof BABYLON.MeshBuilder.CreateTube>[1]
 
   const context = createObjectContext(BABYLON.MeshBuilder.CreateTube(name, options, root.scene))
 
