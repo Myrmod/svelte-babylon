@@ -1,24 +1,24 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
-  import { onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
+  const parent = getContext('object') as {
+    self: BABYLON.Mesh
+  }
+
+  if (!parent) {
+    throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
+  }
 
   export let name: string = 'Decal'
-  export let receiveShadows = false
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateDecal>[1]
-  export let sourceMesh: BABYLON.AbstractMesh
+  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateDecal>[2]
 
-  const context = createObjectContext(BABYLON.MeshBuilder.CreateDecal(name, sourceMesh, options))
+  const context = createObjectContext(BABYLON.MeshBuilder.CreateDecal(name, parent.self, options))
 
-  export let position = BABYLON.Vector3.Zero()
-  export let x: number = undefined
-  export let y: number = undefined
-  export let z: number = undefined
-
-  export let object = root.objects[context.self.id]
+  export const object = root.objects[context.self.id]
 
   onMount(() => {
     try {
@@ -38,12 +38,6 @@
   })
 
   $: if (root.objects[context.self.id]) {
-    context.self.position.x = x || position.x
-    context.self.position.y = y || position.y
-    context.self.position.z = z || position.z
-    context.self.receiveShadows = receiveShadows
-
-    object = context
     root.scene.render()
   }
 
