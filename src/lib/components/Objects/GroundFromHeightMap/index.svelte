@@ -13,7 +13,9 @@
 
   const context = createObjectContext(
     BABYLON.MeshBuilder.CreateGroundFromHeightMap(name, url, options, root.scene),
-  )
+  ) as {
+    self: BABYLON.GroundMesh
+  }
 
   export let position = BABYLON.Vector3.Zero()
   export let x: number = undefined
