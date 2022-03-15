@@ -8,7 +8,7 @@
 
   export let name: string = 'Lathe'
   export let receiveShadows = false
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateLathe>[1]
+  export let options: Parameters<typeof BABYLON.MeshBuilder.CreateLathe>[1]
 
   const context = createObjectContext(BABYLON.MeshBuilder.CreateLathe(name, options, root.scene))
 
