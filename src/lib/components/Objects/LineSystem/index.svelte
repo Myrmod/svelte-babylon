@@ -7,8 +7,7 @@
   const root = getRoot()
 
   export let name: string = 'LineSystem'
-  export let receiveShadows = false
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateLineSystem>[1]
+  export let options: Parameters<typeof BABYLON.MeshBuilder.CreateLineSystem>[1]
 
   const context = createObjectContext(
     BABYLON.MeshBuilder.CreateLineSystem(name, options, root.scene),
@@ -42,7 +41,6 @@
     context.self.position.x = x || position.x
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
-    context.self.receiveShadows = receiveShadows
 
     object = context
     root.scene.render()

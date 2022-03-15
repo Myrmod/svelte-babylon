@@ -5,7 +5,7 @@
 
   export const __pageMeta: PageMeta = {
     title: 'Lathe',
-    description: '',
+    description: 'https://doc.babylonjs.com/divingDeeper/mesh/creation/param/lathe',
   }
 </script>
 

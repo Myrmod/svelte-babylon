@@ -8,7 +8,7 @@
 
   export let name: string = 'Lines'
   export let receiveShadows = false
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateLines>[1]
+  export let options: Parameters<typeof BABYLON.MeshBuilder.CreateLines>[1]
 
   const context = createObjectContext(BABYLON.MeshBuilder.CreateLines(name, options, root.scene))
 
