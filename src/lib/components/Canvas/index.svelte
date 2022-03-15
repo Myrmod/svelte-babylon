@@ -9,6 +9,7 @@
   export let engineOptions: BABYLON.EngineOptions = undefined
   export let clearColor: BABYLON.Color4 = new BABYLON.Color4(0, 0, 0)
   export let initialized = false
+  export let displayLoadingUI = false
 
   let wrapper: HTMLElement
   let canvas: HTMLCanvasElement = undefined
@@ -55,6 +56,13 @@
   $: if (root.scene && root.scene.cameras.length) {
     root.scene.clearColor = clearColor
     root.scene.render()
+  }
+  $: if (root.engine) {
+    if (displayLoadingUI) {
+      root.engine.displayLoadingUI()
+    } else {
+      root.engine.hideLoadingUI()
+    }
   }
 </script>
 
