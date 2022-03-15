@@ -1,6 +1,6 @@
 {
   "name": "svelte-babylon",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -44,6 +44,7 @@
   "dependencies": {
     "babylonjs": "^5.0.0-rc.3",
     "babylonjs-gui": "^5.0.0-rc.3",
-    "babylonjs-loaders": "^5.0.0-rc.3"
+    "babylonjs-loaders": "^5.0.0-rc.3",
+    "earcut": "^2.2.3"
   }
 }

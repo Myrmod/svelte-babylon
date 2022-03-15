@@ -1,6 +1,8 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
+  // we need better typings for this https://github.com/mapbox/earcut
+  import earcut from 'earcut'
   import { onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
@@ -8,16 +10,19 @@
 
   export let name: string = 'Polygon'
   export let receiveShadows = false
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreatePolygon>[1]
+  export let options: Parameters<typeof BABYLON.MeshBuilder.CreatePolygon>[1]
+  export let earcutInjection: () => unknown = earcut
 
-  const context = createObjectContext(BABYLON.MeshBuilder.CreatePolygon(name, options, root.scene))
+  const context = createObjectContext(
+    BABYLON.MeshBuilder.CreatePolygon(name, options, root.scene, earcutInjection),
+  )
 
   export let position = BABYLON.Vector3.Zero()
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
 
-  export let object = root.objects[context.self.id]
+  export const object = root.objects[context.self.id]
 
   onMount(() => {
     try {
@@ -41,9 +46,6 @@
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
     context.self.receiveShadows = receiveShadows
-
-    object = context
-    root.scene.render()
   }
 
   // event handling
