@@ -13,7 +13,10 @@
   export let rootUrl: string = '/'
   export let onProgress: (event: BABYLON.ISceneLoaderProgressEvent) => void = undefined
   export let receiveShadows = false
-  export let scaling = new BABYLON.Vector3(1, 1, 1)
+  /**
+   * @todo Setting this can cause the model to not handle collisions correctly, that's obviously bad
+   */
+  export let scaling: BABYLON.Vector3 = undefined
 
   export let position = BABYLON.Vector3.Zero()
   export let x: number = undefined
@@ -56,7 +59,7 @@
         pluginExtension,
       )
 
-      __root__ = imports.meshes.find(mesh => mesh.id === '__root__')
+      __root__ = meshes.find(mesh => mesh.id === '__root__')
       root.imports[name] = imports
 
       root.scene.render()
@@ -76,7 +79,7 @@
     delete root.imports[name]
   })
 
-  $: if (root.imports[name]) {
+  $: if (root.imports[name] && __root__) {
     __root__.position.x = x || position.x
     __root__.position.y = y || position.y
     __root__.position.z = z || position.z
@@ -85,15 +88,15 @@
     __root__.rotation.x = rotation.x
     __root__.rotation.y = rotation.y
     __root__.rotation.z = rotation.z
-    __root__.scaling = scaling
 
     root.scene.render()
   }
 
-  $: if (root.imports[name]) {
-    meshes.forEach(mesh => (mesh.checkCollisions = checkCollisions))
-
-    root.scene.render()
+  $: if (meshes) {
+    meshes.forEach(mesh => {
+      mesh.checkCollisions = checkCollisions
+      if (scaling) mesh.scaling = scaling
+    })
   }
 
   // event handling

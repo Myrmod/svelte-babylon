@@ -4,6 +4,7 @@
   import { ControlsAddon } from '@vitebook/client/addons'
   import * as BABYLON from 'babylonjs'
   import 'babylonjs-loaders'
+  import DescriptionAddon from 'vitebook/Addons/DescriptionAddon.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'First person movement',
@@ -13,7 +14,7 @@
 
 <script lang="ts">
   let meshes: BABYLON.ISceneLoaderAsyncResult['meshes']
-  let showCustom = false
+  let showCustom = true
 
   // Add new keyboard inputs for camera movement
   let camera: BABYLON.FreeCamera
@@ -24,8 +25,8 @@
     camera.keysRight.push(68) // d
   }
 
-  $: if (camera || showCustom) {
-    camera.position = new BABYLON.Vector3(0, 20, 0)
+  $: if (camera && typeof showCustom === 'boolean') {
+    camera.position = new BABYLON.Vector3(0, 10, 0)
   }
 </script>
 
@@ -46,7 +47,7 @@
     castShadowOf={meshes}
   />
   <FreeCamera
-    position={new BABYLON.Vector3(0, 20, 0)}
+    position={new BABYLON.Vector3(0, 10, 0)}
     applyGravity
     checkCollisions
     ellipsoid={new BABYLON.Vector3(1, 1, 1)}
@@ -54,11 +55,9 @@
   />
   {#if showCustom}
     <Custom
-      name="level"
+      name="Level"
       rootUrl="/assets/models/"
       fileName="Prototype_Level.glb"
-      scaling={new BABYLON.Vector3(1, 1, 1)}
-      position={new BABYLON.Vector3(0, 2, 0)}
       bind:meshes
       receiveShadows
       checkCollisions
@@ -79,3 +78,18 @@
     show custom <input type="checkbox" bind:checked={showCustom} />
   </label>
 </ControlsAddon>
+
+<DescriptionAddon>
+  <h1>Issues</h1>
+  <ul>
+    <li>
+      <p>Currently you cannot walk up a ramp.</p>
+    </li>
+    <li>
+      <p>
+        For some reason it is not possible to scale an element with collision. This causes the
+        Camera to slowly fall through while moving.
+      </p>
+    </li>
+  </ul>
+</DescriptionAddon>
