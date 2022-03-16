@@ -22,6 +22,7 @@ const config = {
       resolve: {
         alias: {
           'svelte-babylon': path.resolve('src/lib'),
+          vitebook: path.resolve('.vitebook'),
         },
       },
     },

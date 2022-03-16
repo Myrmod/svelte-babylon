@@ -3,6 +3,7 @@ import { clientPlugin, defineConfig } from '@vitebook/client/node'
 import { shikiMarkdownPlugin } from '@vitebook/markdown-shiki/node'
 import { svelteMarkdownPlugin } from '@vitebook/markdown-svelte/node'
 import { defaultThemePlugin } from '@vitebook/theme-default/node'
+import path from 'path'
 import preprocess from 'svelte-preprocess'
 
 export default defineConfig({
@@ -29,6 +30,12 @@ export default defineConfig({
   vite: {
     optimizeDeps: {
       include: ['babylonjs-loaders/babylonjs.loaders'],
+    },
+    resolve: {
+      alias: {
+        'svelte-babylon': path.resolve('src/lib'),
+        vitebook: path.resolve('.vitebook'),
+      },
     },
   },
   site: {
