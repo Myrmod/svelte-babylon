@@ -32,6 +32,7 @@
   export let particleSystems: typeof imports['particleSystems'] = undefined
   export let skeletons: typeof imports['skeletons'] = undefined
   export let transformNodes: typeof imports['transformNodes'] = undefined
+  export let checkCollisions: boolean = false
 
   onMount(async () => {
     try {
@@ -84,6 +85,12 @@
     __root__.rotation.y = rotation.y
     __root__.rotation.z = rotation.z
     __root__.scaling = scaling
+
+    root.scene.render()
+  }
+
+  $: if (root.imports[name]) {
+    meshes.forEach(mesh => (mesh.checkCollisions = checkCollisions))
 
     root.scene.render()
   }

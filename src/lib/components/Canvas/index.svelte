@@ -12,7 +12,7 @@
   export let initialized = false
   export let displayLoadingUI = false
   export let enablePointerLockOnClick = false
-  export let gravity = -9.81
+  export let gravity = 9.81
   export let framesPerSecond = 60
   export let collisionsEnabled = false
 

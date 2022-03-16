@@ -1,6 +1,5 @@
 <script lang="ts" context="module">
-  // WIP: https://www.youtube.com/watch?v=npt_oXGTLfg
-  import { Canvas, Custom, DirectionalLight, FreeCamera, HemisphericLight } from '$lib'
+  import { Canvas, Custom, DirectionalLight, FreeCamera, Ground, HemisphericLight } from '$lib'
   import type { PageMeta } from '@vitebook/client'
   import * as BABYLON from 'babylonjs'
   import 'babylonjs-loaders'
@@ -13,20 +12,14 @@
 
 <script lang="ts">
   let meshes: BABYLON.ISceneLoaderAsyncResult['meshes']
-  let shadowObjects: typeof meshes
-  $: {
-    const temp: typeof shadowObjects = []
-    if (meshes?.[0]) {
-      temp.push(meshes[0])
-    }
-    shadowObjects = temp
-  }
 
-  // handle collisions
-  $: if (meshes?.length) {
-    meshes.forEach(mesh => {
-      mesh.checkCollisions = true
-    })
+  // Add new keyboard inputs for camera movement
+  let camera: BABYLON.FreeCamera
+  $: if (camera) {
+    camera.keysUp.push(87) // w
+    camera.keysLeft.push(65) // a
+    camera.keysDown.push(83) // s
+    camera.keysRight.push(68) // d
   }
 </script>
 
@@ -44,13 +37,14 @@
     intensity={0.25}
     direction={new BABYLON.Vector3(-10, -20, -10)}
     position={new BABYLON.Vector3(2, 6, 2)}
-    castShadowOf={shadowObjects}
+    castShadowOf={meshes}
   />
   <FreeCamera
     position={new BABYLON.Vector3(0, 20, 0)}
     applyGravity
     checkCollisions
     ellipsoid={new BABYLON.Vector3(1, 1, 1)}
+    bind:camera
   />
   <Custom
     name="level"
@@ -60,5 +54,13 @@
     position={new BABYLON.Vector3(0, 2, 0)}
     bind:meshes
     receiveShadows
+    checkCollisions
+  />
+  <Ground
+    options={{
+      width: 20,
+      height: 20,
+    }}
+    checkCollisions
   />
 </Canvas>

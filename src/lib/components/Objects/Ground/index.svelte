@@ -13,6 +13,7 @@
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
+  export let checkCollisions = false
 
   const context = createObjectContext(BABYLON.MeshBuilder.CreateGround(name, options, root.scene))
 
@@ -42,6 +43,7 @@
     context.self.position.x = x || position.x
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
+    context.self.checkCollisions = checkCollisions
   }
 
   // event handling

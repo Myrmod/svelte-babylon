@@ -9,11 +9,14 @@
   export let position = BABYLON.Vector3.Zero()
   export let target = BABYLON.Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
-  export let speed = 1
+  export let speed = 0.75
   export let disableControl = false
   export let applyGravity = false
   export let checkCollisions = false
   export let ellipsoid: BABYLON.Vector3 = undefined
+  export let minZ = 0.45
+  export let angularSensibility = 3000
+
   export const getFacingDirection = () =>
     BABYLON.Vector3.Normalize(camera.target.subtract(camera.position))
   export const camera = new BABYLON.FreeCamera(
@@ -57,6 +60,8 @@
     camera.applyGravity = applyGravity
     camera.checkCollisions = checkCollisions
     camera.ellipsoid = ellipsoid
+    camera.minZ = minZ
+    camera.angularSensibility = angularSensibility
 
     root.scene.render()
   }
