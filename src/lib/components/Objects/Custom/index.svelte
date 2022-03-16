@@ -70,6 +70,7 @@
       if (mesh.actionManager) {
         mesh.actionManager?.dispose()
       }
+      mesh.dispose()
     })
     context.self?.dispose()
     delete root.imports[name]
