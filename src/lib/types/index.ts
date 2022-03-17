@@ -36,4 +36,9 @@ export default interface RootContext {
   gizmos: {
     [key: string]: BABYLON.Gizmo | BABYLON.GizmoManager
   }
+  physics: {
+    impostors: {
+      [key: string]: BABYLON.PhysicsImpostor
+    }
+  }
 }

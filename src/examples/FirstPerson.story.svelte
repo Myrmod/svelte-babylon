@@ -50,7 +50,7 @@
     position={new BABYLON.Vector3(0, 10, 0)}
     applyGravity
     checkCollisions
-    ellipsoid={new BABYLON.Vector3(1, 1, 1)}
+    ellipsoid={new BABYLON.Vector3(0.01, 1, 0.01)}
     bind:camera
   />
   {#if showCustom}
@@ -83,7 +83,10 @@
   <h1>Issues</h1>
   <ul>
     <li>
-      <p>Currently you cannot walk up a ramp.</p>
+      <p>
+        We made the cameras ellipsoid very small so that we can walk up the ramp. That's not how it
+        is supposed to be though. So we're creating a physics based approach.
+      </p>
     </li>
     <li>
       <p>
