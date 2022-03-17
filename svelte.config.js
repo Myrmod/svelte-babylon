@@ -27,7 +27,7 @@ const config = {
       },
     },
     package: {
-      files: id => !id.startsWith('site/') && !id.includes('.story.svelte'),
+      files: id => !id.includes('.story.svelte'),
     },
   },
 }
