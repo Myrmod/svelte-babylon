@@ -32,6 +32,9 @@
     imports: {},
     gizmos: {},
     gui: {},
+    physics: {
+      impostors: {},
+    },
   } as RootContext)
 
   onMount(() => {

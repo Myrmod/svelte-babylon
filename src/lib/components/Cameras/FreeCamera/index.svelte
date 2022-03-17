@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
-  import { onDestroy, onMount } from 'svelte'
+  import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()
 
@@ -25,6 +25,7 @@
     root.scene,
     setActiveOnSceneIfNoneActive,
   )
+  setContext('camera', camera)
 
   onMount(() => {
     try {

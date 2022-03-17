@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
-  import { onDestroy, onMount } from 'svelte'
+  import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()
 
@@ -12,6 +12,7 @@
   export const getFacingDirection = () =>
     BABYLON.Vector3.Normalize(camera.target.subtract(camera.position))
   export const camera = new BABYLON.FollowCamera(name, position, root.scene, lockedTarget)
+  setContext('camera', camera)
 
   onMount(() => {
     try {
