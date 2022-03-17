@@ -8,11 +8,11 @@ This website doesn't track you at all.
 There is no use of cookies or other means used to identify you.
 
 # Impressum
-Pascal Galle
-Germany
-Walkürenring 49
-38106 Brunswick
-myrmod@gmx.de
+Pascal Galle<br>
+Germany<br>
+Walkürenring 49<br>
+38106 Brunswick<br>
+myrmod@gmx.de<br>
 
 Preferably you would use either [twitter](https://twitter.com/myrmod) or GitHub if you have an issue.
 

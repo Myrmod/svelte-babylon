@@ -59,12 +59,24 @@ export default defineConfig({
         primaryActionLink: '/getting-started.html',
         // secondaryActionText: 'Documentation',
         // secondaryActionLink: '/examples/rotatecameratoclickedface.html',
-        // features: [
-        //   {
-        //     title: 'Instant Server Start',
-        //     body: 'On demand file serving over native ESM, no bundling required!',
-        //   },
-        // ],
+        features: [
+          {
+            title: 'Easy to learn syntax',
+            body: 'We have the great developer experience of Svelte with its awesome community. To make abstractions which help us to lower the bar of entry.',
+          },
+          {
+            title: 'Great power',
+            body: 'We integrate BabylonJS in sucha way, that we can do everything BabylonJS can do, just with an easier to use syntax.',
+          },
+          {
+            title: 'Accessibility',
+            body: "A11y is not just an afterthought. Though it's still work in progress, it is planned to provide features for the usage of screenreaders and tab behaviour.",
+          },
+          {
+            title: 'WebXR',
+            body: "The aim is to provide an easy way to build applications, that are usable within VR/AR. This is still work in progress though, we don't restrict BabylonJS' native features in that regard.",
+          },
+        ],
       },
       sidebar: {
         toggleAriaLabel: 'Toggle sidebar menu',
