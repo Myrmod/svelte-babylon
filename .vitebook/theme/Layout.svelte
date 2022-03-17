@@ -12,7 +12,7 @@
         | Copyright © {new Date().getFullYear()}
       </span>
 
-      <a class="privacy" href="/privacy.html"> privacy </a>
+      <a class="privacy" href="/privacy.html"> privacy/impressum </a>
     </footer>
   </svelte:fragment>
 </Theme.Layout>
