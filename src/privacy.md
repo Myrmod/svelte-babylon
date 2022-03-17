@@ -6,3 +6,13 @@ This websites only use is to provide free informations to people who are interes
 ## What do we track?
 This website doesn't track you at all.
 There is no use of cookies or other means used to identify you.
+
+# Impressum
+Pascal Galle
+Germany
+Walkürenring 49
+38106 Brunswick
+myrmod@gmx.de
+
+Preferably you would use either [twitter](https://twitter.com/myrmod) or GitHub if you have an issue.
+
