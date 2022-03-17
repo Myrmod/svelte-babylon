@@ -2,6 +2,7 @@
   import type RootContext from '$lib/types'
   import * as BABYLON from 'babylonjs'
   import { Vector3 } from 'babylonjs'
+  import * as cannon from 'cannon'
   import { onMount } from 'svelte'
   import { setRoot } from '../../utils/context'
 
@@ -15,6 +16,7 @@
   export let gravity = -9.81
   export let framesPerSecond = 60
   export let collisionsEnabled = false
+  export let enablePhysics = false
 
   let wrapper: HTMLElement
   let canvas: HTMLCanvasElement = undefined
@@ -46,7 +48,9 @@
     root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
   }
 
-  function init() {
+  export let physicsPlugin: BABYLON.AmmoJSPlugin | BABYLON.CannonJSPlugin
+
+  async function init() {
     try {
       root.engine = new BABYLON.Engine(canvas, antialiasing, engineOptions)
       root.scene = new BABYLON.Scene(root.engine)
@@ -54,6 +58,10 @@
       window.addEventListener('resize', () => {
         root.engine.resize()
       })
+
+      if (enablePhysics) {
+        physicsPlugin = new BABYLON.CannonJSPlugin(true, 10, cannon)
+      }
 
       initialized = true
     } catch (error) {
@@ -68,6 +76,19 @@
 
     root.scene.render()
   }
+
+  // physics
+  $: if (root.scene) {
+    console.log('here', root.scene.physicsEnabled)
+
+    if (enablePhysics) {
+      root.scene.enablePhysics(root.scene.gravity, physicsPlugin)
+      console.log('physics enabled')
+    } else {
+      root.scene.disablePhysicsEngine()
+    }
+  }
+
   $: if (root.engine) {
     if (displayLoadingUI) {
       root.engine.displayLoadingUI()

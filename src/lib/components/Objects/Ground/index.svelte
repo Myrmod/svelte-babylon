@@ -46,6 +46,21 @@
     context.self.checkCollisions = checkCollisions
   }
 
+  $: if (
+    root.objects[context.self.id] &&
+    root.scene.physicsEnabled &&
+    !context.self.physicsImpostor
+  ) {
+    console.log('ground', root.scene.physicsEnabled)
+
+    context.self.physicsImpostor = new BABYLON.PhysicsImpostor(
+      context.self,
+      BABYLON.PhysicsImpostor.BoxImpostor,
+      { mass: 1, restitution: 0.9 },
+      root.scene,
+    )
+  }
+
   // event handling
   export let onPick: (evt: BABYLON.ActionEvent) => void = undefined
   export let onPickCondition: BABYLON.Condition = undefined

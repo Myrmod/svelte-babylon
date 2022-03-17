@@ -9,6 +9,7 @@
   export let name: string = 'Capsule'
   export let receiveShadows = false
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateCapsule>[1]
+  export let checkCollisions = false
 
   const context = createObjectContext(BABYLON.MeshBuilder.CreateCapsule(name, options, root.scene))
 
@@ -41,9 +42,25 @@
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
     context.self.receiveShadows = receiveShadows
+    context.self.checkCollisions = checkCollisions
 
     object = context
     root.scene.render()
+  }
+
+  $: if (
+    root.objects[context.self.id] &&
+    root.scene.physicsEnabled &&
+    !context.self.physicsImpostor
+  ) {
+    console.log('capsule', root.scene.physicsEnabled)
+
+    context.self.physicsImpostor = new BABYLON.PhysicsImpostor(
+      context.self,
+      BABYLON.PhysicsImpostor.CapsuleImpostor,
+      { mass: 0, restitution: 0.9 },
+      root.scene,
+    )
   }
 
   // event handling
