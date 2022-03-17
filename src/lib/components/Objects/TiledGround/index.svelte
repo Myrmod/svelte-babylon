@@ -18,6 +18,7 @@
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
+  export let checkCollisions = false
 
   export let object = root.objects[context.self.id]
 
@@ -43,6 +44,7 @@
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
     context.self.receiveShadows = receiveShadows
+    context.self.checkCollisions = checkCollisions
 
     object = context
     root.scene.render()

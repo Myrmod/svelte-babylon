@@ -4,6 +4,7 @@ export { default as ArcRotateCamera } from './components/Cameras/ArcRotateCamera
 export { default as FlyCamera } from './components/Cameras/FlyCamera.svelte'
 export { default as FollowCamera } from './components/Cameras/FollowCamera.svelte'
 export { default as FreeCamera } from './components/Cameras/FreeCamera/index.svelte'
+export { default as TargetCamera } from './components/Cameras/TargetCamera/index.svelte'
 export { default as Canvas } from './components/Canvas/index.svelte'
 // Gizmos
 export { default as AxisDragGizmo } from './components/Gizmos/AxisDragGizmo/index.svelte'
@@ -46,7 +47,6 @@ export { default as Plane } from './components/Objects/Plane/index.svelte'
 export { default as Polygon } from './components/Objects/Polygon/index.svelte'
 export { default as Polyhedron } from './components/Objects/Polyhedron/index.svelte'
 export { default as Ribbon } from './components/Objects/Ribbon/index.svelte'
-export { default as Skybox } from './components/Objects/Skybox/index.svelte'
 export { default as Sphere } from './components/Objects/Sphere/index.svelte'
 export { default as TiledBox } from './components/Objects/TiledBox/index.svelte'
 export { default as TiledGround } from './components/Objects/TiledGround/index.svelte'
@@ -57,3 +57,6 @@ export { default as Tube } from './components/Objects/Tube/index.svelte'
 export { default as CubeTexture } from './components/Textures/CubeTexture.svelte'
 // Textures
 export { default as StandardTexture } from './components/Textures/Standard/index.svelte'
+// prebuilds
+export { default as FirstPersonWorld } from './prebuilds/FirstPersonWorld/index.svelte'
+export { default as Skybox } from './prebuilds/Skybox/index.svelte'
