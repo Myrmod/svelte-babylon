@@ -1,7 +1,8 @@
 <script lang="ts" context="module">
+  import type RootContext from '$lib/types'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import type * as BABYLON from 'babylonjs'
+  import * as BABYLON from 'babylonjs'
   import 'babylonjs-loaders'
   import { Custom } from 'svelte-babylon'
   import DescriptionAddon from 'vitebook/Addons/DescriptionAddon.svelte'
@@ -14,12 +15,33 @@
 </script>
 
 <script lang="ts">
+  let root: RootContext
   let meshes: BABYLON.ISceneLoaderAsyncResult['meshes']
-  let showCustom = false
+  let showCustom = true
+
+  $: if (meshes) {
+    meshes.forEach(mesh => {
+      mesh.getChildMeshes().forEach(child => {
+        child.physicsImpostor = new BABYLON.PhysicsImpostor(
+          child,
+          BABYLON.PhysicsImpostor.BoxImpostor,
+          { mass: 0 },
+          root.scene,
+        )
+      })
+
+      mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
+        mesh,
+        BABYLON.PhysicsImpostor.BoxImpostor,
+        { mass: 0 },
+        root.scene,
+      )
+    })
+  }
 </script>
 
-<FirstPersonWorld>
-  {#if showCustom}
+{#if showCustom}
+  <FirstPersonWorld bind:root playerPosition={new BABYLON.Vector3(0, 10, 0)}>
     <Custom
       name="Level"
       rootUrl="/assets/models/"
@@ -29,8 +51,10 @@
       checkCollisions
       slot="models"
     />
-  {/if}
-</FirstPersonWorld>
+  </FirstPersonWorld>
+{:else}
+  <FirstPersonWorld />
+{/if}
 
 <ControlsAddon>
   <label style="margin-top: 24px;display:block;">
