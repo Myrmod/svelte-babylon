@@ -54,6 +54,7 @@ export { default as TiledPlane } from './components/Objects/TiledPlane/index.sve
 export { default as Torus } from './components/Objects/Torus/index.svelte'
 export { default as TorusKnot } from './components/Objects/TorusKnot/index.svelte'
 export { default as Tube } from './components/Objects/Tube/index.svelte'
+export { default as PhysicsImpostor } from './components/PhysicsImpostor/index.svelte'
 export { default as CubeTexture } from './components/Textures/CubeTexture.svelte'
 // Textures
 export { default as StandardTexture } from './components/Textures/Standard/index.svelte'

@@ -14,11 +14,12 @@
   export let y: number = undefined
   export let z: number = undefined
   export let checkCollisions = false
+  export let isVisible = true
 
   const context = createObjectContext(BABYLON.MeshBuilder.CreateGround(name, options, root.scene))
 
   export let receiveShadows = false
-  export const object = root.objects[context.self.id]
+  export let object = root.objects[context.self.id]
 
   onMount(() => {
     try {
@@ -44,21 +45,10 @@
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
     context.self.checkCollisions = checkCollisions
-  }
+    context.self.isVisible = isVisible
 
-  $: if (
-    root.objects[context.self.id] &&
-    root.scene.physicsEnabled &&
-    !context.self.physicsImpostor
-  ) {
-    console.log('ground', root.scene.physicsEnabled)
-
-    context.self.physicsImpostor = new BABYLON.PhysicsImpostor(
-      context.self,
-      BABYLON.PhysicsImpostor.BoxImpostor,
-      { mass: 1, restitution: 0.9 },
-      root.scene,
-    )
+    // this is required to have a reactive variable
+    object = root.objects[context.self.id]
   }
 
   // event handling

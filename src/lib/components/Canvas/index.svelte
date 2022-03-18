@@ -48,7 +48,8 @@
     root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
   }
 
-  export let physicsPlugin: BABYLON.AmmoJSPlugin | BABYLON.CannonJSPlugin
+  export let physicsPlugin: BABYLON.AmmoJSPlugin | BABYLON.CannonJSPlugin | BABYLON.OimoJSPlugin =
+    undefined
 
   async function init() {
     try {
@@ -59,7 +60,7 @@
         root.engine.resize()
       })
 
-      if (enablePhysics) {
+      if (enablePhysics && !physicsPlugin) {
         physicsPlugin = new BABYLON.CannonJSPlugin(true, 10, cannon)
       }
 
@@ -79,11 +80,8 @@
 
   // physics
   $: if (root.scene) {
-    console.log('here', root.scene.physicsEnabled)
-
     if (enablePhysics) {
       root.scene.enablePhysics(root.scene.gravity, physicsPlugin)
-      console.log('physics enabled')
     } else {
       root.scene.disablePhysicsEngine()
     }

@@ -48,21 +48,6 @@
     root.scene.render()
   }
 
-  $: if (
-    root.objects[context.self.id] &&
-    root.scene.physicsEnabled &&
-    !context.self.physicsImpostor
-  ) {
-    console.log('capsule', root.scene.physicsEnabled)
-
-    context.self.physicsImpostor = new BABYLON.PhysicsImpostor(
-      context.self,
-      BABYLON.PhysicsImpostor.CapsuleImpostor,
-      { mass: 0, restitution: 0.9 },
-      root.scene,
-    )
-  }
-
   // event handling
   export let onPick: (evt: BABYLON.ActionEvent) => void = undefined
   export let onPickCondition: BABYLON.Condition = undefined

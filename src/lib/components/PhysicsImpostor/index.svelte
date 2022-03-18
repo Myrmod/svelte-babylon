@@ -15,9 +15,12 @@
     )
   }
 
-  export let name: string = 'BeanImpostor'
-  export let plugin: BABYLON.IPhysicsEnginePlugin = new BABYLON.AmmoJSPlugin()
-
+  export let name: string = `${parent.self.name}Impostor`
+  /**
+   * eg BABYLON.PhysicsImpostor.BoxImpostor
+   * There is no proper type handling in babylonjs, might open a pull request
+   */
+  export let type = PhysicsImpostor.BoxImpostor
   /**
    * - mass: The only mandatory parameters is mass, which is the object's mass in kg. A 0 as a value will create a static impostor - good for floors.
    * - friction: is the impostor's friction when colliding against other impostors.
@@ -34,27 +37,18 @@
 
   onMount(async () => {
     try {
-      if (!plugin.isSupported) {
-        throw new Error('Physics plugin is not supported')
-      }
-
-      if (!root.scene.enablePhysics(root.scene.gravity, plugin)) {
-        throw new Error('Physics engine could not be initialized')
-      }
-
       // create the physics impostor
-      root.physics.impostors[name] = new BABYLON.PhysicsImpostor(
+      parent.self.physicsImpostor = new BABYLON.PhysicsImpostor(
         parent.self,
-        PhysicsImpostor.CapsuleImpostor,
-        {
-          mass: 0,
-          ...options,
-        },
+        type,
+        /**
+         * we overwrite some options here, setting them directly results in a jumping of some objects
+         */
+        { ...options, mass: 0, restitution: 0 },
         root.scene,
       )
 
-      parent.self.physicsImpostor = root.physics.impostors[name]
-
+      root.physics.impostors[name] = parent.self.physicsImpostor
       root.scene.render()
     } catch (error) {
       console.error(error)
@@ -62,11 +56,24 @@
   })
 
   onDestroy(() => {
-    parent.self.physicsImpostor.dispose()
+    parent.self?.physicsImpostor?.dispose()
 
     delete root.physics.impostors[name]
     if (!Object.keys(root.physics.impostors)) {
       root.scene.disablePhysicsEngine()
     }
   })
+
+  /**
+   * if we don't do it like this and directly
+   * set the options onMount, the object might jump weirdly
+   */
+  $: if (parent.self.physicsImpostor) {
+    if (parent.self.physicsImpostor.mass !== options.mass) {
+      parent.self.physicsImpostor.setMass(options.mass)
+    }
+    if (parent.self.physicsImpostor.restitution !== options.restitution) {
+      parent.self.physicsImpostor.restitution = options.restitution
+    }
+  }
 </script>

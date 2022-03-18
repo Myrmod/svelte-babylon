@@ -3,17 +3,19 @@
   import * as BABYLON from 'babylonjs'
   import { onDestroy } from 'svelte'
   import {
+    Box,
     Canvas,
-    Capsule,
     DirectionalLight,
+    FreeCamera,
     Ground,
     HemisphericLight,
-    TargetCamera,
+    // TargetCamera,
+    PhysicsImpostor,
   } from 'svelte-babylon'
 </script>
 
 <script lang="ts">
-  export let playerPosition = new BABYLON.Vector3(0, 5, 0)
+  export let playerPosition = new BABYLON.Vector3(0, 2, 0)
   export let cameraPositionOffsett = BABYLON.Vector3.Zero()
   export let root: RootContext = undefined
   let meshes: BABYLON.ISceneLoaderAsyncResult['meshes']
@@ -81,15 +83,25 @@
   bind:root
   enablePhysics
 >
-  <TargetCamera bind:camera parent={player?.self} />
-  <Capsule position={playerPosition} bind:object={player} />
+  <!-- <TargetCamera bind:camera parent={player?.self} /> -->
+  <FreeCamera position={new BABYLON.Vector3(1, 10, 1)} />
+  <Box position={playerPosition} bind:object={player}>
+    <PhysicsImpostor
+      options={{
+        mass: 1,
+        restitution: 0.75,
+      }}
+    />
+  </Box>
   <slot name="models">
     <Ground
       options={{
-        width: 50,
-        height: 50,
+        width: 20,
+        height: 20,
       }}
-    />
+    >
+      <PhysicsImpostor options={{ mass: 0, restitution: 0.5 }} />
+    </Ground>
   </slot>
   <slot name="lights">
     <HemisphericLight intensity={0.5} />

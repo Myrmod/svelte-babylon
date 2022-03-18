@@ -7,7 +7,6 @@
 
   export let name: string = 'FreeCamera'
   export let position = BABYLON.Vector3.Zero()
-  export let target = BABYLON.Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
   export let disableControl = false
   export let minZ = 0.45
