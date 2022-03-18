@@ -16,6 +16,7 @@
   export let ellipsoid: BABYLON.Vector3 = undefined
   export let minZ = 0.45
   export let angularSensibility = 3000
+  export let parent: BABYLON.Mesh = undefined
 
   export const getFacingDirection = () =>
     BABYLON.Vector3.Normalize(camera.target.subtract(camera.position))
@@ -46,6 +47,7 @@
   })
 
   onDestroy(() => {
+    camera.dispose()
     root.cameras[camera.id] = null
   })
 
@@ -63,6 +65,7 @@
     camera.ellipsoid = ellipsoid
     camera.minZ = minZ
     camera.angularSensibility = angularSensibility
+    camera.parent = parent
 
     root.scene.render()
   }

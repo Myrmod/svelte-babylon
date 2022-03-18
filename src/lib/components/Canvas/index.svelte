@@ -100,6 +100,10 @@
       if (e.button === 0) root.engine.enterPointerlock()
     }
   }
+
+  $: if (canvas) {
+    root.canvas.element = canvas
+  }
 </script>
 
 <svelte:window on:resize={resize} />

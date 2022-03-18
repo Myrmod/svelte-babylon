@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
-  import { onDestroy, onMount, setContext } from 'svelte'
+  import { onDestroy,onMount,setContext } from 'svelte'
 
   const root = getRoot()
 
@@ -32,7 +32,9 @@
       root.cameras[camera.id] = camera
 
       root.engine.runRenderLoop(() => {
-        root.scene.render()
+        if (root.scene.cameras.length) {
+          root.scene.render()
+        }
       })
     } catch (error) {
       console.error(error)
@@ -40,6 +42,7 @@
   })
 
   onDestroy(() => {
+    camera.dispose()
     root.cameras[camera.id] = null
   })
 

@@ -1,5 +1,5 @@
 import type * as BABYLON from 'babylonjs'
-import * as GUI from 'babylonjs-gui'
+import type * as GUI from 'babylonjs-gui'
 
 export default interface RootContext {
   canvas: {

@@ -9,34 +9,42 @@
     FreeCamera,
     Ground,
     HemisphericLight,
-    // TargetCamera,
     PhysicsImpostor,
   } from 'svelte-babylon'
 </script>
 
 <script lang="ts">
   export let playerPosition = new BABYLON.Vector3(0, 2, 0)
-  export let cameraPositionOffsett = BABYLON.Vector3.Zero()
   export let root: RootContext = undefined
   let meshes: BABYLON.ISceneLoaderAsyncResult['meshes']
 
   // Add new keyboard inputs for camera movement
-  let camera: BABYLON.TargetCamera = undefined
+  let camera: BABYLON.FreeCamera = undefined
 
   export let player: { self: BABYLON.Mesh } = undefined
-  let onBeforeRenderObserver: BABYLON.Observer<unknown>
+  export let movementSpeed = 0.5
+  export let verticalCameraDegree = 135
+
+  let inputs = {}
+  export let goForward = false
+  $: goForward = inputs['w'] || inputs['ArrowUp']
+
+  export let goLeft = false
+  $: goLeft = inputs['a'] || inputs['ArrowLeft']
+
+  export let goRight = false
+  $: goRight = inputs['d'] || inputs['ArrowRight']
+
+  export let goBackward = false
+  $: goBackward = inputs['s'] || inputs['ArrowDown']
+
+  let keyboardInputs: BABYLON.Observer<unknown>
+  let mouseInputs: BABYLON.Observer<unknown>
 
   onDestroy(() => {
-    root.scene.onBeforeRenderObservable.remove(onBeforeRenderObserver)
+    root.scene.onBeforeRenderObservable.remove(keyboardInputs)
   })
 
-  $: if (player && camera && root.scene) {
-    // camera.position = player.self.position.add(cameraPositionOffsett)
-    // camera.rotationQuaternion = player.self.rotationQuaternion
-    // root.scene.activeCamera = camera
-  }
-
-  export let inputs = {}
   // adds the pressed keys to inputs
   $: if (root?.scene) {
     root.scene.actionManager = new BABYLON.ActionManager(root.scene)
@@ -54,21 +62,68 @@
     )
   }
 
-  $: if (player && root?.scene && !playerCreated) {
-    createPlayer()
+  $: if (player && root?.scene && !controlsAdded) {
+    addControls()
   }
 
-  let playerCreated = false
-  function createPlayer() {
-    // Register input to move the player.
-    root.scene.onBeforeRenderObservable.remove(onBeforeRenderObserver)
-    onBeforeRenderObserver = root.scene.onBeforeRenderObservable.add(() => {
-      if (inputs['w']) player.self.locallyTranslate(new BABYLON.Vector3(0, 0, 0.2))
-      if (inputs['a']) player.self.locallyTranslate(new BABYLON.Vector3(-0.2, 0, 0))
-      if (inputs['s']) player.self.locallyTranslate(new BABYLON.Vector3(0, 0, -0.2))
-      if (inputs['d']) player.self.locallyTranslate(new BABYLON.Vector3(0.2, 0, 0))
+  let controlsAdded = false
+  function addControls() {
+    // Used for movement
+    root.scene.onBeforeRenderObservable.remove(keyboardInputs)
+
+    keyboardInputs = root.scene.onBeforeRenderObservable.add(() => {
+      if (goForward)
+        player.self.locallyTranslate(
+          new BABYLON.Vector3(movementSpeed, 0, movementSpeed).multiply(
+            camera.getDirection(BABYLON.Vector3.Forward()),
+          ),
+        )
+      if (goLeft)
+        player.self.locallyTranslate(
+          new BABYLON.Vector3(movementSpeed, 0, movementSpeed).multiply(
+            camera.getDirection(BABYLON.Vector3.Left()),
+          ),
+        )
+      if (goBackward)
+        player.self.locallyTranslate(
+          new BABYLON.Vector3(movementSpeed, 0, movementSpeed).multiply(
+            camera.getDirection(BABYLON.Vector3.Backward()),
+          ),
+        )
+      if (goRight)
+        player.self.locallyTranslate(
+          new BABYLON.Vector3(movementSpeed, 0, movementSpeed).multiply(
+            camera.getDirection(BABYLON.Vector3.Right()),
+          ),
+        )
     })
-    playerCreated = true
+
+    // Used for the camera
+    root.scene.onPointerObservable.remove(mouseInputs)
+    mouseInputs = root.scene.onPointerObservable.add(() => {
+      if (!camera) {
+        console.error('no camera defined')
+        return
+      }
+      if (root.engine.isPointerLock) {
+        const verticalCameraRadiant = ((verticalCameraDegree / 2) * Math.PI) / 180
+        // restrict vertical camera movement
+        // top
+        if (camera.rotation.x > verticalCameraRadiant) {
+          camera.rotation.x = verticalCameraRadiant
+        }
+        // bottom
+        if (camera.rotation.x < -verticalCameraRadiant) {
+          camera.rotation.x = -verticalCameraRadiant
+        }
+      }
+    })
+    controlsAdded = true
+  }
+
+  // remove default camera keyboard inputs
+  $: if (camera?.inputs.attached.keyboard) {
+    camera.inputs.remove(camera.inputs.attached.keyboard)
   }
 </script>
 
@@ -83,8 +138,7 @@
   bind:root
   enablePhysics
 >
-  <!-- <TargetCamera bind:camera parent={player?.self} /> -->
-  <FreeCamera position={new BABYLON.Vector3(1, 10, 1)} />
+  <FreeCamera bind:camera position={playerPosition} parent={player?.self} />
   <Box position={playerPosition} bind:object={player}>
     <PhysicsImpostor
       options={{
