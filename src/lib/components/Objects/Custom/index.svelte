@@ -3,6 +3,8 @@
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
+  import 'babylonjs-loaders'
+  import 'babylonjs-loaders/babylonjs.loaders'
 
   const root = getRoot()
 

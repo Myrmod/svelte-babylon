@@ -28,9 +28,6 @@ export default defineConfig({
     }),
   ],
   vite: {
-    optimizeDeps: {
-      include: ['babylonjs-loaders/babylonjs.loaders'],
-    },
     resolve: {
       alias: {
         'svelte-babylon': path.resolve('src/lib'),

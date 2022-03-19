@@ -2,7 +2,6 @@
   import { ArcRotateCamera, Canvas, Custom, DirectionalLight, Ground, HemisphericLight } from '$lib'
   import type { PageMeta } from '@vitebook/client'
   import * as BABYLON from 'babylonjs'
-  import 'babylonjs-loaders'
 
   export const __pageMeta: PageMeta = {
     title: 'Custom',
