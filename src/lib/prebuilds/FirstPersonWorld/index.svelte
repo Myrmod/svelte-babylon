@@ -42,7 +42,7 @@
   let mouseInputs: BABYLON.Observer<unknown>
 
   onDestroy(() => {
-    root.scene.onBeforeRenderObservable.remove(keyboardInputs)
+    root.scene?.onBeforeRenderObservable.remove(keyboardInputs)
   })
 
   // adds the pressed keys to inputs
@@ -68,6 +68,8 @@
 
   let controlsAdded = false
   function addControls() {
+    if (!root.scene) return
+
     // Used for movement
     root.scene.onBeforeRenderObservable.remove(keyboardInputs)
 

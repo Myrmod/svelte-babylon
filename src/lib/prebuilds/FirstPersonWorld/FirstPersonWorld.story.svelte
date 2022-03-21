@@ -3,7 +3,7 @@
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
   import * as BABYLON from 'babylonjs'
-  import { Custom } from 'svelte-babylon'
+  import { Custom, Screen } from 'svelte-babylon'
   import DescriptionAddon from 'vitebook/Addons/DescriptionAddon.svelte'
   import FirstPersonWorld from './index.svelte'
 
@@ -50,9 +50,12 @@
       checkCollisions
       slot="models"
     />
+    <Screen />
   </FirstPersonWorld>
 {:else}
-  <FirstPersonWorld />
+  <FirstPersonWorld>
+    <Screen />
+  </FirstPersonWorld>
 {/if}
 
 <ControlsAddon>

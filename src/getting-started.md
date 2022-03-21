@@ -5,6 +5,7 @@ description: A short introduction with tutorial and explanation for Svelte-Babyl
 # Getting Started
 
 ## Description
+
 Svelte-Babylon is a [BabylonJS](https://www.babylonjs.com/) component library for [Svelte](https://svelte.dev/). It is highly inspired by [svelte-cubed](https://svelte-cubed.vercel.app/), a component library for building [Three.js](https://threejs.org/) scene graphs in Svelte apps.
 
 **This library is a work in progress**. It has not been tested in its entirety and there are surely bugs, that haven't been fixed or even been identified.
@@ -21,15 +22,19 @@ npm run dev
 ```
 
 Then install BabylonJS and Svelte-Babylon:
+
 ```bash:no-line-numbers
 npm install babylonjs svelte-babylon
 ```
 
 if you want to load custom objects eg. .glb files
+
 ```bash:no-line-numbers
 npm install babylonjs-loaders
 ```
+
 You might need to add this to your `svelte.config.js`s kit property
+
 ```js:no-line-numbers
 ...
 vite: {
@@ -43,14 +48,10 @@ vite: {
 Now you're set up to build your own 3D scenes.
 
 ## Your first scene
+
 ```svelte
 <script lang="ts">
-  import {
-    ArcRotateCamera,
-    Box,
-    Canvas,
-    HemisphericLight,
-  } from "svelte-babylon"
+  import { ArcRotateCamera, Box, Canvas, HemisphericLight } from 'svelte-babylon'
 </script>
 
 <Canvas>
@@ -59,6 +60,7 @@ Now you're set up to build your own 3D scenes.
   <Box />
 </Canvas>
 ```
+
 As Svelte-Babylon is a libray that implements BabylonJS in a component driven manner, we can create a very simple scene using only our Svelte knowledge with barely any regard to BabylonJS itself.
 
 Our `Canvas` component is the wrapper of a scene. It created an `HTMLCanvasElement`, an [engine](https://doc.babylonjs.com/typedoc/classes/babylon.engine) and a [scene](https://doc.babylonjs.com/typedoc/classes/babylon.scene).
@@ -66,6 +68,7 @@ Furthermore the `Canvas` component creates a [svelte context](https://svelte.dev
 This context is bindable via `<Canvas bind:root>`. This allows you to use BabylonJS with all of its features, even if implementations are missing. You have to refer to the [BabylonJS documentation](https://doc.babylonjs.com/) though.
 
 Let's add `Ground` and adjust the positions of the box. We also add some settings to the `Canvas` to make the scene look a little sharper.
+
 ```diff
 <script lang="ts">
 +  import * as BABYLON from "babylonjs"
@@ -169,17 +172,11 @@ Shadows are somewhat tricky to handle. A light needs to know what objects it sho
 Objects like our `Ground` components' have to know, that there might be a shadow to be cast on them. So we have to add the `receiveShadows` attribute to them.
 
 And that's it. Your first scene using Svelte Babylon. Here is the whole code:
+
 ```svelte
 <script lang="ts">
   import * as BABYLON from 'babylonjs'
-  import {
-    ArcRotateCamera,
-    Box,
-    Canvas,
-   DirectionalLight,
-    Ground,
-    HemisphericLight,
-  } from '$lib'
+  import { ArcRotateCamera, Box, Canvas, DirectionalLight, Ground, HemisphericLight } from '$lib'
   const objectPosition = new BABYLON.Vector3(0, 3, 0)
 
   let object: {
@@ -213,11 +210,7 @@ And that's it. Your first scene using Svelte Babylon. Here is the whole code:
   <ArcRotateCamera target={objectPosition} />
   <Box y={3} bind:object />
 
-  <Ground
-    options={{ width: 6, height: 6 }}
-    y={1}
-    receiveShadows
-  />
+  <Ground options={{ width: 6, height: 6 }} y={1} receiveShadows />
 </Canvas>
 ```
 

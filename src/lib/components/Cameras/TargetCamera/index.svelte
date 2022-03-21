@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
-  import { onDestroy,onMount,setContext } from 'svelte'
+  import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()
 

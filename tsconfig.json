@@ -28,11 +28,7 @@
       "svelte-babylon": ["src/lib"],
       "vitebook": [".vitebook"]
     },
-    "types": [
-      "babylonjs",
-      "babylonjs-loaders",
-      "babylonjs-gui"
-    ]
+    "types": ["babylonjs", "babylonjs-loaders", "babylonjs-gui"]
   },
   "include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
 }
