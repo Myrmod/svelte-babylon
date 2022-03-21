@@ -104,6 +104,10 @@
   $: if (canvas) {
     root.canvas.element = canvas
   }
+  $: if (wrapper) {
+    root.canvas.width = wrapper.clientWidth / root.canvas.pixelRatio
+    root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
+  }
 </script>
 
 <svelte:window on:resize={resize} />

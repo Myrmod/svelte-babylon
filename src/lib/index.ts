@@ -60,4 +60,5 @@ export { default as CubeTexture } from './components/Textures/CubeTexture.svelte
 export { default as StandardTexture } from './components/Textures/Standard/index.svelte'
 // prebuilds
 export { default as FirstPersonWorld } from './prebuilds/FirstPersonWorld/index.svelte'
+export { default as Screen } from './prebuilds/Screen/index.svelte'
 export { default as Skybox } from './prebuilds/Skybox/index.svelte'
