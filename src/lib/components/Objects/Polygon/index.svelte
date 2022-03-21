@@ -23,7 +23,7 @@
   export let z: number = undefined
   export let checkCollisions = false
 
-  export const object = root.objects[context.self.id]
+  export let object = root.objects[context.self.id]
 
   onMount(() => {
     try {
@@ -48,6 +48,8 @@
     context.self.position.z = z || position.z
     context.self.receiveShadows = receiveShadows
     context.self.checkCollisions = checkCollisions
+
+    object = context
   }
 
   // event handling
