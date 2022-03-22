@@ -105,6 +105,7 @@
   >
     <StandardMaterial slot="screen">
       <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="diffuseTexture" />
+      <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="specularTexture" />
     </StandardMaterial>
   </Platform>
   <Platform
