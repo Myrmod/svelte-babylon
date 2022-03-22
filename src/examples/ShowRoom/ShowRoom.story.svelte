@@ -9,6 +9,7 @@
     Disc,
     FreeCamera,
     HemisphericLight,
+    HTMLMaterial,
     Skybox,
     StandardMaterial,
     StandardTexture,
@@ -95,7 +96,9 @@
     bind:screen={screens[0]}
     position={new BABYLON.Vector3(10, 0.5, 10)}
     name="Platform1"
-  />
+  >
+    <HTMLMaterial slot="screen" />
+  </Platform>
   <Platform
     bind:platform={platforms[1]}
     bind:screen={screens[1]}
