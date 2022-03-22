@@ -8,7 +8,6 @@
     StandardMaterial,
     StandardTexture,
   } from '$lib'
-  import { TextureTargets } from '$lib/types/enums/TextureTargets'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
   import * as BABYLON from 'babylonjs'
@@ -76,7 +75,7 @@
           url="/assets/textures/metal/metal_diffuse.jpg"
           uScale={2}
           vScale={2}
-          textureTarget={TextureTargets.DIFFUSE}
+          textureTarget="diffuseTexture"
         />
       {/if}
       {#if specularTexture}
@@ -84,7 +83,7 @@
           url="/assets/textures/metal/metal_specular.jpg"
           uScale={2}
           vScale={2}
-          textureTarget={TextureTargets.SPECULAR}
+          textureTarget="specularTexture"
         />
       {/if}
       {#if aoTexture}
@@ -92,7 +91,7 @@
           url="/assets/textures/metal/metal_ao.jpg"
           uScale={2}
           vScale={2}
-          textureTarget={TextureTargets.AMBIENT}
+          textureTarget="ambientTexture"
         />
       {/if}
       {#if normalTexture}
@@ -100,7 +99,7 @@
           url="/assets/textures/metal/metal_normal.jpg"
           uScale={2}
           vScale={2}
-          textureTarget={TextureTargets.BUMP}
+          textureTarget="bumpTexture"
         />
       {/if}
     </StandardMaterial>

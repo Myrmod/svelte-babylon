@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { TextureTargets } from '$lib/types/enums/TextureTargets'
   import { getRoot } from '$lib/utils/context'
   import type { Nullable } from 'babylonjs'
   import * as BABYLON from 'babylonjs'
@@ -9,7 +8,16 @@
   const root = getRoot()
 
   export let url: string
-  export let textureTarget: TextureTargets
+  export let textureTarget:
+    | 'ambientTexture'
+    | 'bumpTexture'
+    | 'diffuseTexture'
+    | 'emissiveTexture'
+    | 'lightmapTexture'
+    | 'opacityTexture'
+    | 'reflectionTexture'
+    | 'refractionTexture'
+    | 'specularTexture'
   export let noMipmap: boolean = undefined
   export let invertY: boolean = undefined
   export let invertZ: boolean = undefined

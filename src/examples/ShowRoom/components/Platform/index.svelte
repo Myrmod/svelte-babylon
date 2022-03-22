@@ -1,6 +1,6 @@
 <script lang="ts">
   import * as BABYLON from 'babylonjs'
-  import { Box, Cylinder } from 'svelte-babylon'
+  import { Box, Cylinder, Plane, StandardMaterial } from 'svelte-babylon'
 
   export let platform: {
     self: BABYLON.Mesh
@@ -17,7 +17,6 @@
 </script>
 
 <Cylinder
-  y={1}
   bind:object={platform}
   {position}
   rotation={new BABYLON.Vector3(0, BABYLON.Tools.ToRadians(rotation), 0)}
@@ -28,17 +27,29 @@
     diameterTop: 8,
   }}
   checkCollisions
+  receiveShadows
 >
   <Box
     name={`${name}-Screen`}
     position={new BABYLON.Vector3(1, 3, 1)}
     rotation={new BABYLON.Vector3(0, Math.PI / 4, 0)}
     options={{
-      width: 19 / 5,
+      width: 16 / 5,
       height: 9 / 5,
       depth: 0.25,
     }}
     bind:object={screen}
     checkCollisions
-  />
+  >
+    <StandardMaterial diffuseColor={BABYLON.Color3.Black()} />
+    <Plane
+      options={{
+        width: 16 / 5.2,
+        height: 9 / 5.2,
+      }}
+      position={new BABYLON.Vector3(0, 0, -0.13)}
+    >
+      <slot name="screen" />
+    </Plane>
+  </Box>
 </Cylinder>

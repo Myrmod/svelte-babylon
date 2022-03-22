@@ -10,6 +10,8 @@
     FreeCamera,
     HemisphericLight,
     Skybox,
+    StandardMaterial,
+    StandardTexture,
   } from 'svelte-babylon'
   import Platform from './components/Platform/index.svelte'
 
@@ -38,13 +40,12 @@
   }
 
   let shadowObjects: Array<typeof object['self']>
-  // $: {
-  //   shadowObjects = platforms
-  //     .concat(screens)
-  //     .map(v => v?.self)
-  //     .filter(v => v)
-  //   console.log(shadowObjects.map(i => i.name))
-  // }
+  $: {
+    shadowObjects = platforms
+      .concat(screens)
+      .map(v => v?.self)
+      .filter(v => v)
+  }
 
   let rotateToFacePickedFace: (
     e: BABYLON.ActionEvent,
@@ -64,7 +65,7 @@
   enablePointerLockOnClick={useFreeCamera}
   collisionsEnabled
 >
-  <HemisphericLight intensity={0.5} />
+  <HemisphericLight intensity={1} />
   <DirectionalLight
     intensity={0.25}
     direction={new BABYLON.Vector3(-10, -20, -10)}
@@ -92,27 +93,31 @@
   <Platform
     bind:platform={platforms[0]}
     bind:screen={screens[0]}
-    position={new BABYLON.Vector3(10, 0, 10)}
+    position={new BABYLON.Vector3(10, 0.5, 10)}
     name="Platform1"
   />
   <Platform
     bind:platform={platforms[1]}
     bind:screen={screens[1]}
-    position={new BABYLON.Vector3(-10, 0, 10)}
+    position={new BABYLON.Vector3(-10, 0.5, 10)}
     rotation={270}
     name="Platform2"
-  />
+  >
+    <StandardMaterial slot="screen">
+      <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="diffuseTexture" />
+    </StandardMaterial>
+  </Platform>
   <Platform
     bind:platform={platforms[2]}
     bind:screen={screens[2]}
-    position={new BABYLON.Vector3(-10, 0, -10)}
+    position={new BABYLON.Vector3(-10, 0.5, -10)}
     rotation={180}
     name="Platform3"
   />
   <Platform
     bind:platform={platforms[3]}
     bind:screen={screens[3]}
-    position={new BABYLON.Vector3(10, 0, -10)}
+    position={new BABYLON.Vector3(10, 0.5, -10)}
     rotation={90}
     name="Platform4"
   />

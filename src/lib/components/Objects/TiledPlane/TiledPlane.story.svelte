@@ -1,4 +1,6 @@
 <script lang="ts" context="module">
+  import type { PageMeta } from '@vitebook/client'
+  import * as BABYLON from 'babylonjs'
   import {
     ArcRotateCamera,
     Canvas,
@@ -6,10 +8,7 @@
     StandardMaterial,
     StandardTexture,
     TiledPlane,
-  } from '$lib'
-  import { TextureTargets } from '$lib/types/enums/TextureTargets'
-  import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'TiledPlane',
@@ -57,25 +56,25 @@
         url="/assets/textures/metal/metal_diffuse.jpg"
         uScale={2}
         vScale={2}
-        textureTarget={TextureTargets.DIFFUSE}
+        textureTarget="diffuseTexture"
       />
       <StandardTexture
         url="/assets/textures/metal/metal_specular.jpg"
         uScale={2}
         vScale={2}
-        textureTarget={TextureTargets.SPECULAR}
+        textureTarget="specularTexture"
       />
       <StandardTexture
         url="/assets/textures/metal/metal_ao.jpg"
         uScale={2}
         vScale={2}
-        textureTarget={TextureTargets.AMBIENT}
+        textureTarget="ambientTexture"
       />
       <StandardTexture
         url="/assets/textures/metal/metal_normal.jpg"
         uScale={2}
         vScale={2}
-        textureTarget={TextureTargets.BUMP}
+        textureTarget="bumpTexture"
       />
     </StandardMaterial>
   </TiledPlane>

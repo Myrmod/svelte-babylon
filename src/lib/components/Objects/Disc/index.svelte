@@ -48,7 +48,7 @@
     context.self.position.x = x || position.x
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
-    root.objects[name].receiveShadows = receiveShadows
+    context.self.receiveShadows = receiveShadows
     context.self.checkCollisions = checkCollisions
     context.self.rotation = rotation
 

@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Skybox, Canvas, HemisphericLight } from '$lib'
+  import { ArcRotateCamera, Canvas, HemisphericLight, Skybox } from '$lib'
   import type { PageMeta } from '@vitebook/client'
 
   export const __pageMeta: PageMeta = {

@@ -1,9 +1,6 @@
 <script lang="ts">
-  import type { TextureTargets } from '$lib/types/enums/TextureTargets'
-
   import { getRoot } from '$lib/utils/context'
   import type { Nullable } from 'babylonjs'
-
   import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
   import getParent from './getParent'
@@ -11,7 +8,16 @@
   const root = getRoot()
 
   export let rootUrl = '/'
-  export let textureTarget: TextureTargets
+  export let textureTarget:
+    | 'ambientTexture'
+    | 'bumpTexture'
+    | 'diffuseTexture'
+    | 'emissiveTexture'
+    | 'lightmapTexture'
+    | 'opacityTexture'
+    | 'reflectionTexture'
+    | 'refractionTexture'
+    | 'specularTexture' = 'reflectionTexture'
   export let noMipmap: boolean = undefined
   export let invertZ: boolean = undefined
   export let onLoad: Nullable<() => void> = undefined
