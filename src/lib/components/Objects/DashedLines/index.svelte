@@ -2,7 +2,7 @@
   import { getRoot } from '$lib/utils/context'
   import type { LinesMesh } from 'babylonjs'
   import * as BABYLON from 'babylonjs'
-  import { onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
@@ -10,6 +10,10 @@
   export let name: string = 'DashedLines'
   export let options: Parameters<typeof BABYLON.MeshBuilder.CreateDashedLines>[1]
 
+  const parentObject = getContext('object') as {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+  export let parent: BABYLON.Node = parentObject?.self
   const context = createObjectContext(
     BABYLON.MeshBuilder.CreateDashedLines(name, options, root.scene),
   ) as {
@@ -20,12 +24,14 @@
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
+  export let rotation = BABYLON.Vector3.Zero()
 
-  export const object = root.objects[context.self.id]
+  export let object = root.objects[context.self.id]
 
   onMount(() => {
     try {
       root.objects[context.self.id] = context
+
       root.scene.render()
     } catch (error) {
       console.error(error)
@@ -44,6 +50,13 @@
     context.self.position.x = x || position.x
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
+    context.self.rotation = rotation
+
+    object = context
+  }
+
+  $: if (parent) {
+    context.self.parent = parent
   }
 
   // event handling

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
-  import { onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
@@ -10,12 +10,17 @@
   export let receiveShadows = false
   export let options: Parameters<typeof BABYLON.MeshBuilder.CreateLines>[1]
 
+  const parentObject = getContext('object') as {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+  export let parent: BABYLON.Node = parentObject?.self
   const context = createObjectContext(BABYLON.MeshBuilder.CreateLines(name, options, root.scene))
 
   export let position = BABYLON.Vector3.Zero()
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
+  export let rotation = BABYLON.Vector3.Zero()
 
   export let object = root.objects[context.self.id]
 
@@ -41,9 +46,14 @@
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
     context.self.receiveShadows = receiveShadows
+    context.self.rotation = rotation
 
     object = context
     root.scene.render()
+  }
+
+  $: if (parent) {
+    context.self.parent = parent
   }
 
   // event handling

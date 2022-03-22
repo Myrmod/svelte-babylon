@@ -5,24 +5,24 @@
   import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
-  const parent = getContext('object') as {
-    self: BABYLON.Mesh
-  }
-
-  if (!parent) {
-    throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
-  }
 
   export let name: string = 'Decal'
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateDecal>[2]
+  const parentObject = getContext('object') as {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+  export let parent = parentObject?.self
+  if (!parent) {
+    throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
+  }
+  const context = createObjectContext(BABYLON.MeshBuilder.CreateDecal(name, parent, options))
 
-  const context = createObjectContext(BABYLON.MeshBuilder.CreateDecal(name, parent.self, options))
-
-  export const object = root.objects[context.self.id]
+  export let object = root.objects[context.self.id]
 
   onMount(() => {
     try {
       root.objects[context.self.id] = context
+
       root.scene.render()
     } catch (error) {
       console.error(error)
@@ -38,6 +38,7 @@
   })
 
   $: if (root.objects[context.self.id]) {
+    object = context
     root.scene.render()
   }
 

@@ -1,12 +1,15 @@
 <script lang="ts" context="module">
   import type { PageMeta } from '@vitebook/client'
+  import { ControlsAddon } from '@vitebook/client/addons'
   import * as BABYLON from 'babylonjs'
   import {
     ArcRotateCamera,
     Canvas,
     DirectionalLight,
-    Ground,
+    Disc,
+    FreeCamera,
     HemisphericLight,
+    Skybox,
   } from 'svelte-babylon'
   import Platform from './components/Platform/index.svelte'
 
@@ -17,38 +20,31 @@
 </script>
 
 <script lang="ts">
-  const plattforms: Array<{
-    position: BABYLON.Vector3
-    object: { self: BABYLON.Mesh }
-  }> = [
-    {
-      position: new BABYLON.Vector3(10, 0, -10),
-      object: undefined,
-    },
-    {
-      position: new BABYLON.Vector3(-10, 0, 10),
-      object: undefined,
-    },
-    {
-      position: new BABYLON.Vector3(10, 0, 10),
-      object: undefined,
-    },
-    {
-      position: new BABYLON.Vector3(-10, 0, -10),
-      object: undefined,
-    },
-  ]
+  const platforms: Array<{ self: BABYLON.Mesh }> = []
+  const screens: Array<{ self: BABYLON.Mesh }> = []
 
-  let camera: BABYLON.ArcRotateCamera
+  let arcCamera: BABYLON.ArcRotateCamera
+  let freeCamera: BABYLON.FreeCamera
+  let useFreeCamera = false
+  $: if (freeCamera) {
+    freeCamera.keysUp.push(87) // w
+    freeCamera.keysLeft.push(65) // a
+    freeCamera.keysDown.push(83) // s
+    freeCamera.keysRight.push(68) // d
+  }
 
   let object: {
     self: BABYLON.Mesh
   }
 
   let shadowObjects: Array<typeof object['self']>
-  $: {
-    shadowObjects = plattforms.map(v => v?.object?.self).filter(v => v)
-  }
+  // $: {
+  //   shadowObjects = platforms
+  //     .concat(screens)
+  //     .map(v => v?.self)
+  //     .filter(v => v)
+  //   console.log(shadowObjects.map(i => i.name))
+  // }
 
   let rotateToFacePickedFace: (
     e: BABYLON.ActionEvent,
@@ -65,6 +61,8 @@
     preserveDrawingBuffer: true,
     stencil: true,
   }}
+  enablePointerLockOnClick={useFreeCamera}
+  collisionsEnabled
 >
   <HemisphericLight intensity={0.5} />
   <DirectionalLight
@@ -73,15 +71,63 @@
     position={new BABYLON.Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
-  <ArcRotateCamera
-    bind:camera
-    target={new BABYLON.Vector3(0, 10, 0)}
-    bind:rotateToFacePickedFace
-    radius={50}
-    beta={0}
+  {#if useFreeCamera}
+    <FreeCamera
+      position={new BABYLON.Vector3(0, 2, 0)}
+      speed={0.2}
+      applyGravity
+      checkCollisions
+      ellipsoid={new BABYLON.Vector3(0.01, 1, 0.01)}
+      bind:camera={freeCamera}
+    />
+  {:else}
+    <ArcRotateCamera
+      bind:camera={arcCamera}
+      target={new BABYLON.Vector3(0, 10, 0)}
+      bind:rotateToFacePickedFace
+      radius={50}
+      beta={0}
+    />
+  {/if}
+  <Platform
+    bind:platform={platforms[0]}
+    bind:screen={screens[0]}
+    position={new BABYLON.Vector3(10, 0, 10)}
+    name="Platform1"
   />
-  {#each plattforms as plattform, index}
-    <Platform bind:object={plattforms[index].object} position={plattform.position} />
-  {/each}
-  <Ground options={{ width: 50, height: 50, subdivisions: 2 }} receiveShadows />
+  <Platform
+    bind:platform={platforms[1]}
+    bind:screen={screens[1]}
+    position={new BABYLON.Vector3(-10, 0, 10)}
+    rotation={270}
+    name="Platform2"
+  />
+  <Platform
+    bind:platform={platforms[2]}
+    bind:screen={screens[2]}
+    position={new BABYLON.Vector3(-10, 0, -10)}
+    rotation={180}
+    name="Platform3"
+  />
+  <Platform
+    bind:platform={platforms[3]}
+    bind:screen={screens[3]}
+    position={new BABYLON.Vector3(10, 0, -10)}
+    rotation={90}
+    name="Platform4"
+  />
+  <!-- Base platform -->
+  <Disc
+    checkCollisions
+    options={{ radius: 25 }}
+    rotation={new BABYLON.Vector3(Math.PI / 2, 0, 0)}
+    receiveShadows
+  />
+  <Skybox rootUrl="/assets/textures/skybox/sky" />
 </Canvas>
+
+<ControlsAddon>
+  <label style="margin-top: 24px;display:block;">
+    Use free camera <input type="checkbox" bind:checked={useFreeCamera} />
+  </label>
+</ControlsAddon>

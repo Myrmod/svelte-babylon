@@ -3,7 +3,7 @@
   import * as BABYLON from 'babylonjs'
   // we need better typings for this https://github.com/mapbox/earcut
   import earcut from 'earcut'
-  import { onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
@@ -13,6 +13,10 @@
   export let options: Parameters<typeof BABYLON.MeshBuilder.CreatePolygon>[1]
   export let earcutInjection: () => unknown = earcut
 
+  const parentObject = getContext('object') as {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+  export let parent: BABYLON.Node = parentObject?.self
   const context = createObjectContext(
     BABYLON.MeshBuilder.CreatePolygon(name, options, root.scene, earcutInjection),
   )
@@ -22,6 +26,7 @@
   export let y: number = undefined
   export let z: number = undefined
   export let checkCollisions = false
+  export let rotation = BABYLON.Vector3.Zero()
 
   export let object = root.objects[context.self.id]
 
@@ -48,8 +53,13 @@
     context.self.position.z = z || position.z
     context.self.receiveShadows = receiveShadows
     context.self.checkCollisions = checkCollisions
+    context.self.rotation = rotation
 
     object = context
+  }
+
+  $: if (parent) {
+    context.self.parent = parent
   }
 
   // event handling

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
-  import { onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
@@ -11,6 +11,10 @@
   export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateGroundFromHeightMap>[2]
   export let url: string
 
+  const parentObject = getContext('object') as {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+  export let parent: BABYLON.Node = parentObject?.self
   const context = createObjectContext(
     BABYLON.MeshBuilder.CreateGroundFromHeightMap(name, url, options, root.scene),
   ) as {
@@ -22,6 +26,8 @@
   export let y: number = undefined
   export let z: number = undefined
   export let checkCollisions = false
+  export let rotation = BABYLON.Vector3.Zero()
+  context.self.rotation = rotation
 
   export let object = root.objects[context.self.id]
 
@@ -51,6 +57,10 @@
 
     object = context
     root.scene.render()
+  }
+
+  $: if (parent) {
+    context.self.parent = parent
   }
 
   // event handling

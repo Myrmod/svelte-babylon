@@ -1,12 +1,16 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import * as BABYLON from 'babylonjs'
-  import { onDestroy, onMount } from 'svelte'
-  import { createObjectContext } from '../createObjectContext'
   import 'babylonjs-loaders'
   import 'babylonjs-loaders/babylonjs.loaders'
+  import { getContext, onDestroy, onMount } from 'svelte'
+  import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
+  const parentObject = getContext('object') as {
+    self: BABYLON.Mesh | BABYLON.AbstractMesh
+  }
+  export let parent: BABYLON.Node = parentObject?.self
 
   export let meshesNames: Array<string> | string = ''
   export let fileName: string | File
@@ -99,6 +103,10 @@
       mesh.checkCollisions = checkCollisions
       if (scaling) mesh.scaling = scaling
     })
+  }
+
+  $: if (parent) {
+    context.self.parent = parent
   }
 
   // event handling
