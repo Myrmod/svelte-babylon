@@ -49,6 +49,7 @@
           height: 9 / 5.2,
         }}
         position={new BABYLON.Vector3(0, 0, -0.13)}
+        checkCollisions
       >
         <slot name="screen-material" />
       </Plane>
