@@ -128,6 +128,7 @@
       fontSizeMultiplier={1}
       sizeMultiplier={60}
       position={new BABYLON.Vector3(0, 0, -0.13)}
+      checkCollisions
     />
   </Platform>
   <!-- Video -->
