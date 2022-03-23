@@ -27,8 +27,8 @@ export { default as DirectionalLight } from './components/Lights/DirectionalLigh
 export { default as HemisphericLight } from './components/Lights/HemisphericLight/index.svelte'
 export { default as PointLight } from './components/Lights/PointLight/index.svelte'
 export { default as SpotLight } from './components/Lights/SpotLight/index.svelte'
-export { default as HTMLMaterial } from './components/Materials/HTMLMaterial/index.svelte'
 // Materials
+export { default as HTMLMaterial } from './components/Materials/HTMLMaterial/index.svelte'
 export { default as StandardMaterial } from './components/Materials/StandardMaterial/index.svelte'
 // Objects
 export { default as Box } from './components/Objects/Box/index.svelte'
@@ -56,10 +56,17 @@ export { default as Torus } from './components/Objects/Torus/index.svelte'
 export { default as TorusKnot } from './components/Objects/TorusKnot/index.svelte'
 export { default as Tube } from './components/Objects/Tube/index.svelte'
 export { default as PhysicsImpostor } from './components/PhysicsImpostor/index.svelte'
-export { default as CubeTexture } from './components/Textures/CubeTexture.svelte'
 // Textures
-export { default as StandardTexture } from './components/Textures/Standard/index.svelte'
+export { default as CubeTexture } from './components/Textures/CubeTexture.svelte'
+export { default as DynamicTexture } from './components/Textures/DynamicTexture/index.svelte'
+export { default as StandardTexture } from './components/Textures/StandardTexture/index.svelte'
 // prebuilds
 export { default as FirstPersonWorld } from './prebuilds/FirstPersonWorld/index.svelte'
 export { default as Screen } from './prebuilds/Screen/index.svelte'
 export { default as Skybox } from './prebuilds/Skybox/index.svelte'
+export { default as TextPlane } from './prebuilds/TextPlane/index.svelte'
+
+import drawTextOnTexture from './utils/drawTextOnTexture'
+export const util = {
+  drawTextOnTexture,
+}

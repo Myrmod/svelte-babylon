@@ -37,7 +37,7 @@
   export let wrapV = 1
   export let coordinatesMode: number = BABYLON.Texture.EXPLICIT_MODE
 
-  const context = getParent()
+  const parent = getParent()
   export const texture = new BABYLON.CubeTexture(
     rootUrl,
     root.scene,
@@ -56,14 +56,15 @@
   )
 
   onMount(() => {
-    context.self[textureTarget] = texture
+    parent.self[textureTarget] = texture
   })
 
   onDestroy(() => {
-    context.self[textureTarget] = null
+    parent.self[textureTarget] = null
+    texture.dispose()
   })
 
-  $: if (texture && context.self && context.self[textureTarget]) {
+  $: if (texture && parent.self && parent.self[textureTarget]) {
     texture.wrapR = wrapR
     texture.wrapU = wrapU
     texture.wrapV = wrapV

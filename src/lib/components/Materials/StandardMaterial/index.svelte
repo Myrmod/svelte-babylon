@@ -23,15 +23,15 @@
 
   createMaterialContext(material)
 
-  const context = getParent()
+  export let parent = getParent()
 
   onMount(() => {
     try {
-      if (context.self.material) {
-        console.warn(`Previous material on ${context.self.id} will be overwritten`)
+      if (parent.self.material) {
+        console.warn(`Previous material on ${parent.self.id} will be overwritten`)
       }
 
-      context.self.material = material
+      parent.self.material = material
 
       root.scene.render()
     } catch (error) {
@@ -40,10 +40,10 @@
   })
 
   onDestroy(() => {
-    context.self.material = null
+    parent.self.material = null
   })
 
-  $: if (root.objects[context.self.id]?.self?.material) {
+  $: if (root.objects[parent.self.id]?.self?.material) {
     if (specularColor) material.specularColor = specularColor
     if (ambientColor) material.ambientColor = ambientColor
     if (diffuseColor) material.diffuseColor = diffuseColor
@@ -52,7 +52,7 @@
     root.scene.render()
   }
 
-  $: if (root.objects[context.self.id]?.self?.material) {
+  $: if (root.objects[parent.self.id]?.self?.material) {
     material.roughness = roughness
     material.separateCullingPass = separateCullingPass
     material.invertNormalMapX = invertNormalMapX

@@ -9,10 +9,10 @@
     Disc,
     FreeCamera,
     HemisphericLight,
-    HTMLMaterial,
     Skybox,
     StandardMaterial,
     StandardTexture,
+    TextPlane,
   } from 'svelte-babylon'
   import Platform from './components/Platform/index.svelte'
 
@@ -97,8 +97,9 @@
     position={new BABYLON.Vector3(10, 0.5, 10)}
     name="Platform1"
   >
-    <HTMLMaterial slot="screen" />
+    <!-- <HTMLMaterial slot="screen" /> -->
   </Platform>
+  <!-- Image on a screen -->
   <Platform
     bind:platform={platforms[1]}
     bind:screen={screens[1]}
@@ -106,18 +107,30 @@
     rotation={270}
     name="Platform2"
   >
-    <StandardMaterial slot="screen">
+    <StandardMaterial slot="screen-material">
       <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="diffuseTexture" />
       <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="specularTexture" />
     </StandardMaterial>
   </Platform>
+  <!-- Text -->
   <Platform
     bind:platform={platforms[2]}
     bind:screen={screens[2]}
     position={new BABYLON.Vector3(-10, 0.5, -10)}
     rotation={180}
     name="Platform3"
-  />
+  >
+    <TextPlane
+      text="TextPlane"
+      planeOptions={{ width: 16 / 5.2, height: 9 / 5.2 }}
+      backgroundColor={'#ffffff'}
+      color={'#000000'}
+      fontSizeMultiplier={1}
+      sizeMultiplier={60}
+      position={new BABYLON.Vector3(0, 0, -0.13)}
+    />
+  </Platform>
+  <!-- Video -->
   <Platform
     bind:platform={platforms[3]}
     bind:screen={screens[3]}

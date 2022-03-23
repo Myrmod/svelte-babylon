@@ -42,14 +42,16 @@
     checkCollisions
   >
     <StandardMaterial diffuseColor={BABYLON.Color3.Black()} />
-    <Plane
-      options={{
-        width: 16 / 5.2,
-        height: 9 / 5.2,
-      }}
-      position={new BABYLON.Vector3(0, 0, -0.13)}
-    >
-      <slot name="screen" />
-    </Plane>
+    <slot>
+      <Plane
+        options={{
+          width: 16 / 5.2,
+          height: 9 / 5.2,
+        }}
+        position={new BABYLON.Vector3(0, 0, -0.13)}
+      >
+        <slot name="screen-material" />
+      </Plane>
+    </slot>
   </Box>
 </Cylinder>
