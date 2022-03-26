@@ -80,6 +80,7 @@
       applyGravity
       checkCollisions
       ellipsoid={new BABYLON.Vector3(0.01, 1, 0.01)}
+      target={new BABYLON.Vector3(4, 2, 4)}
       bind:camera={freeCamera}
     />
   {:else}
