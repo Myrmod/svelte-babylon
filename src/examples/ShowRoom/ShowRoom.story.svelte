@@ -13,6 +13,7 @@
     StandardMaterial,
     StandardTexture,
     TextPlane,
+    VideoTexture,
   } from 'svelte-babylon'
   import Platform from './components/Platform/index.svelte'
 
@@ -55,6 +56,14 @@
     totalFrames?: number,
     onAnimationEnd?: any,
   ) => void
+
+  let videoTexture: BABYLON.VideoTexture
+  let playVideo = false
+  $: if (playVideo && videoTexture) {
+    videoTexture.video.play()
+  } else if (videoTexture) {
+    videoTexture.video.pause()
+  }
 </script>
 
 <Canvas
@@ -139,7 +148,14 @@
     position={new BABYLON.Vector3(10, 0.5, -10)}
     rotation={90}
     name="Platform4"
-  />
+  >
+    <StandardMaterial roughness={1} emissiveColor={BABYLON.Color3.White()}>
+      <VideoTexture
+        bind:texture={videoTexture}
+        src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+      />
+    </StandardMaterial>
+  </Platform>
   <!-- Base platform -->
   <Disc
     checkCollisions
@@ -153,5 +169,8 @@
 <ControlsAddon>
   <label style="margin-top: 24px;display:block;">
     Use free camera <input type="checkbox" bind:checked={useFreeCamera} />
+  </label>
+  <label style="margin-top: 24px;display:block;">
+    play video <input type="checkbox" bind:checked={playVideo} />
   </label>
 </ControlsAddon>
