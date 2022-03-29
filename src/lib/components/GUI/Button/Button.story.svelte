@@ -1,4 +1,7 @@
 <script lang="ts" context="module">
+  import type { PageMeta } from '@vitebook/client'
+  import { ControlsAddon } from '@vitebook/client/addons'
+  import * as BABYLON from 'babylonjs'
   import {
     ArcRotateCamera,
     Box,
@@ -8,10 +11,7 @@
     Ground,
     GUI,
     HemisphericLight,
-  } from '$lib'
-  import type { PageMeta } from '@vitebook/client'
-  import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'Button',

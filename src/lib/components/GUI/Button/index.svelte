@@ -39,7 +39,7 @@
   onDestroy(() => {
     context.removeControl(guiElement)
     guiElement.dispose()
-    delete root.gui[context.name].controls[name]
+    delete root.gui[context.name]
   })
 
   $: if (root.gui?.[context?.name]?.controls?.[name]) {

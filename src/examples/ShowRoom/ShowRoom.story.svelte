@@ -15,6 +15,7 @@
     TextPlane,
     VideoTexture,
   } from 'svelte-babylon'
+  import GUI from './components/GUI/index.svelte'
   import Platform from './components/Platform/index.svelte'
 
   export const __pageMeta: PageMeta = {
@@ -25,7 +26,7 @@
 
 <script lang="ts">
   const platforms: Array<{ self: BABYLON.Mesh }> = []
-  const screens: Array<{ self: BABYLON.Mesh }> = []
+  let screens: Array<{ self: BABYLON.Mesh }> = []
 
   let arcCamera: BABYLON.ArcRotateCamera
   let freeCamera: BABYLON.FreeCamera
@@ -48,6 +49,8 @@
       .map(v => v?.self)
       .filter(v => v)
   }
+
+  $: screens = screens
 
   let rotateToFacePickedFace: (
     e: BABYLON.ActionEvent,
@@ -105,7 +108,7 @@
     bind:platform={platforms[0]}
     bind:screen={screens[0]}
     position={new BABYLON.Vector3(10, 0.5, 10)}
-    name="Platform1"
+    name="Platform1 HTML"
   >
     <!-- <HTMLMaterial slot="screen" /> -->
   </Platform>
@@ -115,7 +118,7 @@
     bind:screen={screens[1]}
     position={new BABYLON.Vector3(-10, 0.5, 10)}
     rotation={270}
-    name="Platform2"
+    name="Platform2 Image"
   >
     <StandardMaterial slot="screen-material">
       <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="diffuseTexture" />
@@ -128,7 +131,7 @@
     bind:screen={screens[2]}
     position={new BABYLON.Vector3(-10, 0.5, -10)}
     rotation={180}
-    name="Platform3"
+    name="Platform3 Text"
   >
     <TextPlane
       text="TextPlane"
@@ -147,7 +150,7 @@
     bind:screen={screens[3]}
     position={new BABYLON.Vector3(10, 0.5, -10)}
     rotation={90}
-    name="Platform4"
+    name="Platform4 Video"
   >
     <StandardMaterial roughness={1} emissiveColor={BABYLON.Color3.White()}>
       <VideoTexture
@@ -164,6 +167,9 @@
     receiveShadows
   />
   <Skybox rootUrl="/assets/textures/skybox/sky" />
+  {#if screens.length}
+    <GUI {screens} />
+  {/if}
 </Canvas>
 
 <ControlsAddon>
