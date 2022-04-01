@@ -152,7 +152,12 @@
     rotation={90}
     name="Platform4 Video"
   >
-    <StandardMaterial roughness={1} emissiveColor={BABYLON.Color3.White()}>
+    <StandardMaterial
+      roughness={1}
+      emissiveColor={BABYLON.Color3.White()}
+      slot="screen-material"
+      specularColor={BABYLON.Color3.Black()}
+    >
       <VideoTexture
         bind:texture={videoTexture}
         src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
@@ -167,7 +172,7 @@
     receiveShadows
   />
   <Skybox rootUrl="/assets/textures/skybox/sky" />
-  {#if screens.length}
+  {#if screens.length && !useFreeCamera}
     <GUI {screens} />
   {/if}
 </Canvas>
