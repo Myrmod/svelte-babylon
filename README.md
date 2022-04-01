@@ -35,7 +35,7 @@ npm i svelte-babylon
 npm ci
 ```
 
-Run `npm run dev -- --open` to launch the demo site.
+Run `npm run vitebook:dev` to launch the demo site.
 
 ## License
 
