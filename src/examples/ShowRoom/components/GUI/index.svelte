@@ -15,29 +15,43 @@
 
   function handleClick(id: number) {
     if (id === -1) {
-      ;(root.scene.activeCamera as BABYLON.ArcRotateCamera).setTarget(new BABYLON.Vector3(0, 10, 0))
+      root.scene.beginDirectAnimation(
+        root.scene.activeCamera,
+        [
+          animMove(root.scene.activeCamera, new BABYLON.Vector3(0, 50, 0)),
+          animLookAt(root.scene.activeCamera as BABYLON.ArcRotateCamera, BABYLON.Vector3.Zero()),
+        ],
+        0,
+        120,
+        false,
+        0.5,
+        () => {
+          ;(root.scene.activeCamera as BABYLON.ArcRotateCamera).setTarget(BABYLON.Vector3.Zero())
+        },
+      )
 
       return
     }
 
     const mesh = screens[id].self
     const platform = mesh.parent as BABYLON.Mesh
-    const vector = mesh.forward
-    const origin = platform.position
-    const newPosition = origin.add(vector.multiplyByFloats(1, 1, 1))
+    const vector = mesh.forward.multiplyByFloats(-1, -1, -1)
+    const origin = new BABYLON.Vector3(platform.position.x, mesh.position.y, platform.position.z)
+    const newPosition = origin.add(vector.multiplyByFloats(5, 1, 5))
 
-    console.log(mesh.name)
-    ;(root.scene.activeCamera as BABYLON.ArcRotateCamera).setTarget(mesh.position)
     root.scene.beginDirectAnimation(
       root.scene.activeCamera,
       [
         animMove(root.scene.activeCamera, newPosition),
-        animLookAt(root.scene.activeCamera as BABYLON.ArcRotateCamera, mesh.position),
+        animLookAt(root.scene.activeCamera as BABYLON.ArcRotateCamera, origin),
       ],
       0,
       120,
       false,
       0.5,
+      () => {
+        ;(root.scene.activeCamera as BABYLON.ArcRotateCamera).setTarget(origin)
+      },
     )
 
     function animMove(camera: BABYLON.Camera, pos: BABYLON.Vector3) {
