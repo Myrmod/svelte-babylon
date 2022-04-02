@@ -29,30 +29,32 @@
   checkCollisions
   receiveShadows
 >
-  <Box
-    name={`${name}-Screen`}
-    position={new BABYLON.Vector3(1, 3, 1)}
-    rotation={new BABYLON.Vector3(0, Math.PI / 4, 0)}
-    options={{
-      width: 16 / 5,
-      height: 9 / 5,
-      depth: 0.25,
-    }}
-    bind:object={screen}
-    checkCollisions
-  >
-    <StandardMaterial diffuseColor={BABYLON.Color3.Black()} />
-    <slot>
-      <Plane
-        options={{
-          width: 16 / 5.2,
-          height: 9 / 5.2,
-        }}
-        position={new BABYLON.Vector3(0, 0, -0.13)}
-        checkCollisions
-      >
-        <slot name="screen-material" />
-      </Plane>
-    </slot>
-  </Box>
+  <slot>
+    <Box
+      name={`${name}-Screen`}
+      position={new BABYLON.Vector3(1, 3, 1)}
+      rotation={new BABYLON.Vector3(0, Math.PI / 4, 0)}
+      options={{
+        width: 16 / 5,
+        height: 9 / 5,
+        depth: 0.25,
+      }}
+      bind:object={screen}
+      checkCollisions
+    >
+      <StandardMaterial diffuseColor={BABYLON.Color3.Black()} />
+      <slot name="screen">
+        <Plane
+          options={{
+            width: 16 / 5.2,
+            height: 9 / 5.2,
+          }}
+          position={new BABYLON.Vector3(0, 0, -0.13)}
+          checkCollisions
+        >
+          <slot name="screen-material" />
+        </Plane>
+      </slot>
+    </Box>
+  </slot>
 </Cylinder>

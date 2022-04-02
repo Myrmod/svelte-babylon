@@ -12,21 +12,11 @@
 <script lang="ts">
   const objectPosition = new BABYLON.Vector3(0, 3, 0)
 
-  let meshes: BABYLON.ISceneLoaderAsyncResult['meshes']
-  let shadowObjects: typeof meshes
-  $: {
-    const temp: typeof shadowObjects = []
-    if (meshes?.[0]) {
-      temp.push(meshes[0])
-    }
-    shadowObjects = temp
+  let model: BABYLON.Mesh
+  let shadowObjects: Array<BABYLON.Mesh>
+  $: if (model) {
+    shadowObjects = [model]
   }
-
-  function handleClick(e) {
-    console.log('click:', e)
-  }
-
-  $: console.log(meshes)
 </script>
 
 <Canvas
@@ -48,11 +38,10 @@
     name="logo"
     rootUrl="/assets/models/"
     fileName="logo.glb"
-    scaling={new BABYLON.Vector3(1, 1, 1)}
+    scaling={new BABYLON.Vector3(5, 5, 5)}
     position={new BABYLON.Vector3(0, 2, 0)}
     receiveShadows
-    onPick={handleClick}
-    bind:meshes
+    bind:__root__={model}
   />
   <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
 </Canvas>

@@ -105,8 +105,8 @@
     })
   }
 
-  $: if (parent) {
-    context.self.parent = parent
+  $: if (parent && __root__) {
+    __root__.parent = parent
   }
 
   // event handling

@@ -56,6 +56,13 @@
       root.engine = new BABYLON.Engine(canvas, antialiasing, engineOptions)
       root.scene = new BABYLON.Scene(root.engine)
 
+      // this way we prevent rendering of no camera is active
+      root.scene.onBeforeRenderObservable.add((_scene, event) => {
+        if (!root.scene.activeCamera) {
+          event.skipNextObservers = true
+        }
+      })
+
       window.addEventListener('resize', () => {
         root.engine.resize()
       })

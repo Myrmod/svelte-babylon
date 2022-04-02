@@ -107,7 +107,7 @@
   })
 
   onDestroy(() => {
-    camera.dispose()
+    camera?.dispose()
     root.cameras[camera.id] = null
   })
 

@@ -1,6 +1,6 @@
 {
   "name": "svelte-babylon",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",

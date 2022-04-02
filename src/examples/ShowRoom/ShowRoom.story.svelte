@@ -5,6 +5,7 @@
   import {
     ArcRotateCamera,
     Canvas,
+    Custom,
     DirectionalLight,
     Disc,
     FreeCamera,
@@ -25,8 +26,11 @@
 </script>
 
 <script lang="ts">
+  import type RootContext from '$lib/types'
+
   const platforms: Array<{ self: BABYLON.Mesh }> = []
   let screens: Array<{ self: BABYLON.Mesh }> = []
+  let root: RootContext
 
   let arcCamera: BABYLON.ArcRotateCamera
   let freeCamera: BABYLON.FreeCamera
@@ -42,12 +46,21 @@
     self: BABYLON.Mesh
   }
 
+  let customMesh: BABYLON.Mesh
+  $: if (customMesh && root) {
+    root.scene.onBeforeRenderObservable.add(() => {
+      if (root.scene.activeCamera) {
+        customMesh.rotate(new BABYLON.Vector3(1, 1, 1), 0.005)
+      }
+    })
+  }
+
   let shadowObjects: Array<typeof object['self']>
-  $: {
-    shadowObjects = platforms
-      .concat(screens)
+  $: if (customMesh && screens?.length && platforms?.length) {
+    shadowObjects = [...platforms, ...screens]
       .map(v => v?.self)
       .filter(v => v)
+      .concat(customMesh)
   }
 
   $: screens = screens
@@ -77,12 +90,13 @@
   }}
   enablePointerLockOnClick={useFreeCamera}
   collisionsEnabled
+  bind:root
 >
   <HemisphericLight intensity={1} />
   <DirectionalLight
     intensity={0.25}
     direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    position={new BABYLON.Vector3(20, 60, 20)}
     castShadowOf={shadowObjects}
   />
   {#if useFreeCamera}
@@ -108,9 +122,17 @@
     bind:platform={platforms[0]}
     bind:screen={screens[0]}
     position={new BABYLON.Vector3(10, 0.5, 10)}
-    name="Platform1 HTML"
+    name="Platform1 Object"
   >
-    <!-- <HTMLMaterial slot="screen" /> -->
+    <Custom
+      name="logo"
+      rootUrl="/assets/models/"
+      fileName="logo.glb"
+      scaling={new BABYLON.Vector3(7, 7, 7)}
+      position={new BABYLON.Vector3(0, 2, 0)}
+      receiveShadows
+      bind:__root__={customMesh}
+    />
   </Platform>
   <!-- Image on a screen -->
   <Platform
@@ -134,6 +156,7 @@
     name="Platform3 Text"
   >
     <TextPlane
+      slot="screen"
       text="TextPlane"
       planeOptions={{ width: 16 / 5.2, height: 9 / 5.2 }}
       backgroundColor={'#ffffff'}

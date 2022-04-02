@@ -75,21 +75,25 @@
 
   let shadowGenerator: BABYLON.ShadowGenerator
   $: if (castShadowOf?.length) {
-    if (!shadowGenerator) {
-      shadowGenerator = new BABYLON.ShadowGenerator(1024, light)
-    }
-    if (shadowGenerator) {
-      castShadowOf
-        .filter(i => i)
-        .forEach(mesh => {
-          shadowGenerator?.addShadowCaster(mesh)
-        })
+    try {
+      if (!shadowGenerator) {
+        shadowGenerator = new BABYLON.ShadowGenerator(1024, light)
+      }
+      if (shadowGenerator) {
+        castShadowOf
+          .filter(i => i)
+          .forEach(mesh => {
+            shadowGenerator?.addShadowCaster(mesh)
+          })
 
-      shadowGenerator.useExponentialShadowMap = useExponentialShadowMap
-      shadowGenerator.usePoissonSampling = usePoissonSampling
-      shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
+        shadowGenerator.useExponentialShadowMap = useExponentialShadowMap
+        shadowGenerator.usePoissonSampling = usePoissonSampling
+        shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
 
-      root.scene.render()
+        root.scene.render()
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 </script>
