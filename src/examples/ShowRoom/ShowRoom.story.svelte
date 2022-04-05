@@ -1,4 +1,5 @@
 <script lang="ts" context="module">
+  import type RootContext from '$lib/types'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
   import * as BABYLON from 'babylonjs'
@@ -26,8 +27,6 @@
 </script>
 
 <script lang="ts">
-  import type RootContext from '$lib/types'
-
   const platforms: Array<{ self: BABYLON.Mesh }> = []
   let screens: Array<{ self: BABYLON.Mesh }> = []
   let root: RootContext
@@ -63,7 +62,10 @@
       .concat(customMesh)
   }
 
-  $: screens = screens
+  $: {
+    screens[0] = { self: customMesh }
+    screens = screens
+  }
 
   let rotateToFacePickedFace: (
     e: BABYLON.ActionEvent,
@@ -120,7 +122,6 @@
   {/if}
   <Platform
     bind:platform={platforms[0]}
-    bind:screen={screens[0]}
     position={new BABYLON.Vector3(10, 0.5, 10)}
     name="Platform1 Object"
   >
