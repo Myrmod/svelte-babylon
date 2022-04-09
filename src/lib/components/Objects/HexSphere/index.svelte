@@ -22,6 +22,7 @@
       {
         custom: GDToGP(createGDMM(1, 10)),
         ...options,
+        size: options.size ? options.size * 0.1 : 0.1,
       },
       root.scene,
     ),
