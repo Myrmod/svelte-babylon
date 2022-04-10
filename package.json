@@ -38,7 +38,7 @@
     "svelte2tsx": "^0.4.14",
     "tslib": "^2.3.1",
     "typescript": "^4.6.3",
-    "vite": "^2.7.0"
+    "vite": "^2.8.4"
   },
   "license": "MIT (modified)",
   "type": "module",
