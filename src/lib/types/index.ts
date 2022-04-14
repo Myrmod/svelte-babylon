@@ -1,15 +1,13 @@
-import type {
-  AbstractMesh,
-  Engine,
-  Gizmo,
-  GizmoManager,
-  ISceneLoaderAsyncResult,
-  Light,
-  Mesh,
-  PhysicsImpostor,
-  Scene,
-  TargetCamera,
-} from '@babylonjs/core'
+import type { TargetCamera } from '@babylonjs/core/Cameras/targetCamera'
+import type { Engine } from '@babylonjs/core/Engines/engine'
+import type { Gizmo } from '@babylonjs/core/Gizmos/gizmo'
+import type { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager'
+import type { Light } from '@babylonjs/core/Lights/light'
+import type { ISceneLoaderAsyncResult } from '@babylonjs/core/Loading/sceneLoader'
+import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+import type { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor'
+import type { Scene } from '@babylonjs/core/scene'
 import type { AdvancedDynamicTexture, Control } from '@babylonjs/gui'
 
 export default interface RootContext {
