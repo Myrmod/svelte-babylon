@@ -1,4 +1,6 @@
 <script lang="ts" context="module">
+  import { AbstractMesh, ActionEvent, Color3, Mesh, Vector3 } from '@babylonjs/core'
+  import type { PageMeta } from '@vitebook/client'
   import {
     ArcRotateCamera,
     Box,
@@ -8,9 +10,7 @@
     Ground,
     HemisphericLight,
     StandardMaterial,
-  } from '$lib'
-  import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'Decal',
@@ -20,10 +20,10 @@
 </script>
 
 <script lang="ts">
-  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+  const objectPosition = new Vector3(0, 3, 0)
 
   let object: {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
 
   let shadowObjects: Array<typeof object['self']>
@@ -37,9 +37,9 @@
 
   // handling bullet holes
   let bulletHoles: Array<{
-    position: BABYLON.Vector3
+    position: Vector3
   }> = []
-  function handlePick(e: BABYLON.ActionEvent) {
+  function handlePick(e: ActionEvent) {
     const temp = bulletHoles
 
     temp.push({
@@ -59,8 +59,8 @@
   <HemisphericLight intensity={0.5} />
   <DirectionalLight
     intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
   <ArcRotateCamera target={objectPosition} />
@@ -68,11 +68,11 @@
     {#each bulletHoles as hole}
       <Decal
         options={{
-          size: new BABYLON.Vector3(0.25, 0.25, 0.25),
+          size: new Vector3(0.25, 0.25, 0.25),
           position: hole.position,
         }}
       >
-        <StandardMaterial diffuseColor={BABYLON.Color3.Black()} />
+        <StandardMaterial diffuseColor={Color3.Black()} />
       </Decal>
     {/each}
   </Box>

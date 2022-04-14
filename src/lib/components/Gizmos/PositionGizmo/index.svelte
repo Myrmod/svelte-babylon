@@ -1,17 +1,16 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-
-  import * as BABYLON from 'babylonjs'
+  import { GizmoManager, PositionGizmo, UtilityLayerRenderer } from '@babylonjs/core'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
 
   export let name: string = 'PositionGizmo'
-  export let gizmoLayer: BABYLON.UtilityLayerRenderer = undefined
+  export let gizmoLayer: UtilityLayerRenderer = undefined
   export let thickness: number = undefined
-  export const gizmoManager = new BABYLON.GizmoManager(root.scene)
+  export const gizmoManager = new GizmoManager(root.scene)
 
-  export const gizmo = new BABYLON.PositionGizmo(gizmoLayer, thickness, gizmoManager)
+  export const gizmo = new PositionGizmo(gizmoLayer, thickness, gizmoManager)
 
   onMount(() => {
     try {

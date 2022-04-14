@@ -1,8 +1,8 @@
-import type * as BABYLON from 'babylonjs'
+import type { StandardMaterial } from '@babylonjs/core'
 import { getContext } from 'svelte'
 
 export default function getParent(): {
-  self: BABYLON.StandardMaterial
+  self: StandardMaterial
 } {
   return getContext('material')
 }

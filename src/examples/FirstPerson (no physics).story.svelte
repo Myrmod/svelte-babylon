@@ -1,8 +1,15 @@
 <script lang="ts" context="module">
-  import { Canvas, Custom, DirectionalLight, FreeCamera, Ground, HemisphericLight } from '$lib'
+  import { FreeCamera as FCamera, ISceneLoaderAsyncResult, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
+  import {
+    Canvas,
+    Custom,
+    DirectionalLight,
+    FreeCamera,
+    Ground,
+    HemisphericLight,
+  } from 'svelte-babylon'
   import DescriptionAddon from 'vitebook/Addons/DescriptionAddon.svelte'
 
   export const __pageMeta: PageMeta = {
@@ -12,11 +19,11 @@
 </script>
 
 <script lang="ts">
-  let meshes: BABYLON.ISceneLoaderAsyncResult['meshes']
+  let meshes: ISceneLoaderAsyncResult['meshes']
   let showCustom = true
 
   // Add new keyboard inputs for camera movement
-  let camera: BABYLON.FreeCamera
+  let camera: FCamera
   $: if (camera) {
     camera.keysUp.push(87) // w
     camera.keysLeft.push(65) // a
@@ -25,7 +32,7 @@
   }
 
   $: if (camera && typeof showCustom === 'boolean') {
-    camera.position = new BABYLON.Vector3(0, 10, 0)
+    camera.position = new Vector3(0, 10, 0)
   }
 </script>
 
@@ -41,15 +48,15 @@
   <HemisphericLight intensity={0.5} />
   <DirectionalLight
     intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
     castShadowOf={meshes}
   />
   <FreeCamera
-    position={new BABYLON.Vector3(0, 10, 0)}
+    position={new Vector3(0, 10, 0)}
     applyGravity
     checkCollisions
-    ellipsoid={new BABYLON.Vector3(0.01, 1, 0.01)}
+    ellipsoid={new Vector3(0.01, 1, 0.01)}
     bind:camera
   />
   {#if showCustom}

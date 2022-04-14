@@ -1,18 +1,18 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { Texture } from 'babylonjs'
-  import * as GUI from 'babylonjs-gui'
+  import { Texture } from '@babylonjs/core'
+  import { AdvancedDynamicTexture } from '@babylonjs/gui'
   import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()
 
   export let name: string = 'GUI'
   export let foreground = true
-  export let sampling: Parameters<typeof GUI.AdvancedDynamicTexture.CreateFullscreenUI>[3] =
+  export let sampling: Parameters<typeof AdvancedDynamicTexture.CreateFullscreenUI>[3] =
     Texture.BILINEAR_SAMPLINGMODE
   export let adaptiveScaling = false
 
-  export const gui = GUI.AdvancedDynamicTexture.CreateFullscreenUI(
+  export const gui = AdvancedDynamicTexture.CreateFullscreenUI(
     name,
     foreground,
     root.scene,
@@ -24,11 +24,11 @@
 
   onMount(() => {
     try {
-      if (root.gui[gui.name]) {
+      if (root.gui[name]) {
         throw new Error(`A GUI names "${name}" already exists`)
       }
 
-      root.gui[gui.name] = {
+      root.gui[name] = {
         self: gui,
         controls: {},
       }

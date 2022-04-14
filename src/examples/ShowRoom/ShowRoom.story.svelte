@@ -1,8 +1,16 @@
 <script lang="ts" context="module">
   import type RootContext from '$lib/types'
+  import {
+    ActionEvent,
+    ArcRotateCamera as ACamera,
+    Color3,
+    FreeCamera as FCamera,
+    Mesh,
+    Vector3,
+    VideoTexture as VTexture,
+  } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
   import {
     ArcRotateCamera,
     Canvas,
@@ -27,12 +35,12 @@
 </script>
 
 <script lang="ts">
-  const platforms: Array<{ self: BABYLON.Mesh }> = []
-  let screens: Array<{ self: BABYLON.Mesh }> = []
+  const platforms: Array<{ self: Mesh }> = []
+  let screens: Array<{ self: Mesh }> = []
   let root: RootContext
 
-  let arcCamera: BABYLON.ArcRotateCamera
-  let freeCamera: BABYLON.FreeCamera
+  let arcCamera: ACamera
+  let freeCamera: FCamera
   let useFreeCamera = false
   $: if (freeCamera) {
     freeCamera.keysUp.push(87) // w
@@ -42,14 +50,14 @@
   }
 
   let object: {
-    self: BABYLON.Mesh
+    self: Mesh
   }
 
-  let customMesh: BABYLON.Mesh
+  let customMesh: Mesh
   $: if (customMesh && root) {
     root.scene.onBeforeRenderObservable.add(() => {
       if (root.scene.activeCamera) {
-        customMesh.rotate(new BABYLON.Vector3(1, 1, 1), 0.005)
+        customMesh.rotate(new Vector3(1, 1, 1), 0.005)
       }
     })
   }
@@ -68,14 +76,14 @@
   }
 
   let rotateToFacePickedFace: (
-    e: BABYLON.ActionEvent,
+    e: ActionEvent,
     radius?: number,
     fps?: number,
     totalFrames?: number,
     onAnimationEnd?: any,
   ) => void
 
-  let videoTexture: BABYLON.VideoTexture
+  let videoTexture: VTexture
   let playVideo = false
   $: if (playVideo && videoTexture) {
     videoTexture.video.play()
@@ -97,24 +105,24 @@
   <HemisphericLight intensity={1} />
   <DirectionalLight
     intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(20, 60, 20)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(20, 60, 20)}
     castShadowOf={shadowObjects}
   />
   {#if useFreeCamera}
     <FreeCamera
-      position={new BABYLON.Vector3(0, 2, 0)}
+      position={new Vector3(0, 2, 0)}
       speed={0.2}
       applyGravity
       checkCollisions
-      ellipsoid={new BABYLON.Vector3(0.01, 1, 0.01)}
-      target={new BABYLON.Vector3(4, 2, 4)}
+      ellipsoid={new Vector3(0.01, 1, 0.01)}
+      target={new Vector3(4, 2, 4)}
       bind:camera={freeCamera}
     />
   {:else}
     <ArcRotateCamera
       bind:camera={arcCamera}
-      target={new BABYLON.Vector3(0, 10, 0)}
+      target={new Vector3(0, 10, 0)}
       bind:rotateToFacePickedFace
       radius={50}
       beta={0}
@@ -122,15 +130,15 @@
   {/if}
   <Platform
     bind:platform={platforms[0]}
-    position={new BABYLON.Vector3(10, 0.5, 10)}
+    position={new Vector3(10, 0.5, 10)}
     name="Platform1 Object"
   >
     <Custom
       name="logo"
       rootUrl="/assets/models/"
       fileName="logo.glb"
-      scaling={new BABYLON.Vector3(7, 7, 7)}
-      position={new BABYLON.Vector3(0, 2, 0)}
+      scaling={new Vector3(7, 7, 7)}
+      position={new Vector3(0, 2, 0)}
       receiveShadows
       bind:__root__={customMesh}
     />
@@ -139,20 +147,20 @@
   <Platform
     bind:platform={platforms[1]}
     bind:screen={screens[1]}
-    position={new BABYLON.Vector3(-10, 0.5, 10)}
+    position={new Vector3(-10, 0.5, 10)}
     rotation={270}
     name="Platform2 Image"
   >
     <StandardMaterial slot="screen-material">
-      <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="diffuseTexture" />
-      <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="specularTexture" />
+      <StandardTexture url="/assets/images/svelte-png" textureTarget="diffuseTexture" />
+      <StandardTexture url="/assets/images/svelte-png" textureTarget="specularTexture" />
     </StandardMaterial>
   </Platform>
   <!-- Text -->
   <Platform
     bind:platform={platforms[2]}
     bind:screen={screens[2]}
-    position={new BABYLON.Vector3(-10, 0.5, -10)}
+    position={new Vector3(-10, 0.5, -10)}
     rotation={180}
     name="Platform3 Text"
   >
@@ -164,7 +172,7 @@
       color={'#000000'}
       fontSizeMultiplier={1}
       sizeMultiplier={60}
-      position={new BABYLON.Vector3(0, 0, -0.13)}
+      position={new Vector3(0, 0, -0.13)}
       checkCollisions
     />
   </Platform>
@@ -172,15 +180,15 @@
   <Platform
     bind:platform={platforms[3]}
     bind:screen={screens[3]}
-    position={new BABYLON.Vector3(10, 0.5, -10)}
+    position={new Vector3(10, 0.5, -10)}
     rotation={90}
     name="Platform4 Video"
   >
     <StandardMaterial
       roughness={1}
-      emissiveColor={BABYLON.Color3.White()}
+      emissiveColor={Color3.White()}
       slot="screen-material"
-      specularColor={BABYLON.Color3.Black()}
+      specularColor={Color3.Black()}
     >
       <VideoTexture
         bind:texture={videoTexture}
@@ -192,7 +200,7 @@
   <Disc
     checkCollisions
     options={{ radius: 25 }}
-    rotation={new BABYLON.Vector3(Math.PI / 2, 0, 0)}
+    rotation={new Vector3(Math.PI / 2, 0, 0)}
     receiveShadows
   />
   <Skybox rootUrl="/assets/textures/skybox/sky" />

@@ -1,8 +1,8 @@
-import type * as BABYLON from 'babylonjs'
+import type { StandardMaterial } from '@babylonjs/core'
 import { setContext } from 'svelte'
 
-export function createMaterialContext(self: BABYLON.StandardMaterial): {
-  self: BABYLON.StandardMaterial
+export function createMaterialContext(self: StandardMaterial): {
+  self: StandardMaterial
 } {
   const context = {
     self,

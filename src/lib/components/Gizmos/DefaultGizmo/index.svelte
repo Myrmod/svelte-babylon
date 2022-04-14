@@ -1,30 +1,24 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-
-  import * as BABYLON from 'babylonjs'
+  import { AbstractMesh, GizmoManager, Mesh, UtilityLayerRenderer } from '@babylonjs/core'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
   const parent = getContext('object') as {
-    self: BABYLON.AbstractMesh | BABYLON.Mesh
+    self: AbstractMesh | Mesh
   }
 
   export let name: string = 'GizmoManager'
   export let thickness: number = undefined
-  export let utilityLayer: BABYLON.UtilityLayerRenderer = undefined
-  export let keepDepthUtilityLayer: BABYLON.UtilityLayerRenderer = undefined
+  export let utilityLayer: UtilityLayerRenderer = undefined
+  export let keepDepthUtilityLayer: UtilityLayerRenderer = undefined
   export let positionGizmoEnabled = true
   export let rotationGizmoEnabled = true
   export let scaleGizmoEnabled = true
   export let boundingBoxGizmoEnabled = true
   export let usePointerToAttachGizmos = false
 
-  export const gizmo = new BABYLON.GizmoManager(
-    root.scene,
-    thickness,
-    utilityLayer,
-    keepDepthUtilityLayer,
-  )
+  export const gizmo = new GizmoManager(root.scene, thickness, utilityLayer, keepDepthUtilityLayer)
 
   onMount(() => {
     try {

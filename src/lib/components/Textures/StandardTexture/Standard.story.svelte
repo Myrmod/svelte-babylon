@@ -8,9 +8,9 @@
     StandardMaterial,
     StandardTexture,
   } from '$lib'
+  import { Color3, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
 
   export const __pageMeta: PageMeta = {
     title: 'StandardTexture',
@@ -31,10 +31,10 @@
   let invertRefractionY = false
   let backfaceCulling = false
 
-  $: ambient = BABYLON.Color3.FromHexString(ambientHex)
-  $: diffuse = BABYLON.Color3.FromHexString(diffuseHex)
-  $: emissive = BABYLON.Color3.FromHexString(emissiveHex)
-  $: specular = BABYLON.Color3.FromHexString(specularHex)
+  $: ambient = Color3.FromHexString(ambientHex)
+  $: diffuse = Color3.FromHexString(diffuseHex)
+  $: emissive = Color3.FromHexString(emissiveHex)
+  $: specular = Color3.FromHexString(specularHex)
 
   // texture
   let diffuseTexture = true
@@ -53,10 +53,10 @@
   <HemisphericLight intensity={0.25} />
   <DirectionalLight
     intensity={0.5}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
   />
-  <ArcRotateCamera target={BABYLON.Vector3.Zero()} radius={2} />
+  <ArcRotateCamera target={Vector3.Zero()} radius={2} />
   <Plane>
     <StandardMaterial
       ambientColor={ambient}

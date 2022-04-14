@@ -1,6 +1,14 @@
 <script lang="ts" context="module">
   import type RootContext from '$lib/types'
-  import * as BABYLON from 'babylonjs'
+  import {
+    ActionManager,
+    ExecuteCodeAction,
+    FreeCamera as FCamera,
+    ISceneLoaderAsyncResult,
+    Mesh,
+    Observer,
+    Vector3,
+  } from '@babylonjs/core'
   import { onDestroy } from 'svelte'
   import {
     Box,
@@ -14,14 +22,14 @@
 </script>
 
 <script lang="ts">
-  export let playerPosition = new BABYLON.Vector3(0, 2, 0)
+  export let playerPosition = new Vector3(0, 2, 0)
   export let root: RootContext = undefined
-  let meshes: BABYLON.ISceneLoaderAsyncResult['meshes']
+  let meshes: ISceneLoaderAsyncResult['meshes']
 
   // Add new keyboard inputs for camera movement
-  let camera: BABYLON.FreeCamera = undefined
+  let camera: FCamera = undefined
 
-  export let player: { self: BABYLON.Mesh } = undefined
+  export let player: { self: Mesh } = undefined
   export let movementSpeed = 0.5
   export let verticalCameraDegree = 135
 
@@ -38,8 +46,8 @@
   export let goBackward = false
   $: goBackward = inputs['s'] || inputs['ArrowDown']
 
-  let keyboardInputs: BABYLON.Observer<unknown>
-  let mouseInputs: BABYLON.Observer<unknown>
+  let keyboardInputs: Observer<unknown>
+  let mouseInputs: Observer<unknown>
 
   onDestroy(() => {
     root.scene?.onBeforeRenderObservable.remove(keyboardInputs)
@@ -47,16 +55,16 @@
 
   // adds the pressed keys to inputs
   $: if (root?.scene) {
-    root.scene.actionManager = new BABYLON.ActionManager(root.scene)
+    root.scene.actionManager = new ActionManager(root.scene)
     root.scene.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnKeyDownTrigger,
+      new ExecuteCodeAction(
+        ActionManager.OnKeyDownTrigger,
         e => (inputs[e.sourceEvent.key] = e.sourceEvent.type == 'keydown'),
       ),
     )
     root.scene.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnKeyUpTrigger,
+      new ExecuteCodeAction(
+        ActionManager.OnKeyUpTrigger,
         e => (inputs[e.sourceEvent.key] = e.sourceEvent.type == 'keydown'),
       ),
     )
@@ -76,26 +84,26 @@
     keyboardInputs = root.scene.onBeforeRenderObservable.add(() => {
       if (goForward)
         player.self.locallyTranslate(
-          new BABYLON.Vector3(movementSpeed, 0, movementSpeed).multiply(
-            camera.getDirection(BABYLON.Vector3.Forward()),
+          new Vector3(movementSpeed, 0, movementSpeed).multiply(
+            camera.getDirection(Vector3.Forward()),
           ),
         )
       if (goLeft)
         player.self.locallyTranslate(
-          new BABYLON.Vector3(movementSpeed, 0, movementSpeed).multiply(
-            camera.getDirection(BABYLON.Vector3.Left()),
+          new Vector3(movementSpeed, 0, movementSpeed).multiply(
+            camera.getDirection(Vector3.Left()),
           ),
         )
       if (goBackward)
         player.self.locallyTranslate(
-          new BABYLON.Vector3(movementSpeed, 0, movementSpeed).multiply(
-            camera.getDirection(BABYLON.Vector3.Backward()),
+          new Vector3(movementSpeed, 0, movementSpeed).multiply(
+            camera.getDirection(Vector3.Backward()),
           ),
         )
       if (goRight)
         player.self.locallyTranslate(
-          new BABYLON.Vector3(movementSpeed, 0, movementSpeed).multiply(
-            camera.getDirection(BABYLON.Vector3.Right()),
+          new Vector3(movementSpeed, 0, movementSpeed).multiply(
+            camera.getDirection(Vector3.Right()),
           ),
         )
     })
@@ -163,8 +171,8 @@
     <HemisphericLight intensity={0.5} />
     <DirectionalLight
       intensity={0.25}
-      direction={new BABYLON.Vector3(-10, -20, -10)}
-      position={new BABYLON.Vector3(2, 6, 2)}
+      direction={new Vector3(-10, -20, -10)}
+      position={new Vector3(2, 6, 2)}
       castShadowOf={meshes}
     />
   </slot>

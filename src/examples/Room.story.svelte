@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Canvas, HemisphericLight } from '$lib'
   import type RootContext from '$lib/types'
+  import { Mesh, Vector3, VertexData } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  import { ArcRotateCamera, Canvas, HemisphericLight } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'Room',
@@ -43,25 +43,25 @@
   }
 
   function corner(x: number, z: number) {
-    return new BABYLON.Vector3(x, 0, z)
+    return new Vector3(x, 0, z)
   }
-  function wall(corner: BABYLON.Vector3) {
+  function wall(corner: Vector3) {
     this.corner = corner
   }
   function buildFromPlan(walls: string | any[], ply: number, height: any) {
     const outerData = []
     let angle = 0
     let direction = 0
-    let line = BABYLON.Vector3.Zero()
+    let line = Vector3.Zero()
     walls[1].corner.subtractToRef(walls[0].corner, line)
-    let nextLine = BABYLON.Vector3.Zero()
+    let nextLine = Vector3.Zero()
     walls[2].corner.subtractToRef(walls[1].corner, nextLine)
     let nbWalls = walls.length
 
     for (let w = 0; w <= nbWalls; w++) {
-      angle = Math.acos(BABYLON.Vector3.Dot(line, nextLine) / (line.length() * nextLine.length()))
-      direction = BABYLON.Vector3.Cross(nextLine, line).normalize().y
-      let lineNormal = new BABYLON.Vector3(line.z, 0, -1 * line.x).normalize()
+      angle = Math.acos(Vector3.Dot(line, nextLine) / (line.length() * nextLine.length()))
+      direction = Vector3.Cross(nextLine, line).normalize().y
+      let lineNormal = new Vector3(line.z, 0, -1 * line.x).normalize()
       line.normalize()
       outerData[(w + 1) % nbWalls] = walls[(w + 1) % nbWalls].corner
         .add(lineNormal.scale(ply))
@@ -130,14 +130,14 @@
     const normals = []
     const uvs = []
 
-    BABYLON.VertexData.ComputeNormals(positions, indices, normals)
-    BABYLON.VertexData._ComputeSides(BABYLON.Mesh.FRONTSIDE, positions, indices, normals, uvs)
+    VertexData.ComputeNormals(positions, indices, normals)
+    VertexData._ComputeSides(Mesh.FRONTSIDE, positions, indices, normals, uvs)
 
     //Create a custom mesh
-    const customMesh = new BABYLON.Mesh('custom', root.scene)
+    const customMesh = new Mesh('custom', root.scene)
 
     //Create a vertexData object
-    const vertexData = new BABYLON.VertexData()
+    const vertexData = new VertexData()
 
     //Assign positions and indices to vertexData
     vertexData.positions = positions
@@ -160,6 +160,6 @@
   }}
   bind:root
 >
-  <HemisphericLight direction={new BABYLON.Vector3(5, 10, 0)} />
-  <ArcRotateCamera target={new BABYLON.Vector3(0, 0, 4.5)} radius={20} beta={Math.PI / 4} />
+  <HemisphericLight direction={new Vector3(5, 10, 0)} />
+  <ArcRotateCamera target={new Vector3(0, 0, 4.5)} radius={20} beta={Math.PI / 4} />
 </Canvas>

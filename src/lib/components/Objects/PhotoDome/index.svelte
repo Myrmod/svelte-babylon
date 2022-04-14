@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import { Mesh, PhotoDome, Vector3 } from '@babylonjs/core'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
 
   const dispatch = createEventDispatcher()
@@ -20,25 +20,19 @@
     halfDomeMode?: boolean
     crossEyeMode?: boolean
     generateMipMaps?: boolean
-    mesh?: BABYLON.Mesh
+    mesh?: Mesh
   }
 
-  export let position = BABYLON.Vector3.Zero()
+  export let position = Vector3.Zero()
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
-  export let rotation = BABYLON.Vector3.Zero()
+  export let rotation = Vector3.Zero()
   export let url: string | string[] | HTMLVideoElement
 
-  export let object = new BABYLON.PhotoDome(
-    name,
-    url,
-    options,
-    root.scene,
-    (message, exception) => {
-      dispatch('error', { message, exception })
-    },
-  )
+  export let object = new PhotoDome(name, url, options, root.scene, (message, exception) => {
+    dispatch('error', { message, exception })
+  })
 
   onMount(() => {
     try {

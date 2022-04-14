@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Canvas, HemisphericLight, LineSystem } from '$lib'
+  import { Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  import { ArcRotateCamera, Canvas, HemisphericLight, LineSystem } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'LineSystem',
@@ -17,16 +17,12 @@
   }}
 >
   <HemisphericLight />
-  <ArcRotateCamera target={new BABYLON.Vector3(5, 3, 3)} alpha={Math.PI / 4} radius={20} />
+  <ArcRotateCamera target={new Vector3(5, 3, 3)} alpha={Math.PI / 4} radius={20} />
   <LineSystem
     options={{
       lines: [
-        [new BABYLON.Vector3(0, 0, 10), new BABYLON.Vector3(10, 0, 10)],
-        [
-          new BABYLON.Vector3(10, 0, 0),
-          new BABYLON.Vector3(10, 10, 0),
-          new BABYLON.Vector3(0, 10, 0),
-        ],
+        [new Vector3(0, 0, 10), new Vector3(10, 0, 10)],
+        [new Vector3(10, 0, 0), new Vector3(10, 10, 0), new Vector3(0, 10, 0)],
       ],
     }}
   />

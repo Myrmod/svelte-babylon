@@ -1,30 +1,30 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import type { EventState, Vector2 } from 'babylonjs'
-  import * as GUI from 'babylonjs-gui'
+  import type { EventState, Vector2 } from '@babylonjs/core'
+  import { AdvancedDynamicTexture, Control, TextBlock, Vector2WithInfo } from '@babylonjs/gui'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
 
   export let name = 'TextBlock'
   export let text = 'Hello Svelte-Babylon'
-  export let color: GUI.TextBlock['color'] = 'white'
-  export let fontSize: GUI.TextBlock['fontSize'] = 24
-  export let fontFamily: GUI.TextBlock['fontFamily'] = 'Arial'
-  export let fontStyle: GUI.TextBlock['fontStyle'] = 'normal'
-  export let fontWeight: GUI.TextBlock['fontWeight'] = '600'
-  export let fontSizeInPixels: GUI.TextBlock['fontSizeInPixels'] = undefined
-  export let fontOffset: GUI.TextBlock['fontOffset'] = undefined
-  export let paddingBottom: GUI.TextBlock['paddingBottom'] = '0px'
-  export let paddingTop: GUI.TextBlock['paddingTop'] = '0px'
-  export let paddingLeft: GUI.TextBlock['paddingLeft'] = '0px'
-  export let paddingRight: GUI.TextBlock['paddingRight'] = '0px'
-  export let top: GUI.TextBlock['top'] = 0
-  export let left: GUI.TextBlock['left'] = 0
+  export let color: TextBlock['color'] = 'white'
+  export let fontSize: TextBlock['fontSize'] = 24
+  export let fontFamily: TextBlock['fontFamily'] = 'Arial'
+  export let fontStyle: TextBlock['fontStyle'] = 'normal'
+  export let fontWeight: TextBlock['fontWeight'] = '600'
+  export let fontSizeInPixels: TextBlock['fontSizeInPixels'] = undefined
+  export let fontOffset: TextBlock['fontOffset'] = undefined
+  export let paddingBottom: TextBlock['paddingBottom'] = '0px'
+  export let paddingTop: TextBlock['paddingTop'] = '0px'
+  export let paddingLeft: TextBlock['paddingLeft'] = '0px'
+  export let paddingRight: TextBlock['paddingRight'] = '0px'
+  export let top: TextBlock['top'] = 0
+  export let left: TextBlock['left'] = 0
 
-  const context = getContext('gui') as GUI.AdvancedDynamicTexture
+  const context = getContext('gui') as AdvancedDynamicTexture
 
-  export let guiElement = new GUI.TextBlock(name, text)
+  export let guiElement = new TextBlock(name, text)
 
   onMount(() => {
     try {
@@ -48,26 +48,24 @@
     root.scene.render()
   }
 
-  export let onPointerUp: (eventData: GUI.Vector2WithInfo, eventState: EventState) => void =
-    undefined
+  export let onPointerUp: (eventData: Vector2WithInfo, eventState: EventState) => void = undefined
   $: if (onPointerUp) {
     guiElement.onPointerUpObservable.add(onPointerUp)
   }
-  export let onPointerDown: (eventData: GUI.Vector2WithInfo, eventState: EventState) => void =
-    undefined
+  export let onPointerDown: (eventData: Vector2WithInfo, eventState: EventState) => void = undefined
   $: if (onPointerDown) {
     guiElement.onPointerDownObservable.add(onPointerUp)
   }
-  export let onPointerClick: (eventData: GUI.Vector2WithInfo, eventState: EventState) => void =
+  export let onPointerClick: (eventData: Vector2WithInfo, eventState: EventState) => void =
     undefined
   $: if (onPointerClick) {
     guiElement.onPointerClickObservable.add(onPointerUp)
   }
-  export let onPointerEnter: (eventData: GUI.Control, eventState: EventState) => void = undefined
+  export let onPointerEnter: (eventData: Control, eventState: EventState) => void = undefined
   $: if (onPointerEnter) {
     guiElement.onPointerEnterObservable.add(onPointerEnter)
   }
-  export let onPointerOut: (eventData: GUI.Control, eventState: EventState) => void = undefined
+  export let onPointerOut: (eventData: Control, eventState: EventState) => void = undefined
   $: if (onPointerOut) {
     guiElement.onPointerOutObservable.add(onPointerOut)
   }

@@ -4,7 +4,7 @@ It can be used to apply text to a material. This is used in the TextPlane compon
 -->
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import { DynamicTexture, Engine, Texture } from '@babylonjs/core'
   import { onDestroy, onMount } from 'svelte'
   import getParent from '../getParent'
 
@@ -14,8 +14,8 @@ It can be used to apply text to a material. This is used in the TextPlane compon
   export let name = 'DynamicTexture'
   export let options: Record<string, unknown> = {}
   export let generateMipMaps = false
-  export let samplingMode = BABYLON.Texture.TRILINEAR_SAMPLINGMODE
-  export let format = BABYLON.Engine.TEXTUREFORMAT_RGBA
+  export let samplingMode = Texture.TRILINEAR_SAMPLINGMODE
+  export let format = Engine.TEXTUREFORMAT_RGBA
   export let invertY = false
   export let textureTarget:
     | 'ambientTexture'
@@ -28,7 +28,7 @@ It can be used to apply text to a material. This is used in the TextPlane compon
     | 'refractionTexture'
     | 'specularTexture' = 'diffuseTexture'
 
-  export const texture = new BABYLON.DynamicTexture(
+  export const texture = new DynamicTexture(
     `${name}-Texture`,
     options,
     root.scene,

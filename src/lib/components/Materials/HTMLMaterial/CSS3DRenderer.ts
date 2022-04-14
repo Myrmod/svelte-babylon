@@ -1,4 +1,4 @@
-import * as BABYLON from 'babylonjs'
+import { AbstractMesh, Camera, Matrix, Scene } from '@babylonjs/core'
 import CSS3DObject from './CSS3DObject'
 
 export default class CSS3DRenderer {
@@ -157,9 +157,9 @@ export default class CSS3DRenderer {
   }
 
   renderObject(
-    object: CSS3DObject | BABYLON.Scene | BABYLON.AbstractMesh,
-    scene: BABYLON.Scene,
-    camera: BABYLON.Camera,
+    object: CSS3DObject | Scene | AbstractMesh,
+    scene: Scene,
+    camera: Camera,
     cameraCSSMatrix,
   ) {
     console.log('renderObject')
@@ -184,10 +184,10 @@ export default class CSS3DRenderer {
       innerMatrix[14] = camMatrix.m[14] - object.position.z
       innerMatrix[15] = camMatrix.m[15] * 0.00001
 
-      objectMatrixWorld = BABYLON.Matrix.FromArray(innerMatrix)
+      objectMatrixWorld = Matrix.FromArray(innerMatrix)
       if (this.isIE) {
         // IE will round numbers like 1e-005 to zero so we need to scale whole matrix up.
-        // Side-effect is reduced accuracy with CSS object mapping to Babylon.js object
+        // Side-effect is reduced accuracy with CSS object mapping to babylonjs object
         objectMatrixWorld = objectMatrixWorld.scale(100)
       }
       style = this.getObjectCSSMatrix(objectMatrixWorld, cameraCSSMatrix)
@@ -205,21 +205,21 @@ export default class CSS3DRenderer {
       if (element.parentNode !== this.cameraElement) {
         this.cameraElement.appendChild(element)
       }
-    } else if (object instanceof BABYLON.Scene) {
+    } else if (object instanceof Scene) {
       for (var i = 0, l = object.meshes.length; i < l; i++) {
         this.renderObject(object.meshes[i], scene, camera, cameraCSSMatrix)
       }
     }
   }
 
-  render(scene: BABYLON.Scene, camera: BABYLON.Camera) {
+  render(scene: Scene, camera: Camera) {
     console.log('render')
 
     var projectionMatrix = camera.getProjectionMatrix()
     var fov = projectionMatrix.m[5] * this.heightHalf
 
     if (this.cache.camera.fov !== fov) {
-      if (camera.mode == BABYLON.Camera.PERSPECTIVE_CAMERA) {
+      if (camera.mode == Camera.PERSPECTIVE_CAMERA) {
         this.domElement.style.webkitPerspective = fov + 'px'
         this.domElement.style.perspective = fov + 'px'
       } else {
@@ -242,7 +242,7 @@ export default class CSS3DRenderer {
     innerMatrix[8] = -rotation.m[8]
     innerMatrix[9] = -rotation.m[9]
 
-    matrixWorld = BABYLON.Matrix.FromArray(innerMatrix)
+    matrixWorld = Matrix.FromArray(innerMatrix)
 
     var cameraCSSMatrix = 'translateZ(' + fov + 'px)' + this.getCameraCSSMatrix(matrixWorld)
 

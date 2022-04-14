@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, PhotoDome, Canvas, Box, HemisphericLight } from '$lib'
   import type { PageMeta } from '@vitebook/client'
+  import { ArcRotateCamera, Box, Canvas, HemisphericLight, PhotoDome } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'PhotoDome',

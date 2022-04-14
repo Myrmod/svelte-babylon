@@ -1,8 +1,9 @@
 import type RootContext from '$lib/types'
-import * as BABYLON from 'babylonjs'
+import { Mesh, Scene, StandardMaterial } from '@babylonjs/core'
 import CSS3DObject from './CSS3DObject'
+import CSS3DRenderer from './CSS3DRenderer'
 
-export default function run(plane: BABYLON.Mesh, root: RootContext) {
+export default function run(plane: Mesh, root: RootContext) {
   const cssObject = createCSSobject(
     plane,
     root.scene,
@@ -31,12 +32,7 @@ function setupRenderer(canvas: HTMLCanvasElement) {
   return renderer
 }
 
-function createCSSobject(
-  mesh: BABYLON.Mesh,
-  scene: BABYLON.Scene,
-  videoID: string,
-  renderer: CSS3DRenderer,
-) {
+function createCSSobject(mesh: Mesh, scene: Scene, videoID: string, renderer: CSS3DRenderer) {
   let width = 480
   let height = 360
   scene.onBeforeRenderObservable.add(() => {
@@ -67,8 +63,8 @@ function createCSSobject(
   return CSSobject
 }
 
-function createMaskingScreen(maskMesh: BABYLON.Mesh, scene: BABYLON.Scene) {
-  let depthMask = new BABYLON.StandardMaterial('matDepthMask', scene)
+function createMaskingScreen(maskMesh: Mesh, scene: Scene) {
+  let depthMask = new StandardMaterial('matDepthMask', scene)
   depthMask.backFaceCulling = false
 
   maskMesh.material = depthMask

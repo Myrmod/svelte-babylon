@@ -4,25 +4,34 @@
  -->
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import {
+    ArcRotateCamera,
+    Camera,
+    Color3,
+    Mesh,
+    MeshBuilder,
+    RenderTargetTexture,
+    StandardMaterial,
+    Vector3,
+  } from '@babylonjs/core'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
 
-  let monitor: BABYLON.Mesh
-  export let parent: BABYLON.Camera = root.scene.activeCamera
+  let monitor: Mesh
+  export let parent: Camera = root.scene.activeCamera
 
   /**
    * Camera for texture creation. We need one to create a texture from.
    */
-  let screenCamera: BABYLON.ArcRotateCamera
+  let screenCamera: ArcRotateCamera
   $: if (parent) {
-    screenCamera = new BABYLON.ArcRotateCamera(
+    screenCamera = new ArcRotateCamera(
       'ScreenCamera',
       0,
       Math.PI / 4,
       10,
-      BABYLON.Vector3.Zero(),
+      Vector3.Zero(),
       root.scene,
       false,
     )
@@ -34,7 +43,7 @@
   /**
    * Texture that we want to apply to the material. It is generated using a camera.
    */
-  let screenTexture: BABYLON.RenderTargetTexture
+  let screenTexture: RenderTargetTexture
   export let size:
     | number
     | {
@@ -52,7 +61,7 @@
   export let doNotChangeAspectRatio = true
 
   onMount(() => {
-    screenTexture = new BABYLON.RenderTargetTexture(
+    screenTexture = new RenderTargetTexture(
       'ScreenTexture',
       size,
       root.scene,
@@ -72,15 +81,15 @@
   /**
    * Material we want to apply to the plane. The materials texture is created using a camera.
    */
-  let screenMaterial: BABYLON.StandardMaterial
+  let screenMaterial: StandardMaterial
 
   onMount(() => {
-    screenMaterial = new BABYLON.StandardMaterial('screenMaterial', root.scene)
-    screenMaterial.diffuseColor = new BABYLON.Color3(1, 1, 1)
+    screenMaterial = new StandardMaterial('screenMaterial', root.scene)
+    screenMaterial.diffuseColor = new Color3(1, 1, 1)
     screenMaterial.diffuseTexture = screenTexture
-    screenMaterial.specularColor = BABYLON.Color3.Black()
+    screenMaterial.specularColor = Color3.Black()
     screenMaterial.diffuseTexture.level = 1.2
-    screenMaterial.emissiveColor = new BABYLON.Color3(1, 1, 1)
+    screenMaterial.emissiveColor = new Color3(1, 1, 1)
   })
   $: if (screenMaterial && monitor) {
     monitor.material = screenMaterial
@@ -94,7 +103,7 @@
    * Plane which uses a material created by a camera texture to create a screen/monitor.
    */
   onMount(() => {
-    monitor = BABYLON.MeshBuilder.CreatePlane(
+    monitor = MeshBuilder.CreatePlane(
       'Monitor',
       {
         width: 0.5,
@@ -108,7 +117,7 @@
   })
 
   $: if (parent && monitor && root.canvas.element) {
-    monitor.position = new BABYLON.Vector3(
+    monitor.position = new Vector3(
       root.canvas.element.clientWidth / 1100,
       root.canvas.element.clientHeight / 2000,
       1.5,

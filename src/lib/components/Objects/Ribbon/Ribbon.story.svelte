@@ -1,7 +1,13 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Canvas, DirectionalLight, HemisphericLight, Ribbon } from '$lib'
+  import { AbstractMesh, Mesh, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  import {
+    ArcRotateCamera,
+    Canvas,
+    DirectionalLight,
+    HemisphericLight,
+    Ribbon,
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'Ribbon',
@@ -10,10 +16,10 @@
 </script>
 
 <script lang="ts">
-  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+  const objectPosition = new Vector3(0, 3, 0)
 
   let object: {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
 
   let shadowObjects: Array<typeof object['self']>
@@ -36,8 +42,8 @@
   <HemisphericLight intensity={0.5} />
   <DirectionalLight
     intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
   <ArcRotateCamera target={objectPosition} radius={20} alpha={Math.PI / 4} />
@@ -46,28 +52,28 @@
     options={{
       pathArray: [
         [
-          new BABYLON.Vector3(5, 0, 0),
-          new BABYLON.Vector3(4.5, 1, 0),
-          new BABYLON.Vector3(4, 2, 0),
-          new BABYLON.Vector3(3.5, 3, 0),
-          new BABYLON.Vector3(3, 4, 0),
+          new Vector3(5, 0, 0),
+          new Vector3(4.5, 1, 0),
+          new Vector3(4, 2, 0),
+          new Vector3(3.5, 3, 0),
+          new Vector3(3, 4, 0),
         ],
         [
-          new BABYLON.Vector3(0, 0, -5),
-          new BABYLON.Vector3(0, 0.5, -7),
-          new BABYLON.Vector3(0, 1, -9),
-          new BABYLON.Vector3(0, 1.5, -11),
-          new BABYLON.Vector3(0, 2, -13),
+          new Vector3(0, 0, -5),
+          new Vector3(0, 0.5, -7),
+          new Vector3(0, 1, -9),
+          new Vector3(0, 1.5, -11),
+          new Vector3(0, 2, -13),
         ],
         [
-          new BABYLON.Vector3(-5, 0, 0),
-          new BABYLON.Vector3(-4.5, 1, 0),
-          new BABYLON.Vector3(-4.0, 2, 0),
-          new BABYLON.Vector3(-3.5, 3, 0),
-          new BABYLON.Vector3(-3, 4, 0),
+          new Vector3(-5, 0, 0),
+          new Vector3(-4.5, 1, 0),
+          new Vector3(-4.0, 2, 0),
+          new Vector3(-3.5, 3, 0),
+          new Vector3(-3, 4, 0),
         ],
       ],
-      sideOrientation: BABYLON.Mesh.DOUBLESIDE,
+      sideOrientation: Mesh.DOUBLESIDE,
     }}
   />
 </Canvas>

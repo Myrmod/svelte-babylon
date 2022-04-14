@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import { Color4, Mesh, Observer, StandardMaterial } from '@babylonjs/core'
   import { onDestroy, onMount } from 'svelte'
   import { createMaterialContext } from '../createMaterialContext'
   import getParent from '../getParent'
@@ -22,14 +22,14 @@
 
   export let name: string = 'HTMLMaterial'
 
-  export const material = new BABYLON.StandardMaterial(name, root.scene)
+  export const material = new StandardMaterial(name, root.scene)
   material.backFaceCulling = false
 
   createMaterialContext(material)
 
-  let onBeforeRenderObservable: BABYLON.Observer<BABYLON.Mesh> = undefined
-  let onAfterRenderObservable: BABYLON.Observer<BABYLON.Mesh> = undefined
-  let oldClearColor: BABYLON.Color4
+  let onBeforeRenderObservable: Observer<Mesh> = undefined
+  let onAfterRenderObservable: Observer<Mesh> = undefined
+  let oldClearColor: Color4
   onMount(() => {
     try {
       if (parent.self.material) {
@@ -51,9 +51,9 @@
       root.scene.meshes[0] = parent.self
 
       // The canvas' clearcolor has to be transparent, otherwise we dont see anything
-      if (root.scene.clearColor !== new BABYLON.Color4(0, 0, 0, 0)) {
+      if (root.scene.clearColor !== new Color4(0, 0, 0, 0)) {
         oldClearColor = root.scene.clearColor
-        root.scene.clearColor = new BABYLON.Color4(0, 0, 0, 0)
+        root.scene.clearColor = new Color4(0, 0, 0, 0)
       }
 
       root.scene.render()

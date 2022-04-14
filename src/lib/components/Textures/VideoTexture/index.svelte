@@ -3,7 +3,7 @@ The VideoTexture can be used to play videos on an Object.
 -->
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import { Texture, VideoTexture, VideoTextureSettings } from '@babylonjs/core'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import getParent from '../getParent'
 
@@ -12,9 +12,9 @@ The VideoTexture can be used to play videos on an Object.
   const dispatch = createEventDispatcher()
 
   export let name = 'VideoTexture'
-  export let settings: Partial<BABYLON.VideoTextureSettings> = {}
+  export let settings: Partial<VideoTextureSettings> = {}
   export let generateMipMaps = false
-  export let samplingMode = BABYLON.Texture.TRILINEAR_SAMPLINGMODE
+  export let samplingMode = Texture.TRILINEAR_SAMPLINGMODE
   export let invertY = false
   /**
    * url of the video
@@ -31,7 +31,7 @@ The VideoTexture can be used to play videos on an Object.
     | 'refractionTexture'
     | 'specularTexture' = 'diffuseTexture'
 
-  export const texture = new BABYLON.VideoTexture(
+  export const texture = new VideoTexture(
     `${name}-Texture`,
     src,
     root.scene,

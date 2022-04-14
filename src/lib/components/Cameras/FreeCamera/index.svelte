@@ -1,31 +1,25 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import { FreeCamera, Mesh, Vector3 } from '@babylonjs/core'
   import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()
 
   export let name: string = 'FreeCamera'
-  export let position = BABYLON.Vector3.Zero()
-  export let target = BABYLON.Vector3.Zero()
+  export let position = Vector3.Zero()
+  export let target = Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
   export let speed = 0.75
   export let disableControl = false
   export let applyGravity = false
   export let checkCollisions = false
-  export let ellipsoid: BABYLON.Vector3 = undefined
+  export let ellipsoid: Vector3 = undefined
   export let minZ = 0.45
   export let angularSensibility = 3000
-  export let parent: BABYLON.Mesh = undefined
+  export let parent: Mesh = undefined
 
-  export const getFacingDirection = () =>
-    BABYLON.Vector3.Normalize(camera.target.subtract(camera.position))
-  export const camera = new BABYLON.FreeCamera(
-    name,
-    position,
-    root.scene,
-    setActiveOnSceneIfNoneActive,
-  )
+  export const getFacingDirection = () => Vector3.Normalize(camera.target.subtract(camera.position))
+  export const camera = new FreeCamera(name, position, root.scene, setActiveOnSceneIfNoneActive)
   setContext('camera', camera)
 
   onMount(() => {

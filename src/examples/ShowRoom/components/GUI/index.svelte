@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import { Animation, ArcRotateCamera, Camera, Mesh, Vector3 } from '@babylonjs/core'
 
   const buttons = [
     { name: 'Platform1Button', text: 'go to platform 1' },
@@ -9,7 +9,7 @@
     { name: 'Platform4Button', text: 'go to platform 4' },
   ]
 
-  export let screens: Array<{ self: BABYLON.Mesh }> = []
+  export let screens: Array<{ self: Mesh }> = []
 
   const root = getRoot()
 
@@ -18,15 +18,15 @@
       root.scene.beginDirectAnimation(
         root.scene.activeCamera,
         [
-          animMove(root.scene.activeCamera, new BABYLON.Vector3(0, 50, 0)),
-          animLookAt(root.scene.activeCamera as BABYLON.ArcRotateCamera, BABYLON.Vector3.Zero()),
+          animMove(root.scene.activeCamera, new Vector3(0, 50, 0)),
+          animLookAt(root.scene.activeCamera as ArcRotateCamera, Vector3.Zero()),
         ],
         0,
         120,
         false,
         0.5,
         () => {
-          ;(root.scene.activeCamera as BABYLON.ArcRotateCamera).setTarget(BABYLON.Vector3.Zero())
+          ;(root.scene.activeCamera as ArcRotateCamera).setTarget(Vector3.Zero())
         },
       )
 
@@ -34,33 +34,28 @@
     }
 
     const mesh = screens[id].self
-    const platform = mesh.parent as BABYLON.Mesh
+    const platform = mesh.parent as Mesh
     const vector = mesh.forward.multiplyByFloats(-1, -1, -1)
-    const origin = new BABYLON.Vector3(platform.position.x, mesh.position.y, platform.position.z)
+    const origin = new Vector3(platform.position.x, mesh.position.y, platform.position.z)
     const newPosition = origin.add(vector.multiplyByFloats(5, 1, 5))
 
     root.scene.beginDirectAnimation(
       root.scene.activeCamera,
       [
         animMove(root.scene.activeCamera, newPosition),
-        animLookAt(root.scene.activeCamera as BABYLON.ArcRotateCamera, origin),
+        animLookAt(root.scene.activeCamera as ArcRotateCamera, origin),
       ],
       0,
       120,
       false,
       0.5,
       () => {
-        ;(root.scene.activeCamera as BABYLON.ArcRotateCamera).setTarget(origin)
+        ;(root.scene.activeCamera as ArcRotateCamera).setTarget(origin)
       },
     )
 
-    function animMove(camera: BABYLON.Camera, pos: BABYLON.Vector3) {
-      const anim = new BABYLON.Animation(
-        'movecam',
-        'position',
-        60,
-        BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
-      )
+    function animMove(camera: Camera, pos: Vector3) {
+      const anim = new Animation('movecam', 'position', 60, Animation.ANIMATIONTYPE_VECTOR3)
       anim.setKeys([
         { frame: 0, value: camera.position.clone() },
         { frame: 60, value: pos },
@@ -69,13 +64,8 @@
       return anim
     }
 
-    function animLookAt(camera: BABYLON.ArcRotateCamera, lookAt: BABYLON.Vector3) {
-      const anim = new BABYLON.Animation(
-        'lookcam',
-        'target',
-        60,
-        BABYLON.Animation.ANIMATIONTYPE_VECTOR3,
-      )
+    function animLookAt(camera: ArcRotateCamera, lookAt: Vector3) {
+      const anim = new Animation('lookcam', 'target', 60, Animation.ANIMATIONTYPE_VECTOR3)
       anim.setKeys([
         { frame: 0, value: camera.target.clone() },
         { frame: 60, value: lookAt },

@@ -1,7 +1,20 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Box, Canvas, DirectionalLight, Ground, HemisphericLight } from '$lib'
+  import {
+    AbstractMesh,
+    ActionEvent,
+    ArcRotateCamera as ACamera,
+    Mesh,
+    Vector3,
+  } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  import {
+    ArcRotateCamera,
+    Box,
+    Canvas,
+    DirectionalLight,
+    Ground,
+    HemisphericLight,
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'Rotate the ArcRotateCamera to the clicked face',
@@ -10,12 +23,12 @@
 </script>
 
 <script lang="ts">
-  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+  const objectPosition = new Vector3(0, 3, 0)
 
-  let camera: BABYLON.ArcRotateCamera
+  let camera: ACamera
 
   let object: {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
 
   let shadowObjects: Array<typeof object['self']>
@@ -28,7 +41,7 @@
   }
 
   let rotateToFacePickedFace: (
-    e: BABYLON.ActionEvent,
+    e: ActionEvent,
     radius?: number,
     fps?: number,
     totalFrames?: number,
@@ -46,8 +59,8 @@
   <HemisphericLight intensity={0.5} />
   <DirectionalLight
     intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
   <ArcRotateCamera bind:camera target={objectPosition} bind:rotateToFacePickedFace />

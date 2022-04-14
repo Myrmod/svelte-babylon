@@ -1,23 +1,17 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import { FlyCamera, Vector3 } from '@babylonjs/core'
   import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()
 
   export let name: string = 'FlyCamera'
-  export let position = BABYLON.Vector3.Zero()
-  export let target = BABYLON.Vector3.Zero()
+  export let position = Vector3.Zero()
+  export let target = Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
   export let speed = 1
-  export const getFacingDirection = () =>
-    BABYLON.Vector3.Normalize(camera.target.subtract(camera.position))
-  export const camera = new BABYLON.FlyCamera(
-    name,
-    position,
-    root.scene,
-    setActiveOnSceneIfNoneActive,
-  )
+  export const getFacingDirection = () => Vector3.Normalize(camera.target.subtract(camera.position))
+  export const camera = new FlyCamera(name, position, root.scene, setActiveOnSceneIfNoneActive)
   setContext('camera', camera)
 
   onMount(() => {

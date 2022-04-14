@@ -1,14 +1,14 @@
 <script lang="ts">
-  import * as BABYLON from 'babylonjs'
+  import { Color3, Mesh, Tools, Vector3 } from '@babylonjs/core'
   import { Box, Cylinder, Plane, StandardMaterial } from 'svelte-babylon'
 
   export let platform: {
-    self: BABYLON.Mesh
+    self: Mesh
   } = undefined
   export let screen: {
-    self: BABYLON.Mesh
+    self: Mesh
   } = undefined
-  export let position = BABYLON.Vector3.Zero()
+  export let position = Vector3.Zero()
   export let name = 'Platform'
   /**
    * rotation in degree
@@ -19,7 +19,7 @@
 <Cylinder
   bind:object={platform}
   {position}
-  rotation={new BABYLON.Vector3(0, BABYLON.Tools.ToRadians(rotation), 0)}
+  rotation={new Vector3(0, Tools.ToRadians(rotation), 0)}
   {name}
   options={{
     height: 1,
@@ -32,8 +32,8 @@
   <slot>
     <Box
       name={`${name}-Screen`}
-      position={new BABYLON.Vector3(1, 3, 1)}
-      rotation={new BABYLON.Vector3(0, Math.PI / 4, 0)}
+      position={new Vector3(1, 3, 1)}
+      rotation={new Vector3(0, Math.PI / 4, 0)}
       options={{
         width: 16 / 5,
         height: 9 / 5,
@@ -42,14 +42,14 @@
       bind:object={screen}
       checkCollisions
     >
-      <StandardMaterial diffuseColor={BABYLON.Color3.Black()} />
+      <StandardMaterial diffuseColor={Color3.Black()} />
       <slot name="screen">
         <Plane
           options={{
             width: 16 / 5.2,
             height: 9 / 5.2,
           }}
-          position={new BABYLON.Vector3(0, 0, -0.13)}
+          position={new Vector3(0, 0, -0.13)}
           checkCollisions
         >
           <slot name="screen-material" />

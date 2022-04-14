@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
   import type RootContext from '$lib/types'
+  import { ISceneLoaderAsyncResult, PhysicsImpostor, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
   import { Custom, Screen } from 'svelte-babylon'
   import DescriptionAddon from 'vitebook/Addons/DescriptionAddon.svelte'
   import FirstPersonWorld from './index.svelte'
@@ -15,23 +15,23 @@
 
 <script lang="ts">
   let root: RootContext
-  let meshes: BABYLON.ISceneLoaderAsyncResult['meshes']
+  let meshes: ISceneLoaderAsyncResult['meshes']
   let showCustom = true
 
   $: if (meshes) {
     meshes.forEach(mesh => {
       mesh.getChildMeshes().forEach(child => {
-        child.physicsImpostor = new BABYLON.PhysicsImpostor(
+        child.physicsImpostor = new PhysicsImpostor(
           child,
-          BABYLON.PhysicsImpostor.BoxImpostor,
+          PhysicsImpostor.BoxImpostor,
           { mass: 0 },
           root.scene,
         )
       })
 
-      mesh.physicsImpostor = new BABYLON.PhysicsImpostor(
+      mesh.physicsImpostor = new PhysicsImpostor(
         mesh,
-        BABYLON.PhysicsImpostor.BoxImpostor,
+        PhysicsImpostor.BoxImpostor,
         { mass: 0 },
         root.scene,
       )
@@ -40,7 +40,7 @@
 </script>
 
 {#if showCustom}
-  <FirstPersonWorld bind:root playerPosition={new BABYLON.Vector3(0, 10, 0)}>
+  <FirstPersonWorld bind:root playerPosition={new Vector3(0, 10, 0)}>
     <Custom
       name="Level"
       rootUrl="/assets/models/"

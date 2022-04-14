@@ -1,4 +1,6 @@
 <script lang="ts" context="module">
+  import { AbstractMesh, Mesh } from '@babylonjs/core'
+  import type { PageMeta } from '@vitebook/client'
   import {
     ArcRotateCamera,
     Canvas,
@@ -6,9 +8,7 @@
     StandardMaterial,
     StandardTexture,
     TiledBox,
-  } from '$lib'
-  import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'TiledBox',
@@ -18,7 +18,7 @@
 
 <script lang="ts">
   let object: {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
 
   let shadowObjects: Array<typeof object['self']>
@@ -43,8 +43,8 @@
   <TiledBox
     bind:object
     options={{
-      sideOrientation: BABYLON.Mesh.DOUBLESIDE,
-      pattern: BABYLON.Mesh.NO_FLIP,
+      sideOrientation: Mesh.DOUBLESIDE,
+      pattern: Mesh.NO_FLIP,
       width: 2,
       height: 2,
       tileSize: 0.5,

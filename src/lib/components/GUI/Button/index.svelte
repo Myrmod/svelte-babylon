@@ -1,28 +1,28 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import type { EventState, Vector2 } from 'babylonjs'
-  import * as GUI from 'babylonjs-gui'
+  import type { EventState, Vector2 } from '@babylonjs/core'
+  import { AdvancedDynamicTexture, Button, Control, Vector2WithInfo } from '@babylonjs/gui'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
 
   export let name = 'Button'
   export let text = 'Click Me'
-  export let width: GUI.Button['width'] = '150px'
-  export let height: GUI.Button['height'] = '40px'
-  export let color: GUI.Button['color'] = 'white'
-  export let cornerRadius: GUI.Button['cornerRadius'] = 20
-  export let background: GUI.Button['background'] = 'green'
-  export let paddingBottom: GUI.Button['paddingBottom'] = '0px'
-  export let paddingTop: GUI.Button['paddingTop'] = '0px'
-  export let paddingLeft: GUI.Button['paddingLeft'] = '0px'
-  export let paddingRight: GUI.Button['paddingRight'] = '0px'
-  export let top: GUI.Button['top'] = 0
-  export let left: GUI.Button['left'] = 0
+  export let width: Button['width'] = '150px'
+  export let height: Button['height'] = '40px'
+  export let color: Button['color'] = 'white'
+  export let cornerRadius: Button['cornerRadius'] = 20
+  export let background: Button['background'] = 'green'
+  export let paddingBottom: Button['paddingBottom'] = '0px'
+  export let paddingTop: Button['paddingTop'] = '0px'
+  export let paddingLeft: Button['paddingLeft'] = '0px'
+  export let paddingRight: Button['paddingRight'] = '0px'
+  export let top: Button['top'] = 0
+  export let left: Button['left'] = 0
 
-  const context = getContext('gui') as GUI.AdvancedDynamicTexture
+  const context = getContext('gui') as AdvancedDynamicTexture
 
-  export let guiElement = GUI.Button.CreateSimpleButton(name, text)
+  export let guiElement = Button.CreateSimpleButton(name, text)
 
   onMount(() => {
     try {
@@ -46,26 +46,24 @@
     root.scene.render()
   }
 
-  export let onPointerUp: (eventData: GUI.Vector2WithInfo, eventState: EventState) => void =
-    undefined
+  export let onPointerUp: (eventData: Vector2WithInfo, eventState: EventState) => void = undefined
   $: if (onPointerUp) {
     guiElement.onPointerUpObservable.add(onPointerUp)
   }
-  export let onPointerDown: (eventData: GUI.Vector2WithInfo, eventState: EventState) => void =
-    undefined
+  export let onPointerDown: (eventData: Vector2WithInfo, eventState: EventState) => void = undefined
   $: if (onPointerDown) {
     guiElement.onPointerDownObservable.add(onPointerUp)
   }
-  export let onPointerClick: (eventData: GUI.Vector2WithInfo, eventState: EventState) => void =
+  export let onPointerClick: (eventData: Vector2WithInfo, eventState: EventState) => void =
     undefined
   $: if (onPointerClick) {
     guiElement.onPointerClickObservable.add(onPointerUp)
   }
-  export let onPointerEnter: (eventData: GUI.Control, eventState: EventState) => void = undefined
+  export let onPointerEnter: (eventData: Control, eventState: EventState) => void = undefined
   $: if (onPointerEnter) {
     guiElement.onPointerEnterObservable.add(onPointerEnter)
   }
-  export let onPointerOut: (eventData: GUI.Control, eventState: EventState) => void = undefined
+  export let onPointerOut: (eventData: Control, eventState: EventState) => void = undefined
   $: if (onPointerOut) {
     guiElement.onPointerOutObservable.add(onPointerOut)
   }

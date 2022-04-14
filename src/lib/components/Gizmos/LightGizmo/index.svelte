@@ -1,17 +1,16 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-
-  import * as BABYLON from 'babylonjs'
+  import { GizmoManager, Light, LightGizmo } from '@babylonjs/core'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
-  const parent = getContext('light') as BABYLON.Light
+  const parent = getContext('light') as Light
 
   export let name: string = 'LightGizmo'
   export let scaleRatio = 1
-  export const gizmo = new BABYLON.LightGizmo()
+  export const gizmo = new LightGizmo()
 
-  const gizmoManager = new BABYLON.GizmoManager(root.scene)
+  const gizmoManager = new GizmoManager(root.scene)
   export let positionGizmoEnabled = true
   export let rotationGizmoEnabled = true
   export let usePointerToAttachGizmos = false

@@ -1,18 +1,18 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import { ActionEvent, Animation, ArcRotateCamera, Vector3 } from '@babylonjs/core'
   import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()
 
   export let name: string = 'ArcRotateCamera'
-  export let target = BABYLON.Vector3.Zero()
+  export let target = Vector3.Zero()
   export let alpha = -Math.PI / 2
   export let beta = Math.PI / 2
   export let radius = 5
   export let setActiveOnSceneIfNoneActive = true
   export let speed = 1
-  export const camera = new BABYLON.ArcRotateCamera(
+  export const camera = new ArcRotateCamera(
     name,
     alpha,
     beta,
@@ -24,22 +24,21 @@
   setContext('camera', camera)
 
   // Helper functions
-  export const getFacingDirection = () =>
-    BABYLON.Vector3.Normalize(camera.target.subtract(camera.position))
+  export const getFacingDirection = () => Vector3.Normalize(camera.target.subtract(camera.position))
   export const moveCamera = (alpha = 0, beta = 0, fps = 60, totalFrames = 60) => {
-    const alphaAnim = new BABYLON.Animation(
+    const alphaAnim = new Animation(
       'alphaAnim',
       'alpha',
       fps,
-      BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-      BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT,
+      Animation.ANIMATIONTYPE_FLOAT,
+      Animation.ANIMATIONLOOPMODE_CONSTANT,
     )
-    const betaAnim = new BABYLON.Animation(
+    const betaAnim = new Animation(
       'betaAnim',
       'beta',
       fps,
-      BABYLON.Animation.ANIMATIONTYPE_FLOAT,
-      BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT,
+      Animation.ANIMATIONTYPE_FLOAT,
+      Animation.ANIMATIONLOOPMODE_CONSTANT,
     )
 
     const alphaKeys = [
@@ -59,7 +58,7 @@
     camera._scene.beginAnimation(camera, 0, totalFrames, false)
   }
   export const rotateToFacePickedFace = (
-    e: BABYLON.ActionEvent,
+    e: ActionEvent,
     radius = 5,
     fps = 60,
     totalFrames = 60,
@@ -71,7 +70,7 @@
       const origin = mesh.getFacetPosition(e.additionalData.faceId)
       const newPosition = origin.add(vector.multiplyByFloats(radius, radius, radius))
 
-      BABYLON.Animation.CreateAndStartAnimation(
+      Animation.CreateAndStartAnimation(
         'anim',
         camera,
         'position',
@@ -79,7 +78,7 @@
         totalFrames,
         camera.position.clone(),
         newPosition,
-        BABYLON.Animation.ANIMATIONLOOPMODE_CONSTANT,
+        Animation.ANIMATIONLOOPMODE_CONSTANT,
         undefined,
         onAnimationEnd,
       )

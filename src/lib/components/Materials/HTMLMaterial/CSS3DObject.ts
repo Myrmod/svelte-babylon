@@ -1,8 +1,8 @@
-import * as BABYLON from 'babylonjs'
+import { Mesh, Scene } from '@babylonjs/core'
 
-export default class CSS3DObject extends BABYLON.Mesh {
+export default class CSS3DObject extends Mesh {
   element: HTMLElement
-  constructor(element: HTMLElement, scene: BABYLON.Scene) {
+  constructor(element: HTMLElement, scene: Scene) {
     super(element.tagName, scene)
     this.element = element
     this.element.style.position = 'absolute'

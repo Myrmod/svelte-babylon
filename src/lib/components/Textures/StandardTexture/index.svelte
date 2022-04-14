@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
+  import { Texture } from '@babylonjs/core'
   import type { Nullable } from 'babylonjs'
-  import * as BABYLON from 'babylonjs'
   import { onDestroy, onMount } from 'svelte'
   import getParent from '../getParent'
 
@@ -45,10 +45,10 @@
   export let wrapR = 1
   export let wrapU = 1
   export let wrapV = 1
-  export let coordinatesMode: number = BABYLON.Texture.EXPLICIT_MODE
+  export let coordinatesMode: number = Texture.EXPLICIT_MODE
 
   const parent = getParent()
-  export const texture = new BABYLON.Texture(
+  export const texture = new Texture(
     url,
     root.scene,
     noMipmap,

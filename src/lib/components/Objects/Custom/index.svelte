@@ -1,6 +1,20 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import {
+    AbstractMesh,
+    ActionEvent,
+    ActionManager,
+    Condition,
+    ExecuteCodeAction,
+    IAction,
+    ISceneLoaderAsyncResult,
+    ISceneLoaderProgressEvent,
+    Mesh,
+    Node,
+    Quaternion,
+    SceneLoader,
+    Vector3,
+  } from '@babylonjs/core'
   import 'babylonjs-loaders'
   import 'babylonjs-loaders/babylonjs.loaders'
   import { getContext, onDestroy, onMount } from 'svelte'
@@ -8,32 +22,32 @@
 
   const root = getRoot()
   const parentObject = getContext('object') as {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
-  export let parent: BABYLON.Node = parentObject?.self
+  export let parent: Node = parentObject?.self
 
   export let meshesNames: Array<string> | string = ''
   export let fileName: string | File
   export let name: string = String(fileName)
   export let pluginExtension: string = undefined
   export let rootUrl: string = '/'
-  export let onProgress: (event: BABYLON.ISceneLoaderProgressEvent) => void = undefined
+  export let onProgress: (event: ISceneLoaderProgressEvent) => void = undefined
   export let receiveShadows = false
   /**
    * @todo Setting this can cause the model to not handle collisions correctly, that's obviously bad
    */
-  export let scaling: BABYLON.Vector3 = undefined
+  export let scaling: Vector3 = undefined
 
-  export let position = BABYLON.Vector3.Zero()
+  export let position = Vector3.Zero()
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
-  export let rotation = BABYLON.Vector3.Zero()
-  export let rotationQuaternion: BABYLON.Quaternion = null
-  export let __root__: BABYLON.AbstractMesh = undefined
+  export let rotation = Vector3.Zero()
+  export let rotationQuaternion: Quaternion = null
+  export let __root__: AbstractMesh = undefined
   export const context = createObjectContext(__root__)
 
-  export let imports: BABYLON.ISceneLoaderAsyncResult = undefined
+  export let imports: ISceneLoaderAsyncResult = undefined
   export let animationGroups: typeof imports['animationGroups'] = undefined
   export let geometries: typeof imports['geometries'] = undefined
   export let lights: typeof imports['lights'] = undefined
@@ -56,7 +70,7 @@
         particleSystems,
         skeletons,
         transformNodes,
-      } = await BABYLON.SceneLoader.ImportMeshAsync(
+      } = await SceneLoader.ImportMeshAsync(
         meshesNames,
         rootUrl,
         fileName,
@@ -110,69 +124,69 @@
   }
 
   // event handling
-  export let onPick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPickCondition: BABYLON.Condition = undefined
-  let onPickIAction: BABYLON.IAction
+  export let onPick: (evt: ActionEvent) => void = undefined
+  export let onPickCondition: Condition = undefined
+  let onPickIAction: IAction
 
-  export let onLeftPick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onLeftPickCondition: BABYLON.Condition = undefined
-  let onLeftPickIAction: BABYLON.IAction
+  export let onLeftPick: (evt: ActionEvent) => void = undefined
+  export let onLeftPickCondition: Condition = undefined
+  let onLeftPickIAction: IAction
 
-  export let onRightPick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onRightPickCondition: BABYLON.Condition = undefined
-  let onRightPickIAction: BABYLON.IAction
+  export let onRightPick: (evt: ActionEvent) => void = undefined
+  export let onRightPickCondition: Condition = undefined
+  let onRightPickIAction: IAction
 
-  export let onCenterPick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onCenterPickCondition: BABYLON.Condition = undefined
-  let onCenterPickIAction: BABYLON.IAction
+  export let onCenterPick: (evt: ActionEvent) => void = undefined
+  export let onCenterPickCondition: Condition = undefined
+  let onCenterPickIAction: IAction
 
-  export let onPickDown: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPickDownCondition: BABYLON.Condition = undefined
-  let onPickDownIAction: BABYLON.IAction
+  export let onPickDown: (evt: ActionEvent) => void = undefined
+  export let onPickDownCondition: Condition = undefined
+  let onPickDownIAction: IAction
 
-  export let onDoublePick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onDoublePickCondition: BABYLON.Condition = undefined
-  let onDoublePickIAction: BABYLON.IAction
+  export let onDoublePick: (evt: ActionEvent) => void = undefined
+  export let onDoublePickCondition: Condition = undefined
+  let onDoublePickIAction: IAction
 
-  export let onPickUp: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPickUpCondition: BABYLON.Condition = undefined
-  let onPickUpIAction: BABYLON.IAction
+  export let onPickUp: (evt: ActionEvent) => void = undefined
+  export let onPickUpCondition: Condition = undefined
+  let onPickUpIAction: IAction
 
-  export let onPickOut: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPickOutCondition: BABYLON.Condition = undefined
-  let onPickOutIAction: BABYLON.IAction
+  export let onPickOut: (evt: ActionEvent) => void = undefined
+  export let onPickOutCondition: Condition = undefined
+  let onPickOutIAction: IAction
 
-  export let onLongPress: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onLongPressCondition: BABYLON.Condition = undefined
-  let onLongPressIAction: BABYLON.IAction
+  export let onLongPress: (evt: ActionEvent) => void = undefined
+  export let onLongPressCondition: Condition = undefined
+  let onLongPressIAction: IAction
 
-  export let onPointerOver: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPointerOverCondition: BABYLON.Condition = undefined
-  let onPointerOverIAction: BABYLON.IAction
+  export let onPointerOver: (evt: ActionEvent) => void = undefined
+  export let onPointerOverCondition: Condition = undefined
+  let onPointerOverIAction: IAction
 
-  export let onPointerOut: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPointerOutCondition: BABYLON.Condition = undefined
-  let onPointerOutIAction: BABYLON.IAction
+  export let onPointerOut: (evt: ActionEvent) => void = undefined
+  export let onPointerOutCondition: Condition = undefined
+  let onPointerOutIAction: IAction
 
-  export let onEveryFrame: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onEveryFrameCondition: BABYLON.Condition = undefined
-  let onEveryFrameIAction: BABYLON.IAction
+  export let onEveryFrame: (evt: ActionEvent) => void = undefined
+  export let onEveryFrameCondition: Condition = undefined
+  let onEveryFrameIAction: IAction
 
-  export let onIntersectionEnter: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onIntersectionEnterCondition: BABYLON.Condition = undefined
-  let onIntersectionEnterIAction: BABYLON.IAction
+  export let onIntersectionEnter: (evt: ActionEvent) => void = undefined
+  export let onIntersectionEnterCondition: Condition = undefined
+  let onIntersectionEnterIAction: IAction
 
-  export let onIntersectionExit: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onIntersectionExitCondition: BABYLON.Condition = undefined
-  let onIntersectionExitIAction: BABYLON.IAction
+  export let onIntersectionExit: (evt: ActionEvent) => void = undefined
+  export let onIntersectionExitCondition: Condition = undefined
+  let onIntersectionExitIAction: IAction
 
-  export let onKeyDown: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onKeyDownCondition: BABYLON.Condition = undefined
-  let onKeyDownIAction: BABYLON.IAction
+  export let onKeyDown: (evt: ActionEvent) => void = undefined
+  export let onKeyDownCondition: Condition = undefined
+  let onKeyDownIAction: IAction
 
-  export let onKeyUp: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onKeyUpCondition: BABYLON.Condition = undefined
-  let onKeyUpIAction: BABYLON.IAction
+  export let onKeyUp: (evt: ActionEvent) => void = undefined
+  export let onKeyUpCondition: Condition = undefined
+  let onKeyUpIAction: IAction
 
   $: if (meshes) {
     meshes.forEach(mesh => {
@@ -194,18 +208,14 @@
         onKeyDown ||
         onKeyUp
       ) {
-        mesh.actionManager = new BABYLON.ActionManager(root.scene)
+        mesh.actionManager = new ActionManager(root.scene)
       } else if (mesh?.actionManager) {
         mesh.actionManager.dispose()
       }
 
       if (onPick) {
         onPickIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onPickCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onPickIAction)) {
         mesh.actionManager.unregisterAction(onPickIAction)
@@ -214,11 +224,7 @@
 
       if (onLeftPick) {
         onLeftPickIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onLeftPickCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onLeftPickCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onLeftPickIAction)) {
         mesh.actionManager.unregisterAction(onLeftPickIAction)
@@ -227,11 +233,7 @@
 
       if (onRightPick) {
         onRightPickIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onRightPickCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onRightPickCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onRightPickIAction)) {
         mesh.actionManager.unregisterAction(onRightPickIAction)
@@ -240,11 +242,7 @@
 
       if (onCenterPick) {
         onCenterPickIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onCenterPickCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onCenterPickCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onCenterPickIAction)) {
         mesh.actionManager.unregisterAction(onCenterPickIAction)
@@ -253,11 +251,7 @@
 
       if (onPickDown) {
         onPickDownIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onPickDownCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickDownCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onPickDownIAction)) {
         mesh.actionManager.unregisterAction(onPickDownIAction)
@@ -266,11 +260,7 @@
 
       if (onDoublePick) {
         onDoublePickIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onDoublePickCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onDoublePickCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onDoublePickIAction)) {
         mesh.actionManager.unregisterAction(onDoublePickIAction)
@@ -279,11 +269,7 @@
 
       if (onPickUp) {
         onPickUpIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onPickUpCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickUpCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onPickUpIAction)) {
         mesh.actionManager.unregisterAction(onPickUpIAction)
@@ -292,11 +278,7 @@
 
       if (onPickOut) {
         onPickOutIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onPickOutCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickOutCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onPickOutIAction)) {
         mesh.actionManager.unregisterAction(onPickOutIAction)
@@ -305,11 +287,7 @@
 
       if (onLongPress) {
         onLongPressIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onLongPressCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onLongPressCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onLongPressIAction)) {
         mesh.actionManager.unregisterAction(onLongPressIAction)
@@ -318,11 +296,7 @@
 
       if (onPointerOver) {
         onPointerOverIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onPointerOverCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPointerOverCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onPointerOverIAction)) {
         mesh.actionManager.unregisterAction(onPointerOverIAction)
@@ -331,11 +305,7 @@
 
       if (onPointerOut) {
         onPointerOutIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onPointerOutCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPointerOutCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onPointerOutIAction)) {
         mesh.actionManager.unregisterAction(onPointerOutIAction)
@@ -344,11 +314,7 @@
 
       if (onEveryFrame) {
         onEveryFrameIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onEveryFrameCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onEveryFrameCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onEveryFrameIAction)) {
         mesh.actionManager.unregisterAction(onEveryFrameIAction)
@@ -357,11 +323,7 @@
 
       if (onIntersectionEnter) {
         onIntersectionEnterIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onIntersectionEnterCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onIntersectionEnterCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onIntersectionEnterIAction)) {
         mesh.actionManager.unregisterAction(onIntersectionEnterIAction)
@@ -370,11 +332,7 @@
 
       if (onIntersectionExit) {
         onIntersectionExitIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onIntersectionExitCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onIntersectionExitCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onIntersectionExitIAction)) {
         mesh.actionManager.unregisterAction(onIntersectionExitIAction)
@@ -383,11 +341,7 @@
 
       if (onKeyDown) {
         onKeyDownIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onKeyDownCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onKeyDownCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onKeyDownIAction)) {
         mesh.actionManager.unregisterAction(onKeyDownIAction)
@@ -396,11 +350,7 @@
 
       if (onKeyUp) {
         onKeyUpIAction = mesh.actionManager.registerAction(
-          new BABYLON.ExecuteCodeAction(
-            BABYLON.ActionManager.OnPickTrigger,
-            onPick,
-            onKeyUpCondition,
-          ),
+          new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onKeyUpCondition),
         )
       } else if (mesh?.actionManager?.actions.includes(onKeyUpIAction)) {
         mesh.actionManager.unregisterAction(onKeyUpIAction)

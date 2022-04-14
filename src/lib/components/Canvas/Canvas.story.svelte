@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Box, Canvas, DirectionalLight, HemisphericLight } from '$lib'
+  import { Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
+  import { ArcRotateCamera, Box, Canvas, DirectionalLight, HemisphericLight } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'Canvas',
@@ -28,7 +28,7 @@
   {clearColor}
 >
   <HemisphericLight intensity={0.25} />
-  <DirectionalLight intensity={0.5} direction={new BABYLON.Vector3(-10, -20, -10)} />
+  <DirectionalLight intensity={0.5} direction={new Vector3(-10, -20, -10)} />
   <ArcRotateCamera />
   <Box />
 </Canvas>

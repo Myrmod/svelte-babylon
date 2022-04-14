@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import { Color3, StandardMaterial } from '@babylonjs/core'
   import { onDestroy, onMount } from 'svelte'
   import { createMaterialContext } from '../createMaterialContext'
   import getParent from '../getParent'
@@ -8,10 +8,10 @@
   const root = getRoot()
 
   export let name: string = 'StandardMaterial'
-  export let ambientColor: BABYLON.Color3 = undefined
-  export let emissiveColor: BABYLON.Color3 = undefined
-  export let diffuseColor: BABYLON.Color3 = undefined
-  export let specularColor: BABYLON.Color3 = undefined
+  export let ambientColor: Color3 = undefined
+  export let emissiveColor: Color3 = undefined
+  export let diffuseColor: Color3 = undefined
+  export let specularColor: Color3 = undefined
   export let roughness = 1
   export let separateCullingPass = false
   export let invertNormalMapX = false
@@ -19,7 +19,7 @@
   export let invertRefractionY = false
   export let backfaceCulling = false
 
-  export const material = new BABYLON.StandardMaterial(name, root.scene)
+  export const material = new StandardMaterial(name, root.scene)
 
   createMaterialContext(material)
 

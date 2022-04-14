@@ -1,7 +1,14 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Canvas, DirectionalLight, Ground, HemisphericLight, Torus } from '$lib'
+  import { AbstractMesh, Mesh, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  import {
+    ArcRotateCamera,
+    Canvas,
+    DirectionalLight,
+    Ground,
+    HemisphericLight,
+    Torus,
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'Torus',
@@ -10,10 +17,10 @@
 </script>
 
 <script lang="ts">
-  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+  const objectPosition = new Vector3(0, 3, 0)
 
   let object: {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
 
   let shadowObjects: Array<typeof object['self']>
@@ -36,8 +43,8 @@
   <HemisphericLight intensity={0.5} />
   <DirectionalLight
     intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
   <ArcRotateCamera target={objectPosition} />

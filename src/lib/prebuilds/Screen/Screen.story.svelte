@@ -1,4 +1,8 @@
 <script lang="ts" context="module">
+  import type RootContext from '$lib/types'
+  import { AbstractMesh, ArcRotateCamera as ACamera, Mesh, Vector3 } from '@babylonjs/core'
+  import type { PageMeta } from '@vitebook/client'
+  import { ControlsAddon } from '@vitebook/client/addons'
   import {
     ArcRotateCamera,
     Box,
@@ -7,11 +11,7 @@
     Ground,
     HemisphericLight,
     Screen,
-  } from '$lib'
-  import type RootContext from '$lib/types'
-  import type { PageMeta } from '@vitebook/client'
-  import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'Screen',
@@ -20,11 +20,11 @@
 </script>
 
 <script lang="ts">
-  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+  const objectPosition = new Vector3(0, 3, 0)
   let root: RootContext
 
   let object: {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
 
   let shadowObjects: Array<typeof object['self']>
@@ -37,11 +37,11 @@
   }
   $: if (object && root.scene) {
     root.scene.onBeforeRenderObservable.add(() => {
-      object.self.rotate(BABYLON.Vector3.Up(), 0.01)
+      object.self.rotate(Vector3.Up(), 0.01)
     })
   }
 
-  let mainCamera: BABYLON.ArcRotateCamera
+  let mainCamera: ACamera
   let showScreen = true
 </script>
 
@@ -56,8 +56,8 @@
   <HemisphericLight intensity={0.5} />
   <DirectionalLight
     intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
   <ArcRotateCamera target={objectPosition} bind:camera={mainCamera} />

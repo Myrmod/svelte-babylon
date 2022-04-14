@@ -1,8 +1,8 @@
-import type * as BABYLON from 'babylonjs'
+import type { Mesh } from '@babylonjs/core'
 import { getContext } from 'svelte'
 
 export default function getParent(): {
-  self: BABYLON.Mesh
+  self: Mesh
 } {
   return getContext('object')
 }

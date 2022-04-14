@@ -1,20 +1,19 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-
-  import * as BABYLON from 'babylonjs'
+  import { AbstractMesh, Color3, Mesh, ShadowGenerator, SpotLight, Vector3 } from '@babylonjs/core'
   import { onDestroy, onMount } from 'svelte'
   import { createLightContext } from '../createLightContext'
 
   const root = getRoot()
 
   export let name: string = 'SpotLight'
-  export let direction = BABYLON.Vector3.Zero()
+  export let direction = Vector3.Zero()
   export let angle = Math.PI / 2 // 90deg
   export let exponent = 10
   export let intensity = 1
-  export let diffuse: BABYLON.Color3 = BABYLON.Color3.White()
-  export let specular: BABYLON.Color3 = BABYLON.Color3.White()
-  export let position = BABYLON.Vector3.Zero()
+  export let diffuse: Color3 = Color3.White()
+  export let specular: Color3 = Color3.White()
+  export let position = Vector3.Zero()
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
@@ -22,7 +21,7 @@
   export let shadowMinZ = undefined
 
   // shadow
-  export let castShadowOf: Array<BABYLON.Mesh | BABYLON.AbstractMesh> = undefined
+  export let castShadowOf: Array<Mesh | AbstractMesh> = undefined
 
   /**
    * @link https://doc.babylonjs.com/divingDeeper/lights/shadows#exponential-shadow-map
@@ -38,8 +37,8 @@
   export let useBlurExponentialShadowMap = false
 
   export const light = createLightContext(
-    new BABYLON.SpotLight(name, position, direction, angle, exponent, root.scene),
-  ) as BABYLON.SpotLight
+    new SpotLight(name, position, direction, angle, exponent, root.scene),
+  ) as SpotLight
 
   onMount(() => {
     try {
@@ -73,10 +72,10 @@
     root.scene.render()
   }
 
-  let shadowGenerator: BABYLON.ShadowGenerator
+  let shadowGenerator: ShadowGenerator
   $: if (castShadowOf?.length) {
     if (!shadowGenerator) {
-      shadowGenerator = new BABYLON.ShadowGenerator(1024, light)
+      shadowGenerator = new ShadowGenerator(1024, light)
     }
     if (shadowGenerator) {
       castShadowOf

@@ -1,21 +1,30 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
+  import {
+    AbstractMesh,
+    ActionEvent,
+    ActionManager,
+    Condition,
+    ExecuteCodeAction,
+    IAction,
+    Mesh,
+    MeshBuilder,
+  } from '@babylonjs/core'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
 
   export let name: string = 'Decal'
-  export let options = {} as Parameters<typeof BABYLON.MeshBuilder.CreateDecal>[2]
+  export let options = {} as Parameters<typeof MeshBuilder.CreateDecal>[2]
   const parentObject = getContext('object') as {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
   export let parent = parentObject?.self
   if (!parent) {
     throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
   }
-  const context = createObjectContext(BABYLON.MeshBuilder.CreateDecal(name, parent, options))
+  const context = createObjectContext(MeshBuilder.CreateDecal(name, parent, options))
 
   export let object = root.objects[context.self.id]
 
@@ -43,69 +52,69 @@
   }
 
   // event handling
-  export let onPick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPickCondition: BABYLON.Condition = undefined
-  let onPickIAction: BABYLON.IAction
+  export let onPick: (evt: ActionEvent) => void = undefined
+  export let onPickCondition: Condition = undefined
+  let onPickIAction: IAction
 
-  export let onLeftPick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onLeftPickCondition: BABYLON.Condition = undefined
-  let onLeftPickIAction: BABYLON.IAction
+  export let onLeftPick: (evt: ActionEvent) => void = undefined
+  export let onLeftPickCondition: Condition = undefined
+  let onLeftPickIAction: IAction
 
-  export let onRightPick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onRightPickCondition: BABYLON.Condition = undefined
-  let onRightPickIAction: BABYLON.IAction
+  export let onRightPick: (evt: ActionEvent) => void = undefined
+  export let onRightPickCondition: Condition = undefined
+  let onRightPickIAction: IAction
 
-  export let onCenterPick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onCenterPickCondition: BABYLON.Condition = undefined
-  let onCenterPickIAction: BABYLON.IAction
+  export let onCenterPick: (evt: ActionEvent) => void = undefined
+  export let onCenterPickCondition: Condition = undefined
+  let onCenterPickIAction: IAction
 
-  export let onPickDown: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPickDownCondition: BABYLON.Condition = undefined
-  let onPickDownIAction: BABYLON.IAction
+  export let onPickDown: (evt: ActionEvent) => void = undefined
+  export let onPickDownCondition: Condition = undefined
+  let onPickDownIAction: IAction
 
-  export let onDoublePick: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onDoublePickCondition: BABYLON.Condition = undefined
-  let onDoublePickIAction: BABYLON.IAction
+  export let onDoublePick: (evt: ActionEvent) => void = undefined
+  export let onDoublePickCondition: Condition = undefined
+  let onDoublePickIAction: IAction
 
-  export let onPickUp: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPickUpCondition: BABYLON.Condition = undefined
-  let onPickUpIAction: BABYLON.IAction
+  export let onPickUp: (evt: ActionEvent) => void = undefined
+  export let onPickUpCondition: Condition = undefined
+  let onPickUpIAction: IAction
 
-  export let onPickOut: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPickOutCondition: BABYLON.Condition = undefined
-  let onPickOutIAction: BABYLON.IAction
+  export let onPickOut: (evt: ActionEvent) => void = undefined
+  export let onPickOutCondition: Condition = undefined
+  let onPickOutIAction: IAction
 
-  export let onLongPress: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onLongPressCondition: BABYLON.Condition = undefined
-  let onLongPressIAction: BABYLON.IAction
+  export let onLongPress: (evt: ActionEvent) => void = undefined
+  export let onLongPressCondition: Condition = undefined
+  let onLongPressIAction: IAction
 
-  export let onPointerOver: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPointerOverCondition: BABYLON.Condition = undefined
-  let onPointerOverIAction: BABYLON.IAction
+  export let onPointerOver: (evt: ActionEvent) => void = undefined
+  export let onPointerOverCondition: Condition = undefined
+  let onPointerOverIAction: IAction
 
-  export let onPointerOut: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onPointerOutCondition: BABYLON.Condition = undefined
-  let onPointerOutIAction: BABYLON.IAction
+  export let onPointerOut: (evt: ActionEvent) => void = undefined
+  export let onPointerOutCondition: Condition = undefined
+  let onPointerOutIAction: IAction
 
-  export let onEveryFrame: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onEveryFrameCondition: BABYLON.Condition = undefined
-  let onEveryFrameIAction: BABYLON.IAction
+  export let onEveryFrame: (evt: ActionEvent) => void = undefined
+  export let onEveryFrameCondition: Condition = undefined
+  let onEveryFrameIAction: IAction
 
-  export let onIntersectionEnter: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onIntersectionEnterCondition: BABYLON.Condition = undefined
-  let onIntersectionEnterIAction: BABYLON.IAction
+  export let onIntersectionEnter: (evt: ActionEvent) => void = undefined
+  export let onIntersectionEnterCondition: Condition = undefined
+  let onIntersectionEnterIAction: IAction
 
-  export let onIntersectionExit: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onIntersectionExitCondition: BABYLON.Condition = undefined
-  let onIntersectionExitIAction: BABYLON.IAction
+  export let onIntersectionExit: (evt: ActionEvent) => void = undefined
+  export let onIntersectionExitCondition: Condition = undefined
+  let onIntersectionExitIAction: IAction
 
-  export let onKeyDown: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onKeyDownCondition: BABYLON.Condition = undefined
-  let onKeyDownIAction: BABYLON.IAction
+  export let onKeyDown: (evt: ActionEvent) => void = undefined
+  export let onKeyDownCondition: Condition = undefined
+  let onKeyDownIAction: IAction
 
-  export let onKeyUp: (evt: BABYLON.ActionEvent) => void = undefined
-  export let onKeyUpCondition: BABYLON.Condition = undefined
-  let onKeyUpIAction: BABYLON.IAction
+  export let onKeyUp: (evt: ActionEvent) => void = undefined
+  export let onKeyUpCondition: Condition = undefined
+  let onKeyUpIAction: IAction
 
   $: if (
     onPick ||
@@ -125,14 +134,14 @@
     onKeyDown ||
     onKeyUp
   ) {
-    context.self.actionManager = new BABYLON.ActionManager(root.scene)
+    context.self.actionManager = new ActionManager(root.scene)
   } else if (context.self.actionManager) {
     context.self.actionManager.dispose()
   }
 
   $: if (onPick) {
     onPickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, onPick, onPickCondition),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onPickIAction)) {
     context.self.actionManager.unregisterAction(onPickIAction)
@@ -141,11 +150,7 @@
 
   $: if (onLeftPick) {
     onLeftPickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onLeftPickCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onLeftPickCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onLeftPickIAction)) {
     context.self.actionManager.unregisterAction(onLeftPickIAction)
@@ -154,11 +159,7 @@
 
   $: if (onRightPick) {
     onRightPickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onRightPickCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onRightPickCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onRightPickIAction)) {
     context.self.actionManager.unregisterAction(onRightPickIAction)
@@ -167,11 +168,7 @@
 
   $: if (onCenterPick) {
     onCenterPickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onCenterPickCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onCenterPickCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onCenterPickIAction)) {
     context.self.actionManager.unregisterAction(onCenterPickIAction)
@@ -180,11 +177,7 @@
 
   $: if (onPickDown) {
     onPickDownIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onPickDownCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickDownCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onPickDownIAction)) {
     context.self.actionManager.unregisterAction(onPickDownIAction)
@@ -193,11 +186,7 @@
 
   $: if (onDoublePick) {
     onDoublePickIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onDoublePickCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onDoublePickCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onDoublePickIAction)) {
     context.self.actionManager.unregisterAction(onDoublePickIAction)
@@ -206,7 +195,7 @@
 
   $: if (onPickUp) {
     onPickUpIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, onPick, onPickUpCondition),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickUpCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onPickUpIAction)) {
     context.self.actionManager.unregisterAction(onPickUpIAction)
@@ -215,11 +204,7 @@
 
   $: if (onPickOut) {
     onPickOutIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onPickOutCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickOutCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onPickOutIAction)) {
     context.self.actionManager.unregisterAction(onPickOutIAction)
@@ -228,11 +213,7 @@
 
   $: if (onLongPress) {
     onLongPressIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onLongPressCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onLongPressCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onLongPressIAction)) {
     context.self.actionManager.unregisterAction(onLongPressIAction)
@@ -241,11 +222,7 @@
 
   $: if (onPointerOver) {
     onPointerOverIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onPointerOverCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPointerOverCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onPointerOverIAction)) {
     context.self.actionManager.unregisterAction(onPointerOverIAction)
@@ -254,11 +231,7 @@
 
   $: if (onPointerOut) {
     onPointerOutIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onPointerOutCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPointerOutCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onPointerOutIAction)) {
     context.self.actionManager.unregisterAction(onPointerOutIAction)
@@ -267,11 +240,7 @@
 
   $: if (onEveryFrame) {
     onEveryFrameIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onEveryFrameCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onEveryFrameCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onEveryFrameIAction)) {
     context.self.actionManager.unregisterAction(onEveryFrameIAction)
@@ -280,11 +249,7 @@
 
   $: if (onIntersectionEnter) {
     onIntersectionEnterIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onIntersectionEnterCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onIntersectionEnterCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onIntersectionEnterIAction)) {
     context.self.actionManager.unregisterAction(onIntersectionEnterIAction)
@@ -293,11 +258,7 @@
 
   $: if (onIntersectionExit) {
     onIntersectionExitIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onIntersectionExitCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onIntersectionExitCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onIntersectionExitIAction)) {
     context.self.actionManager.unregisterAction(onIntersectionExitIAction)
@@ -306,11 +267,7 @@
 
   $: if (onKeyDown) {
     onKeyDownIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(
-        BABYLON.ActionManager.OnPickTrigger,
-        onPick,
-        onKeyDownCondition,
-      ),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onKeyDownCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onKeyDownIAction)) {
     context.self.actionManager.unregisterAction(onKeyDownIAction)
@@ -319,7 +276,7 @@
 
   $: if (onKeyUp) {
     onKeyUpIAction = context.self.actionManager.registerAction(
-      new BABYLON.ExecuteCodeAction(BABYLON.ActionManager.OnPickTrigger, onPick, onKeyUpCondition),
+      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onKeyUpCondition),
     )
   } else if (context.self.actionManager?.actions.includes(onKeyUpIAction)) {
     context.self.actionManager.unregisterAction(onKeyUpIAction)

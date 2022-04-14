@@ -1,4 +1,7 @@
 <script lang="ts" context="module">
+  import { Color3, Vector3 } from '@babylonjs/core'
+  import type { PageMeta } from '@vitebook/client'
+  import { ControlsAddon } from '@vitebook/client/addons'
   import {
     ArcRotateCamera,
     Canvas,
@@ -6,10 +9,7 @@
     HemisphericLight,
     Plane,
     StandardMaterial,
-  } from '$lib'
-  import type { PageMeta } from '@vitebook/client'
-  import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'StandardMaterial',
@@ -29,10 +29,10 @@
   let invertRefractionY = false
   let backfaceCulling = false
 
-  $: ambient = BABYLON.Color3.FromHexString(ambientHex)
-  $: diffuse = BABYLON.Color3.FromHexString(diffuseHex)
-  $: emissive = BABYLON.Color3.FromHexString(emissiveHex)
-  $: specular = BABYLON.Color3.FromHexString(specularHex)
+  $: ambient = Color3.FromHexString(ambientHex)
+  $: diffuse = Color3.FromHexString(diffuseHex)
+  $: emissive = Color3.FromHexString(emissiveHex)
+  $: specular = Color3.FromHexString(specularHex)
 </script>
 
 <Canvas
@@ -45,10 +45,10 @@
   <HemisphericLight intensity={0.25} />
   <DirectionalLight
     intensity={0.5}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
   />
-  <ArcRotateCamera target={BABYLON.Vector3.Zero()} />
+  <ArcRotateCamera target={Vector3.Zero()} />
   <Plane>
     <StandardMaterial
       ambientColor={ambient}

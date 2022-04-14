@@ -1,16 +1,15 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-
-  import * as BABYLON from 'babylonjs'
+  import { BoundingBoxGizmo, Color3, UtilityLayerRenderer } from '@babylonjs/core'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
 
   export let name: string = 'BoundingBoxGizmo'
-  export let color: BABYLON.Color3 = undefined
-  export let gizmoLayer: BABYLON.UtilityLayerRenderer = undefined
+  export let color: Color3 = undefined
+  export let gizmoLayer: UtilityLayerRenderer = undefined
 
-  export const gizmo = new BABYLON.BoundingBoxGizmo(color, gizmoLayer)
+  export const gizmo = new BoundingBoxGizmo(color, gizmoLayer)
 
   onMount(() => {
     try {

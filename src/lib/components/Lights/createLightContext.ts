@@ -1,7 +1,7 @@
-import type * as BABYLON from 'babylonjs'
+import type { Light } from '@babylonjs/core'
 import { setContext } from 'svelte'
 
-export function createLightContext(self: BABYLON.Light): BABYLON.Light {
+export function createLightContext(self: Light): Light {
   setContext('light', self)
 
   return self

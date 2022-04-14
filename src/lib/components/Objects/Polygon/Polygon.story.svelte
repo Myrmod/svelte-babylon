@@ -1,7 +1,13 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Canvas, DirectionalLight, HemisphericLight, Polygon } from '$lib'
+  import { AbstractMesh, Mesh, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  import {
+    ArcRotateCamera,
+    Canvas,
+    DirectionalLight,
+    HemisphericLight,
+    Polygon,
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'Polygon',
@@ -10,10 +16,10 @@
 </script>
 
 <script lang="ts">
-  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+  const objectPosition = new Vector3(0, 3, 0)
 
   let object: {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
 
   let shadowObjects: Array<typeof object['self']>
@@ -36,8 +42,8 @@
   <HemisphericLight intensity={0.5} />
   <DirectionalLight
     intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
   <ArcRotateCamera target={objectPosition} radius={10} />
@@ -46,22 +52,22 @@
     bind:object
     options={{
       shape: [
-        new BABYLON.Vector3(2, 0, -2),
-        new BABYLON.Vector3(2, 0, 0),
-        new BABYLON.Vector3(3, 0, 2),
-        new BABYLON.Vector3(1, 0, 2),
-        new BABYLON.Vector3(-3, 0, 3),
-        new BABYLON.Vector3(-3, 0, 1),
-        new BABYLON.Vector3(-2, 0, -2),
-        new BABYLON.Vector3(-2, 0, -3),
-        new BABYLON.Vector3(2, 0, -3),
+        new Vector3(2, 0, -2),
+        new Vector3(2, 0, 0),
+        new Vector3(3, 0, 2),
+        new Vector3(1, 0, 2),
+        new Vector3(-3, 0, 3),
+        new Vector3(-3, 0, 1),
+        new Vector3(-2, 0, -2),
+        new Vector3(-2, 0, -3),
+        new Vector3(2, 0, -3),
       ],
       holes: [
         [
-          new BABYLON.Vector3(1, 0, -1),
-          new BABYLON.Vector3(1.5, 0, 0),
-          new BABYLON.Vector3(1.4, 0, 1),
-          new BABYLON.Vector3(0.5, 0, 1.5),
+          new Vector3(1, 0, -1),
+          new Vector3(1.5, 0, 0),
+          new Vector3(1.4, 0, 1),
+          new Vector3(0.5, 0, 1.5),
         ],
       ],
       depth: 2,

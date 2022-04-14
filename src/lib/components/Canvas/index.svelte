@@ -1,14 +1,22 @@
 <script lang="ts">
   import type RootContext from '$lib/types'
-  import * as BABYLON from 'babylonjs'
-  import { Vector3 } from 'babylonjs'
+  import {
+    AmmoJSPlugin,
+    CannonJSPlugin,
+    Color4,
+    Engine,
+    EngineOptions,
+    OimoJSPlugin,
+    Scene,
+    Vector3,
+  } from '@babylonjs/core'
   import { onMount } from 'svelte'
   import { setRoot } from '../../utils/context'
 
   // settings
   export let antialiasing = false
-  export let engineOptions: BABYLON.EngineOptions = undefined
-  export let clearColor: BABYLON.Color4 = new BABYLON.Color4(0, 0, 0)
+  export let engineOptions: EngineOptions = undefined
+  export let clearColor: Color4 = new Color4(0, 0, 0)
   export let initialized = false
   export let displayLoadingUI = false
   export let enablePointerLockOnClick = false
@@ -47,13 +55,12 @@
     root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
   }
 
-  export let physicsPlugin: BABYLON.AmmoJSPlugin | BABYLON.CannonJSPlugin | BABYLON.OimoJSPlugin =
-    undefined
+  export let physicsPlugin: AmmoJSPlugin | CannonJSPlugin | OimoJSPlugin = undefined
 
   async function init() {
     try {
-      root.engine = new BABYLON.Engine(canvas, antialiasing, engineOptions)
-      root.scene = new BABYLON.Scene(root.engine)
+      root.engine = new Engine(canvas, antialiasing, engineOptions)
+      root.scene = new Scene(root.engine)
 
       // this way we prevent rendering of no camera is active
       root.scene.onBeforeRenderObservable.add((_scene, event) => {
@@ -67,7 +74,7 @@
       })
 
       if (enablePhysics && !physicsPlugin) {
-        physicsPlugin = new BABYLON.CannonJSPlugin(true, 10, await import('cannon'))
+        physicsPlugin = new CannonJSPlugin(true, 10, await import('cannon'))
       }
 
       initialized = true

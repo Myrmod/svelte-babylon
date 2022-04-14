@@ -1,7 +1,7 @@
-import type * as BABYLON from 'babylonjs'
+import type { DynamicTexture } from '@babylonjs/core'
 
 export default function drawTextOnTexture(
-  texture: BABYLON.DynamicTexture,
+  texture: DynamicTexture,
   text: string,
   fontFamily: string,
   textOffsetX: number,

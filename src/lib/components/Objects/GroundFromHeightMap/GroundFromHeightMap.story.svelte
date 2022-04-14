@@ -1,13 +1,13 @@
 <script lang="ts" context="module">
+  import { Vector3 } from '@babylonjs/core'
+  import type { PageMeta } from '@vitebook/client'
   import {
     ArcRotateCamera,
     Canvas,
     DirectionalLight,
     GroundFromHeightMap,
     HemisphericLight,
-  } from '$lib'
-  import type { PageMeta } from '@vitebook/client'
-  import * as BABYLON from 'babylonjs'
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'GroundFromHeightMap',
@@ -25,8 +25,8 @@
   <HemisphericLight intensity={0.5} />
   <DirectionalLight
     intensity={0.25}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
   />
   <ArcRotateCamera radius={5} />
   <GroundFromHeightMap

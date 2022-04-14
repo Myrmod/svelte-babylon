@@ -1,12 +1,11 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import * as BABYLON from 'babylonjs'
-  import { PhysicsImpostor, PhysicsImpostorParameters } from 'babylonjs'
+  import { Mesh, PhysicsImpostor, PhysicsImpostorParameters } from '@babylonjs/core'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
   const parent = getContext('object') as {
-    self: BABYLON.Mesh
+    self: Mesh
   }
 
   if (!parent) {
@@ -17,7 +16,7 @@
 
   export let name: string = `${parent.self.name}Impostor`
   /**
-   * eg BABYLON.PhysicsImpostor.BoxImpostor
+   * eg PhysicsImpostor.BoxImpostor
    * There is no proper type handling in babylonjs, might open a pull request
    */
   export let type = PhysicsImpostor.BoxImpostor
@@ -38,7 +37,7 @@
   onMount(async () => {
     try {
       // create the physics impostor
-      parent.self.physicsImpostor = new BABYLON.PhysicsImpostor(
+      parent.self.physicsImpostor = new PhysicsImpostor(
         parent.self,
         type,
         /**

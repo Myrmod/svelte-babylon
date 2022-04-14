@@ -1,5 +1,16 @@
-import type * as BABYLON from 'babylonjs'
-import type * as GUI from 'babylonjs-gui'
+import type {
+  AbstractMesh,
+  Engine,
+  Gizmo,
+  GizmoManager,
+  ISceneLoaderAsyncResult,
+  Light,
+  Mesh,
+  PhysicsImpostor,
+  Scene,
+  TargetCamera,
+} from '@babylonjs/core'
+import type { AdvancedDynamicTexture, Control } from '@babylonjs/gui'
 
 export default interface RootContext {
   canvas: {
@@ -8,37 +19,37 @@ export default interface RootContext {
     height: number
     pixelRatio: number
   }
-  scene: BABYLON.Scene
-  engine: BABYLON.Engine
+  scene: Scene
+  engine: Engine
   cameras: {
-    [key: string]: BABYLON.TargetCamera
+    [key: string]: TargetCamera
   }
   lights: {
-    [key: string]: BABYLON.Light
+    [key: string]: Light
   }
   objects: {
     [key: string]: {
-      self: BABYLON.Mesh | BABYLON.AbstractMesh
+      self: Mesh | AbstractMesh
       [key: string]: unknown
     }
   }
   gui: {
     [key: string]: {
-      self: GUI.AdvancedDynamicTexture
+      self: AdvancedDynamicTexture
       controls: {
-        [key: string]: GUI.Control
+        [key: string]: Control
       }
     }
   }
   imports: {
-    [key: string]: BABYLON.ISceneLoaderAsyncResult
+    [key: string]: ISceneLoaderAsyncResult
   }
   gizmos: {
-    [key: string]: BABYLON.Gizmo | BABYLON.GizmoManager
+    [key: string]: Gizmo | GizmoManager
   }
   physics: {
     impostors: {
-      [key: string]: BABYLON.PhysicsImpostor
+      [key: string]: PhysicsImpostor
     }
   }
 }

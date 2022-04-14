@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Box, Canvas, Ground, LightGizmo, SpotLight } from '$lib'
+  import { AbstractMesh, Color3, Mesh, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
+  import { ArcRotateCamera, Box, Canvas, Ground, LightGizmo, SpotLight } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'SpotLight',
@@ -17,10 +17,10 @@
   let specularHex = '#ffffff'
 
   // scene specific
-  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+  const objectPosition = new Vector3(0, 3, 0)
 
   let box: {
-    self: BABYLON.Mesh | BABYLON.AbstractMesh
+    self: Mesh | AbstractMesh
   }
 
   let shadowObjects: Array<typeof box['self']>
@@ -32,8 +32,8 @@
     shadowObjects = temp
   }
 
-  $: specular = BABYLON.Color3.FromHexString(specularHex)
-  $: diffuse = BABYLON.Color3.FromHexString(diffuseHex)
+  $: specular = Color3.FromHexString(specularHex)
+  $: diffuse = Color3.FromHexString(diffuseHex)
 </script>
 
 <Canvas
@@ -45,8 +45,8 @@
 >
   <SpotLight
     {intensity}
-    direction={new BABYLON.Vector3(-10, -20, -10)}
-    position={new BABYLON.Vector3(2, 6, 2)}
+    direction={new Vector3(-10, -20, -10)}
+    position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
     {specular}
     {diffuse}

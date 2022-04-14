@@ -1,8 +1,15 @@
 <script lang="ts" context="module">
-  import { ArcRotateCamera, Box, Canvas, Ground, HemisphericLight, LightGizmo } from '$lib'
+  import { Color3, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import * as BABYLON from 'babylonjs'
+  import {
+    ArcRotateCamera,
+    Box,
+    Canvas,
+    Ground,
+    HemisphericLight,
+    LightGizmo,
+  } from 'svelte-babylon'
 
   export const __pageMeta: PageMeta = {
     title: 'HemisphericLight',
@@ -17,10 +24,10 @@
   let specularHex = '#ffffff'
 
   // scene specific
-  const objectPosition = new BABYLON.Vector3(0, 3, 0)
+  const objectPosition = new Vector3(0, 3, 0)
 
-  $: specular = BABYLON.Color3.FromHexString(specularHex)
-  $: diffuse = BABYLON.Color3.FromHexString(diffuseHex)
+  $: specular = Color3.FromHexString(specularHex)
+  $: diffuse = Color3.FromHexString(diffuseHex)
 </script>
 
 <Canvas

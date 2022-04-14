@@ -16,6 +16,14 @@
     "vitebook:preview": "vitebook preview"
   },
   "devDependencies": {
+    "@babylonjs/core": "^5.2.0",
+    "@babylonjs/gui": "^5.2.0",
+    "@babylonjs/inspector": "^5.2.0",
+    "@babylonjs/loaders": "^5.2.0",
+    "@babylonjs/materials": "^5.2.0",
+    "@babylonjs/post-processes": "^5.2.0",
+    "@babylonjs/procedural-textures": "^5.2.0",
+    "@babylonjs/serializers": "^5.2.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.36",
@@ -44,9 +52,6 @@
   "type": "module",
   "dependencies": {
     "ammo.js": "^0.0.10",
-    "babylonjs": "^5.0.3",
-    "babylonjs-gui": "^5.0.3",
-    "babylonjs-loaders": "^5.0.3",
     "cannon": "^0.6.2",
     "earcut": "^2.2.3"
   }
