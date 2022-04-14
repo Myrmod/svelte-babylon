@@ -1,8 +1,8 @@
-import type { AbstractMesh, Mesh } from '@babylonjs/core'
+import type { AbstractMesh, LinesMesh, Mesh } from '@babylonjs/core'
 import { setContext } from 'svelte'
 
-export function createObjectContext(self: Mesh | AbstractMesh): {
-  self: Mesh | AbstractMesh
+export function createObjectContext(self: Mesh | AbstractMesh | LinesMesh): {
+  self: Mesh | AbstractMesh | LinesMesh
 } {
   const context = {
     self,

@@ -15,8 +15,7 @@
     SceneLoader,
     Vector3,
   } from '@babylonjs/core'
-  import 'babylonjs-loaders'
-  import 'babylonjs-loaders/babylonjs.loaders'
+  import '@babylonjs/loaders'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 

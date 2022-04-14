@@ -34,9 +34,6 @@ export default defineConfig({
         vitebook: path.resolve('.vitebook'),
       },
     },
-    optimizeDeps: {
-      include: ['babylonjs-loaders/babylonjs.loaders'],
-    },
   },
   site: {
     title: 'Svelte Babylon',
