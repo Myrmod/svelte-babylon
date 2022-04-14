@@ -2,7 +2,6 @@
   import type RootContext from '$lib/types'
   import * as BABYLON from 'babylonjs'
   import { Vector3 } from 'babylonjs'
-  import * as cannon from 'cannon'
   import { onMount } from 'svelte'
   import { setRoot } from '../../utils/context'
 
@@ -68,7 +67,7 @@
       })
 
       if (enablePhysics && !physicsPlugin) {
-        physicsPlugin = new BABYLON.CannonJSPlugin(true, 10, cannon)
+        physicsPlugin = new BABYLON.CannonJSPlugin(true, 10, await import('cannon'))
       }
 
       initialized = true
