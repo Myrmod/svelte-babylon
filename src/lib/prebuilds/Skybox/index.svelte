@@ -1,10 +1,13 @@
 <script lang="ts">
-  import { createObjectContext } from '$lib/components/Objects/createObjectContext'
-  import { TextureTargets } from '$lib/types/enums/TextureTargets'
-  import { getRoot } from '$lib/utils/context'
-  import { Color3, MeshBuilder, Texture, Vector3 } from '@babylonjs/core'
+  import { Texture } from '@babylonjs/core/Materials/Textures/texture'
+  import { Color3 } from '@babylonjs/core/Maths/math.color'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import { onDestroy, onMount } from 'svelte'
   import { CubeTexture, StandardMaterial } from 'svelte-babylon'
+  import { createObjectContext } from 'svelte-babylon/components/Objects/createObjectContext'
+  import { TextureTargets } from 'svelte-babylon/types/enums/TextureTargets'
+  import { getRoot } from 'svelte-babylon/utils/context'
   const root = getRoot()
 
   export let name: string = 'Skybox'

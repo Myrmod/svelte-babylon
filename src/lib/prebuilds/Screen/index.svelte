@@ -4,16 +4,13 @@
  -->
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import {
-    ArcRotateCamera,
-    Camera,
-    Color3,
-    Mesh,
-    MeshBuilder,
-    RenderTargetTexture,
-    StandardMaterial,
-    Vector3,
-  } from '@babylonjs/core'
+  import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera'
+  import type { Camera } from '@babylonjs/core/Cameras/camera'
+  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
+  import { RenderTargetTexture } from '@babylonjs/core/Materials/Textures/renderTargetTexture'
+  import { Color3 } from '@babylonjs/core/Maths/math.color'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()

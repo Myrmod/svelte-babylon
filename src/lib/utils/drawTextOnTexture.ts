@@ -1,4 +1,4 @@
-import type { DynamicTexture } from '@babylonjs/core'
+import type { DynamicTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture'
 
 export default function drawTextOnTexture(
   texture: DynamicTexture,
@@ -10,7 +10,7 @@ export default function drawTextOnTexture(
   backgroundColor: string,
   fontSizeMultiplier: number,
   dtWidth: number,
-) {
+): DynamicTexture {
   const dtContext = texture.getContext()
   const size = 12
   dtContext.font = `${size}px ${fontFamily}`
@@ -20,4 +20,6 @@ export default function drawTextOnTexture(
   const font = `${fontSize}px ${fontFamily}`
 
   texture.drawText(text, textOffsetX, textOffsetY, font, color, backgroundColor, true)
+
+  return texture
 }

@@ -3,17 +3,17 @@
   Only single line texts can be rendered though.
 -->
 <script lang="ts">
-  import {
-    DynamicTexture as DTexture,
-    Engine,
-    Mesh,
-    MeshBuilder,
-    StandardMaterial as SMaterial,
-    Texture,
-    Vector3,
-  } from '@babylonjs/core'
-  import { DynamicTexture, Plane, StandardMaterial } from 'svelte-babylon'
-  import drawTextOnTexture from '../../utils/drawTextOnTexture'
+  import { Engine } from '@babylonjs/core/Engines/engine'
+  import type { StandardMaterial as SMaterial } from '@babylonjs/core/Materials/standardMaterial'
+  import type { DynamicTexture as DTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture'
+  import { Texture } from '@babylonjs/core/Materials/Textures/texture'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
+  import StandardMaterial from 'svelte-babylon/components/Materials/StandardMaterial/index.svelte'
+  import Plane from 'svelte-babylon/components/Objects/Plane/index.svelte'
+  import DynamicTexture from 'svelte-babylon/components/Textures/DynamicTexture/index.svelte'
+  import drawTextOnTexture from 'svelte-babylon/utils/drawTextOnTexture'
 
   export let name = 'TextPlane'
   export let text = 'svelte-babylon'

@@ -1,6 +1,9 @@
 <script lang="ts" context="module">
   import type RootContext from '$lib/types'
-  import { AbstractMesh, ArcRotateCamera as ACamera, Mesh, Vector3 } from '@babylonjs/core'
+  import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
   import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
