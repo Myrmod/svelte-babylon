@@ -1,7 +1,11 @@
 <script lang="ts" context="module">
   import { Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import { ArcRotateCamera, Canvas, HemisphericLight, Lines } from 'svelte-babylon'
+  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import Lines from 'svelte-babylon/components/Objects/Lines/index.svelte'
+
   export const __pageMeta: PageMeta = {
     title: 'Lines',
     description: 'https://doc.babylonjs.com/divingDeeper/mesh/creation/param/lines',

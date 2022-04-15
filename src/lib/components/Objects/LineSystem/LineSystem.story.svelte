@@ -1,7 +1,10 @@
 <script lang="ts" context="module">
   import { Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import { ArcRotateCamera, Canvas, HemisphericLight, LineSystem } from 'svelte-babylon'
+  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import LineSystem from 'svelte-babylon/components/Objects/LineSystem/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'LineSystem',

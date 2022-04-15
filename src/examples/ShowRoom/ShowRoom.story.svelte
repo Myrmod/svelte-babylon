@@ -1,30 +1,26 @@
 <script lang="ts" context="module">
-  import type RootContext from '$lib/types'
-  import {
-    ActionEvent,
-    ArcRotateCamera as ACamera,
-    Color3,
-    FreeCamera as FCamera,
-    Mesh,
-    Vector3,
-    VideoTexture as VTexture,
-  } from '@babylonjs/core'
+  import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
+  import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera'
+  import type { FreeCamera as FCamera } from '@babylonjs/core/Cameras/freeCamera'
+  import type { VideoTexture as VTexture } from '@babylonjs/core/Materials/Textures/videoTexture'
+  import { Color3 } from '@babylonjs/core/Maths/math.color'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import {
-    ArcRotateCamera,
-    Canvas,
-    Custom,
-    DirectionalLight,
-    Disc,
-    FreeCamera,
-    HemisphericLight,
-    Skybox,
-    StandardMaterial,
-    StandardTexture,
-    TextPlane,
-    VideoTexture,
-  } from 'svelte-babylon'
+  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
+  import FreeCamera from 'svelte-babylon/components/Cameras/FreeCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import StandardMaterial from 'svelte-babylon/components/Materials/StandardMaterial/index.svelte'
+  import Custom from 'svelte-babylon/components/Objects/Custom/index.svelte'
+  import Disc from 'svelte-babylon/components/Objects/Disc/index.svelte'
+  import StandardTexture from 'svelte-babylon/components/Textures/StandardTexture/index.svelte'
+  import VideoTexture from 'svelte-babylon/components/Textures/VideoTexture/index.svelte'
+  import Skybox from 'svelte-babylon/prebuilds/Skybox/index.svelte'
+  import TextPlane from 'svelte-babylon/prebuilds/TextPlane/index.svelte'
+  import type RootContext from 'svelte-babylon/types'
   import GUI from './components/GUI/index.svelte'
   import Platform from './components/Platform/index.svelte'
 

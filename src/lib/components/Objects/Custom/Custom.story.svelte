@@ -1,14 +1,12 @@
 <script lang="ts" context="module">
   import { Mesh, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import {
-    ArcRotateCamera,
-    Canvas,
-    Custom,
-    DirectionalLight,
-    Ground,
-    HemisphericLight,
-  } from 'svelte-babylon'
+  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import Custom from 'svelte-babylon/components/Objects/Custom/index.svelte'
+  import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'Custom',

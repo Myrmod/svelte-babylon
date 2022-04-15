@@ -3,15 +3,13 @@
   import { AbstractMesh, ArcRotateCamera as ACamera, Mesh, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import {
-    ArcRotateCamera,
-    Box,
-    Canvas,
-    DirectionalLight,
-    Ground,
-    HemisphericLight,
-    Screen,
-  } from 'svelte-babylon'
+  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
+  import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
+  import Screen from 'svelte-babylon/prebuilds/Screen/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'Screen',

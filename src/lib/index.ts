@@ -73,3 +73,10 @@ import drawTextOnTexture from './utils/drawTextOnTexture'
 export const util = {
   drawTextOnTexture,
 }
+
+import degreeToRadians from './utils/Math/degreeToRadians'
+import radiansToDegrees from './utils/Math/radiansToDegree'
+export const math = {
+  degreeToRadians,
+  radiansToDegrees,
+}

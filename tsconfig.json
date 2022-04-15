@@ -26,6 +26,7 @@
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"],
       "svelte-babylon": ["src/lib"],
+      "svelte-babylon/*": ["src/lib/*"],
       "vitebook": [".vitebook"]
     },
     "types": ["babylonjs", "babylonjs-loaders", "babylonjs-gui"]

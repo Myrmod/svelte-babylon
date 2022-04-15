@@ -1,15 +1,15 @@
 <script lang="ts" context="module">
-  import { FreeCamera as FCamera, ISceneLoaderAsyncResult, Vector3 } from '@babylonjs/core'
+  import type { FreeCamera as FCamera } from '@babylonjs/core/Cameras/freeCamera'
+  import type { ISceneLoaderAsyncResult } from '@babylonjs/core/Loading/sceneLoader'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import {
-    Canvas,
-    Custom,
-    DirectionalLight,
-    FreeCamera,
-    Ground,
-    HemisphericLight,
-  } from 'svelte-babylon'
+  import FreeCamera from 'svelte-babylon/components/Cameras/FreeCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import Custom from 'svelte-babylon/components/Objects/Custom/index.svelte'
+  import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
   import DescriptionAddon from 'vitebook/Addons/DescriptionAddon.svelte'
 
   export const __pageMeta: PageMeta = {

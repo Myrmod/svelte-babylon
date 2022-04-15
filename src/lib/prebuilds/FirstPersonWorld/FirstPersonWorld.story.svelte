@@ -3,7 +3,8 @@
   import { ISceneLoaderAsyncResult, PhysicsImpostor, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import { Custom, Screen } from 'svelte-babylon'
+  import Custom from 'svelte-babylon/components/Objects/Custom/index.svelte'
+  import Screen from 'svelte-babylon/prebuilds/Screen/index.svelte'
   import DescriptionAddon from 'vitebook/Addons/DescriptionAddon.svelte'
   import FirstPersonWorld from './index.svelte'
 

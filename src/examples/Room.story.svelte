@@ -1,8 +1,12 @@
 <script lang="ts" context="module">
-  import type RootContext from '$lib/types'
-  import { Mesh, Vector3, VertexData } from '@babylonjs/core'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import { VertexData } from '@babylonjs/core/Meshes/mesh.vertexData'
   import type { PageMeta } from '@vitebook/client'
-  import { ArcRotateCamera, Canvas, HemisphericLight } from 'svelte-babylon'
+  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import type RootContext from 'svelte-babylon/types'
 
   export const __pageMeta: PageMeta = {
     title: 'Room',

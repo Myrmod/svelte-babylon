@@ -1,16 +1,14 @@
 <script lang="ts" context="module">
   import { AbstractMesh, ActionEvent, Color3, Mesh, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
-  import {
-    ArcRotateCamera,
-    Box,
-    Canvas,
-    Decal,
-    DirectionalLight,
-    Ground,
-    HemisphericLight,
-    StandardMaterial,
-  } from 'svelte-babylon'
+  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import StandardMaterial from 'svelte-babylon/components/Materials/StandardMaterial/index.svelte'
+  import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
+  import Decal from 'svelte-babylon/components/Objects/Decal/index.svelte'
+  import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'Decal',

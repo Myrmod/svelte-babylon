@@ -1,8 +1,12 @@
 <script lang="ts" context="module">
-  import { Vector3 } from '@babylonjs/core'
+  import { Color4, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import { ArcRotateCamera, Box, Canvas, DirectionalLight, HemisphericLight } from 'svelte-babylon'
+  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'Canvas',
@@ -16,7 +20,7 @@
   let preserveDrawingBuffer = true
   let stencil = true
 
-  $: clearColor = BABYLON.Color4.FromHexString(backgroundColor)
+  $: clearColor = Color4.FromHexString(backgroundColor)
 </script>
 
 <Canvas

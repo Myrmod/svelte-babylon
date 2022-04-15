@@ -2,16 +2,14 @@
   import { AbstractMesh, Mesh, Vector3 } from '@babylonjs/core'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import {
-    ArcRotateCamera,
-    Box,
-    Button,
-    Canvas,
-    DirectionalLight,
-    Ground,
-    GUI,
-    HemisphericLight,
-  } from 'svelte-babylon'
+  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
+  import Button from 'svelte-babylon/components/GUI/Button/index.svelte'
+  import GUI from 'svelte-babylon/components/GUI/index.svelte'
+  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
+  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
+  import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'Button',
