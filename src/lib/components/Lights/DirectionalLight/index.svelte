@@ -79,8 +79,11 @@
   }
 
   let shadowGenerator: ShadowGenerator
-  $: if (castShadowOf?.length) {
+  async function initShadows(meshes: Array<Mesh | AbstractMesh>) {
     try {
+      if (!meshes?.length) return
+      await import('@babylonjs/core/Lights/Shadows/shadowGeneratorSceneComponent')
+
       if (!shadowGenerator) {
         shadowGenerator = new ShadowGenerator(1024, light)
       }
@@ -101,6 +104,7 @@
       console.error(error)
     }
   }
+  $: initShadows(castShadowOf)
 </script>
 
 <slot />

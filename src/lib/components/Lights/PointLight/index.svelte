@@ -75,24 +75,32 @@
   }
 
   let shadowGenerator: ShadowGenerator
-  $: if (castShadowOf?.length) {
-    if (!shadowGenerator) {
-      shadowGenerator = new ShadowGenerator(1024, light)
-    }
-    if (shadowGenerator) {
-      castShadowOf
-        .filter(i => i)
-        .forEach(mesh => {
-          shadowGenerator?.addShadowCaster(mesh)
-        })
+  async function initShadows(meshes: Array<Mesh | AbstractMesh>) {
+    try {
+      if (!meshes?.length) return
+      await import('@babylonjs/core/Lights/Shadows/shadowGeneratorSceneComponent')
 
-      shadowGenerator.useExponentialShadowMap = useExponentialShadowMap
-      shadowGenerator.usePoissonSampling = usePoissonSampling
-      shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
+      if (!shadowGenerator) {
+        shadowGenerator = new ShadowGenerator(1024, light)
+      }
+      if (shadowGenerator) {
+        castShadowOf
+          .filter(i => i)
+          .forEach(mesh => {
+            shadowGenerator?.addShadowCaster(mesh)
+          })
 
-      root.scene.render()
+        shadowGenerator.useExponentialShadowMap = useExponentialShadowMap
+        shadowGenerator.usePoissonSampling = usePoissonSampling
+        shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
+
+        root.scene.render()
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
+  $: initShadows(castShadowOf)
 </script>
 
 <slot />
