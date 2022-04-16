@@ -69,13 +69,16 @@ export { default as Screen } from './prebuilds/Screen/index.svelte'
 export { default as Skybox } from './prebuilds/Skybox/index.svelte'
 export { default as TextPlane } from './prebuilds/TextPlane/index.svelte'
 
+import { getRoot, setRoot } from './utils/context'
 import drawTextOnTexture from './utils/drawTextOnTexture'
-export const util = {
-  drawTextOnTexture,
-}
-
 import degreeToRadians from './utils/Math/degreeToRadians'
 import radiansToDegrees from './utils/Math/radiansToDegree'
+export const utils = {
+  drawTextOnTexture,
+  setRoot,
+  getRoot,
+}
+
 export const math = {
   degreeToRadians,
   radiansToDegrees,

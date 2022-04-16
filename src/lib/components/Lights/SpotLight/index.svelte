@@ -1,6 +1,11 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { AbstractMesh, Color3, Mesh, ShadowGenerator, SpotLight, Vector3 } from '@babylonjs/core'
+  import { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator'
+  import { SpotLight } from '@babylonjs/core/Lights/spotLight'
+  import { Color3 } from '@babylonjs/core/Maths/math.color'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import { onDestroy, onMount } from 'svelte'
   import { createLightContext } from '../createLightContext'
 

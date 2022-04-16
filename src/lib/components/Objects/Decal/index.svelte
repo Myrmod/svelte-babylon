@@ -1,15 +1,13 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import {
-    AbstractMesh,
-    ActionEvent,
-    ActionManager,
-    Condition,
-    ExecuteCodeAction,
-    IAction,
-    Mesh,
-    MeshBuilder,
-  } from '@babylonjs/core'
+  import type { IAction } from '@babylonjs/core/Actions/action'
+  import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
+  import { ActionManager } from '@babylonjs/core/Actions/actionManager'
+  import type { Condition } from '@babylonjs/core/Actions/condition'
+  import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
+  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 

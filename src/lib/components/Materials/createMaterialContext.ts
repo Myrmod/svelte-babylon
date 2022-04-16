@@ -1,4 +1,4 @@
-import type { StandardMaterial } from '@babylonjs/core'
+import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
 import { setContext } from 'svelte'
 
 export function createMaterialContext(self: StandardMaterial): {

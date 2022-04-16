@@ -1,10 +1,10 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
+  import { Animation } from '@babylonjs/core/Animations/animation'
   import type { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera'
   import type { Camera } from '@babylonjs/core/Cameras/camera'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { Animation } from '@babylonjs/core/Animations/animation'
 
   const buttons = [
     { name: 'Platform1Button', text: 'go to platform 1' },

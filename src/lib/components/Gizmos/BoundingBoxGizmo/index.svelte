@@ -1,6 +1,8 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { BoundingBoxGizmo, Color3, UtilityLayerRenderer } from '@babylonjs/core'
+  import { BoundingBoxGizmo } from '@babylonjs/core/Gizmos/boundingBoxGizmo'
+  import type { Color3 } from '@babylonjs/core/Maths/math.color'
+  import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()

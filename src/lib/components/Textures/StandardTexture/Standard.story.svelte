@@ -1,8 +1,9 @@
 <script lang="ts" context="module">
-  import { Color3, Vector3 } from '@babylonjs/core'
+  import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera'
+  import { Color3 } from '@babylonjs/core/Maths/math.color'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
   import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
   import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'

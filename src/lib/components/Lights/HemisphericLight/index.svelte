@@ -1,6 +1,8 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { Color3, HemisphericLight, Vector3 } from '@babylonjs/core'
+  import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight'
+  import { Color3 } from '@babylonjs/core/Maths/math.color'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { onDestroy, onMount } from 'svelte'
   import { createLightContext } from '../createLightContext'
 

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { Color3, StandardMaterial } from '@babylonjs/core'
+  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
+  import type { Color3 } from '@babylonjs/core/Maths/math.color'
   import { onDestroy, onMount } from 'svelte'
   import { createMaterialContext } from '../createMaterialContext'
   import getParent from '../getParent'

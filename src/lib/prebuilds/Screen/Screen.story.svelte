@@ -1,5 +1,4 @@
 <script lang="ts" context="module">
-  import type RootContext from '$lib/types'
   import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
@@ -13,6 +12,7 @@
   import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
   import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
   import Screen from 'svelte-babylon/prebuilds/Screen/index.svelte'
+  import type RootContext from 'svelte-babylon/types'
 
   export const __pageMeta: PageMeta = {
     title: 'Screen',

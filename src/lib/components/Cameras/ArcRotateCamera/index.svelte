@@ -1,8 +1,10 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { ActionEvent, Animation, ArcRotateCamera, Vector3 } from '@babylonjs/core'
+  import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
+  import { Animation } from '@babylonjs/core/Animations/animation'
+  import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { onDestroy, onMount, setContext } from 'svelte'
-
   const root = getRoot()
 
   export let name: string = 'ArcRotateCamera'

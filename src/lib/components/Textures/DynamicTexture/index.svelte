@@ -4,7 +4,9 @@ It can be used to apply text to a material. This is used in the TextPlane compon
 -->
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { DynamicTexture, Engine, Texture } from '@babylonjs/core'
+  import { Engine } from '@babylonjs/core/Engines/engine'
+  import { DynamicTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture'
+  import { Texture } from '@babylonjs/core/Materials/Textures/texture'
   import { onDestroy, onMount } from 'svelte'
   import getParent from '../getParent'
 

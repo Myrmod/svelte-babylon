@@ -1,6 +1,8 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { GizmoManager, PositionGizmo, UtilityLayerRenderer } from '@babylonjs/core'
+  import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager'
+  import { PositionGizmo } from '@babylonjs/core/Gizmos/positionGizmo'
+  import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()

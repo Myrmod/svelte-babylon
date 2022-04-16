@@ -1,6 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { CameraGizmo, UtilityLayerRenderer } from '@babylonjs/core'
+  import { CameraGizmo } from '@babylonjs/core/Gizmos/cameraGizmo'
+  import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()

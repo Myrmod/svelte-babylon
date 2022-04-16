@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { Texture } from '@babylonjs/core'
-  import type { Nullable } from 'babylonjs'
+  import { Texture } from '@babylonjs/core/Materials/Textures/texture'
+  import type { Nullable } from '@babylonjs/core/types'
   import { onDestroy, onMount } from 'svelte'
   import getParent from '../getParent'
 

@@ -1,6 +1,8 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { GizmoManager, Light, LightGizmo } from '@babylonjs/core'
+  import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager'
+  import { LightGizmo } from '@babylonjs/core/Gizmos/lightGizmo'
+  import type { Light } from '@babylonjs/core/Lights/light'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()

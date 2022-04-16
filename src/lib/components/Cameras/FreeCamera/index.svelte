@@ -1,6 +1,8 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { FreeCamera, Mesh, Vector3 } from '@babylonjs/core'
+  import { FreeCamera } from '@babylonjs/core/Cameras/freeCamera'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()

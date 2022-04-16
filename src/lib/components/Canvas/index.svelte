@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type RootContext from '$lib/types'
+  import { setRoot } from '$lib/utils/context'
   import { Engine } from '@babylonjs/core/Engines/engine'
   import type { EngineOptions } from '@babylonjs/core/Engines/thinEngine'
   import { Color4 } from '@babylonjs/core/Maths/math.color'
@@ -9,7 +9,7 @@
   import type { OimoJSPlugin } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
   import { Scene } from '@babylonjs/core/scene'
   import { onMount } from 'svelte'
-  import { setRoot } from '../../utils/context'
+  import type RootContext from 'svelte-babylon/types'
 
   // settings
   export let antialiasing = false

@@ -1,12 +1,10 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import {
-    Color3,
-    PlaneRotationGizmo,
-    RotationGizmo,
-    UtilityLayerRenderer,
-    Vector3,
-  } from '@babylonjs/core'
+  import { PlaneRotationGizmo } from '@babylonjs/core/Gizmos/planeRotationGizmo'
+  import type { RotationGizmo } from '@babylonjs/core/Gizmos/rotationGizmo'
+  import type { Color3 } from '@babylonjs/core/Maths/math.color'
+  import type { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()

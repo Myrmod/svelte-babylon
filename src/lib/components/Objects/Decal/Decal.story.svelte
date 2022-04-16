@@ -1,5 +1,9 @@
 <script lang="ts" context="module">
-  import { AbstractMesh, ActionEvent, Color3, Mesh, Vector3 } from '@babylonjs/core'
+  import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
+  import { Color3 } from '@babylonjs/core/Maths/math.color'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import type { PageMeta } from '@vitebook/client'
   import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'

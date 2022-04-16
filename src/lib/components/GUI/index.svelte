@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { Texture } from '@babylonjs/core'
-  import { AdvancedDynamicTexture } from '@babylonjs/gui'
+  import { Texture } from '@babylonjs/core/Materials/Textures/texture'
+  import { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture'
   import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()

@@ -1,20 +1,19 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
+  import type { IAction } from '@babylonjs/core/Actions/action'
+  import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
+  import { ActionManager } from '@babylonjs/core/Actions/actionManager'
+  import type { Condition } from '@babylonjs/core/Actions/condition'
+  import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import {
-    AbstractMesh,
-    ActionEvent,
-    ActionManager,
-    Condition,
-    ExecuteCodeAction,
-    IAction,
     ISceneLoaderAsyncResult,
     ISceneLoaderProgressEvent,
-    Mesh,
-    Node,
-    Quaternion,
     SceneLoader,
-    Vector3,
-  } from '@babylonjs/core'
+  } from '@babylonjs/core/Loading/sceneLoader'
+  import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Node } from '@babylonjs/core/node'
   import '@babylonjs/loaders'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'

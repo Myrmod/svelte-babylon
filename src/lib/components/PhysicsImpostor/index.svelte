@@ -1,6 +1,10 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { Mesh, PhysicsImpostor, PhysicsImpostorParameters } from '@babylonjs/core'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import {
+    PhysicsImpostor,
+    PhysicsImpostorParameters,
+  } from '@babylonjs/core/Physics/physicsImpostor'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
