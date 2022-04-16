@@ -7,8 +7,8 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import { CreateIcoSphere } from '@babylonjs/core/Meshes/Builders/icoSphereBuilder'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
@@ -17,13 +17,13 @@
 
   export let name: string = 'IcoSphere'
   export let receiveShadows = false
-  export let options = {} as Parameters<typeof MeshBuilder.CreateIcoSphere>[1]
+  export let options = {} as Parameters<typeof CreateIcoSphere>[1]
 
   const parentObject = getContext('object') as {
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(MeshBuilder.CreateIcoSphere(name, options, root.scene))
+  const context = createObjectContext(CreateIcoSphere(name, options, root.scene))
 
   export let position = Vector3.Zero()
   export let x: number = undefined

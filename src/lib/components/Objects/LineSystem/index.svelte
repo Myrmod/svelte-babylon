@@ -7,8 +7,8 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import { CreateLineSystem } from '@babylonjs/core/Meshes/Builders/linesBuilder'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
@@ -16,13 +16,13 @@
   const root = getRoot()
 
   export let name: string = 'LineSystem'
-  export let options: Parameters<typeof MeshBuilder.CreateLineSystem>[1]
+  export let options: Parameters<typeof CreateLineSystem>[1]
 
   const parentObject = getContext('object') as {
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(MeshBuilder.CreateLineSystem(name, options, root.scene))
+  const context = createObjectContext(CreateLineSystem(name, options, root.scene))
 
   export let position = Vector3.Zero()
   export let x: number = undefined

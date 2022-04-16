@@ -7,8 +7,8 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import { CreateTube } from '@babylonjs/core/Meshes/Builders/tubeBuilder'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
@@ -17,13 +17,13 @@
 
   export let name: string = 'Tube'
   export let receiveShadows = false
-  export let options: Parameters<typeof MeshBuilder.CreateTube>[1]
+  export let options: Parameters<typeof CreateTube>[1]
 
   const parentObject = getContext('object') as {
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(MeshBuilder.CreateTube(name, options, root.scene))
+  const context = createObjectContext(CreateTube(name, options, root.scene))
 
   export let position = Vector3.Zero()
   export let x: number = undefined

@@ -7,9 +7,9 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import { CreateDashedLines } from '@babylonjs/core/Meshes/Builders/linesBuilder'
   import type { LinesMesh } from '@babylonjs/core/Meshes/linesMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
@@ -17,13 +17,13 @@
   const root = getRoot()
 
   export let name: string = 'DashedLines'
-  export let options: Parameters<typeof MeshBuilder.CreateDashedLines>[1]
+  export let options: Parameters<typeof CreateDashedLines>[1]
 
   const parentObject = getContext('object') as {
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(MeshBuilder.CreateDashedLines(name, options, root.scene)) as {
+  const context = createObjectContext(CreateDashedLines(name, options, root.scene)) as {
     self: LinesMesh
   }
 

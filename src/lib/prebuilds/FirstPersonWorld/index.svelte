@@ -142,7 +142,7 @@
   enablePointerLockOnClick
   collisionsEnabled
   bind:root
-  enablePhysics
+  physicsEnabled
 >
   <FreeCamera bind:camera position={playerPosition} parent={player?.self} />
   <Box position={playerPosition} bind:object={player}>

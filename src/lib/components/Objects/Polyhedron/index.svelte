@@ -7,8 +7,8 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import { CreatePolyhedron } from '@babylonjs/core/Meshes/Builders/polyhedronBuilder'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
@@ -17,12 +17,12 @@
 
   export let name: string = 'Polyhedron'
   export let receiveShadows = false
-  export let options = {} as Parameters<typeof MeshBuilder.CreatePolyhedron>[1]
+  export let options = {} as Parameters<typeof CreatePolyhedron>[1]
   const parentObject = getContext('object') as {
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(MeshBuilder.CreatePolyhedron(name, options, root.scene))
+  const context = createObjectContext(CreatePolyhedron(name, options, root.scene))
 
   export let position = Vector3.Zero()
   export let x: number = undefined

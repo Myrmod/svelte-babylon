@@ -7,9 +7,9 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import { CreateGroundFromHeightMap } from '@babylonjs/core/Meshes/Builders/groundBuilder'
   import type { GroundMesh } from '@babylonjs/core/Meshes/groundMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
@@ -18,7 +18,7 @@
 
   export let name: string = 'GroundFromHeightMap'
   export let receiveShadows = false
-  export let options = {} as Parameters<typeof MeshBuilder.CreateGroundFromHeightMap>[2]
+  export let options = {} as Parameters<typeof CreateGroundFromHeightMap>[2]
   export let url: string
 
   const parentObject = getContext('object') as {
@@ -26,7 +26,7 @@
   }
   export let parent: Node = parentObject?.self
   const context = createObjectContext(
-    MeshBuilder.CreateGroundFromHeightMap(name, url, options, root.scene),
+    CreateGroundFromHeightMap(name, url, options, root.scene),
   ) as {
     self: GroundMesh
   }

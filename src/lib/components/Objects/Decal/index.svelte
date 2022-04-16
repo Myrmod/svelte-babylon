@@ -6,15 +6,15 @@
   import type { Condition } from '@babylonjs/core/Actions/condition'
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import type { CreateDecal } from '@babylonjs/core/Meshes/Builders/decalBuilder'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
 
   export let name: string = 'Decal'
-  export let options = {} as Parameters<typeof MeshBuilder.CreateDecal>[2]
+  export let options = {} as Parameters<typeof CreateDecal>[2]
   const parentObject = getContext('object') as {
     self: Mesh | AbstractMesh
   }
@@ -22,7 +22,7 @@
   if (!parent) {
     throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
   }
-  const context = createObjectContext(MeshBuilder.CreateDecal(name, parent, options))
+  const context = createObjectContext(CreateDecal(name, parent, options))
 
   export let object = root.objects[context.self.id]
 

@@ -7,8 +7,8 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import { CreatePolygon } from '@babylonjs/core/Meshes/Builders/polygonBuilder'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import type { Node } from '@babylonjs/core/node'
   // we need better typings for this https://github.com/mapbox/earcut
   import earcut from 'earcut'
@@ -19,16 +19,14 @@
 
   export let name: string = 'Polygon'
   export let receiveShadows = false
-  export let options: Parameters<typeof MeshBuilder.CreatePolygon>[1]
+  export let options: Parameters<typeof CreatePolygon>[1]
   export let earcutInjection: () => unknown = earcut
 
   const parentObject = getContext('object') as {
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(
-    MeshBuilder.CreatePolygon(name, options, root.scene, earcutInjection),
-  )
+  const context = createObjectContext(CreatePolygon(name, options, root.scene, earcutInjection))
 
   export let position = Vector3.Zero()
   export let x: number = undefined
