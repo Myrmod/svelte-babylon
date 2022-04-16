@@ -5,6 +5,7 @@
   import { ActionManager } from '@babylonjs/core/Actions/actionManager'
   import type { Condition } from '@babylonjs/core/Actions/condition'
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
+  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import { CreateGroundFromHeightMap } from '@babylonjs/core/Meshes/Builders/groundBuilder'
@@ -30,6 +31,7 @@
   ) as {
     self: GroundMesh
   }
+  context.self.material = new StandardMaterial(`${name}-material`, root.scene)
 
   export let position = Vector3.Zero()
   export let x: number = undefined

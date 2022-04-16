@@ -5,8 +5,9 @@
   import { ActionManager } from '@babylonjs/core/Actions/actionManager'
   import type { Condition } from '@babylonjs/core/Actions/condition'
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
+  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
-  import type { CreateDecal } from '@babylonjs/core/Meshes/Builders/decalBuilder'
+  import { CreateDecal } from '@babylonjs/core/Meshes/Builders/decalBuilder'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
@@ -23,6 +24,7 @@
     throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
   }
   const context = createObjectContext(CreateDecal(name, parent, options))
+  context.self.material = new StandardMaterial(`${name}-material`, root.scene)
 
   export let object = root.objects[context.self.id]
 
