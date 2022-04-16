@@ -3,6 +3,7 @@
   import { TargetCamera } from '@babylonjs/core/Cameras/targetCamera'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { Viewport } from '@babylonjs/core/Maths/math.viewport'
+  import type { Node } from '@babylonjs/core/node'
   import { onDestroy, onMount, setContext } from 'svelte'
 
   const root = getRoot()

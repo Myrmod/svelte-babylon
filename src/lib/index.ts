@@ -28,7 +28,6 @@ export { default as HemisphericLight } from './components/Lights/HemisphericLigh
 export { default as PointLight } from './components/Lights/PointLight/index.svelte'
 export { default as SpotLight } from './components/Lights/SpotLight/index.svelte'
 // Materials
-export { default as HTMLMaterial } from './components/Materials/HTMLMaterial/index.svelte'
 export { default as StandardMaterial } from './components/Materials/StandardMaterial/index.svelte'
 // Objects
 export { default as Box } from './components/Objects/Box/index.svelte'

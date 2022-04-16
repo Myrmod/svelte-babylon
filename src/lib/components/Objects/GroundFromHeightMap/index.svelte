@@ -7,6 +7,7 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import type { GroundMesh } from '@babylonjs/core/Meshes/groundMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import type { Node } from '@babylonjs/core/node'

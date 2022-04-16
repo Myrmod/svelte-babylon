@@ -4,6 +4,7 @@
   import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
   import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import TextPlane from 'svelte-babylon/prebuilds/TextPlane/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'TextPlane',
