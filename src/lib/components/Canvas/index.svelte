@@ -21,7 +21,7 @@
   export let gravity = -9.81
   export let framesPerSecond = 60
   export let collisionsEnabled = false
-  export let enablePhysics = false
+  export let physicsEnabled = false
 
   let wrapper: HTMLElement
   let canvas: HTMLCanvasElement = undefined
@@ -71,7 +71,7 @@
         root.engine.resize()
       })
 
-      if (enablePhysics && !physicsPlugin) {
+      if (physicsEnabled && !physicsPlugin) {
         physicsPlugin = new CannonJSPlugin(true, 10, await import('cannon'))
       }
 
@@ -85,17 +85,9 @@
     root.scene.clearColor = clearColor
     root.scene.gravity = new Vector3(0, gravity / framesPerSecond, 0)
     root.scene.collisionsEnabled = collisionsEnabled
+    root.scene.physicsEnabled = physicsEnabled
 
     root.scene.render()
-  }
-
-  // physics
-  $: if (root.scene) {
-    if (enablePhysics) {
-      root.scene.enablePhysics(root.scene.gravity, physicsPlugin)
-    } else {
-      root.scene.disablePhysicsEngine()
-    }
   }
 
   $: if (root.engine) {
