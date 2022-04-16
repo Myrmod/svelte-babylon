@@ -1,10 +1,10 @@
 <script lang="ts" context="module">
+  import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from '$lib/components/Canvas/index.svelte'
+  import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
+  import TextPlane from '$lib/prebuilds/TextPlane/index.svelte'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
-  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
-  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
-  import TextPlane from 'svelte-babylon/prebuilds/TextPlane/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'TextPlane',

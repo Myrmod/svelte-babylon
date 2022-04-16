@@ -1,5 +1,5 @@
+import type RootContext from '$lib/types'
 import { getContext, setContext } from 'svelte'
-import type RootContext from 'svelte-babylon/types'
 
 const ROOT = {}
 

@@ -1,13 +1,13 @@
 <script lang="ts" context="module">
+  import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from '$lib/components/Canvas/index.svelte'
+  import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
+  import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
+  import TiledPlane from '$lib/components/Objects/TiledPlane/index.svelte'
+  import StandardTexture from '$lib/components/Textures/StandardTexture/index.svelte'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import { Mesh } from '@babylonjs/core/Meshes/mesh'
   import type { PageMeta } from '@vitebook/client'
-  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
-  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
-  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
-  import StandardMaterial from 'svelte-babylon/components/Materials/StandardMaterial/index.svelte'
-  import TiledPlane from 'svelte-babylon/components/Objects/TiledPlane/index.svelte'
-  import StandardTexture from 'svelte-babylon/components/Textures/StandardTexture/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'TiledPlane',

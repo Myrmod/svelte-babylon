@@ -1,16 +1,16 @@
 <script lang="ts" context="module">
+  import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from '$lib/components/Canvas/index.svelte'
+  import LightGizmo from '$lib/components/Gizmos/LightGizmo/index.svelte'
+  import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
+  import Box from '$lib/components/Objects/Box/index.svelte'
+  import Ground from '$lib/components/Objects/Ground/index.svelte'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
-  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
-  import LightGizmo from 'svelte-babylon/components/Gizmos/LightGizmo/index.svelte'
-  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
-  import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
-  import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'DirectionalLight',

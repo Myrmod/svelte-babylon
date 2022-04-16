@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { createObjectContext } from '$lib/components/Objects/createObjectContext'
+  import { TextureTargets } from '$lib/types/enums/TextureTargets'
   import { getRoot } from '$lib/utils/context'
   import { StandardMaterial as SMaterial } from '@babylonjs/core/Materials/standardMaterial'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture'
@@ -7,8 +9,6 @@
   import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
   import { onDestroy, onMount } from 'svelte'
   import { CubeTexture, StandardMaterial } from 'svelte-babylon'
-  import { createObjectContext } from 'svelte-babylon/components/Objects/createObjectContext'
-  import { TextureTargets } from 'svelte-babylon/types/enums/TextureTargets'
 
   const root = getRoot()
 

@@ -1,14 +1,14 @@
 <script lang="ts" context="module">
+  import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from '$lib/components/Canvas/index.svelte'
+  import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
+  import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
+  import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
+  import Plane from '$lib/components/Objects/Plane/index.svelte'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
-  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
-  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
-  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
-  import StandardMaterial from 'svelte-babylon/components/Materials/StandardMaterial/index.svelte'
-  import Plane from 'svelte-babylon/components/Objects/Plane/index.svelte'
 
   export const __pageMeta: PageMeta = {
     title: 'StandardMaterial',

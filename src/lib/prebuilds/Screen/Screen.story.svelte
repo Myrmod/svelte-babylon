@@ -1,18 +1,18 @@
 <script lang="ts" context="module">
+  import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
+  import Canvas from '$lib/components/Canvas/index.svelte'
+  import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
+  import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
+  import Box from '$lib/components/Objects/Box/index.svelte'
+  import Ground from '$lib/components/Objects/Ground/index.svelte'
+  import Screen from '$lib/prebuilds/Screen/index.svelte'
+  import type RootContext from '$lib/types'
   import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import type { PageMeta } from '@vitebook/client'
   import { ControlsAddon } from '@vitebook/client/addons'
-  import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
-  import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
-  import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
-  import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
-  import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
-  import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
-  import Screen from 'svelte-babylon/prebuilds/Screen/index.svelte'
-  import type RootContext from 'svelte-babylon/types'
 
   export const __pageMeta: PageMeta = {
     title: 'Screen',
