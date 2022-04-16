@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
+  import { StandardMaterial as SMaterial } from '@babylonjs/core/Materials/standardMaterial'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
@@ -8,6 +9,7 @@
   import { CubeTexture, StandardMaterial } from 'svelte-babylon'
   import { createObjectContext } from 'svelte-babylon/components/Objects/createObjectContext'
   import { TextureTargets } from 'svelte-babylon/types/enums/TextureTargets'
+
   const root = getRoot()
 
   export let name: string = 'Skybox'
@@ -22,6 +24,7 @@
   export let scaling = new Vector3(1, 1, 1)
 
   const context = createObjectContext(MeshBuilder.CreateBox(name, options, root.scene))
+  context.self.material = new SMaterial(`${name}-material`, root.scene)
 
   export let position = Vector3.Zero()
   export let x: number = undefined
