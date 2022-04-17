@@ -1,6 +1,8 @@
 import adapter from '@sveltejs/adapter-auto'
+import { kitDocsPlugin } from '@svelteness/kit-docs/node'
 import path from 'path'
 import preprocess from 'svelte-preprocess'
+import Icons from 'unplugin-icons/vite'
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -9,25 +11,33 @@ const config = {
   preprocess: preprocess({
     sourceMap: true,
   }),
-
+  extensions: ['.svelte', '.md'],
   kit: {
     adapter: adapter(),
 
-    // hydrate the <div id="svelte"> element in src/app.html
-    target: '#svelte',
+    prerender: {
+      default: true,
+      entries: ['*'],
+    },
+
     vite: {
-      optimizeDeps: {
-        include: ['babylonjs-loaders/babylonjs.loaders.min'],
-      },
       resolve: {
         alias: {
           'svelte-babylon': path.resolve('src/lib'),
-          vitebook: path.resolve('.vitebook'),
+          $docs: path.resolve('src/docs'),
         },
       },
+      plugins: [
+        Icons({ compiler: 'svelte' }),
+        kitDocsPlugin({
+          shiki: {
+            theme: 'material-ocean',
+          },
+        }),
+      ],
     },
     package: {
-      files: id => !id.includes('.story.svelte'),
+      files: id => !id.includes('.story.svelte') && !id.includes('docs'),
     },
   },
 }
