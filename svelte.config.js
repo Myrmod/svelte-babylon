@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import adapter from '@sveltejs/adapter-auto'
 import { kitDocsPlugin } from '@svelteness/kit-docs/node'
 import path from 'path'
@@ -37,7 +38,7 @@ const config = {
       ],
     },
     package: {
-      files: id => !id.includes('.story.svelte') && !id.includes('docs'),
+      files: id => !id.includes('.story.svelte') && !id.includes('docs') && !id.includes('fonts'),
     },
   },
 }

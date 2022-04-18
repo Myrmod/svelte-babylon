@@ -28,7 +28,7 @@
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "^1.0.0-next.314",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.36",
-    "@svelteness/kit-docs": "^0.5.0",
+    "@svelteness/kit-docs": "^0.7.2",
     "@types/cannon": "^0.1.8",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
