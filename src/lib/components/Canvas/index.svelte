@@ -22,6 +22,10 @@
   export let framesPerSecond = 60
   export let collisionsEnabled = false
   export let physicsEnabled = false
+  /**
+   * since we're using es6 modules we have to deal with side effects. The property "enableAnimations" is required if you want to use animations in your scene.
+   */
+  export let animationsEnabled = false
 
   let wrapper: HTMLElement
   let canvas: HTMLCanvasElement = undefined
@@ -70,6 +74,9 @@
       window.addEventListener('resize', () => {
         root.engine.resize()
       })
+      if (animationsEnabled) {
+        await import('@babylonjs/core/Animations/animatable')
+      }
       if (collisionsEnabled) {
         await import('@babylonjs/core/Collisions/collisionCoordinator')
       }

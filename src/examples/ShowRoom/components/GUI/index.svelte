@@ -19,7 +19,7 @@
 
   const root = getRoot()
 
-  function handleClick(id: number) {
+  async function handleClick(id: number) {
     if (id === -1) {
       root.scene.beginDirectAnimation(
         root.scene.activeCamera,
@@ -86,9 +86,9 @@
   {#each buttons as button, index}
     <button on:click={() => handleClick(index)}>{button.text}</button>
   {/each}
-  <button on:click={() => handleClick(-1)}>Reset</button>
-  <button on:click={playVideo}>Play Video</button>
-  <button on:click={useFreeCamera}>Toggle FreeCamera</button>
+  <button on:click={() => handleClick(-1)}>reset</button>
+  <button on:click={playVideo}>play video</button>
+  <button on:click={useFreeCamera}>use 1st Person</button>
 </fieldset>
 
 <style>

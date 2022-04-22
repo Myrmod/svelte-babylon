@@ -87,6 +87,7 @@
   }}
   enablePointerLockOnClick={useFreeCamera}
   collisionsEnabled
+  animationsEnabled
   bind:root
 >
   <HemisphericLight intensity={1} />
