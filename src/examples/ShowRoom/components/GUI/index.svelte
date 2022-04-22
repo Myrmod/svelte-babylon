@@ -14,6 +14,8 @@
   ]
 
   export let screens: Array<{ self: Mesh }> = []
+  export let playVideo: () => void
+  export let useFreeCamera: () => void
 
   const root = getRoot()
 
@@ -85,6 +87,8 @@
     <button on:click={() => handleClick(index)}>{button.text}</button>
   {/each}
   <button on:click={() => handleClick(-1)}>Reset</button>
+  <button on:click={playVideo}>Play Video</button>
+  <button on:click={useFreeCamera}>Toggle FreeCamera</button>
 </fieldset>
 
 <style>

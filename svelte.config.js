@@ -27,6 +27,7 @@ const config = {
           'svelte-babylon': path.resolve('src/lib'),
           $docs: path.resolve('src/docs'),
           $routes: path.resolve('src/routes'),
+          $examples: path.resolve('src/examples'),
         },
       },
       plugins: [

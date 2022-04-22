@@ -5,9 +5,9 @@
   import type { EngineOptions } from '@babylonjs/core/Engines/thinEngine'
   import { Color4 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { AmmoJSPlugin } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin'
-  import { CannonJSPlugin } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin'
-  import type { OimoJSPlugin } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
+  import type { AmmoJSPlugin as AmmoJSPluginType } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin'
+  import type { CannonJSPlugin as CannonJSPluginType } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin'
+  import type { OimoJSPlugin as OimoJSPluginType } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
   import { Scene } from '@babylonjs/core/scene'
   import { onMount } from 'svelte'
 
@@ -53,7 +53,7 @@
     root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
   }
 
-  export let physicsPlugin: AmmoJSPlugin | CannonJSPlugin | OimoJSPlugin = undefined
+  export let physicsPlugin: AmmoJSPluginType | CannonJSPluginType | OimoJSPluginType = undefined
 
   async function init() {
     try {
@@ -70,8 +70,11 @@
       window.addEventListener('resize', () => {
         root.engine.resize()
       })
-
+      if (collisionsEnabled) {
+        await import('@babylonjs/core/Collisions/collisionCoordinator')
+      }
       if (physicsEnabled && !physicsPlugin) {
+        const { CannonJSPlugin } = await import('@babylonjs/core/Physics/Plugins/cannonJSPlugin')
         physicsPlugin = new CannonJSPlugin(true, 10, await import('cannon'))
       }
 
@@ -80,7 +83,6 @@
       console.error(error)
     }
   }
-
   $: if (root.scene && root.scene.cameras.length) {
     root.scene.clearColor = clearColor
     root.scene.gravity = new Vector3(0, gravity / framesPerSecond, 0)
