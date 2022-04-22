@@ -11,7 +11,7 @@ export { default as AxisDragGizmo } from './components/Gizmos/AxisDragGizmo/inde
 export { default as AxisScaleGizmo } from './components/Gizmos/AxisScaleGizmo/index.svelte'
 export { default as BoundingBoxGizmo } from './components/Gizmos/BoundingBoxGizmo/index.svelte'
 export { default as CameraGizmo } from './components/Gizmos/CameraGizmo/index.svelte'
-export { default as DefaultGizmo } from './components/Gizmos/DefaultGizmo/index.svelte'
+export { default as GizmoManager } from './components/Gizmos/GizmoManager/index.svelte'
 export { default as LightGizmo } from './components/Gizmos/LightGizmo/index.svelte'
 export { default as PlaneDragGizmo } from './components/Gizmos/PlaneDragGizmo/index.svelte'
 export { default as PlaneRotationGizmo } from './components/Gizmos/PlaneRotationGizmo/index.svelte'

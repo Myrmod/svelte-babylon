@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
   import Button from '$lib/components/GUI/Button/index.svelte'
@@ -10,23 +10,10 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import type { PageMeta } from '@vitebook/client'
-  import { ControlsAddon } from '@vitebook/client/addons'
 
-  export const __pageMeta: PageMeta = {
-    title: 'Button',
-    description: '',
-  }
-</script>
-
-<script lang="ts">
-  // Functionality
   function handleClick() {
     alert('clicked button')
   }
-
-  // Scene
-  const objectPosition = new Vector3(0, 3, 0)
 
   let object: {
     self: Mesh | AbstractMesh
@@ -41,12 +28,12 @@
     shadowObjects = temp
   }
 
-  let width = '150px'
-  let height = '40px'
-  let color = '#ffffff'
-  let cornerRadius = 20
-  let background = '#aaaa00'
-  let text = 'Click Me'
+  const width = '150px'
+  const height = '40px'
+  const color = '#ffffff'
+  const cornerRadius = 20
+  const background = '#aaaa00'
+  const text = 'Click Me'
 </script>
 
 <Canvas
@@ -63,31 +50,10 @@
     position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
-  <ArcRotateCamera target={objectPosition} />
+  <ArcRotateCamera target={new Vector3(0, 3, 0)} />
   <Box y={3} bind:object />
   <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
   <GUI>
     <Button onPointerUp={handleClick} {width} {height} {color} {cornerRadius} {background} {text} />
   </GUI>
 </Canvas>
-
-<ControlsAddon>
-  <label style="margin-top: 24px;display:block;">
-    text <input type="text" bind:value={text} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    color <input type="color" bind:value={color} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    background <input type="color" bind:value={background} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    width <input type="string" bind:value={width} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    height <input type="string" bind:value={height} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    cornerRadius <input type="number" bind:value={cornerRadius} />
-  </label>
-</ControlsAddon>

@@ -26,6 +26,7 @@ const config = {
         alias: {
           'svelte-babylon': path.resolve('src/lib'),
           $docs: path.resolve('src/docs'),
+          $routes: path.resolve('src/routes'),
         },
       },
       plugins: [

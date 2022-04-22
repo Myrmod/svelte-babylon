@@ -6,13 +6,6 @@
   import Box from '$lib/components/Objects/Box/index.svelte'
   import { Color4 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { PageMeta } from '@vitebook/client'
-  import { ControlsAddon } from '@vitebook/client/addons'
-
-  export const __pageMeta: PageMeta = {
-    title: 'Canvas',
-    description: `That's the root of your scene, where all the other elements are placed into. It is basically an implementation of https://doc.babylonjs.com/divingDeeper/scene`,
-  }
 </script>
 
 <script lang="ts">
@@ -37,18 +30,3 @@
   <ArcRotateCamera />
   <Box />
 </Canvas>
-
-<ControlsAddon>
-  <label style="margin-top: 24px;display:block;">
-    Antialiasing <input type="checkbox" bind:checked={antialiasing} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    preserveDrawingBuffer <input type="checkbox" bind:checked={preserveDrawingBuffer} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    stencil <input type="checkbox" bind:checked={stencil} />
-  </label>
-  <label style="margin-top: 24px;display:block;">
-    clearColor <input type="color" bind:value={backgroundColor} />
-  </label>
-</ControlsAddon>
