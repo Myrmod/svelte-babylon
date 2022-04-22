@@ -16,7 +16,7 @@
     )
   }
 
-  export let name: string = `${parent.self.name}Impostor`
+  export let name: string = `${parent.self.name}-PhysicsImpostor`
   /**
    * eg PhysicsImpostor.BoxImpostor
    * There is no proper type handling in babylonjs, might open a pull request
@@ -39,7 +39,7 @@
   onMount(async () => {
     try {
       // create the physics impostor
-      parent.self.physicsImpostor = new PhysicsImpostor(
+      root.physics.impostors[name] = new PhysicsImpostor(
         parent.self,
         type,
         /**
@@ -49,7 +49,6 @@
         root.scene,
       )
 
-      root.physics.impostors[name] = parent.self.physicsImpostor
       root.scene.render()
     } catch (error) {
       console.error(error)
@@ -57,11 +56,11 @@
   })
 
   onDestroy(() => {
-    parent.self?.physicsImpostor?.dispose()
+    root.physics.impostors[name]?.dispose()
 
     delete root.physics.impostors[name]
     if (!Object.keys(root.physics.impostors)) {
-      root.scene.disablePhysicsEngine()
+      root.scene.physicsEnabled = false
     }
   })
 
@@ -69,12 +68,12 @@
    * if we don't do it like this and directly
    * set the options onMount, the object might jump weirdly
    */
-  $: if (parent.self.physicsImpostor) {
-    if (parent.self.physicsImpostor.mass !== options.mass) {
-      parent.self.physicsImpostor.setMass(options.mass)
+  $: if (root.physics.impostors[name]) {
+    if (root.physics.impostors[name].mass !== options.mass) {
+      root.physics.impostors[name].setMass(options.mass)
     }
-    if (parent.self.physicsImpostor.restitution !== options.restitution) {
-      parent.self.physicsImpostor.restitution = options.restitution
+    if (root.physics.impostors[name].restitution !== options.restitution) {
+      root.physics.impostors[name].restitution = options.restitution
     }
   }
 </script>

@@ -116,7 +116,7 @@
 
   $: if (parent && monitor && root.canvas.element) {
     monitor.position = new Vector3(
-      root.canvas.element.clientWidth / 1100,
+      root.canvas.element.clientWidth / 2000,
       root.canvas.element.clientHeight / 2000,
       1.5,
     )

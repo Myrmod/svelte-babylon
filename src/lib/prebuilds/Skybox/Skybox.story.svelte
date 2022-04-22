@@ -3,12 +3,6 @@
   import Canvas from '$lib/components/Canvas/index.svelte'
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import Skybox from '$lib/prebuilds/Skybox/index.svelte'
-  import type { PageMeta } from '@vitebook/client'
-
-  export const __pageMeta: PageMeta = {
-    title: 'Skybox',
-    description: '',
-  }
 </script>
 
 <Canvas

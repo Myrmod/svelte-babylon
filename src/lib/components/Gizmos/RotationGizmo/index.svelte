@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager'
-  import { RotationGizmo, RotationGizmoOptions } from '@babylonjs/core/Gizmos/rotationGizmo'
+  import { RotationGizmo, type RotationGizmoOptions } from '@babylonjs/core/Gizmos/rotationGizmo'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 

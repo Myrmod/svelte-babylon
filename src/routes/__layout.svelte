@@ -46,6 +46,9 @@
       </Button>
     </div>
 
+    <footer slot="main-bottom">
+      <a href="/privacy" sveltekit:reload>Privacy</a>
+    </footer>
     <slot />
   </KitDocsLayout>
 </KitDocs>
@@ -68,5 +71,12 @@
   .logo :global(svg) {
     height: 36px;
     overflow: hidden;
+  }
+
+  footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
   }
 </style>

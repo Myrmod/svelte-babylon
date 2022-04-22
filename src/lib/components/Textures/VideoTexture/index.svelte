@@ -6,7 +6,7 @@ The VideoTexture can be used to play videos on an Object.
   import { Texture } from '@babylonjs/core/Materials/Textures/texture'
   import {
     VideoTexture,
-    VideoTextureSettings,
+    type VideoTextureSettings,
   } from '@babylonjs/core/Materials/Textures/videoTexture'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
   import getParent from '../getParent'
