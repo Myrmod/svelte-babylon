@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import adapter from '@sveltejs/adapter-auto'
+import adapter from '@sveltejs/adapter-static'
 import { kitDocsPlugin } from '@svelteness/kit-docs/node'
 import path from 'path'
 import preprocess from 'svelte-preprocess'
