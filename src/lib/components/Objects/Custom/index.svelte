@@ -5,11 +5,11 @@
   import { ActionManager } from '@babylonjs/core/Actions/actionManager'
   import type { Condition } from '@babylonjs/core/Actions/condition'
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
-  import {
+  import type {
     ISceneLoaderAsyncResult,
     ISceneLoaderProgressEvent,
-    SceneLoader,
   } from '@babylonjs/core/Loading/sceneLoader'
+  import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader'
   import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'

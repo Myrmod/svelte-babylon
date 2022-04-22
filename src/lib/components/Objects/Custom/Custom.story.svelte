@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
   import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
@@ -7,16 +7,6 @@
   import Ground from '$lib/components/Objects/Ground/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import type { PageMeta } from '@vitebook/client'
-
-  export const __pageMeta: PageMeta = {
-    title: 'Custom',
-    description: '',
-  }
-</script>
-
-<script lang="ts">
-  const objectPosition = new Vector3(0, 3, 0)
 
   let model: Mesh
   let shadowObjects: Array<Mesh>
@@ -39,7 +29,7 @@
     position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
-  <ArcRotateCamera target={objectPosition} />
+  <ArcRotateCamera target={new Vector3(0, 3, 0)} />
   <Custom
     name="logo"
     rootUrl="/assets/models/"

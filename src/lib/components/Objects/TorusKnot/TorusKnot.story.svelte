@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
   import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
@@ -8,16 +8,6 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import type { PageMeta } from '@vitebook/client'
-
-  export const __pageMeta: PageMeta = {
-    title: 'TorusKnot',
-    description: '',
-  }
-</script>
-
-<script lang="ts">
-  const objectPosition = new Vector3(0, 3, 0)
 
   let object: {
     self: Mesh | AbstractMesh
@@ -47,7 +37,7 @@
     position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
-  <ArcRotateCamera target={objectPosition} />
+  <ArcRotateCamera target={new Vector3(0, 3, 0)} />
   <TorusKnot y={3} bind:object />
   <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
 </Canvas>

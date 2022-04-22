@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
   import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
@@ -7,16 +7,6 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import type { PageMeta } from '@vitebook/client'
-
-  export const __pageMeta: PageMeta = {
-    title: 'Ribbon',
-    description: 'https://doc.babylonjs.com/divingDeeper/mesh/creation/param/ribbon',
-  }
-</script>
-
-<script lang="ts">
-  const objectPosition = new Vector3(0, 3, 0)
 
   let object: {
     self: Mesh | AbstractMesh
@@ -46,7 +36,7 @@
     position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
-  <ArcRotateCamera target={objectPosition} radius={20} alpha={Math.PI / 4} />
+  <ArcRotateCamera target={new Vector3(0, 3, 0)} radius={20} alpha={Math.PI / 4} />
   <Ribbon
     bind:object
     options={{

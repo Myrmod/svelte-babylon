@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
   import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
@@ -12,17 +12,6 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import type { PageMeta } from '@vitebook/client'
-
-  export const __pageMeta: PageMeta = {
-    title: 'Decal',
-    description:
-      'These are usually used to add details on meshes (bullets hole, local details, etc...), a decal is a mesh produced from a subset of a previous one with a small offset in order to appear on top of it. https://doc.babylonjs.com/divingDeeper/mesh/decals',
-  }
-</script>
-
-<script lang="ts">
-  const objectPosition = new Vector3(0, 3, 0)
 
   let object: {
     self: Mesh | AbstractMesh
@@ -65,7 +54,7 @@
     position={new Vector3(2, 6, 2)}
     castShadowOf={shadowObjects}
   />
-  <ArcRotateCamera target={objectPosition} />
+  <ArcRotateCamera target={new Vector3(0, 3, 0)} />
   <Box y={3} bind:object onPick={handlePick}>
     {#each bulletHoles as hole}
       <Decal

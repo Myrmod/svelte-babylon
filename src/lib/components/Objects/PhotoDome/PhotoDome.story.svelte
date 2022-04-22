@@ -1,18 +1,9 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import Box from '$lib/components/Objects/Box/index.svelte'
   import PhotoDome from '$lib/components/Objects/PhotoDome/index.svelte'
-  import type { PageMeta } from '@vitebook/client'
-
-  export const __pageMeta: PageMeta = {
-    title: 'PhotoDome',
-    description: '',
-  }
-</script>
-
-<script lang="ts">
 </script>
 
 <Canvas

@@ -1,11 +1,10 @@
 <script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
-  import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
-  import Ground from '$lib/components/Objects/Ground/index.svelte'
-  import HexSphere from '$lib/components/Objects/HexSphere/index.svelte'
-  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
+  import TiledGround from '$lib/components/Objects/TiledGround/index.svelte'
+  import { Color3 } from '@babylonjs/core/Maths/math.color'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
 
@@ -30,14 +29,17 @@
     stencil: true,
   }}
 >
-  <HemisphericLight intensity={0.5} />
-  <DirectionalLight
-    intensity={0.25}
-    direction={new Vector3(-10, -20, -10)}
-    position={new Vector3(2, 6, 2)}
-    castShadowOf={shadowObjects}
-  />
-  <ArcRotateCamera target={new Vector3(0, 3, 0)} />
-  <HexSphere y={3} bind:object />
-  <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
+  <HemisphericLight />
+  <ArcRotateCamera alpha={1.8} radius={3} />
+  <TiledGround
+    bind:object
+    options={{
+      xmin: 1,
+      zmin: 1,
+      xmax: 1,
+      zmax: 1,
+    }}
+  >
+    <StandardMaterial diffuseColor={Color3.Red()} />
+  </TiledGround>
 </Canvas>
