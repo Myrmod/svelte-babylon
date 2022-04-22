@@ -1,12 +1,12 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { CameraGizmo } from '@babylonjs/core/Gizmos/cameraGizmo'
+  import { CameraGizmo } from '@babylonjs/core/Gizmos/cameraGizmo.js'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
 
-  export let name: string = 'CameraGizmo'
+  export let name: string = 'CameraGizmo.js'
   export let gizmoLayer: UtilityLayerRenderer = undefined
 
   export const gizmo = new CameraGizmo(gizmoLayer)

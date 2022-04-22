@@ -5,7 +5,6 @@
 </script>
 
 <script>
-  import SvelteLogo from '$docs/img/svelte-horizontal.svg?raw'
   import {
     Button,
     createKitDocsLoader,
@@ -42,7 +41,7 @@
   <KitDocsLayout {navbar} {sidebar}>
     <div class="logo" slot="navbar-left">
       <Button href="/">
-        {@html SvelteLogo}
+        <img class="logo" src="/svelte-babylon-logo.png" alt="Svelte-Babylon Logo" />
       </Button>
     </div>
 
@@ -78,5 +77,10 @@
     justify-content: center;
     align-items: center;
     height: 5rem;
+  }
+
+  .logo {
+    height: 2.5rem;
+    object-fit: contain;
   }
 </style>

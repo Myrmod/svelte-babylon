@@ -1,13 +1,13 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { BoundingBoxGizmo } from '@babylonjs/core/Gizmos/boundingBoxGizmo'
+  import { BoundingBoxGizmo } from '@babylonjs/core/Gizmos/boundingBoxGizmo.js'
   import type { Color3 } from '@babylonjs/core/Maths/math.color'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
 
-  export let name: string = 'BoundingBoxGizmo'
+  export let name: string = 'BoundingBoxGizmo.js'
   export let color: Color3 = undefined
   export let gizmoLayer: UtilityLayerRenderer = undefined
 

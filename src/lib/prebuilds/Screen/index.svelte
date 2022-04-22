@@ -4,14 +4,14 @@
  -->
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera'
+  import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import type { Camera } from '@babylonjs/core/Cameras/camera'
-  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
-  import { RenderTargetTexture } from '@babylonjs/core/Materials/Textures/renderTargetTexture'
+  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
+  import { RenderTargetTexture } from '@babylonjs/core/Materials/Textures/renderTargetTexture.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()

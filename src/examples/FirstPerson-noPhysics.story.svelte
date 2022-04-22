@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
-  import type { FreeCamera as FCamera } from '@babylonjs/core/Cameras/freeCamera'
-  import type { ISceneLoaderAsyncResult } from '@babylonjs/core/Loading/sceneLoader'
+  import type { FreeCamera as FCamera } from '@babylonjs/core/Cameras/freeCamera.js'
+  import type { ISceneLoaderAsyncResult } from '@babylonjs/core/Loading/sceneLoader.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import FreeCamera from 'svelte-babylon/components/Cameras/FreeCamera/index.svelte'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'

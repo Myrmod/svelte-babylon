@@ -1,4 +1,4 @@
-import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 import { getContext } from 'svelte'
 
 export default function getParent(): {

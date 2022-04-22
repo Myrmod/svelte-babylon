@@ -1,4 +1,4 @@
-import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
+import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
 import { getContext } from 'svelte'
 
 export default function getParent(): {

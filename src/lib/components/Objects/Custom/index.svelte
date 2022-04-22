@@ -2,17 +2,17 @@
   import { getRoot } from '$lib/utils/context'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
-  import { ActionManager } from '@babylonjs/core/Actions/actionManager'
+  import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
   import type { Condition } from '@babylonjs/core/Actions/condition'
-  import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions'
+  import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js'
   import type {
     ISceneLoaderAsyncResult,
     ISceneLoaderProgressEvent,
-  } from '@babylonjs/core/Loading/sceneLoader'
-  import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader'
+  } from '@babylonjs/core/Loading/sceneLoader.js'
+  import { SceneLoader } from '@babylonjs/core/Loading/sceneLoader.js'
   import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Node } from '@babylonjs/core/node'
   import '@babylonjs/loaders'
   import { getContext, onDestroy, onMount } from 'svelte'

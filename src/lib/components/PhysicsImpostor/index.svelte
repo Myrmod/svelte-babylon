@@ -1,8 +1,8 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import type { PhysicsImpostorParameters } from '@babylonjs/core/Physics/physicsImpostor'
-  import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { PhysicsImpostorParameters } from '@babylonjs/core/Physics/physicsImpostor.js'
+  import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor.js'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()

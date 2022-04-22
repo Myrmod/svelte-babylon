@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { PlaneRotationGizmo } from '@babylonjs/core/Gizmos/planeRotationGizmo'
-  import type { RotationGizmo } from '@babylonjs/core/Gizmos/rotationGizmo'
+  import { PlaneRotationGizmo } from '@babylonjs/core/Gizmos/planeRotationGizmo.js'
+  import type { RotationGizmo } from '@babylonjs/core/Gizmos/rotationGizmo.js'
   import type { Color3 } from '@babylonjs/core/Maths/math.color'
   import type { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
@@ -9,7 +9,7 @@
 
   const root = getRoot()
 
-  export let name: string = 'PlaneRotationGizmo'
+  export let name: string = 'PlaneRotationGizmo.js'
   export let planeNormal: Vector3
   export let color: Color3 = undefined
   export let gizmoLayer: UtilityLayerRenderer = undefined

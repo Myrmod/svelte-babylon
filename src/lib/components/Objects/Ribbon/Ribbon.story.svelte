@@ -6,7 +6,7 @@
   import Ribbon from '$lib/components/Objects/Ribbon/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
-  import { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 
   let object: {
     self: Mesh | AbstractMesh

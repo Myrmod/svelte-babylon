@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
-  import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera'
+  import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
   import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'

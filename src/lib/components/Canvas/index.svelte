@@ -1,14 +1,14 @@
 <script lang="ts">
   import type RootContext from '$lib/types'
   import { setRoot } from '$lib/utils/context'
-  import { Engine } from '@babylonjs/core/Engines/engine'
+  import { Engine } from '@babylonjs/core/Engines/engine.js'
   import type { EngineOptions } from '@babylonjs/core/Engines/thinEngine'
   import { Color4 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AmmoJSPlugin as AmmoJSPluginType } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin'
   import type { CannonJSPlugin as CannonJSPluginType } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin'
   import type { OimoJSPlugin as OimoJSPluginType } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
-  import { Scene } from '@babylonjs/core/scene'
+  import { Scene } from '@babylonjs/core/scene.js'
   import { onMount } from 'svelte'
 
   // settings

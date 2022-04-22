@@ -1,13 +1,13 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager'
-  import { RotationGizmo, type RotationGizmoOptions } from '@babylonjs/core/Gizmos/rotationGizmo'
+  import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager.js'
+  import { RotationGizmo, type RotationGizmoOptions } from '@babylonjs/core/Gizmos/rotationGizmo.js'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
 
-  export let name: string = 'RotationGizmo'
+  export let name: string = 'RotationGizmo.js'
   export let gizmoLayer: UtilityLayerRenderer = undefined
   export let tessellation: number = undefined
   export let useEulerRotation: boolean = undefined

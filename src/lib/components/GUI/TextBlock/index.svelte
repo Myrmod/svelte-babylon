@@ -2,9 +2,9 @@
   import { getRoot } from '$lib/utils/context'
   import type { Vector2 } from '@babylonjs/core/Maths/math.vector'
   import type { EventState } from '@babylonjs/core/Misc/observable'
-  import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture'
+  import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
-  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock'
+  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
   import { getContext, onDestroy, onMount } from 'svelte'
 

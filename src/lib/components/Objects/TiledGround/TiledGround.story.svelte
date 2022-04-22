@@ -6,7 +6,7 @@
   import TiledGround from '$lib/components/Objects/TiledGround/index.svelte'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 
   let object: {
     self: Mesh | AbstractMesh

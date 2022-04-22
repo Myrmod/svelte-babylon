@@ -7,10 +7,10 @@
   import Ground from '$lib/components/Objects/Ground/index.svelte'
   import Screen from '$lib/prebuilds/Screen/index.svelte'
   import type RootContext from '$lib/types'
-  import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera'
+  import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 
   let root: RootContext
 

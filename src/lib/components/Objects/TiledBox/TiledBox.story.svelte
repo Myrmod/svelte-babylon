@@ -5,7 +5,7 @@
   import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
   import TiledBox from '$lib/components/Objects/TiledBox/index.svelte'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
-  import { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 
   let object: {
     self: Mesh | AbstractMesh

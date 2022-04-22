@@ -2,7 +2,7 @@
   import degreeToRadians from '$lib/utils/Math/degreeToRadians'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import StandardMaterial from 'svelte-babylon/components/Materials/StandardMaterial/index.svelte'
   import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
   import Cylinder from 'svelte-babylon/components/Objects/Cylinder/index.svelte'

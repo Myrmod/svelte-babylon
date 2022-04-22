@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { TargetCamera } from '@babylonjs/core/Cameras/targetCamera'
+  import { TargetCamera } from '@babylonjs/core/Cameras/targetCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { Viewport } from '@babylonjs/core/Maths/math.viewport'
   import type { Node } from '@babylonjs/core/node'

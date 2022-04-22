@@ -1,8 +1,8 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { PhotoDome } from '@babylonjs/core/Helpers/photoDome'
+  import { PhotoDome } from '@babylonjs/core/Helpers/photoDome.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
 
   const dispatch = createEventDispatcher()

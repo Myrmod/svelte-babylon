@@ -6,7 +6,7 @@
   import Custom from '$lib/components/Objects/Custom/index.svelte'
   import Ground from '$lib/components/Objects/Ground/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 
   let model: Mesh
   let shadowObjects: Array<Mesh>

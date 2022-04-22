@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
+  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import { VertexData } from '@babylonjs/core/Meshes/mesh.vertexData'
   import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'

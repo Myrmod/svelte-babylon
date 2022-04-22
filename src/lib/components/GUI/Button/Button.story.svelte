@@ -9,7 +9,7 @@
   import Ground from '$lib/components/Objects/Ground/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 
   function handleClick() {
     alert('clicked button')

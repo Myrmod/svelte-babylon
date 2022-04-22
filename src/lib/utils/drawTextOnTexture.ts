@@ -1,4 +1,4 @@
-import type { DynamicTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture'
+import type { DynamicTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture.js'
 
 export default function drawTextOnTexture(
   texture: DynamicTexture,

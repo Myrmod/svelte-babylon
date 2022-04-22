@@ -1,8 +1,8 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager'
+  import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager.js'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { getContext, onDestroy, onMount } from 'svelte'
 

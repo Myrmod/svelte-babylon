@@ -2,9 +2,9 @@
   import Custom from '$lib/components/Objects/Custom/index.svelte'
   import Screen from '$lib/prebuilds/Screen/index.svelte'
   import type RootContext from '$lib/types'
-  import type { ISceneLoaderAsyncResult } from '@babylonjs/core/Loading/sceneLoader'
+  import type { ISceneLoaderAsyncResult } from '@babylonjs/core/Loading/sceneLoader.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor'
+  import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor.js'
   import FirstPersonWorld from './index.svelte'
 
   let root: RootContext

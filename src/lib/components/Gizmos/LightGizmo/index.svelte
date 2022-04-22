@@ -1,14 +1,14 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager'
-  import { LightGizmo } from '@babylonjs/core/Gizmos/lightGizmo'
+  import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager.js'
+  import { LightGizmo } from '@babylonjs/core/Gizmos/lightGizmo.js'
   import type { Light } from '@babylonjs/core/Lights/light'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
   const parent = getContext('light') as Light
 
-  export let name: string = 'LightGizmo'
+  export let name: string = 'LightGizmo.js'
   export let scaleRatio = 1
   export const gizmo = new LightGizmo()
 
