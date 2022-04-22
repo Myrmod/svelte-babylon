@@ -44,6 +44,16 @@
         <img class="logo" src="/svelte-babylon-logo.png" alt="Svelte-Babylon Logo" />
       </Button>
     </div>
+    <div class="navbar-right" slot="navbar-right-alt">
+      <a
+        href="https://github.com/Myrmod/svelte-babylon"
+        title="open GitHub repository"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img src="/assets/icons/github.svg" alt="GitHub Repository" />
+      </a>
+    </div>
 
     <footer slot="main-bottom">
       <a href="/privacy" sveltekit:reload>Privacy</a>
@@ -82,5 +92,8 @@
   .logo {
     height: 2.5rem;
     object-fit: contain;
+  }
+
+  .navbar-right {
   }
 </style>
