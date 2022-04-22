@@ -154,6 +154,7 @@
     onKeyDown ||
     onKeyUp
   ) {
+    import('@babylonjs/core/Behaviors')
     context.self.actionManager = new ActionManager(root.scene)
   } else if (context.self.actionManager) {
     context.self.actionManager.dispose()

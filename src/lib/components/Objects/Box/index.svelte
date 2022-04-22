@@ -11,7 +11,7 @@
   import { CreateBox } from '@babylonjs/core/Meshes/Builders/boxBuilder'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
   import type { Node } from '@babylonjs/core/node'
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { getContext,onDestroy,onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
   const root = getRoot()
@@ -152,6 +152,7 @@
     onKeyDown ||
     onKeyUp
   ) {
+    import('@babylonjs/core/Behaviors')
     context.self.actionManager = new ActionManager(root.scene)
   } else if (context.self.actionManager) {
     context.self.actionManager.dispose()
@@ -159,8 +160,15 @@
 
   $: if (onPick) {
     onPickIAction = context.self.actionManager.registerAction(
-      new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickCondition),
+      new ExecuteCodeAction(
+        ActionManager.OnPickTrigger,
+        () => {
+          console.log('click')
+        },
+        onPickCondition,
+      ),
     )
+    console.log(onPickIAction)
   } else if (context.self.actionManager?.actions.includes(onPickIAction)) {
     context.self.actionManager.unregisterAction(onPickIAction)
     onPickIAction = null
