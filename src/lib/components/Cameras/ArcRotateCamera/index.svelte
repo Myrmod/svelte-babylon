@@ -59,7 +59,7 @@
     camera.animations.push(betaAnim)
     camera._scene.beginAnimation(camera, 0, totalFrames, false)
   }
-  export const rotateToFacePickedFace = (
+  export const rotateToFacePickedFace = async (
     e: ActionEvent,
     radius = 5,
     fps = 60,
@@ -67,6 +67,9 @@
     onAnimationEnd = undefined,
   ) => {
     try {
+      if (root.scene.beginDirectAnimation === undefined) {
+        await import('@babylonjs/core/Animations/animatable')
+      }
       const mesh = e.meshUnderPointer
       const vector = mesh.getFacetNormal(e.additionalData.faceId)
       const origin = mesh.getFacetPosition(e.additionalData.faceId)
