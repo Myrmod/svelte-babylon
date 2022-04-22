@@ -139,8 +139,8 @@
     name="Platform2 Image"
   >
     <StandardMaterial slot="screen-material">
-      <StandardTexture url="/assets/images/svelte-png" textureTarget="diffuseTexture" />
-      <StandardTexture url="/assets/images/svelte-png" textureTarget="specularTexture" />
+      <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="diffuseTexture" />
+      <StandardTexture url="/assets/images/svelte-babylon.png" textureTarget="specularTexture" />
     </StandardMaterial>
   </Platform>
   <!-- Text -->

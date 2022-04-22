@@ -1,4 +1,5 @@
 <script lang="ts">
+  import degreeToRadians from '$lib/utils/Math/degreeToRadians'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh'
@@ -6,7 +7,6 @@
   import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
   import Cylinder from 'svelte-babylon/components/Objects/Cylinder/index.svelte'
   import Plane from 'svelte-babylon/components/Objects/Plane/index.svelte'
-  import radiansToDegrees from 'svelte-babylon/utils/Math/radiansToDegree'
 
   export let platform: {
     self: Mesh
@@ -25,7 +25,7 @@
 <Cylinder
   bind:object={platform}
   {position}
-  rotation={new Vector3(0, radiansToDegrees(rotation), 0)}
+  rotation={new Vector3(0, degreeToRadians(rotation), 0)}
   {name}
   options={{
     height: 1,
