@@ -38,7 +38,7 @@ The VideoTexture can be used to play videos on an Object.
   export const texture = new VideoTexture(
     `${name}-Texture`,
     src,
-    root.scene,
+    $root.scene,
     generateMipMaps,
     invertY,
     samplingMode,
@@ -50,7 +50,7 @@ The VideoTexture can be used to play videos on an Object.
 
   onMount(() => {
     parent.self[textureTarget] = texture
-    root.scene.render()
+    $root.scene.render()
   })
 
   onDestroy(() => {

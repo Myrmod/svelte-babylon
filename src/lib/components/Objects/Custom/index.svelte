@@ -57,7 +57,7 @@
 
   onMount(async () => {
     try {
-      if (root.imports[name]) {
+      if ($root.imports[name]) {
         throw new Error(`"${name} has already exists."`)
       }
       imports = {
@@ -72,15 +72,15 @@
         meshesNames,
         rootUrl,
         fileName,
-        root.scene,
+        $root.scene,
         onProgress,
         pluginExtension,
       )
 
       __root__ = meshes.find(mesh => mesh.id === '__root__')
-      root.imports[name] = imports
+      $root.imports[name] = imports
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -94,10 +94,10 @@
       mesh.dispose()
     })
     context.self?.dispose()
-    delete root.imports[name]
+    delete $root.imports[name]
   })
 
-  $: if (root.imports[name] && __root__) {
+  $: if ($root.imports[name] && __root__) {
     __root__.position.x = x || position.x
     __root__.position.y = y || position.y
     __root__.position.z = z || position.z
@@ -107,7 +107,7 @@
     __root__.rotation.y = rotation.y
     __root__.rotation.z = rotation.z
 
-    root.scene.render()
+    $root.scene.render()
   }
 
   $: if (meshes) {
@@ -206,7 +206,7 @@
         onKeyDown ||
         onKeyUp
       ) {
-        mesh.actionManager = new ActionManager(root.scene)
+        mesh.actionManager = new ActionManager($root.scene)
       } else if (mesh?.actionManager) {
         mesh.actionManager.dispose()
       }

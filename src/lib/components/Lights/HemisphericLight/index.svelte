@@ -21,24 +21,24 @@
   // export let range = 100
   export let shadowEnabled = false
   export const light = createLightContext(
-    new HemisphericLight(name, direction, root.scene),
+    new HemisphericLight(name, direction, $root.scene),
   ) as HemisphericLight
 
   onMount(() => {
     try {
-      root.lights[light.id] = light
+      $root.lights[light.id] = light
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    delete root.lights[light.id]
+    delete $root.lights[light.id]
   })
 
-  $: if (root.lights[light.id]) {
+  $: if ($root.lights[light.id]) {
     light.diffuse = diffuse
     light.specular = specular
     light.groundColor = groundColor
@@ -51,7 +51,7 @@
     // light.range = range
     light.shadowEnabled = shadowEnabled
 
-    root.scene.render()
+    $root.scene.render()
   }
 </script>
 

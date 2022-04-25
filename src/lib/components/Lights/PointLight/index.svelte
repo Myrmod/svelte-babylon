@@ -38,21 +38,21 @@
    */
   export let useBlurExponentialShadowMap = false
 
-  export const light = createLightContext(new PointLight(name, position, root.scene)) as PointLight
+  export const light = createLightContext(new PointLight(name, position, $root.scene)) as PointLight
 
   onMount(() => {
     try {
-      root.lights[light.id] = light
+      $root.lights[light.id] = light
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    root.lights[light.id].dispose()
-    delete root.lights[light.id]
+    $root.lights[light.id].dispose()
+    delete $root.lights[light.id]
 
     if (shadowGenerator) {
       shadowGenerator.dispose()
@@ -69,8 +69,8 @@
     light.shadowMaxZ = shadowMaxZ
     light.shadowMinZ = shadowMinZ
 
-    if (Object.keys(root.cameras).length) {
-      root.scene.render()
+    if (Object.keys($root.cameras).length) {
+      $root.scene.render()
     }
   }
 
@@ -94,7 +94,7 @@
         shadowGenerator.usePoissonSampling = usePoissonSampling
         shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
 
-        root.scene.render()
+        $root.scene.render()
       }
     } catch (error) {
       console.error(error)

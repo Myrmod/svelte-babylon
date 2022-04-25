@@ -14,21 +14,21 @@
   export let radius = 5
   export let speed = 1
   export const getFacingDirection = () => Vector3.Normalize(camera.target.subtract(camera.position))
-  export const camera = new ArcFollowCamera(name, alpha, beta, radius, target, root.scene)
+  export const camera = new ArcFollowCamera(name, alpha, beta, radius, target, $root.scene)
   setContext('camera', camera)
 
   onMount(() => {
     try {
-      if (root.cameras[camera.id]) {
+      if ($root.cameras[camera.id]) {
         throw new Error('There can only be one camera with the same name')
       }
 
-      root.cameras[camera.id] = camera
+      $root.cameras[camera.id] = camera
 
-      root.cameras[camera.id].attachControl(root.canvas.element, false)
+      $root.cameras[camera.id].attachControl($root.canvas.element, false)
 
-      root.engine.runRenderLoop(() => {
-        root.scene.render()
+      $root.engine.runRenderLoop(() => {
+        $root.scene.render()
       })
     } catch (error) {
       console.error(error)
@@ -37,12 +37,12 @@
 
   onDestroy(() => {
     camera.dispose()
-    root.cameras[camera.id] = null
+    $root.cameras[camera.id] = null
   })
 
-  $: if (root.cameras[camera.id]) {
+  $: if ($root.cameras[camera.id]) {
     camera.speed = speed
 
-    root.scene.render()
+    $root.scene.render()
   }
 </script>

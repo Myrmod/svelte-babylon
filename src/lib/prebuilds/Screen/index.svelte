@@ -17,7 +17,7 @@
   const root = getRoot()
 
   let monitor: Mesh
-  export let parent: Camera = root.scene.activeCamera
+  export let parent: Camera = $root.scene.activeCamera
 
   /**
    * Camera for texture creation. We need one to create a texture from.
@@ -30,7 +30,7 @@
       Math.PI / 4,
       10,
       Vector3.Zero(),
-      root.scene,
+      $root.scene,
       false,
     )
   }
@@ -62,15 +62,15 @@
     screenTexture = new RenderTargetTexture(
       'ScreenTexture',
       size,
-      root.scene,
+      $root.scene,
       generateMipMaps,
       doNotChangeAspectRatio,
     )
-    root.scene.customRenderTargets.push(screenTexture)
+    $root.scene.customRenderTargets.push(screenTexture)
   })
   $: if (screenTexture) {
     screenTexture.activeCamera = screenCamera
-    screenTexture.renderList = root.scene.meshes
+    screenTexture.renderList = $root.scene.meshes
   }
   onDestroy(() => {
     screenTexture.dispose()
@@ -82,7 +82,7 @@
   let screenMaterial: StandardMaterial
 
   onMount(() => {
-    screenMaterial = new StandardMaterial('screenMaterial', root.scene)
+    screenMaterial = new StandardMaterial('screenMaterial', $root.scene)
     screenMaterial.diffuseColor = new Color3(1, 1, 1)
     screenMaterial.diffuseTexture = screenTexture
     screenMaterial.specularColor = Color3.Black()
@@ -107,17 +107,17 @@
         width: 0.5,
         height: 0.5,
       },
-      root.scene,
+      $root.scene,
     )
   })
   onDestroy(() => {
     monitor.dispose()
   })
 
-  $: if (parent && monitor && root.canvas.element) {
+  $: if (parent && monitor && $root.canvas.element) {
     monitor.position = new Vector3(
-      root.canvas.element.clientWidth / 2000,
-      root.canvas.element.clientHeight / 2000,
+      $root.canvas.element.clientWidth / 2000,
+      $root.canvas.element.clientHeight / 2000,
       1.5,
     )
     monitor.parent = parent

@@ -41,7 +41,7 @@
   const parent = getParent()
   export const texture = new CubeTexture(
     rootUrl,
-    root.scene,
+    $root.scene,
     extensions,
     noMipmap,
     files,

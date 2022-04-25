@@ -20,7 +20,7 @@
     beta,
     radius,
     target,
-    root.scene,
+    $root.scene,
     setActiveOnSceneIfNoneActive,
   )
   setContext('camera', camera)
@@ -67,7 +67,7 @@
     onAnimationEnd = undefined,
   ) => {
     try {
-      if (root.scene.beginDirectAnimation === undefined) {
+      if ($root.scene.beginDirectAnimation === undefined) {
         await import('@babylonjs/core/Animations/animatable')
       }
       const mesh = e.meshUnderPointer
@@ -94,16 +94,16 @@
 
   onMount(() => {
     try {
-      if (root.cameras[camera.id]) {
+      if ($root.cameras[camera.id]) {
         throw new Error('There can only be one camera with the same name')
       }
 
-      root.cameras[camera.id] = camera
+      $root.cameras[camera.id] = camera
 
-      root.cameras[camera.id].attachControl(root.canvas.element, false)
+      $root.cameras[camera.id].attachControl($root.canvas.element, false)
 
-      root.engine.runRenderLoop(() => {
-        root.scene.render()
+      $root.engine.runRenderLoop(() => {
+        $root.scene.render()
       })
     } catch (error) {
       console.error(error)
@@ -112,14 +112,14 @@
 
   onDestroy(() => {
     camera?.dispose()
-    root.cameras[camera.id] = null
+    $root.cameras[camera.id] = null
   })
 
-  $: if (root.cameras[camera.id]) {
+  $: if ($root.cameras[camera.id]) {
     camera.speed = speed
     camera.alpha = alpha
     camera.beta = beta
 
-    root.scene.render()
+    $root.scene.render()
   }
 </script>

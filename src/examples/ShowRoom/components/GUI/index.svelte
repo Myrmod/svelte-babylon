@@ -21,18 +21,18 @@
 
   async function handleClick(id: number) {
     if (id === -1) {
-      root.scene.beginDirectAnimation(
-        root.scene.activeCamera,
+      $root.scene.beginDirectAnimation(
+        $root.scene.activeCamera,
         [
-          animMove(root.scene.activeCamera, new Vector3(0, 50, 0)),
-          animLookAt(root.scene.activeCamera as ArcRotateCamera, Vector3.Zero()),
+          animMove($root.scene.activeCamera, new Vector3(0, 50, 0)),
+          animLookAt($root.scene.activeCamera as ArcRotateCamera, Vector3.Zero()),
         ],
         0,
         120,
         false,
         0.5,
         () => {
-          ;(root.scene.activeCamera as ArcRotateCamera).setTarget(Vector3.Zero())
+          ;($root.scene.activeCamera as ArcRotateCamera).setTarget(Vector3.Zero())
         },
       )
 
@@ -45,18 +45,18 @@
     const origin = new Vector3(platform.position.x, mesh.position.y, platform.position.z)
     const newPosition = origin.add(vector.multiplyByFloats(5, 1, 5))
 
-    root.scene.beginDirectAnimation(
-      root.scene.activeCamera,
+    $root.scene.beginDirectAnimation(
+      $root.scene.activeCamera,
       [
-        animMove(root.scene.activeCamera, newPosition),
-        animLookAt(root.scene.activeCamera as ArcRotateCamera, origin),
+        animMove($root.scene.activeCamera, newPosition),
+        animLookAt($root.scene.activeCamera as ArcRotateCamera, origin),
       ],
       0,
       120,
       false,
       0.5,
       () => {
-        ;(root.scene.activeCamera as ArcRotateCamera).setTarget(origin)
+        ;($root.scene.activeCamera as ArcRotateCamera).setTarget(origin)
       },
     )
 

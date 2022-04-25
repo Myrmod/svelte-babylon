@@ -24,15 +24,15 @@
     throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
   }
   const context = createObjectContext(CreateDecal(name, parent, options))
-  context.self.material = new StandardMaterial(`${name}-material`, root.scene)
+  context.self.material = new StandardMaterial(`${name}-material`, $root.scene)
 
-  export let object = root.objects[context.self.id]
+  export let object = $root.objects[context.self.id]
 
   onMount(() => {
     try {
-      root.objects[context.self.id] = context
+      $root.objects[context.self.id] = context
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -43,12 +43,12 @@
       context.self.actionManager.dispose()
     }
     context.self.dispose()
-    delete root.objects[context.self.id]
+    delete $root.objects[context.self.id]
   })
 
-  $: if (root.objects[context.self.id]) {
+  $: if ($root.objects[context.self.id]) {
     object = context
-    root.scene.render()
+    $root.scene.render()
   }
 
   // event handling
@@ -135,7 +135,7 @@
     onKeyUp
   ) {
     import('@babylonjs/core/Behaviors')
-    context.self.actionManager = new ActionManager(root.scene)
+    context.self.actionManager = new ActionManager($root.scene)
   } else if (context.self.actionManager) {
     context.self.actionManager.dispose()
   }

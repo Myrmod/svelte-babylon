@@ -130,8 +130,8 @@
     VertexData._ComputeSides(Mesh.FRONTSIDE, positions, indices, normals, uvs)
 
     //Create a custom mesh
-    const customMesh = new Mesh('custom', root.scene)
-    customMesh.material = new StandardMaterial(`custom-material`, root.scene)
+    const customMesh = new Mesh('custom', $root.scene)
+    customMesh.material = new StandardMaterial(`custom-material`, $root.scene)
 
     //Create a vertexData object
     const vertexData = new VertexData()

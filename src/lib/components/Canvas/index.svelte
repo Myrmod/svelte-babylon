@@ -52,27 +52,27 @@
   })
 
   function resize() {
-    root.canvas.width = wrapper.clientWidth / root.canvas.pixelRatio
-    root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
+    $root.canvas.width = wrapper.clientWidth / $root.canvas.pixelRatio
+    $root.canvas.height = wrapper.clientHeight / $root.canvas.pixelRatio
   }
 
   export let physicsPlugin: AmmoJSPluginType | CannonJSPluginType | OimoJSPluginType = undefined
 
   async function init() {
     try {
-      root.engine = new Engine(canvas, antialiasing, engineOptions)
-      root.scene = new Scene(root.engine)
-      root.scene.physicsEnabled = false
+      $root.engine = new Engine(canvas, antialiasing, engineOptions)
+      $root.scene = new Scene($root.engine)
+      $root.scene.physicsEnabled = false
 
       // this way we prevent rendering of no camera is active
-      root.scene.onBeforeRenderObservable.add((_scene, event) => {
-        if (!root.scene.activeCamera) {
+      $root.scene.onBeforeRenderObservable.add((_scene, event) => {
+        if (!$root.scene.activeCamera) {
           event.skipNextObservers = true
         }
       })
 
       window.addEventListener('resize', () => {
-        root.engine.resize()
+        $root.engine.resize()
       })
       if (animationsEnabled) {
         await import('@babylonjs/core/Animations/animatable')
@@ -90,39 +90,39 @@
       console.error(error)
     }
   }
-  $: if (root.scene && root.scene.cameras.length) {
-    root.scene.clearColor = clearColor
-    root.scene.gravity = gravity
-    root.scene.collisionsEnabled = collisionsEnabled
+  $: if ($root.scene && $root.scene.cameras.length) {
+    $root.scene.clearColor = clearColor
+    $root.scene.gravity = gravity
+    $root.scene.collisionsEnabled = collisionsEnabled
 
     if (gravity && physicsPlugin && physicsEnabled) {
-      root.scene.enablePhysics(root.scene.gravity, physicsPlugin)
-      root.scene.physicsEnabled = true
+      $root.scene.enablePhysics($root.scene.gravity, physicsPlugin)
+      $root.scene.physicsEnabled = true
     }
 
-    root.scene.render()
+    $root.scene.render()
   }
 
-  $: if (root.engine) {
+  $: if ($root.engine) {
     if (displayLoadingUI) {
-      root.engine.displayLoadingUI()
+      $root.engine.displayLoadingUI()
     } else {
-      root.engine.hideLoadingUI()
+      $root.engine.hideLoadingUI()
     }
   }
 
-  $: if (root?.scene && enablePointerLockOnClick) {
-    root.scene.onPointerDown = e => {
-      if (e.button === 0) root.engine.enterPointerlock()
+  $: if ($root?.scene && enablePointerLockOnClick) {
+    $root.scene.onPointerDown = e => {
+      if (e.button === 0) $root.engine.enterPointerlock()
     }
   }
 
   $: if (canvas) {
-    root.canvas.element = canvas
+    $root.canvas.element = canvas
   }
   $: if (wrapper) {
-    root.canvas.width = wrapper.clientWidth / root.canvas.pixelRatio
-    root.canvas.height = wrapper.clientHeight / root.canvas.pixelRatio
+    $root.canvas.width = wrapper.clientWidth / $root.canvas.pixelRatio
+    $root.canvas.height = wrapper.clientHeight / $root.canvas.pixelRatio
   }
 </script>
 
@@ -131,7 +131,7 @@
 <div class="wrapper" bind:this={wrapper}>
   <canvas bind:this={canvas} />
 
-  {#if root.scene}
+  {#if $root.scene}
     <slot />
   {/if}
 </div>

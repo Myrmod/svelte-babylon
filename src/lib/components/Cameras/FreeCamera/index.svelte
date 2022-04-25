@@ -21,21 +21,21 @@
   export let parent: Mesh = undefined
 
   export const getFacingDirection = () => Vector3.Normalize(camera.target.subtract(camera.position))
-  export const camera = new FreeCamera(name, position, root.scene, setActiveOnSceneIfNoneActive)
+  export const camera = new FreeCamera(name, position, $root.scene, setActiveOnSceneIfNoneActive)
   setContext('camera', camera)
 
   onMount(() => {
     try {
-      if (root.cameras[camera.id]) {
+      if ($root.cameras[camera.id]) {
         throw new Error('There can only be one camera with the same name')
       }
 
-      root.cameras[camera.id] = camera
+      $root.cameras[camera.id] = camera
 
-      root.cameras[camera.id].setTarget(target)
+      $root.cameras[camera.id].setTarget(target)
 
-      root.engine.runRenderLoop(() => {
-        root.scene.render()
+      $root.engine.runRenderLoop(() => {
+        $root.scene.render()
       })
     } catch (error) {
       console.error(error)
@@ -44,10 +44,10 @@
 
   onDestroy(() => {
     camera.dispose()
-    root.cameras[camera.id] = null
+    $root.cameras[camera.id] = null
   })
 
-  $: if (root.cameras[camera.id]) {
+  $: if ($root.cameras[camera.id]) {
     camera.speed = speed
 
     if (disableControl) {
@@ -63,6 +63,6 @@
     camera.angularSensibility = angularSensibility
     camera.parent = parent
 
-    root.scene.render()
+    $root.scene.render()
   }
 </script>

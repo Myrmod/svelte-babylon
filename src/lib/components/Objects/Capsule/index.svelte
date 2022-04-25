@@ -25,8 +25,8 @@
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(CreateCapsule(name, options, root.scene))
-  context.self.material = new StandardMaterial(`${name}-material`, root.scene)
+  const context = createObjectContext(CreateCapsule(name, options, $root.scene))
+  context.self.material = new StandardMaterial(`${name}-material`, $root.scene)
 
   export let position = Vector3.Zero()
   export let x: number = undefined
@@ -34,13 +34,13 @@
   export let z: number = undefined
   export let rotation = Vector3.Zero()
 
-  export let object = root.objects[context.self.id]
+  export let object = $root.objects[context.self.id]
 
   onMount(() => {
     try {
-      root.objects[context.self.id] = context
+      $root.objects[context.self.id] = context
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -51,10 +51,10 @@
       context.self.actionManager.dispose()
     }
     context.self.dispose()
-    delete root.objects[context.self.id]
+    delete $root.objects[context.self.id]
   })
 
-  $: if (root.objects[context.self.id]) {
+  $: if ($root.objects[context.self.id]) {
     context.self.position.x = x || position.x
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
@@ -63,7 +63,7 @@
     context.self.rotation = rotation
 
     object = context
-    root.scene.render()
+    $root.scene.render()
   }
 
   $: if (parent) {
@@ -154,7 +154,7 @@
     onKeyUp
   ) {
     import('@babylonjs/core/Behaviors')
-    context.self.actionManager = new ActionManager(root.scene)
+    context.self.actionManager = new ActionManager($root.scene)
   } else if (context.self.actionManager) {
     context.self.actionManager.dispose()
   }

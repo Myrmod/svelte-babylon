@@ -12,7 +12,7 @@
   export let scaleRatio = 1
   export const gizmo = new LightGizmo()
 
-  const gizmoManager = new GizmoManager(root.scene)
+  const gizmoManager = new GizmoManager($root.scene)
   export let positionGizmoEnabled = true
   export let rotationGizmoEnabled = true
   export let usePointerToAttachGizmos = false
@@ -21,29 +21,29 @@
 
   onMount(() => {
     try {
-      if (root.gizmos[name]) return
+      if ($root.gizmos[name]) return
 
-      root.gizmos[name] = gizmo
+      $root.gizmos[name] = gizmo
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    delete root.gizmos[name]
+    delete $root.gizmos[name]
     gizmoManager.dispose()
     gizmo.dispose()
   })
 
-  $: if (root.gizmos[name]) {
+  $: if ($root.gizmos[name]) {
     gizmo.light = parent
     gizmo.scaleRatio = scaleRatio
     gizmoManager.positionGizmoEnabled = positionGizmoEnabled
     gizmoManager.rotationGizmoEnabled = rotationGizmoEnabled
     gizmoManager.usePointerToAttachGizmos = usePointerToAttachGizmos
 
-    root.scene.render()
+    $root.scene.render()
   }
 </script>

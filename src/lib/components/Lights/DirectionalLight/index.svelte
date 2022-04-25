@@ -40,31 +40,31 @@
   export let useBlurExponentialShadowMap = false
 
   export const light = createLightContext(
-    new DirectionalLight(name, direction, root.scene),
+    new DirectionalLight(name, direction, $root.scene),
   ) as DirectionalLight
 
   onMount(() => {
     try {
-      if (root.lights[light.id]) return
+      if ($root.lights[light.id]) return
 
-      root.lights[light.id] = light
+      $root.lights[light.id] = light
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    root.lights[light.id].dispose()
-    delete root.lights[light.id]
+    $root.lights[light.id].dispose()
+    delete $root.lights[light.id]
 
     if (shadowGenerator) {
       shadowGenerator.dispose()
     }
   })
 
-  $: if (root.lights[light.id]) {
+  $: if ($root.lights[light.id]) {
     light.shadowEnabled = !!castShadowOf?.length
     light.intensity = intensity
     light.diffuse = diffuse
@@ -75,7 +75,7 @@
     light.shadowMaxZ = shadowMaxZ
     light.shadowMinZ = shadowMinZ
 
-    root.scene.render()
+    $root.scene.render()
   }
 
   let shadowGenerator: ShadowGenerator
@@ -98,7 +98,7 @@
         shadowGenerator.usePoissonSampling = usePoissonSampling
         shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
 
-        root.scene.render()
+        $root.scene.render()
       }
     } catch (error) {
       console.error(error)

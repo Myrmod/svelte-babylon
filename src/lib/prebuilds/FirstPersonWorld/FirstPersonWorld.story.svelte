@@ -19,7 +19,7 @@
             child,
             PhysicsImpostor.BoxImpostor,
             { mass: 0 },
-            root.scene,
+            $root.scene,
           )
 
           if (index === array.length - 1) {
@@ -32,7 +32,7 @@
         mesh,
         PhysicsImpostor.BoxImpostor,
         { mass: 0 },
-        root.scene,
+        $root.scene,
       )
     })
   }

@@ -33,7 +33,7 @@ It can be used to apply text to a material. This is used in the TextPlane compon
   export const texture = new DynamicTexture(
     `${name}-Texture`,
     options,
-    root.scene,
+    $root.scene,
     generateMipMaps,
     samplingMode,
     format,
@@ -42,7 +42,7 @@ It can be used to apply text to a material. This is used in the TextPlane compon
 
   onMount(() => {
     parent.self[textureTarget] = texture
-    root.scene.render()
+    $root.scene.render()
   })
 
   onDestroy(() => {

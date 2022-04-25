@@ -23,8 +23,8 @@
   export let specularColor = new Color3(0, 0, 0)
   export let scaling = new Vector3(1, 1, 1)
 
-  const context = createObjectContext(MeshBuilder.CreateBox(name, options, root.scene))
-  context.self.material = new SMaterial(`${name}-material`, root.scene)
+  const context = createObjectContext(MeshBuilder.CreateBox(name, options, $root.scene))
+  context.self.material = new SMaterial(`${name}-material`, $root.scene)
 
   export let position = Vector3.Zero()
   export let x: number = undefined
@@ -32,12 +32,12 @@
   export let z: number = undefined
   export let checkCollisions = false
 
-  export let object = root.objects[context.self.id]
+  export let object = $root.objects[context.self.id]
 
   onMount(() => {
     try {
-      root.objects[context.self.id] = context
-      root.scene.render()
+      $root.objects[context.self.id] = context
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -45,10 +45,10 @@
 
   onDestroy(() => {
     context.self.dispose()
-    delete root.objects[context.self.id]
+    delete $root.objects[context.self.id]
   })
 
-  $: if (root.objects[context.self.id]) {
+  $: if ($root.objects[context.self.id]) {
     context.self.position.x = x || position.x
     context.self.position.y = y || position.y
     context.self.position.z = z || position.z
@@ -57,7 +57,7 @@
     context.self.scaling = scaling
 
     object = context
-    root.scene.render()
+    $root.scene.render()
   }
 </script>
 

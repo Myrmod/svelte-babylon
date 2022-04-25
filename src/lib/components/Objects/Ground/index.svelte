@@ -31,18 +31,18 @@
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(CreateGround(name, options, root.scene))
-  context.self.material = new StandardMaterial(`${name}-material`, root.scene)
+  const context = createObjectContext(CreateGround(name, options, $root.scene))
+  context.self.material = new StandardMaterial(`${name}-material`, $root.scene)
 
   export let receiveShadows = false
-  export let object = root.objects[context.self.id]
+  export let object = $root.objects[context.self.id]
 
   onMount(() => {
     try {
-      root.objects[context.self.id] = context
-      root.objects[context.self.id].self.receiveShadows = true
+      $root.objects[context.self.id] = context
+      $root.objects[context.self.id].self.receiveShadows = true
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -53,10 +53,10 @@
       context.self.actionManager.dispose()
     }
     context.self.dispose()
-    delete root.objects[context.self.id]
+    delete $root.objects[context.self.id]
   })
 
-  $: if (root.objects[context.self.id]) {
+  $: if ($root.objects[context.self.id]) {
     context.self.receiveShadows = receiveShadows
     context.self.position.x = x || position.x
     context.self.position.y = y || position.y
@@ -157,7 +157,7 @@
     onKeyUp
   ) {
     import('@babylonjs/core/Behaviors')
-    context.self.actionManager = new ActionManager(root.scene)
+    context.self.actionManager = new ActionManager($root.scene)
   } else if (context.self.actionManager) {
     context.self.actionManager.dispose()
   }

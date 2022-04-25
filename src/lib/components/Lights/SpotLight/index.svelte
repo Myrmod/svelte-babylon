@@ -42,29 +42,29 @@
   export let useBlurExponentialShadowMap = false
 
   export const light = createLightContext(
-    new SpotLight(name, position, direction, angle, exponent, root.scene),
+    new SpotLight(name, position, direction, angle, exponent, $root.scene),
   ) as SpotLight
 
   onMount(() => {
     try {
-      root.lights[light.id] = light
+      $root.lights[light.id] = light
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    root.lights[light.id].dispose()
-    delete root.lights[light.id]
+    $root.lights[light.id].dispose()
+    delete $root.lights[light.id]
 
     if (shadowGenerator) {
       shadowGenerator.dispose()
     }
   })
 
-  $: if (root.lights[light.id]) {
+  $: if ($root.lights[light.id]) {
     light.intensity = intensity
     light.diffuse = diffuse
     light.specular = specular
@@ -74,7 +74,7 @@
     light.shadowMaxZ = shadowMaxZ
     light.shadowMinZ = shadowMinZ
 
-    root.scene.render()
+    $root.scene.render()
   }
 
   let shadowGenerator: ShadowGenerator
@@ -97,7 +97,7 @@
         shadowGenerator.usePoissonSampling = usePoissonSampling
         shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
 
-        root.scene.render()
+        $root.scene.render()
       }
     } catch (error) {
       console.error(error)

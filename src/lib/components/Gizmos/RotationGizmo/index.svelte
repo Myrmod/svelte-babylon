@@ -13,7 +13,7 @@
   export let useEulerRotation: boolean = undefined
   export let thickness: number = undefined
   export let options: RotationGizmoOptions = undefined
-  export const gizmoManager = new GizmoManager(root.scene)
+  export const gizmoManager = new GizmoManager($root.scene)
 
   export const gizmo = new RotationGizmo(
     gizmoLayer,
@@ -26,22 +26,22 @@
 
   onMount(() => {
     try {
-      if (root.gizmos[name]) return
+      if ($root.gizmos[name]) return
 
-      root.gizmos[name] = gizmo
+      $root.gizmos[name] = gizmo
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    delete root.gizmos[name]
+    delete $root.gizmos[name]
     gizmo.dispose()
   })
 
-  $: if (root.gizmos[name]) {
-    root.scene.render()
+  $: if ($root.gizmos[name]) {
+    $root.scene.render()
   }
 </script>

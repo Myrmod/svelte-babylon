@@ -50,7 +50,7 @@
   const parent = getParent()
   export const texture = new Texture(
     url,
-    root.scene,
+    $root.scene,
     noMipmap,
     invertY,
     samplingMode,

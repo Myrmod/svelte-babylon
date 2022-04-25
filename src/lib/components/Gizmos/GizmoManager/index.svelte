@@ -21,7 +21,7 @@
   export let boundingBoxGizmoEnabled = true
   export let usePointerToAttachGizmos = false
 
-  export const gizmo = new GizmoManager(root.scene, thickness, utilityLayer, keepDepthUtilityLayer)
+  export const gizmo = new GizmoManager($root.scene, thickness, utilityLayer, keepDepthUtilityLayer)
 
   onMount(() => {
     try {
@@ -30,29 +30,29 @@
 
         return
       }
-      if (root.gizmos[name]) return
+      if ($root.gizmos[name]) return
 
       gizmo.attachToMesh(parent.self)
-      root.gizmos[name] = gizmo
+      $root.gizmos[name] = gizmo
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    delete root.gizmos[name]
+    delete $root.gizmos[name]
     gizmo.dispose()
   })
 
-  $: if (root.gizmos[name]) {
+  $: if ($root.gizmos[name]) {
     gizmo.positionGizmoEnabled = positionGizmoEnabled
     gizmo.rotationGizmoEnabled = rotationGizmoEnabled
     gizmo.scaleGizmoEnabled = scaleGizmoEnabled
     gizmo.boundingBoxGizmoEnabled = boundingBoxGizmoEnabled
     gizmo.usePointerToAttachGizmos = usePointerToAttachGizmos
 
-    root.scene.render()
+    $root.scene.render()
   }
 </script>

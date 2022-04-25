@@ -46,19 +46,19 @@
   let mouseInputs: Observer<unknown>
 
   onDestroy(() => {
-    root.scene?.onBeforeRenderObservable.remove(keyboardInputs)
+    $root.scene?.onBeforeRenderObservable.remove(keyboardInputs)
   })
 
   // adds the pressed keys to inputs
   $: if (root?.scene) {
-    root.scene.actionManager = new ActionManager(root.scene)
-    root.scene.actionManager.registerAction(
+    $root.scene.actionManager = new ActionManager($root.scene)
+    $root.scene.actionManager.registerAction(
       new ExecuteCodeAction(
         ActionManager.OnKeyDownTrigger,
         e => (inputs[e.sourceEvent.key] = e.sourceEvent.type == 'keydown'),
       ),
     )
-    root.scene.actionManager.registerAction(
+    $root.scene.actionManager.registerAction(
       new ExecuteCodeAction(
         ActionManager.OnKeyUpTrigger,
         e => (inputs[e.sourceEvent.key] = e.sourceEvent.type == 'keydown'),
@@ -72,12 +72,12 @@
 
   let controlsAdded = false
   function addControls() {
-    if (!root.scene) return
+    if (!$root.scene) return
 
     // Used for movement
-    root.scene.onBeforeRenderObservable.remove(keyboardInputs)
+    $root.scene.onBeforeRenderObservable.remove(keyboardInputs)
 
-    keyboardInputs = root.scene.onBeforeRenderObservable.add(() => {
+    keyboardInputs = $root.scene.onBeforeRenderObservable.add(() => {
       if (goForward)
         player.self.locallyTranslate(
           new Vector3(movementSpeed, 0, movementSpeed).multiply(
@@ -105,13 +105,13 @@
     })
 
     // Used for the camera
-    root.scene.onPointerObservable.remove(mouseInputs)
-    mouseInputs = root.scene.onPointerObservable.add(() => {
+    $root.scene.onPointerObservable.remove(mouseInputs)
+    mouseInputs = $root.scene.onPointerObservable.add(() => {
       if (!camera) {
         console.error('no camera defined')
         return
       }
-      if (root.engine.isPointerLock) {
+      if ($root.engine.isPointerLock) {
         const verticalCameraRadiant = ((verticalCameraDegree / 2) * Math.PI) / 180
         // restrict vertical camera movement
         // top

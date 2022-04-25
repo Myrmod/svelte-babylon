@@ -35,31 +35,31 @@
    * @link https://doc.babylonjs.com/divingDeeper/physics/usingPhysicsEngine#impostors
    */
   export let options: PhysicsImpostorParameters = {} as PhysicsImpostorParameters
-  export const object = root.physics.impostors[name]
+  export const object = $root.physics.impostors[name]
 
   onDestroy(() => {
-    root.physics.impostors[name]?.dispose()
+    $root.physics.impostors[name]?.dispose()
 
-    delete root.physics.impostors[name]
-    if (!Object.keys(root.physics.impostors)) {
-      root.scene.physicsEnabled = false
+    delete $root.physics.impostors[name]
+    if (!Object.keys($root.physics.impostors)) {
+      $root.scene.physicsEnabled = false
     }
   })
 
-  $: if (root.scene.physicsEnabled && !root.physics.impostors[name]) {
+  $: if ($root.scene.physicsEnabled && !$root.physics.impostors[name]) {
     try {
       // create the physics impostor
-      root.physics.impostors[name] = new PhysicsImpostor(
+      $root.physics.impostors[name] = new PhysicsImpostor(
         parent.self,
         type,
         /**
          * we overwrite some options here, setting them directly results in a jumping of some objects
          */
         { ...options, mass: 0, restitution: 0 },
-        root.scene,
+        $root.scene,
       )
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -69,12 +69,12 @@
    * if we don't do it like this and directly
    * set the options onMount, the object might jump weirdly
    */
-  $: if (root.physics.impostors[name]) {
-    if (root.physics.impostors[name].mass !== options.mass) {
-      root.physics.impostors[name].setMass(options.mass)
+  $: if ($root.physics.impostors[name]) {
+    if ($root.physics.impostors[name].mass !== options.mass) {
+      $root.physics.impostors[name].setMass(options.mass)
     }
-    if (root.physics.impostors[name].restitution !== options.restitution) {
-      root.physics.impostors[name].restitution = options.restitution
+    if ($root.physics.impostors[name].restitution !== options.restitution) {
+      $root.physics.impostors[name].restitution = options.restitution
     }
   }
 </script>

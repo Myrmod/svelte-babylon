@@ -32,11 +32,11 @@
 
   onMount(() => {
     try {
-      root.gui[context.name].controls[name] = guiElement
+      $root.gui[context.name].controls[name] = guiElement
 
       context.addControl(guiElement)
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -45,11 +45,11 @@
   onDestroy(() => {
     context.removeControl(guiElement)
     guiElement.dispose()
-    delete root.gui[context.name].controls[name]
+    delete $root.gui[context.name].controls[name]
   })
 
-  $: if (root.gui?.[context?.name]?.controls?.[name]) {
-    root.scene.render()
+  $: if ($root.gui?.[context?.name]?.controls?.[name]) {
+    $root.scene.render()
   }
 
   export let onPointerUp: (eventData: Vector2WithInfo, eventState: EventState) => void = undefined

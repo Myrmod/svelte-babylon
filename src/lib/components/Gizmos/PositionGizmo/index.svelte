@@ -10,28 +10,28 @@
   export let name: string = 'PositionGizmo.js'
   export let gizmoLayer: UtilityLayerRenderer = undefined
   export let thickness: number = undefined
-  export const gizmoManager = new GizmoManager(root.scene)
+  export const gizmoManager = new GizmoManager($root.scene)
 
   export const gizmo = new PositionGizmo(gizmoLayer, thickness, gizmoManager)
 
   onMount(() => {
     try {
-      if (root.gizmos[name]) return
+      if ($root.gizmos[name]) return
 
-      root.gizmos[name] = gizmo
+      $root.gizmos[name] = gizmo
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    delete root.gizmos[name]
+    delete $root.gizmos[name]
     gizmo.dispose()
   })
 
-  $: if (root.gizmos[name]) {
-    root.scene.render()
+  $: if ($root.gizmos[name]) {
+    $root.scene.render()
   }
 </script>

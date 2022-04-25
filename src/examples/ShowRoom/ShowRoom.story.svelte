@@ -42,8 +42,8 @@
 
   let customMesh: Mesh
   $: if (customMesh && root) {
-    root.scene.onBeforeRenderObservable.add(() => {
-      if (root.scene.activeCamera) {
+    $root.scene.onBeforeRenderObservable.add(() => {
+      if ($root.scene.activeCamera) {
         customMesh.rotate(new Vector3(1, 1, 1), 0.005)
       }
     })

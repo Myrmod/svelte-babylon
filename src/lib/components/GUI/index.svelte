@@ -15,7 +15,7 @@
   export const gui = AdvancedDynamicTexture.CreateFullscreenUI(
     name,
     foreground,
-    root.scene,
+    $root.scene,
     sampling,
     adaptiveScaling,
   )
@@ -24,15 +24,15 @@
 
   onMount(() => {
     try {
-      if (root.gui[name]) {
+      if ($root.gui[name]) {
         throw new Error(`A GUI names "${name}" already exists`)
       }
 
-      root.gui[name] = {
+      $root.gui[name] = {
         self: gui,
         controls: {},
       }
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -40,14 +40,14 @@
 
   onDestroy(() => {
     gui.dispose()
-    delete root.objects[name]
+    delete $root.objects[name]
   })
 
-  $: if (root.gui[name]?.self?.name === name) {
-    root.scene.render()
+  $: if ($root.gui[name]?.self?.name === name) {
+    $root.scene.render()
   }
 </script>
 
-{#if root.gui[name]?.self?.name === name}
+{#if $root.gui[name]?.self?.name === name}
   <slot />
 {/if}

@@ -20,7 +20,7 @@
   export let invertRefractionY = false
   export let backfaceCulling = false
 
-  export const material = new StandardMaterial(name, root.scene)
+  export const material = new StandardMaterial(name, $root.scene)
 
   createMaterialContext(material)
 
@@ -34,7 +34,7 @@
 
       parent.self.material = material
 
-      root.scene.render()
+      $root.scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -44,16 +44,16 @@
     parent.self.material = null
   })
 
-  $: if (root.objects[parent.self.id]?.self?.material) {
+  $: if ($root.objects[parent.self.id]?.self?.material) {
     if (specularColor) material.specularColor = specularColor
     if (ambientColor) material.ambientColor = ambientColor
     if (diffuseColor) material.diffuseColor = diffuseColor
     if (emissiveColor) material.emissiveColor = emissiveColor
 
-    root.scene.render()
+    $root.scene.render()
   }
 
-  $: if (root.objects[parent.self.id]?.self?.material) {
+  $: if ($root.objects[parent.self.id]?.self?.material) {
     material.roughness = roughness
     material.separateCullingPass = separateCullingPass
     material.invertNormalMapX = invertNormalMapX
