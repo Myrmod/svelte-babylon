@@ -18,8 +18,7 @@
   export let initialized = false
   export let displayLoadingUI = false
   export let enablePointerLockOnClick = false
-  export let gravity = -9.81
-  export let framesPerSecond = 60
+  export let gravity = new Vector3(0, -9.81, 0)
   export let collisionsEnabled = false
   export let physicsEnabled = false
   /**
@@ -63,6 +62,7 @@
     try {
       root.engine = new Engine(canvas, antialiasing, engineOptions)
       root.scene = new Scene(root.engine)
+      root.scene.physicsEnabled = false
 
       // this way we prevent rendering of no camera is active
       root.scene.onBeforeRenderObservable.add((_scene, event) => {
@@ -92,9 +92,13 @@
   }
   $: if (root.scene && root.scene.cameras.length) {
     root.scene.clearColor = clearColor
-    root.scene.gravity = new Vector3(0, gravity / framesPerSecond, 0)
+    root.scene.gravity = gravity
     root.scene.collisionsEnabled = collisionsEnabled
-    root.scene.physicsEnabled = physicsEnabled
+
+    if (gravity && physicsPlugin && physicsEnabled) {
+      root.scene.enablePhysics(root.scene.gravity, physicsPlugin)
+      root.scene.physicsEnabled = true
+    }
 
     root.scene.render()
   }

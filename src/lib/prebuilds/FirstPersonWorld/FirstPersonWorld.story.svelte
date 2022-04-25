@@ -10,15 +10,22 @@
   let root: RootContext
   let meshes: ISceneLoaderAsyncResult['meshes']
 
-  $: if (meshes) {
-    meshes.forEach(mesh => {
-      mesh.getChildMeshes().forEach(child => {
-        child.physicsImpostor = new PhysicsImpostor(
-          child,
-          PhysicsImpostor.BoxImpostor,
-          { mass: 0 },
-          root.scene,
-        )
+  $: if (root?.scene?.physicsEnabled && meshes) enablePhysics()
+  async function enablePhysics() {
+    meshes.forEach(async mesh => {
+      await new Promise<void>(resolve => {
+        mesh.getChildMeshes().forEach((child, index, array) => {
+          child.physicsImpostor = new PhysicsImpostor(
+            child,
+            PhysicsImpostor.BoxImpostor,
+            { mass: 0 },
+            root.scene,
+          )
+
+          if (index === array.length - 1) {
+            resolve()
+          }
+        })
       })
 
       mesh.physicsImpostor = new PhysicsImpostor(

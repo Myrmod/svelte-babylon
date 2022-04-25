@@ -1,9 +1,10 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
+  import '@babylonjs/core'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { PhysicsImpostorParameters } from '@babylonjs/core/Physics/physicsImpostor.js'
   import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor.js'
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy } from 'svelte'
 
   const root = getRoot()
   const parent = getContext('object') as {
@@ -36,7 +37,16 @@
   export let options: PhysicsImpostorParameters = {} as PhysicsImpostorParameters
   export const object = root.physics.impostors[name]
 
-  onMount(async () => {
+  onDestroy(() => {
+    root.physics.impostors[name]?.dispose()
+
+    delete root.physics.impostors[name]
+    if (!Object.keys(root.physics.impostors)) {
+      root.scene.physicsEnabled = false
+    }
+  })
+
+  $: if (root.scene.physicsEnabled && !root.physics.impostors[name]) {
     try {
       // create the physics impostor
       root.physics.impostors[name] = new PhysicsImpostor(
@@ -53,16 +63,7 @@
     } catch (error) {
       console.error(error)
     }
-  })
-
-  onDestroy(() => {
-    root.physics.impostors[name]?.dispose()
-
-    delete root.physics.impostors[name]
-    if (!Object.keys(root.physics.impostors)) {
-      root.scene.physicsEnabled = false
-    }
-  })
+  }
 
   /**
    * if we don't do it like this and directly
