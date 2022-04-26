@@ -67,7 +67,7 @@
     --kd-color-brand-rgb: 233, 127, 6;
   }
 
-  :global(:$root.dark) {
+  :global(:root.dark) {
     --kd-color-brand-rgb: 213, 149, 76;
   }
 
