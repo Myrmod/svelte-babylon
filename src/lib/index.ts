@@ -5,6 +5,7 @@ export { default as FlyCamera } from './components/Cameras/FlyCamera.svelte'
 export { default as FollowCamera } from './components/Cameras/FollowCamera.svelte'
 export { default as FreeCamera } from './components/Cameras/FreeCamera/index.svelte'
 export { default as TargetCamera } from './components/Cameras/TargetCamera/index.svelte'
+export { default as UniversalCamera } from './components/Cameras/UniversalCamera/index.svelte'
 export { default as Canvas } from './components/Canvas/index.svelte'
 // Gizmos
 export { default as AxisDragGizmo } from './components/Gizmos/AxisDragGizmo/index.svelte'
