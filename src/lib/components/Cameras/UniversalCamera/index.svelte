@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
   import { UniversalCamera } from '@babylonjs/core/Cameras/universalCamera.js'
-  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
+  import { Vector3 } from '@babylonjs/core/Maths/math.vector.js'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import { onDestroy, onMount, setContext } from 'svelte'
 

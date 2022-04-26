@@ -1,8 +1,9 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
+  import type { MultiMaterial } from '@babylonjs/core/Materials/multiMaterial.js'
   import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import type { Color3 } from '@babylonjs/core/Maths/math.color'
-  import { onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import { createMaterialContext } from '../createMaterialContext'
   import getParent from '../getParent'
 
@@ -25,11 +26,15 @@
   createMaterialContext(material)
 
   export let parent = getParent()
+  export let multiMaterial = getContext<MultiMaterial>('MultiMaterial')
 
   onMount(() => {
     try {
-      if (parent.self.material) {
-        console.warn(`Previous material on ${parent.self.id} will be overwritten`)
+      if (multiMaterial) {
+        multiMaterial.subMaterials = [...multiMaterial.subMaterials, material]
+        $root.scene.render()
+
+        return
       }
 
       parent.self.material = material
