@@ -8,12 +8,13 @@
   import type { AmmoJSPlugin as AmmoJSPluginType } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin'
   import type { CannonJSPlugin as CannonJSPluginType } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin'
   import type { OimoJSPlugin as OimoJSPluginType } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
-  import { Scene } from '@babylonjs/core/scene.js'
+  import { Scene, type SceneOptions } from '@babylonjs/core/scene.js'
   import { onMount } from 'svelte'
 
   // settings
   export let antialiasing = false
   export let engineOptions: EngineOptions = undefined
+  export let sceneOptions: SceneOptions = undefined
   export let clearColor: Color4 = new Color4(0, 0, 0)
   export let initialized = false
   export let displayLoadingUI = false
@@ -22,12 +23,12 @@
   export let collisionsEnabled = false
   export let physicsEnabled = false
   /**
-   * since we're using es6 modules we have to deal with side effects. The property "enableAnimations" is required if you want to use animations in your scene.
+   * since we're using es6 modules we have to deal with side effects. The property "animationsEnabled" is usually required if you want to use animations in your scene. Some components are able to catch the potential error though.
    */
   export let animationsEnabled = false
 
   let wrapper: HTMLElement
-  let canvas: HTMLCanvasElement = undefined
+  export let canvas: HTMLCanvasElement = undefined
 
   export let root = setRoot({
     engine: undefined,
@@ -61,7 +62,7 @@
   async function init() {
     try {
       $root.engine = new Engine(canvas, antialiasing, engineOptions)
-      $root.scene = new Scene($root.engine)
+      $root.scene = new Scene($root.engine, sceneOptions)
       $root.scene.physicsEnabled = false
 
       // this way we prevent rendering of no camera is active
