@@ -63,7 +63,6 @@ export { default as DynamicTexture } from './components/Textures/DynamicTexture/
 export { default as StandardTexture } from './components/Textures/StandardTexture/index.svelte'
 export { default as VideoTexture } from './components/Textures/VideoTexture/index.svelte'
 // prebuilds
-export { default as FirstPersonWorld } from './prebuilds/FirstPersonWorld/index.svelte'
 export { default as Screen } from './prebuilds/Screen/index.svelte'
 export { default as Skybox } from './prebuilds/Skybox/index.svelte'
 export { default as TextPlane } from './prebuilds/TextPlane/index.svelte'
