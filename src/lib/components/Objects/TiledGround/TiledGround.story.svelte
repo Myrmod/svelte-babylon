@@ -21,6 +21,7 @@
     preserveDrawingBuffer: true,
     stencil: true,
   }}
+  clearColor={Color3.Gray()}
 >
   <HemisphericLight intensity={0.25} />
   <DirectionalLight

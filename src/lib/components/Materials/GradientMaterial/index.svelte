@@ -2,7 +2,7 @@
   import { getRoot } from '$lib/utils/context'
   import type { MultiMaterial } from '@babylonjs/core/Materials/multiMaterial.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
-  import { GradientMaterial } from '@babylonjs/materials/gradient/gradientMaterial'
+  import { GradientMaterial } from '@babylonjs/materials/gradient/gradientMaterial.js'
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createMaterialContext } from '../createMaterialContext'
   import getParent from '../getParent'

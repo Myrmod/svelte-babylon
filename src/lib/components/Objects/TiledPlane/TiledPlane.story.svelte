@@ -5,6 +5,7 @@
   import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
   import TiledPlane from '$lib/components/Objects/TiledPlane/index.svelte'
   import StandardTexture from '$lib/components/Textures/StandardTexture/index.svelte'
+  import { Color3 } from '@babylonjs/core/Maths/math.color.js'
   import { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 </script>
 
@@ -14,6 +15,7 @@
     preserveDrawingBuffer: true,
     stencil: true,
   }}
+  clearColor={Color3.Gray()}
 >
   <HemisphericLight />
   <ArcRotateCamera alpha={1.8} radius={3} />

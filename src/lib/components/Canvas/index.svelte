@@ -3,7 +3,7 @@
   import { setRoot } from '$lib/utils/context'
   import { Engine } from '@babylonjs/core/Engines/engine.js'
   import type { EngineOptions } from '@babylonjs/core/Engines/thinEngine'
-  import { Color4 } from '@babylonjs/core/Maths/math.color'
+  import { Color3, Color4 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AmmoJSPlugin as AmmoJSPluginType } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin'
   import type { CannonJSPlugin as CannonJSPluginType } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin'
@@ -15,7 +15,7 @@
   export let antialiasing = false
   export let engineOptions: EngineOptions = undefined
   export let sceneOptions: SceneOptions = undefined
-  export let clearColor: Color4 = new Color4(0, 0, 0)
+  export let clearColor: Color4 | Color3 = new Color4(0, 0, 0)
   export let initialized = false
   export let displayLoadingUI = false
   export let enablePointerLockOnClick = false
