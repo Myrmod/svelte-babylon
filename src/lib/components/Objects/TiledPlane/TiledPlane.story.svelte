@@ -4,20 +4,8 @@
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
   import TiledPlane from '$lib/components/Objects/TiledPlane/index.svelte'
-  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import StandardTexture from '$lib/components/Textures/StandardTexture/index.svelte'
   import { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  let object: {
-    self: Mesh | AbstractMesh
-  }
-
-  let shadowObjects: Array<typeof object['self']>
-  $: {
-    const temp: typeof shadowObjects = []
-    if (object?.self) {
-      temp.push(object.self)
-    }
-    shadowObjects = temp
-  }
 </script>
 
 <Canvas
@@ -30,16 +18,18 @@
   <HemisphericLight />
   <ArcRotateCamera alpha={1.8} radius={3} />
   <TiledPlane
-    bind:object
     options={{
       sideOrientation: Mesh.DOUBLESIDE,
       pattern: Mesh.NO_FLIP,
       width: 2,
       height: 2,
-      tileSize: 0.5,
-      tileWidth: 0.5,
+      tileSize: 1,
+      tileWidth: 1,
     }}
   >
-    <StandardMaterial />
+    <StandardMaterial>
+      <StandardTexture url="/svelte-babylon-icon.png" textureTarget="diffuseTexture" />
+      <StandardTexture url="/svelte-babylon-icon.png" textureTarget="specularTexture" />
+    </StandardMaterial>
   </TiledPlane>
 </Canvas>
