@@ -37,15 +37,17 @@ const render = (staticPages: Array<string>) => `<?xml version="1.0" encoding="UT
   xmlns:pagemap="http://www.google.com/schemas/sitemap-pagemap/1.0"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
 >
-  ${staticPages.map(
-    staticPage => `
+  ${staticPages
+    .map(
+      staticPage => `
     <url>
       <loc>${staticPage}</loc>
       <lastmod>${`${process.env.VITE_BUILD_TIME}`}</lastmod>
       <changefreq>monthly</changefreq>
     </url>
   `,
-  )}
+    )
+    .join('')}
   <url>
     <loc>https://svelte-babylon.netlify.app/privacy</loc>
     <lastmod>${`${process.env.VITE_BUILD_TIME}`}</lastmod>
