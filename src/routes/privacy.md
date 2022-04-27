@@ -1,3 +1,8 @@
+---
+title: Privacy
+description: Some legally required notes abouts svelte-babylon.
+---
+
 # Privacy
 
 ## What is this website for?

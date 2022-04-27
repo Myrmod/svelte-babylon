@@ -38,6 +38,9 @@ const config = {
           },
         }),
       ],
+      define: {
+        'process.env.VITE_BUILD_TIME': JSON.stringify(new Date().toISOString()),
+      },
     },
     package: {
       files: id => !id.includes('.story.svelte') && !id.includes('docs') && !id.includes('fonts'),
