@@ -92,7 +92,10 @@
     }
   }
   $: if ($root.scene && $root.scene.cameras.length) {
-    $root.scene.clearColor = clearColor
+    $root.scene.clearColor =
+      clearColor instanceof Color3
+        ? new Color4(clearColor.r, clearColor.g, clearColor.b, 1)
+        : clearColor
     $root.scene.gravity = gravity
     $root.scene.collisionsEnabled = collisionsEnabled
 

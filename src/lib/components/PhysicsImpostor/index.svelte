@@ -1,10 +1,9 @@
 <script lang="ts">
   import { getRoot } from '$lib/utils/context'
-  import '@babylonjs/core'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { PhysicsImpostorParameters } from '@babylonjs/core/Physics/physicsImpostor.js'
   import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor.js'
-  import { getContext, onDestroy } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
 
   const root = getRoot()
   const parent = getContext('object') as {
@@ -36,6 +35,10 @@
    */
   export let options: PhysicsImpostorParameters = {} as PhysicsImpostorParameters
   export const object = $root.physics.impostors[name]
+
+  onMount(async () => {
+    await import('@babylonjs/core/Physics')
+  })
 
   onDestroy(() => {
     $root.physics.impostors[name]?.dispose()
