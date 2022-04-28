@@ -1,4 +1,3 @@
-// Cameras
 export { default as ArcFollowCamera } from './components/Cameras/ArcFollowCamera.svelte'
 export { default as ArcRotateCamera } from './components/Cameras/ArcRotateCamera/index.svelte'
 export { default as FlyCamera } from './components/Cameras/FlyCamera.svelte'
@@ -7,7 +6,6 @@ export { default as FreeCamera } from './components/Cameras/FreeCamera/index.sve
 export { default as TargetCamera } from './components/Cameras/TargetCamera/index.svelte'
 export { default as UniversalCamera } from './components/Cameras/UniversalCamera/index.svelte'
 export { default as Canvas } from './components/Canvas/index.svelte'
-// Gizmos
 export { default as AxisDragGizmo } from './components/Gizmos/AxisDragGizmo/index.svelte'
 export { default as AxisScaleGizmo } from './components/Gizmos/AxisScaleGizmo/index.svelte'
 export { default as BoundingBoxGizmo } from './components/Gizmos/BoundingBoxGizmo/index.svelte'
@@ -19,20 +17,17 @@ export { default as PlaneRotationGizmo } from './components/Gizmos/PlaneRotation
 export { default as PositionGizmo } from './components/Gizmos/PositionGizmo/index.svelte'
 export { default as RotationGizmo } from './components/Gizmos/RotationGizmo/index.svelte'
 export { default as ScaleGizmo } from './components/Gizmos/ScaleGizmo/index.svelte'
-// GUI
 export { default as Button } from './components/GUI/Button/index.svelte'
 export { default as GUI } from './components/GUI/index.svelte'
 export { default as TextBlock } from './components/GUI/TextBlock/index.svelte'
-// Lights
+export { default as Layer } from './components/Layer/index.svelte'
 export { default as DirectionalLight } from './components/Lights/DirectionalLight/index.svelte'
 export { default as HemisphericLight } from './components/Lights/HemisphericLight/index.svelte'
 export { default as PointLight } from './components/Lights/PointLight/index.svelte'
 export { default as SpotLight } from './components/Lights/SpotLight/index.svelte'
-// Materials
 export { default as GradientMaterial } from './components/Materials/GradientMaterial/index.svelte'
 export { default as MultiMaterial } from './components/Materials/MultiMaterial/index.svelte'
 export { default as StandardMaterial } from './components/Materials/StandardMaterial/index.svelte'
-// Objects
 export { default as Box } from './components/Objects/Box/index.svelte'
 export { default as Capsule } from './components/Objects/Capsule/index.svelte'
 export { default as Custom } from './components/Objects/Custom/index.svelte'
@@ -60,12 +55,10 @@ export { default as Torus } from './components/Objects/Torus/index.svelte'
 export { default as TorusKnot } from './components/Objects/TorusKnot/index.svelte'
 export { default as Tube } from './components/Objects/Tube/index.svelte'
 export { default as PhysicsImpostor } from './components/PhysicsImpostor/index.svelte'
-// Textures
 export { default as CubeTexture } from './components/Textures/CubeTexture.svelte'
 export { default as DynamicTexture } from './components/Textures/DynamicTexture/index.svelte'
 export { default as StandardTexture } from './components/Textures/StandardTexture/index.svelte'
 export { default as VideoTexture } from './components/Textures/VideoTexture/index.svelte'
-// prebuilds
 export { default as Screen } from './prebuilds/Screen/index.svelte'
 export { default as Skybox } from './prebuilds/Skybox/index.svelte'
 export { default as TextPlane } from './prebuilds/TextPlane/index.svelte'
