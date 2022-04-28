@@ -35,6 +35,7 @@
   })
 
   onDestroy(() => {
+    light.dispose()
     delete $root.lights[light.id]
   })
 

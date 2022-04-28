@@ -56,7 +56,7 @@
   })
 
   onDestroy(() => {
-    $root.lights[light.id].dispose()
+    light.dispose()
     delete $root.lights[light.id]
 
     if (shadowGenerator) {
