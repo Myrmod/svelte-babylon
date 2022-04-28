@@ -1,17 +1,7 @@
 import type RootContext from '$lib/types'
-import { getContext, setContext } from 'svelte'
-import { writable, type Writable } from 'svelte/store'
-
-const ROOT = {} as RootContext
-const rootStore = writable<RootContext>(ROOT)
+import { getContext } from 'svelte'
+import type { Writable } from 'svelte/store'
 
 export function getRoot(): Writable<RootContext> {
-  return getContext(rootStore)
-}
-
-export function setRoot(context: RootContext): Writable<RootContext> {
-  rootStore.set(context)
-  setContext(rootStore, rootStore)
-
-  return rootStore
+  return getContext('root')
 }

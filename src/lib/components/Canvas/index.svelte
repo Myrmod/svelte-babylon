@@ -1,6 +1,5 @@
 <script lang="ts">
   import type RootContext from '$lib/types'
-  import { setRoot } from '$lib/utils/context'
   import { Engine } from '@babylonjs/core/Engines/engine.js'
   import type { EngineOptions } from '@babylonjs/core/Engines/thinEngine'
   import { Color3, Color4 } from '@babylonjs/core/Maths/math.color'
@@ -9,7 +8,8 @@
   import type { CannonJSPlugin as CannonJSPluginType } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin'
   import type { OimoJSPlugin as OimoJSPluginType } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
   import { Scene, type SceneOptions } from '@babylonjs/core/scene.js'
-  import { onMount } from 'svelte'
+  import { onMount, setContext } from 'svelte'
+  import { writable, type Writable } from 'svelte/store'
 
   // settings
   export let antialiasing = false
@@ -30,7 +30,7 @@
   let wrapper: HTMLElement
   export let canvas: HTMLCanvasElement = undefined
 
-  export let root = setRoot({
+  export let root: Writable<RootContext> = writable({
     engine: undefined,
     scene: undefined,
     canvas: {
@@ -46,7 +46,9 @@
     physics: {
       impostors: {},
     },
-  } as RootContext)
+  }) as Writable<RootContext>
+
+  setContext('root', root)
 
   onMount(() => {
     init()
