@@ -171,6 +171,17 @@ test.describe('Components throw no error upon initialization', () => {
     {
       name: 'Layer',
       url: '/docs/components/layer',
+      component: 'LayerStory',
+    },
+    {
+      name: 'LayerFromWebCam',
+      url: '/docs/components/layer',
+      component: 'LayerFromWebCamStory',
+    },
+    {
+      name: 'LayerFromBase64String',
+      url: '/docs/components/layer',
+      component: 'LayerFromBase64StringStory',
     },
   ].forEach(({ name, url, component }) => {
     test(name, async ({ page }) => {
