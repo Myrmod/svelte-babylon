@@ -78,6 +78,7 @@
   async function initShadows(meshes: Array<Mesh | AbstractMesh>) {
     try {
       if (!meshes?.length) return
+      await import('@babylonjs/core/Engines')
       await import('@babylonjs/core/Lights/Shadows/shadowGeneratorSceneComponent')
 
       if (!shadowGenerator) {

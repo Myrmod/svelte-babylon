@@ -1,9 +1,10 @@
 <script lang="ts">
   let showExample = false
   export let text = 'Click to see example!'
+  export let id: string = undefined
 </script>
 
-<div class="example-wrapper" on:click={() => (showExample = true)}>
+<div {id} class="example-wrapper" on:click={() => (showExample = true)}>
   {#if showExample}
     <slot>No Components added</slot>
   {:else}
