@@ -10,18 +10,9 @@ If you find anything not working as expected, it would be great for you to open 
 
 ## Documentation
 
-[Website](https://svelte-babylon.netlify.app)
+The website can be found [here](https://svelte-babylon.netlify.app)
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/67a15e95-bc5d-46e2-9fc9-061a39578019/deploy-status)](https://app.netlify.com/sites/svelte-babylon/deploys)
-
-To see the component library locally follow these steps:
-
-```bash
-git clone git@github.com:Myrmod/svelte-babylon.git && cd svelte-babylon
-npm ci
-npm run vitebook:dev
-```
-
-If you get errors that you cannot load glb files, try deleting `.vitebook/.cache` and `.vitebook/.temp` and restarting your development process. This seems to be a cache problem of `vitebook`.
 
 ## Installation
 
@@ -35,7 +26,16 @@ npm i svelte-babylon
 npm ci
 ```
 
-Run `npm run vitebook:dev` to launch the demo site.
+Run `npm run dev` to launch the documentation site.
+
+## Testing
+
+We try to make sure `svelte-babylon` as is being tested somewhat. So we integrated `playwright` to test and prevent common errors.
+
+To run all tests you can simply type the following command into your console:
+```
+npm run test
+```
 
 ## License
 
