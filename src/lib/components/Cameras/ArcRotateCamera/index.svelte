@@ -4,7 +4,7 @@
   import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Scene } from '@babylonjs/core/scene.js'
-  import { getContext, onDestroy, onMount, setContext } from 'svelte'
+  import { getContext, onDestroy, setContext } from 'svelte'
   import { writable, type Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
@@ -90,18 +90,6 @@
     }
   }
 
-  onMount(() => {
-    try {
-      if (!$scene.activeCamera) {
-        console.log('attaching control')
-
-        $camera.attachControl($canvas, false)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  })
-
   onDestroy(() => {
     $camera?.dispose()
   })
@@ -110,5 +98,13 @@
     $camera.speed = speed
     $camera.alpha = alpha
     $camera.beta = beta
+  }
+
+  $: if ($camera === $scene.activeCamera) {
+    $camera.attachControl($canvas, false)
+  }
+
+  if (setActiveOnSceneIfNoneActive) {
+    $scene.activeCamera = $camera
   }
 </script>

@@ -74,10 +74,8 @@
     }
   }
 
-  $: console.log($scene.activeCamera) // this should react
-
   $: renderFunction = () => {
-    if (!$scene.activeCamera) {
+    if ($scene.activeCamera) {
       $scene.render(updateCameras, ignoreAnimations)
     }
   }
