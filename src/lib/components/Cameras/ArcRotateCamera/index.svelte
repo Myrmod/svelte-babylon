@@ -18,9 +18,12 @@
   export let setActiveOnSceneIfNoneActive = true
   export let speed = 1
   export let disableControl = false
+  export let wheelDeltaPercentage = 0
+  export let wheelPrecision = 50
   export const camera = writable(
     new ArcRotateCamera(name, alpha, beta, radius, target, $scene, setActiveOnSceneIfNoneActive),
   )
+
   setContext('camera', camera)
 
   // Helper functions
@@ -105,6 +108,8 @@
     $camera.speed = speed
     $camera.alpha = alpha
     $camera.beta = beta
+    $camera.wheelPrecision = wheelPrecision
+    $camera.wheelDeltaPercentage = wheelDeltaPercentage
   }
 
   $: if ($camera === $scene.activeCamera) {
