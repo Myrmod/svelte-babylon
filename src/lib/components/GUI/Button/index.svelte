@@ -6,8 +6,7 @@
   import type { Control } from '@babylonjs/gui/2D/controls/control'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
   import { getContext, onDestroy, onMount } from 'svelte'
-
-  const scene = getContext<Writable<Scene>>('scene')
+  import type { Writable } from 'svelte/store'
 
   export let name = 'Button'
   export let text = 'Click Me'
@@ -23,28 +22,22 @@
   export let top: Button['top'] = 0
   export let left: Button['left'] = 0
 
-  const context = getContext('gui') as AdvancedDynamicTexture
+  const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
 
   export let guiElement = Button.CreateSimpleButton(name, text)
 
   onMount(() => {
     try {
-      $root.gui[context.name].controls[name] = guiElement
-
-      context.addControl(guiElement)
+      $parent.addControl(guiElement)
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    context.removeControl(guiElement)
+    $parent.removeControl(guiElement)
     guiElement.dispose()
-    delete $root.gui[context.name]
   })
-
-  $: if ($root.gui?.[context?.name]?.controls?.[name]) {
-  }
 
   export let onPointerUp: (eventData: Vector2WithInfo, eventState: EventState) => void = undefined
   $: if (onPointerUp) {

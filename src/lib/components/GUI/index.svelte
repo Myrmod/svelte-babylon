@@ -1,7 +1,10 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
-  import { onDestroy, onMount, setContext } from 'svelte'
+  import { getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -11,40 +14,16 @@
     Texture.BILINEAR_SAMPLINGMODE
   export let adaptiveScaling = false
 
-  export const gui = AdvancedDynamicTexture.CreateFullscreenUI(
-    name,
-    foreground,
-    $scene,
-    sampling,
-    adaptiveScaling,
+  export const gui = createReactiveContext(
+    'gui',
+    AdvancedDynamicTexture.CreateFullscreenUI(name, foreground, $scene, sampling, adaptiveScaling),
   )
 
-  setContext('gui', gui)
-
-  onMount(() => {
-    try {
-      if ($root.gui[name]) {
-        throw new Error(`A GUI names "${name}" already exists`)
-      }
-
-      $root.gui[name] = {
-        self: gui,
-        controls: {},
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  })
-
   onDestroy(() => {
-    gui.dispose()
-    delete $root.objects[name]
+    $gui.dispose()
   })
-
-  $: if ($root.gui[name]?.self?.name === name) {
-  }
 </script>
 
-{#if $root.gui[name]?.self?.name === name}
+{#if $gui}
   <slot />
 {/if}
