@@ -7,22 +7,20 @@
   import Ground from '$lib/components/Objects/Ground/index.svelte'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Writable } from 'svelte/store'
 
   let intensity = 0.5
   let diffuseHex = '#ffffff'
   let specularHex = '#ffffff'
 
-  let box: {
-    self: Mesh | AbstractMesh
-  }
+  let box: Writable<Mesh>
 
-  let shadowObjects: Array<typeof box['self']>
+  let shadowObjects: Array<Mesh>
   $: {
     const temp: typeof shadowObjects = []
-    if (box?.self) {
-      temp.push(box.self)
+    if ($box) {
+      temp.push($box)
     }
     shadowObjects = temp
   }

@@ -4,6 +4,7 @@
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import Box from '$lib/components/Objects/Box/index.svelte'
   import PhotoDome from '$lib/components/Objects/PhotoDome/index.svelte'
+  import Scene from '$lib/components/Scene/index.svelte'
 </script>
 
 <Canvas
@@ -13,8 +14,10 @@
     stencil: true,
   }}
 >
-  <HemisphericLight />
-  <ArcRotateCamera radius={10} beta={-1} />
-  <Box />
-  <PhotoDome url="/assets/images/photosphere.jpg" />
+  <Scene>
+    <HemisphericLight />
+    <ArcRotateCamera radius={10} beta={-1} />
+    <Box />
+    <PhotoDome url="/assets/images/photosphere.jpg" />
+  </Scene>
 </Canvas>
