@@ -2,10 +2,13 @@
 This represents a full screen 2d layer, that shows the stream from your web cam.
  -->
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { Layer } from '@babylonjs/core/Layers/layer.js'
   import { VideoTexture } from '@babylonjs/core/Materials/Textures/videoTexture.js'
   import type { Color4 } from '@babylonjs/core/Maths/math.color'
-  import { createEventDispatcher, onDestroy, setContext } from 'svelte'
+  import type { Scene } from '@babylonjs/core/scene'
+  import { createEventDispatcher, getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const dispatch = createEventDispatcher()
   const scene = getContext<Writable<Scene>>('scene')
@@ -20,12 +23,15 @@ This represents a full screen 2d layer, that shows the stream from your web cam.
   export let format: Parameters<typeof VideoTexture.CreateFromBase64String>[8] = undefined
   export let creationFlags: Parameters<typeof VideoTexture.CreateFromBase64String>[9] = undefined
 
-  export const layer = new Layer(name, null, $scene, isBackground, color)
+  export const layer = createReactiveContext(
+    'layer',
+    new Layer(name, null, $scene, isBackground, color),
+  )
   $: if (layer) {
-    if (layer.texture) {
-      layer.texture.dispose()
+    if ($layer.texture) {
+      $layer.texture.dispose()
     }
-    layer.texture = VideoTexture.CreateFromBase64String(
+    $layer.texture = VideoTexture.CreateFromBase64String(
       data,
       `${name}-Texture`,
       $scene,
@@ -40,14 +46,12 @@ This represents a full screen 2d layer, that shows the stream from your web cam.
   }
 
   onDestroy(() => {
-    layer.dispose()
+    $layer.dispose()
 
     dispatch('dispose', name)
   })
-
-  $: setContext('parent', layer)
 </script>
 
-{#if layer}
+{#if $layer}
   <slot />
 {/if}

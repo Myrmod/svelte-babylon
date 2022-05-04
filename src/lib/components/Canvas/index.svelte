@@ -1,8 +1,8 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { Engine } from '@babylonjs/core/Engines/engine.js'
   import type { EngineOptions } from '@babylonjs/core/Engines/thinEngine'
-  import { setContext } from 'svelte'
-  import { writable, type Writable } from 'svelte/store'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   // settings
   export let antialiasing = false
@@ -12,10 +12,8 @@
   let wrapper: HTMLElement
   export let canvas: HTMLCanvasElement = undefined
   export let engine: Writable<Engine> = undefined
-
   $: if (canvas) {
-    engine = writable(new Engine(canvas, antialiasing, engineOptions))
-    setContext('engine', engine)
+    engine = createReactiveContext('engine', new Engine(canvas, antialiasing, engineOptions))
   }
 
   $: if ($engine) {

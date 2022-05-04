@@ -2,12 +2,17 @@
 This represents a full screen 2d layer, that shows the stream from your web cam.
  -->
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
+  import type { Engine } from '@babylonjs/core'
   import { Layer } from '@babylonjs/core/Layers/layer.js'
   import { VideoTexture } from '@babylonjs/core/Materials/Textures/videoTexture.js'
   import type { Color4 } from '@babylonjs/core/Maths/math.color'
-  import { createEventDispatcher, onDestroy, setContext } from 'svelte'
+  import type { Scene } from '@babylonjs/core/scene'
+  import { createEventDispatcher, getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
+  const engine = getContext<Writable<Engine>>('engine')
   export let name = 'Layer'
   export let isBackground = true
   export let color: Color4 = undefined
@@ -15,19 +20,24 @@ This represents a full screen 2d layer, that shows the stream from your web cam.
   export let audioConstaints: Parameters<typeof VideoTexture.CreateFromWebCam>[3] = undefined
   export let invertY: Parameters<typeof VideoTexture.CreateFromWebCam>[4] = undefined
 
-  export const layer = new Layer(name, null, $scene, isBackground, color)
+  export const layer = createReactiveContext(
+    'layer',
+    new Layer(name, null, $scene, isBackground, color),
+  )
   VideoTexture.CreateFromWebCam(
     $scene,
     videoTexture => {
       videoTexture.vScale = -1.0
       videoTexture.uScale =
-        ((-$root.canvas.width / $root.canvas.height) * videoTexture.getSize().height) /
+        ((-$engine.getRenderingCanvasClientRect().width /
+          $engine.getRenderingCanvasClientRect().height) *
+          videoTexture.getSize().height) /
         videoTexture.getSize().width
-      layer.texture = videoTexture
+      $layer.texture = videoTexture
     },
     {
-      maxWidth: $root.canvas.width,
-      maxHeight: $root.canvas.height,
+      maxWidth: $engine.getRenderingCanvasClientRect().width,
+      maxHeight: $engine.getRenderingCanvasClientRect().height,
       ...constraint,
     },
     audioConstaints,
@@ -36,15 +46,13 @@ This represents a full screen 2d layer, that shows the stream from your web cam.
 
   onDestroy(() => {
     // There might still be something to do here: https://doc.babylonjs.com/divingDeeper/materials/using/videoTexture#disposal
-    layer.texture.dispose()
-    layer.dispose()
+    $layer.texture.dispose()
+    $layer.dispose()
 
     createEventDispatcher()('dispose', name)
   })
-
-  $: setContext('parent', layer)
 </script>
 
-{#if layer}
+{#if $layer}
   <slot />
 {/if}

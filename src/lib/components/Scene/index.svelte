@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import type { Engine } from '@babylonjs/core/Engines/engine.js'
   import { Color3, Color4 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
@@ -6,8 +7,8 @@
   import type { CannonJSPlugin as CannonJSPluginType } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin'
   import type { OimoJSPlugin as OimoJSPluginType } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
   import { Scene, type SceneOptions } from '@babylonjs/core/scene.js'
-  import { getContext, onMount, setContext } from 'svelte'
-  import { writable, type Writable } from 'svelte/store'
+  import { getContext, onMount } from 'svelte'
+  import { type Writable } from 'svelte/store'
 
   // settings
   export let sceneOptions: SceneOptions = undefined
@@ -27,14 +28,13 @@
   export let animationsEnabled = false
 
   const engine = getContext<Writable<Engine>>('engine')
-  export let scene = writable(new Scene($engine, sceneOptions))
+  export let scene = createReactiveContext('scene', new Scene($engine, sceneOptions))
   $scene.onBeforeRenderObservable.add((_scene, event) => {
     if (!$scene.activeCamera) {
       event.skipNextObservers = true
     }
   })
   $scene.physicsEnabled = false
-  setContext('scene', scene)
 
   onMount(async () => {
     try {
