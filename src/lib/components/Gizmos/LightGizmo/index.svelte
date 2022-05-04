@@ -23,8 +23,6 @@
       if ($root.gizmos[name]) return
 
       $root.gizmos[name] = gizmo
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -42,7 +40,5 @@
     gizmoManager.positionGizmoEnabled = positionGizmoEnabled
     gizmoManager.rotationGizmoEnabled = rotationGizmoEnabled
     gizmoManager.usePointerToAttachGizmos = usePointerToAttachGizmos
-
-    $scene.render()
   }
 </script>

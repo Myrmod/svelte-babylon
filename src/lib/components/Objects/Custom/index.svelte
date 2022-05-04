@@ -78,8 +78,6 @@
 
       __root__ = meshes.find(mesh => mesh.id === '__root__')
       $root.imports[name] = imports
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -105,8 +103,6 @@
     __root__.rotation.x = rotation.x
     __root__.rotation.y = rotation.y
     __root__.rotation.z = rotation.z
-
-    $scene.render()
   }
 
   $: if (meshes) {

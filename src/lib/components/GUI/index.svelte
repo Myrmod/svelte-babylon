@@ -31,7 +31,6 @@
         self: gui,
         controls: {},
       }
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -43,7 +42,6 @@
   })
 
   $: if ($root.gui[name]?.self?.name === name) {
-    $scene.render()
   }
 </script>
 

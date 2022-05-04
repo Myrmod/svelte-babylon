@@ -39,8 +39,6 @@
   onMount(() => {
     try {
       parent.self.material = material
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }

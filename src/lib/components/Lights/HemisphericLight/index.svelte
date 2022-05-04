@@ -39,8 +39,6 @@
     // $light.radius = radius
     // $light.range = range
     $light.shadowEnabled = shadowEnabled
-
-    $scene.render()
   }
 </script>
 

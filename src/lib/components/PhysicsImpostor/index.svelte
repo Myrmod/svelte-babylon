@@ -60,8 +60,6 @@
         { ...options, mass: 0, restitution: 0 },
         $scene,
       )
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }

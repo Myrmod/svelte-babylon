@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Engine } from '@babylonjs/core/Engines/engine.js'
   import type { EngineOptions } from '@babylonjs/core/Engines/thinEngine'
-  import { onMount, setContext } from 'svelte'
+  import { setContext } from 'svelte'
   import { writable, type Writable } from 'svelte/store'
 
   // settings
@@ -12,15 +12,11 @@
   let wrapper: HTMLElement
   export let canvas: HTMLCanvasElement = undefined
   export let engine: Writable<Engine> = undefined
-  setContext('engine', engine)
 
-  onMount(() => {
+  $: if (canvas) {
     engine = writable(new Engine(canvas, antialiasing, engineOptions))
-
-    window.addEventListener('resize', () => {
-      $engine.resize()
-    })
-  })
+    setContext('engine', engine)
+  }
 
   $: if ($engine) {
     if (displayLoadingUI) {

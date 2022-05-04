@@ -38,8 +38,6 @@
   onMount(() => {
     try {
       $root.objects[context.self.id] = context
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -62,7 +60,6 @@
     context.self.rotation = rotation
 
     object = context
-    $scene.render()
   }
 
   $: if (parent) {

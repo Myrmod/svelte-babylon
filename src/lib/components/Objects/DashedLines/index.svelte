@@ -39,8 +39,6 @@
   onMount(() => {
     try {
       $root.objects[context.self.id] = context
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }

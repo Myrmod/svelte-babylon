@@ -41,7 +41,6 @@ It can be used to apply text to a material. This is used in the TextPlane compon
 
   onMount(() => {
     parent.self[textureTarget] = texture
-    $scene.render()
   })
 
   onDestroy(() => {

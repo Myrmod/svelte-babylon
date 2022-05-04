@@ -30,8 +30,6 @@
   onMount(() => {
     try {
       $root.objects[context.self.id] = context
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -47,7 +45,6 @@
 
   $: if ($root.objects[context.self.id]) {
     object = context
-    $scene.render()
   }
 
   // event handling

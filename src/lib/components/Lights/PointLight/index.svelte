@@ -1,12 +1,14 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { PointLight } from '@babylonjs/core/Lights/pointLight.js'
   import { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import { onDestroy,onMount } from 'svelte'
-  import { createLightContext } from../../../utils/createLightContexteLightContext
+  import type { Scene } from '@babylonjs/core/scene.js'
+  import { getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -37,43 +39,30 @@
    */
   export let useBlurExponentialShadowMap = false
 
-  export const light = createLightContext(new PointLight(name, position, $scene)) as PointLight
-
-  onMount(() => {
-    try {
-      $root.lights[light.id] = light
-
-      $scene.render()
-    } catch (error) {
-      console.error(error)
-    }
-  })
+  export const light = createReactiveContext('light', new PointLight(name, position, $scene))
 
   onDestroy(() => {
-    light.dispose()
-    delete $root.lights[light.id]
+    $light.dispose()
 
     if (shadowGenerator) {
       shadowGenerator.dispose()
     }
   })
 
-  $: if (light) {
-    light.intensity = intensity
-    light.diffuse = diffuse
-    light.specular = specular
-    light.position.x = x || position.x
-    light.position.y = y || position.y
-    light.position.z = z || position.z
-    light.shadowMaxZ = shadowMaxZ
-    light.shadowMinZ = shadowMinZ
-
-    if (Object.keys($root.cameras).length) {
-      $scene.render()
-    }
+  $: if ($light) {
+    $light.intensity = intensity
+    $light.diffuse = diffuse
+    $light.specular = specular
+    $light.position.x = x || position.x
+    $light.position.y = y || position.y
+    $light.position.z = z || position.z
+    $light.shadowMaxZ = shadowMaxZ
+    $light.shadowMinZ = shadowMinZ
   }
 
   let shadowGenerator: ShadowGenerator
+  $: initShadows(castShadowOf)
+
   async function initShadows(meshes: Array<Mesh | AbstractMesh>) {
     try {
       if (!meshes?.length) return
@@ -81,7 +70,7 @@
       await import('@babylonjs/core/Lights/Shadows/shadowGeneratorSceneComponent')
 
       if (!shadowGenerator) {
-        shadowGenerator = new ShadowGenerator(1024, light)
+        shadowGenerator = new ShadowGenerator(1024, $light)
       }
       if (shadowGenerator) {
         castShadowOf
@@ -93,14 +82,11 @@
         shadowGenerator.useExponentialShadowMap = useExponentialShadowMap
         shadowGenerator.usePoissonSampling = usePoissonSampling
         shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
-
-        $scene.render()
       }
     } catch (error) {
       console.error(error)
     }
   }
-  $: initShadows(castShadowOf)
 </script>
 
 <slot />

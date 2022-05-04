@@ -28,8 +28,6 @@
       if ($root.gizmos[name]) return
 
       $root.gizmos[name] = gizmo
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -41,6 +39,5 @@
   })
 
   $: if ($root.gizmos[name]) {
-    $scene.render()
   }
 </script>

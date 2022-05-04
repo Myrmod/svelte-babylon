@@ -6,7 +6,9 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import { onDestroy, onMount } from 'svelte'
+  import type { Scene } from '@babylonjs/core/scene.js'
+  import { getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -40,49 +42,36 @@
 
   export const light = createReactiveContext('light', new DirectionalLight(name, direction, $scene))
 
-  onMount(() => {
-    try {
-      if ($root.lights[light.id]) return
-
-      $root.lights[light.id] = light
-
-      $scene.render()
-    } catch (error) {
-      console.error(error)
-    }
-  })
-
   onDestroy(() => {
-    light.dispose()
-    delete $root.lights[light.id]
+    $light.dispose()
 
     if (shadowGenerator) {
       shadowGenerator.dispose()
     }
   })
 
-  $: if ($root.lights[light.id]) {
-    light.shadowEnabled = !!castShadowOf?.length
-    light.intensity = intensity
-    light.diffuse = diffuse
-    light.specular = specular
-    light.position.x = x || position.x
-    light.position.y = y || position.y
-    light.position.z = z || position.z
-    light.shadowMaxZ = shadowMaxZ
-    light.shadowMinZ = shadowMinZ
-
-    $scene.render()
+  $: if ($light) {
+    $light.shadowEnabled = !!castShadowOf?.length
+    $light.intensity = intensity
+    $light.diffuse = diffuse
+    $light.specular = specular
+    $light.position.x = x || position.x
+    $light.position.y = y || position.y
+    $light.position.z = z || position.z
+    $light.shadowMaxZ = shadowMaxZ
+    $light.shadowMinZ = shadowMinZ
   }
 
   let shadowGenerator: ShadowGenerator
+  $: initShadows(castShadowOf)
+
   async function initShadows(meshes: Array<Mesh | AbstractMesh>) {
     try {
       if (!meshes?.length) return
       await import('@babylonjs/core/Lights/Shadows/shadowGeneratorSceneComponent')
 
       if (!shadowGenerator) {
-        shadowGenerator = new ShadowGenerator(1024, light)
+        shadowGenerator = new ShadowGenerator(1024, $light)
       }
       if (shadowGenerator) {
         castShadowOf
@@ -94,14 +83,11 @@
         shadowGenerator.useExponentialShadowMap = useExponentialShadowMap
         shadowGenerator.usePoissonSampling = usePoissonSampling
         shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
-
-        $scene.render()
       }
     } catch (error) {
       console.error(error)
     }
   }
-  $: initShadows(castShadowOf)
 </script>
 
 <slot />

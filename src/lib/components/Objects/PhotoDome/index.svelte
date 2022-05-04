@@ -37,7 +37,6 @@
 
   onMount(() => {
     try {
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -54,7 +53,6 @@
     object.position.z = z || position.z
 
     object = object
-    $scene.render()
   }
 </script>
 

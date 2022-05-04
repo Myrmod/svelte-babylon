@@ -33,7 +33,5 @@
 
   $: if ($camera) {
     $camera.speed = speed
-
-    $scene.render()
   }
 </script>

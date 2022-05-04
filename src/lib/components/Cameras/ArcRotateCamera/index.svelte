@@ -93,7 +93,10 @@
   onMount(() => {
     try {
       if (!$scene.activeCamera) {
+        console.log('attaching control')
+
         $camera.attachControl($canvas, false)
+        scene.update(v => v)
       }
     } catch (error) {
       console.error(error)

@@ -49,7 +49,6 @@ The VideoTexture can be used to play videos on an Object.
 
   onMount(() => {
     parent.self[textureTarget] = texture
-    $scene.render()
   })
 
   onDestroy(() => {

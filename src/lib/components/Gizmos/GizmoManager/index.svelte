@@ -33,8 +33,6 @@
 
       gizmo.attachToMesh(parent.self)
       $root.gizmos[name] = gizmo
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -51,7 +49,5 @@
     gizmo.scaleGizmoEnabled = scaleGizmoEnabled
     gizmo.boundingBoxGizmoEnabled = boundingBoxGizmoEnabled
     gizmo.usePointerToAttachGizmos = usePointerToAttachGizmos
-
-    $scene.render()
   }
 </script>

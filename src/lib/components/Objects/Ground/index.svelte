@@ -40,8 +40,6 @@
     try {
       $root.objects[context.self.id] = context
       $root.objects[context.self.id].self.receiveShadows = true
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }

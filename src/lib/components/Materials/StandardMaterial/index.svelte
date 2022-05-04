@@ -31,14 +31,11 @@
     try {
       if (multiMaterial) {
         multiMaterial.subMaterials = [...multiMaterial.subMaterials, material]
-        $scene.render()
 
         return
       }
 
       parent.self.material = material
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -53,8 +50,6 @@
     if (ambientColor) material.ambientColor = ambientColor
     if (diffuseColor) material.diffuseColor = diffuseColor
     if (emissiveColor) material.emissiveColor = emissiveColor
-
-    $scene.render()
   }
 
   $: if ($root.objects[parent.self.id]?.self?.material) {

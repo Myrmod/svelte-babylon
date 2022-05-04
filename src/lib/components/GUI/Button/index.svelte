@@ -32,8 +32,6 @@
       $root.gui[context.name].controls[name] = guiElement
 
       context.addControl(guiElement)
-
-      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -46,7 +44,6 @@
   })
 
   $: if ($root.gui?.[context?.name]?.controls?.[name]) {
-    $scene.render()
   }
 
   export let onPointerUp: (eventData: Vector2WithInfo, eventState: EventState) => void = undefined
