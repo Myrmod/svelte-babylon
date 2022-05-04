@@ -3,7 +3,7 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Scene } from '@babylonjs/core/scene.js'
-  import { getContext, onDestroy, onMount, setContext } from 'svelte'
+  import { getContext, onDestroy, setContext } from 'svelte'
   import { writable, type Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
@@ -29,16 +29,6 @@
   )
   setContext('camera', camera)
 
-  onMount(() => {
-    try {
-      if (!$scene.activeCamera) {
-        $camera.attachControl($canvas, false)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  })
-
   onDestroy(() => {
     $camera.dispose()
   })
@@ -59,5 +49,13 @@
     $camera.angularSensibility = angularSensibility
     $camera.parent = parent
     $camera.target = target
+  }
+
+  $: if ($camera === $scene.activeCamera) {
+    $camera.attachControl($canvas, false)
+  }
+
+  if (setActiveOnSceneIfNoneActive) {
+    $scene.activeCamera = $camera
   }
 </script>

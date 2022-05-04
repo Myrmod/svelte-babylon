@@ -12,6 +12,7 @@
   export let target = Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
   export let speed = 1
+  export let disableControl = false
   export const getFacingDirection = () =>
     Vector3.Normalize($camera.target.subtract($camera.position))
   export const camera = writable(
@@ -34,7 +35,21 @@
   })
 
   $: if ($camera) {
+    if (disableControl) {
+      $camera.detachControl()
+    } else {
+      $camera.attachControl()
+    }
+
     $camera.speed = speed
     $camera.setTarget(target)
+  }
+
+  $: if ($camera === $scene.activeCamera) {
+    $camera.attachControl(false)
+  }
+
+  if (setActiveOnSceneIfNoneActive) {
+    $scene.activeCamera = $camera
   }
 </script>

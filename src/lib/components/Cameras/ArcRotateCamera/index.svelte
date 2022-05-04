@@ -17,6 +17,7 @@
   export let radius = 5
   export let setActiveOnSceneIfNoneActive = true
   export let speed = 1
+  export let disableControl = false
   export const camera = writable(
     new ArcRotateCamera(name, alpha, beta, radius, target, $scene, setActiveOnSceneIfNoneActive),
   )
@@ -95,6 +96,12 @@
   })
 
   $: if ($camera) {
+    if (disableControl) {
+      $camera.detachControl()
+    } else {
+      $camera.attachControl()
+    }
+
     $camera.speed = speed
     $camera.alpha = alpha
     $camera.beta = beta

@@ -2,6 +2,7 @@
   import { UniversalCamera } from '@babylonjs/core/Cameras/universalCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector.js'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy, onMount, setContext } from 'svelte'
   import { writable, type Writable } from 'svelte/store'
 
@@ -19,6 +20,7 @@
   export let minZ = 0.45
   export let angularSensibility = 3000
   export let parent: Mesh = undefined
+  export let setActiveOnSceneIfNoneActive = true
 
   export const getFacingDirection = () =>
     Vector3.Normalize($camera.target.subtract($camera.position))
@@ -53,5 +55,14 @@
     $camera.minZ = minZ
     $camera.angularSensibility = angularSensibility
     $camera.parent = parent
+    $camera.target = target
+  }
+
+  $: if ($camera === $scene.activeCamera) {
+    $camera.attachControl($canvas, false)
+  }
+
+  if (setActiveOnSceneIfNoneActive) {
+    $scene.activeCamera = $camera
   }
 </script>

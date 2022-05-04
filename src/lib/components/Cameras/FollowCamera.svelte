@@ -12,6 +12,8 @@
   export let position = Vector3.Zero()
   export let lockedTarget: AbstractMesh
   export let speed = 1
+  export let setActiveOnSceneIfNoneActive = true
+  export let disableControl = false
   export const getFacingDirection = () =>
     Vector3.Normalize($camera.target.subtract($camera.position))
   export const camera = writable(new FollowCamera(name, position, $scene, lockedTarget))
@@ -32,6 +34,20 @@
   })
 
   $: if ($camera) {
+    if (disableControl) {
+      $camera.detachControl()
+    } else {
+      $camera.attachControl()
+    }
+
     $camera.speed = speed
+  }
+
+  $: if ($camera === $scene.activeCamera) {
+    $camera.attachControl(false)
+  }
+
+  if (setActiveOnSceneIfNoneActive) {
+    $scene.activeCamera = $camera
   }
 </script>

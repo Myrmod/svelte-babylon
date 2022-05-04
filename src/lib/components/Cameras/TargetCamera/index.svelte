@@ -4,7 +4,7 @@
   import { Viewport } from '@babylonjs/core/Maths/math.viewport'
   import type { Node } from '@babylonjs/core/node'
   import type { Scene } from '@babylonjs/core/scene.js'
-  import { getContext, onDestroy, onMount, setContext } from 'svelte'
+  import { getContext, onDestroy, setContext } from 'svelte'
   import { writable, type Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
@@ -13,10 +13,10 @@
   export let name: string = 'FreeCamera'
   export let position = Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
-  export let disableControl = false
   export let minZ = 0.45
   export let parent: Node
   export let viewport: Viewport = new Viewport(0, 0, 1, 0.5)
+  export let disableControl = false
 
   export const getFacingDirection = () =>
     Vector3.Normalize($camera.target.subtract($camera.position))
@@ -24,16 +24,6 @@
     new TargetCamera(name, position, $scene, setActiveOnSceneIfNoneActive),
   )
   setContext('camera', camera)
-
-  onMount(() => {
-    try {
-      if (!$scene.activeCamera) {
-        $camera.attachControl($canvas, false)
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  })
 
   onDestroy(() => {
     $camera.dispose()
@@ -49,5 +39,13 @@
     $camera.minZ = minZ
     $camera.parent = parent
     $camera.viewport = viewport
+  }
+
+  $: if ($camera === $scene.activeCamera) {
+    $camera.attachControl($canvas, false)
+  }
+
+  if (setActiveOnSceneIfNoneActive) {
+    $scene.activeCamera = $camera
   }
 </script>

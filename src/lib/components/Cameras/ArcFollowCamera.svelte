@@ -15,6 +15,8 @@
   export let beta = Math.PI / 2
   export let radius = 5
   export let speed = 1
+  export let setActiveOnSceneIfNoneActive = true
+  export let disableControl = false
   export const getFacingDirection = () =>
     Vector3.Normalize($camera.target.subtract($camera.position))
   export const camera = writable(new ArcFollowCamera(name, alpha, beta, radius, target, $scene))
@@ -35,6 +37,19 @@
   })
 
   $: if ($camera) {
+    if (disableControl) {
+      $camera.detachControl()
+    } else {
+      $camera.attachControl()
+    }
     $camera.speed = speed
+  }
+
+  $: if ($camera === $scene.activeCamera) {
+    $camera.attachControl($canvas, false)
+  }
+
+  if (setActiveOnSceneIfNoneActive) {
+    $scene.activeCamera = $camera
   }
 </script>
