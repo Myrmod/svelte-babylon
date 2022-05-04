@@ -13,19 +13,16 @@
   import { Quaternion, Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import type { Node } from '@babylonjs/core/node'
+  import type { Scene } from '@babylonjs/core/scene'
   import '@babylonjs/loaders'
   import { getContext, onDestroy, onMount } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
-  const parentObject = getContext('object') as {
-    self: Mesh | AbstractMesh
-  }
-  export let parent: Node = parentObject?.self
+  export let parent = getContext<Writable<Mesh>>('object')
 
   export let meshesNames: Array<string> | string = ''
   export let fileName: string | File
-  export let name: string = String(fileName)
   export let pluginExtension: string = undefined
   export let rootUrl: string = '/'
   export let onProgress: (event: ISceneLoaderProgressEvent) => void = undefined
@@ -42,7 +39,7 @@
   export let rotation = Vector3.Zero()
   export let rotationQuaternion: Quaternion = null
   export let __root__: AbstractMesh = undefined
-  export const context = createReactiveContext('object', __root__)
+  export const object = createReactiveContext('object', __root__)
 
   export let imports: ISceneLoaderAsyncResult = undefined
   export let animationGroups: typeof imports['animationGroups'] = undefined
@@ -56,9 +53,6 @@
 
   onMount(async () => {
     try {
-      if ($root.imports[name]) {
-        throw new Error(`"${name} has already exists."`)
-      }
       imports = {
         animationGroups,
         geometries,
@@ -76,8 +70,7 @@
         pluginExtension,
       )
 
-      __root__ = meshes.find(mesh => mesh.id === '__root__')
-      $root.imports[name] = imports
+      $object = meshes.find(mesh => mesh.id === '__root__')
     } catch (error) {
       console.error(error)
     }
@@ -90,19 +83,18 @@
       }
       mesh.dispose()
     })
-    context.self?.dispose()
-    delete $root.imports[name]
+    $object?.dispose()
   })
 
-  $: if ($root.imports[name] && __root__) {
-    __root__.position.x = x || position.x
-    __root__.position.y = y || position.y
-    __root__.position.z = z || position.z
-    __root__.receiveShadows = receiveShadows
-    __root__.rotationQuaternion = rotationQuaternion
-    __root__.rotation.x = rotation.x
-    __root__.rotation.y = rotation.y
-    __root__.rotation.z = rotation.z
+  $: if ($object) {
+    $object.position.x = x || position.x
+    $object.position.y = y || position.y
+    $object.position.z = z || position.z
+    $object.receiveShadows = receiveShadows
+    $object.rotationQuaternion = rotationQuaternion
+    $object.rotation.x = rotation.x
+    $object.rotation.y = rotation.y
+    $object.rotation.z = rotation.z
   }
 
   $: if (meshes) {
@@ -112,8 +104,8 @@
     })
   }
 
-  $: if (parent && __root__) {
-    __root__.parent = parent
+  $: if ($parent && $object) {
+    $object.parent = $parent
   }
 
   // event handling

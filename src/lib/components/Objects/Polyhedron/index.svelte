@@ -7,10 +7,8 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js'
   import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import { CreatePolyhedron } from '@babylonjs/core/Meshes/Builders/polyhedronBuilder.js'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
 
   const scene = getContext<Writable<Scene>>('scene')
@@ -18,10 +16,7 @@
   export let name: string = 'Polyhedron'
   export let receiveShadows = false
   export let options = {} as Parameters<typeof CreatePolyhedron>[1]
-  const parentObject = getContext('object') as {
-    self: Mesh | AbstractMesh
-  }
-  export let parent: Node = parentObject?.self
+  export let parent = getContext<Writable<Mesh>>('object')
   const context = createReactiveContext('object', CreatePolyhedron(name, options, $scene))
   context.self.material = new StandardMaterial(`${name}-material`, $scene)
 
