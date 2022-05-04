@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { createObjectContext } from '$lib/components/Objects/createObjectContext'
   import { TextureTargets } from '$lib/types/enums/TextureTargets'
   import { StandardMaterial as SMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
@@ -22,7 +21,7 @@
   export let specularColor = new Color3(0, 0, 0)
   export let scaling = new Vector3(1, 1, 1)
 
-  const context = createObjectContext(MeshBuilder.CreateBox(name, options, $scene))
+  const context = createReactiveContext('object', MeshBuilder.CreateBox(name, options, $scene))
   context.self.material = new SMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()

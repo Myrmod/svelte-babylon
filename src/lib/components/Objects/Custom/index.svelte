@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -15,7 +16,6 @@
   import type { Node } from '@babylonjs/core/node'
   import '@babylonjs/loaders'
   import { getContext, onDestroy, onMount } from 'svelte'
-  import { createObjectContext } from '../createObjectContext'
 
   const scene = getContext<Writable<Scene>>('scene')
   const parentObject = getContext('object') as {
@@ -42,7 +42,7 @@
   export let rotation = Vector3.Zero()
   export let rotationQuaternion: Quaternion = null
   export let __root__: AbstractMesh = undefined
-  export const context = createObjectContext(__root__)
+  export const context = createReactiveContext('object', __root__)
 
   export let imports: ISceneLoaderAsyncResult = undefined
   export let animationGroups: typeof imports['animationGroups'] = undefined

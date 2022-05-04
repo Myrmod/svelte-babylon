@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -11,7 +12,6 @@
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
-  import { createObjectContext } from '../createObjectContext'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -23,7 +23,7 @@
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(CreateTorusKnot(name, options, $scene))
+  const context = createReactiveContext('object', CreateTorusKnot(name, options, $scene))
   context.self.material = new StandardMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()

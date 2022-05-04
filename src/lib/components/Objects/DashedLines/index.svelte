@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -12,7 +13,6 @@
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
-  import { createObjectContext } from '../createObjectContext'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -23,7 +23,7 @@
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(CreateDashedLines(name, options, $scene)) as {
+  const context = createReactiveContext('object', CreateDashedLines(name, options, $scene)) as {
     self: LinesMesh
   }
   context.self.material = new StandardMaterial(`${name}-material`, $scene)

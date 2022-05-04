@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -13,7 +14,6 @@
   // we need better typings for this https://github.com/mapbox/earcut
   import earcut from 'earcut'
   import { getContext, onDestroy, onMount } from 'svelte'
-  import { createObjectContext } from '../createObjectContext'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -26,7 +26,10 @@
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(CreatePolygon(name, options, $scene, earcutInjection))
+  const context = createReactiveContext(
+    'object',
+    CreatePolygon(name, options, $scene, earcutInjection),
+  )
   context.self.material = new StandardMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -11,7 +12,6 @@
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Node } from '@babylonjs/core/node'
   import { getContext, onDestroy, onMount } from 'svelte'
-  import { createObjectContext } from '../createObjectContext'
   import createGDMM from './createGDMM'
   import GDToGP from './GDToGP'
 
@@ -25,7 +25,8 @@
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(
+  const context = createReactiveContext(
+    'object',
     CreatePolyhedron(
       name,
       {
