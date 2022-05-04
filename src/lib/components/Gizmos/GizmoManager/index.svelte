@@ -1,16 +1,15 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager.js'
-  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy, onMount } from 'svelte'
+  import type { Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
-  const parent = getContext('object') as {
-    self: AbstractMesh | Mesh
-  }
+  const parent = getContext<Writable<Mesh>>('object')
 
-  export let name: string = 'GizmoManager'
   export let thickness: number = undefined
   export let utilityLayer: UtilityLayerRenderer = undefined
   export let keepDepthUtilityLayer: UtilityLayerRenderer = undefined
@@ -20,34 +19,34 @@
   export let boundingBoxGizmoEnabled = true
   export let usePointerToAttachGizmos = false
 
-  export const gizmo = new GizmoManager($scene, thickness, utilityLayer, keepDepthUtilityLayer)
+  export const gizmo = createReactiveContext(
+    'gizmo',
+    new GizmoManager($scene, thickness, utilityLayer, keepDepthUtilityLayer),
+  )
 
   onMount(() => {
     try {
       if (!parent) {
-        console.error('no parent found')
+        console.error('no parent object found')
 
         return
       }
-      if ($root.gizmos[name]) return
 
-      gizmo.attachToMesh(parent.self)
-      $root.gizmos[name] = gizmo
+      $gizmo.attachToMesh($parent)
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    delete $root.gizmos[name]
-    gizmo.dispose()
+    $gizmo.dispose()
   })
 
-  $: if ($root.gizmos[name]) {
-    gizmo.positionGizmoEnabled = positionGizmoEnabled
-    gizmo.rotationGizmoEnabled = rotationGizmoEnabled
-    gizmo.scaleGizmoEnabled = scaleGizmoEnabled
-    gizmo.boundingBoxGizmoEnabled = boundingBoxGizmoEnabled
-    gizmo.usePointerToAttachGizmos = usePointerToAttachGizmos
+  $: if ($gizmo) {
+    $gizmo.positionGizmoEnabled = positionGizmoEnabled
+    $gizmo.rotationGizmoEnabled = rotationGizmoEnabled
+    $gizmo.scaleGizmoEnabled = scaleGizmoEnabled
+    $gizmo.boundingBoxGizmoEnabled = boundingBoxGizmoEnabled
+    $gizmo.usePointerToAttachGizmos = usePointerToAttachGizmos
   }
 </script>

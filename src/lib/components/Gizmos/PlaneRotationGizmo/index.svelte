@@ -4,16 +4,15 @@
   import type { Color3 } from '@babylonjs/core/Maths/math.color'
   import type { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
-  import { onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
-  const scene = getContext<Writable<Scene>>('scene')
+  const parent = getContext<Writable<RotationGizmo>>('RotationGizmo')
 
-  export let name: string = 'PlaneRotationGizmo.js'
   export let planeNormal: Vector3
   export let color: Color3 = undefined
   export let gizmoLayer: UtilityLayerRenderer = undefined
   export let tessellation: number = undefined
-  export let parent: RotationGizmo = undefined
   export let useEulerRotation: boolean = undefined
   export let thickness: number = undefined
 
@@ -22,26 +21,12 @@
     color,
     gizmoLayer,
     tessellation,
-    parent,
+    $parent,
     useEulerRotation,
     thickness,
   )
 
-  onMount(() => {
-    try {
-      if ($root.gizmos[name]) return
-
-      $root.gizmos[name] = gizmo
-    } catch (error) {
-      console.error(error)
-    }
-  })
-
   onDestroy(() => {
-    delete $root.gizmos[name]
     gizmo.dispose()
   })
-
-  $: if ($root.gizmos[name]) {
-  }
 </script>

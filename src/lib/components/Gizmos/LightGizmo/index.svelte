@@ -1,44 +1,40 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager.js'
   import { LightGizmo } from '@babylonjs/core/Gizmos/lightGizmo.js'
   import type { Light } from '@babylonjs/core/Lights/light'
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
+  import type { Scene } from '@babylonjs/core/scene.js'
+  import { getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
-  const parent = getContext('light') as Light
+  const parent = getContext<Writable<Light>>('light')
 
-  export let name: string = 'LightGizmo.js'
   export let scaleRatio = 1
-  export const gizmo = new LightGizmo()
+  export let gizmoLayer: UtilityLayerRenderer = undefined
+  export let gizmo = createReactiveContext('gizmo', new LightGizmo(gizmoLayer))
 
   const gizmoManager = new GizmoManager($scene)
   export let positionGizmoEnabled = true
   export let rotationGizmoEnabled = true
   export let usePointerToAttachGizmos = false
 
-  gizmoManager.attachToMesh(gizmo.attachedMesh)
-
-  onMount(() => {
-    try {
-      if ($root.gizmos[name]) return
-
-      $root.gizmos[name] = gizmo
-    } catch (error) {
-      console.error(error)
-    }
-  })
-
   onDestroy(() => {
-    delete $root.gizmos[name]
     gizmoManager.dispose()
-    gizmo.dispose()
+    $gizmo.dispose()
   })
 
-  $: if ($root.gizmos[name]) {
-    gizmo.light = parent
-    gizmo.scaleRatio = scaleRatio
-    gizmoManager.positionGizmoEnabled = positionGizmoEnabled
-    gizmoManager.rotationGizmoEnabled = rotationGizmoEnabled
-    gizmoManager.usePointerToAttachGizmos = usePointerToAttachGizmos
+  $: if ($gizmo && $scene.activeCamera && $parent) {
+    try {
+      gizmoManager.attachToMesh($parent as unknown as AbstractMesh)
+      $gizmo.scaleRatio = scaleRatio
+      gizmoManager.positionGizmoEnabled = positionGizmoEnabled
+      gizmoManager.rotationGizmoEnabled = rotationGizmoEnabled
+      gizmoManager.usePointerToAttachGizmos = usePointerToAttachGizmos
+    } catch (error) {
+      console.warn(error)
+    }
   }
 </script>

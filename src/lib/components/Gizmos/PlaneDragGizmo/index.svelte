@@ -4,33 +4,17 @@
   import type { Color3 } from '@babylonjs/core/Maths/math.color'
   import type { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
-  import { onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/store'
 
-  const scene = getContext<Writable<Scene>>('scene')
-
-  export let name: string = 'PlaneDragGizmo.js'
   export let dragPlaneNormal: Vector3
   export let color: Color3 = undefined
   export let gizmoLayer: UtilityLayerRenderer = undefined
-  export let parent: PositionGizmo = undefined
+  const parent = getContext<Writable<PositionGizmo>>('PositionGizmo')
 
-  export const gizmo = new PlaneDragGizmo(dragPlaneNormal, color, gizmoLayer, parent)
-
-  onMount(() => {
-    try {
-      if ($root.gizmos[name]) return
-
-      $root.gizmos[name] = gizmo
-    } catch (error) {
-      console.error(error)
-    }
-  })
+  export const gizmo = new PlaneDragGizmo(dragPlaneNormal, color, gizmoLayer, $parent)
 
   onDestroy(() => {
-    delete $root.gizmos[name]
     gizmo.dispose()
   })
-
-  $: if ($root.gizmos[name]) {
-  }
 </script>
