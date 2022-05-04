@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
   import type { Nullable } from '@babylonjs/core/types'
   import { onDestroy, onMount } from 'svelte'
   import getParent from '../getParent'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let url: string
   export let textureTarget:
@@ -50,7 +49,7 @@
   const parent = getParent()
   export const texture = new Texture(
     url,
-    $root.scene,
+    $scene,
     noMipmap,
     invertY,
     samplingMode,

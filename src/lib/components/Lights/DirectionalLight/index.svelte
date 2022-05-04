@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { DirectionalLight } from '@babylonjs/core/Lights/directionalLight.js'
   import { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
@@ -7,9 +7,8 @@
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import { onDestroy, onMount } from 'svelte'
-  import { createLightContext } from '../createLightContext'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'DirectionalLight'
   export let direction = Vector3.Zero()
@@ -39,9 +38,7 @@
    */
   export let useBlurExponentialShadowMap = false
 
-  export const light = createLightContext(
-    new DirectionalLight(name, direction, $root.scene),
-  ) as DirectionalLight
+  export const light = createReactiveContext('light', new DirectionalLight(name, direction, $scene))
 
   onMount(() => {
     try {
@@ -49,7 +46,7 @@
 
       $root.lights[light.id] = light
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -75,7 +72,7 @@
     light.shadowMaxZ = shadowMaxZ
     light.shadowMinZ = shadowMinZ
 
-    $root.scene.render()
+    $scene.render()
   }
 
   let shadowGenerator: ShadowGenerator
@@ -98,7 +95,7 @@
         shadowGenerator.usePoissonSampling = usePoissonSampling
         shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
 
-        $root.scene.render()
+        $scene.render()
       }
     } catch (error) {
       console.error(error)

@@ -3,14 +3,13 @@ The DynamicTexture can be used for creating more complex textures.
 It can be used to apply text to a material. This is used in the TextPlane component.
 -->
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { Engine } from '@babylonjs/core/Engines/engine.js'
   import { DynamicTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture.js'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
   import { onDestroy, onMount } from 'svelte'
   import getParent from '../getParent'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
   const parent = getParent()
 
   export let name = 'DynamicTexture'
@@ -33,7 +32,7 @@ It can be used to apply text to a material. This is used in the TextPlane compon
   export const texture = new DynamicTexture(
     `${name}-Texture`,
     options,
-    $root.scene,
+    $scene,
     generateMipMaps,
     samplingMode,
     format,
@@ -42,7 +41,7 @@ It can be used to apply text to a material. This is used in the TextPlane compon
 
   onMount(() => {
     parent.self[textureTarget] = texture
-    $root.scene.render()
+    $scene.render()
   })
 
   onDestroy(() => {

@@ -1,18 +1,17 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager.js'
   import { LightGizmo } from '@babylonjs/core/Gizmos/lightGizmo.js'
   import type { Light } from '@babylonjs/core/Lights/light'
   import { getContext, onDestroy, onMount } from 'svelte'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
   const parent = getContext('light') as Light
 
   export let name: string = 'LightGizmo.js'
   export let scaleRatio = 1
   export const gizmo = new LightGizmo()
 
-  const gizmoManager = new GizmoManager($root.scene)
+  const gizmoManager = new GizmoManager($scene)
   export let positionGizmoEnabled = true
   export let rotationGizmoEnabled = true
   export let usePointerToAttachGizmos = false
@@ -25,7 +24,7 @@
 
       $root.gizmos[name] = gizmo
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -44,6 +43,6 @@
     gizmoManager.rotationGizmoEnabled = rotationGizmoEnabled
     gizmoManager.usePointerToAttachGizmos = usePointerToAttachGizmos
 
-    $root.scene.render()
+    $scene.render()
   }
 </script>

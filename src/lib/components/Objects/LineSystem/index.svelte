@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -14,7 +13,7 @@
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'LineSystem'
   export let options: Parameters<typeof CreateLineSystem>[1]
@@ -23,8 +22,8 @@
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(CreateLineSystem(name, options, $root.scene))
-  context.self.material = new StandardMaterial(`${name}-material`, $root.scene)
+  const context = createObjectContext(CreateLineSystem(name, options, $scene))
+  context.self.material = new StandardMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()
   export let x: number = undefined
@@ -37,7 +36,7 @@
   onMount(() => {
     try {
       $root.objects[context.self.id] = context
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -58,7 +57,7 @@
     context.self.rotation = rotation
 
     object = context
-    $root.scene.render()
+    $scene.render()
   }
 
   $: if (parent) {
@@ -149,7 +148,7 @@
     onKeyUp
   ) {
     import('@babylonjs/core/Behaviors')
-    context.self.actionManager = new ActionManager($root.scene)
+    context.self.actionManager = new ActionManager($scene)
   } else if (context.self.actionManager) {
     context.self.actionManager.dispose()
   }

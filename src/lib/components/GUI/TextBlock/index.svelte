@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import type { Vector2 } from '@babylonjs/core/Maths/math.vector'
   import type { EventState } from '@babylonjs/core/Misc/observable'
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
@@ -8,7 +7,7 @@
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
   import { getContext, onDestroy, onMount } from 'svelte'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name = 'TextBlock'
   export let text = 'Hello Svelte-Babylon'
@@ -36,7 +35,7 @@
 
       context.addControl(guiElement)
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -49,7 +48,7 @@
   })
 
   $: if ($root.gui?.[context?.name]?.controls?.[name]) {
-    $root.scene.render()
+    $scene.render()
   }
 
   export let onPointerUp: (eventData: Vector2WithInfo, eventState: EventState) => void = undefined

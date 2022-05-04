@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -18,7 +17,7 @@
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
   const parentObject = getContext('object') as {
     self: Mesh | AbstractMesh
   }
@@ -72,7 +71,7 @@
         meshesNames,
         rootUrl,
         fileName,
-        $root.scene,
+        $scene,
         onProgress,
         pluginExtension,
       )
@@ -80,7 +79,7 @@
       __root__ = meshes.find(mesh => mesh.id === '__root__')
       $root.imports[name] = imports
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -107,7 +106,7 @@
     __root__.rotation.y = rotation.y
     __root__.rotation.z = rotation.z
 
-    $root.scene.render()
+    $scene.render()
   }
 
   $: if (meshes) {
@@ -206,7 +205,7 @@
         onKeyDown ||
         onKeyUp
       ) {
-        mesh.actionManager = new ActionManager($root.scene)
+        mesh.actionManager = new ActionManager($scene)
       } else if (mesh?.actionManager) {
         mesh.actionManager.dispose()
       }

@@ -1,12 +1,11 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager.js'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { getContext, onDestroy, onMount } from 'svelte'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
   const parent = getContext('object') as {
     self: AbstractMesh | Mesh
   }
@@ -21,7 +20,7 @@
   export let boundingBoxGizmoEnabled = true
   export let usePointerToAttachGizmos = false
 
-  export const gizmo = new GizmoManager($root.scene, thickness, utilityLayer, keepDepthUtilityLayer)
+  export const gizmo = new GizmoManager($scene, thickness, utilityLayer, keepDepthUtilityLayer)
 
   onMount(() => {
     try {
@@ -35,7 +34,7 @@
       gizmo.attachToMesh(parent.self)
       $root.gizmos[name] = gizmo
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -53,6 +52,6 @@
     gizmo.boundingBoxGizmoEnabled = boundingBoxGizmoEnabled
     gizmo.usePointerToAttachGizmos = usePointerToAttachGizmos
 
-    $root.scene.render()
+    $scene.render()
   }
 </script>

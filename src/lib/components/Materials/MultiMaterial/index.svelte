@@ -2,7 +2,6 @@
   @component A multi-material is used to apply different materials to different parts of the same object as you can see below.
  -->
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { MultiMaterial } from '@babylonjs/core/Materials/multiMaterial.js'
   import { SubMesh } from '@babylonjs/core/Meshes/subMesh.js'
   import { createEventDispatcher, onDestroy, onMount, setContext } from 'svelte'
@@ -25,14 +24,14 @@
       }
 
   const dispatch = createEventDispatcher()
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'MultiMaterial'
 
   export let renderAs: 'chessboard' | 'custom' = 'chessboard'
   export let options = undefined
 
-  export const material = new MultiMaterial(name, $root.scene)
+  export const material = new MultiMaterial(name, $scene)
   export let parent = getParent()
 
   setContext('MultiMaterial', material)
@@ -41,7 +40,7 @@
     try {
       parent.self.material = material
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }

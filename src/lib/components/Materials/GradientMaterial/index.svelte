@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import type { MultiMaterial } from '@babylonjs/core/Materials/multiMaterial.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { GradientMaterial } from '@babylonjs/materials/gradient/gradientMaterial.js'
@@ -7,7 +6,7 @@
   import { createMaterialContext } from '../createMaterialContext'
   import getParent from '../getParent'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'GradientMaterial'
   export let separateCullingPass = false
@@ -19,7 +18,7 @@
   export let offset = 0.5
   export let smoothness = 1
 
-  export const material = new GradientMaterial(name, $root.scene)
+  export const material = new GradientMaterial(name, $scene)
 
   createMaterialContext(material)
 
@@ -31,14 +30,14 @@
       if (multiMaterial) {
         multiMaterial.subMaterials = [...multiMaterial.subMaterials, material]
 
-        $root.scene.render()
+        $scene.render()
 
         return
       }
 
       parent.self.material = material
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }

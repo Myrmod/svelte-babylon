@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -12,7 +11,7 @@
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'Decal'
   export let options = {} as Parameters<typeof CreateDecal>[2]
@@ -24,7 +23,7 @@
     throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
   }
   const context = createObjectContext(CreateDecal(name, parent, options))
-  context.self.material = new StandardMaterial(`${name}-material`, $root.scene)
+  context.self.material = new StandardMaterial(`${name}-material`, $scene)
 
   export let object = $root.objects[context.self.id]
 
@@ -32,7 +31,7 @@
     try {
       $root.objects[context.self.id] = context
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -48,7 +47,7 @@
 
   $: if ($root.objects[context.self.id]) {
     object = context
-    $root.scene.render()
+    $scene.render()
   }
 
   // event handling
@@ -135,7 +134,7 @@
     onKeyUp
   ) {
     import('@babylonjs/core/Behaviors')
-    context.self.actionManager = new ActionManager($root.scene)
+    context.self.actionManager = new ActionManager($scene)
   } else if (context.self.actionManager) {
     context.self.actionManager.dispose()
   }

@@ -26,8 +26,8 @@
     }
     shadowObjects = temp
   }
-  $: if (object && $root.scene) {
-    $root.scene.onBeforeRenderObservable.add(() => {
+  $: if (object && $scene) {
+    $scene.onBeforeRenderObservable.add(() => {
       object.self.rotate(Vector3.Up(), 0.01)
     })
   }

@@ -1,11 +1,13 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { FreeCamera } from '@babylonjs/core/Cameras/freeCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import { onDestroy, onMount, setContext } from 'svelte'
+  import type { Scene } from '@babylonjs/core/scene.js'
+  import { getContext, onDestroy, onMount, setContext } from 'svelte'
+  import { writable, type Writable } from 'svelte/store'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
+  const canvas = getContext<Writable<HTMLCanvasElement>>('canvas')
 
   export let name: string = 'FreeCamera'
   export let position = Vector3.Zero()
@@ -20,49 +22,42 @@
   export let angularSensibility = 3000
   export let parent: Mesh = undefined
 
-  export const getFacingDirection = () => Vector3.Normalize(camera.target.subtract(camera.position))
-  export const camera = new FreeCamera(name, position, $root.scene, setActiveOnSceneIfNoneActive)
+  export const getFacingDirection = () =>
+    Vector3.Normalize($camera.target.subtract($camera.position))
+  export const camera = writable(
+    new FreeCamera(name, position, $scene, setActiveOnSceneIfNoneActive),
+  )
   setContext('camera', camera)
 
   onMount(() => {
     try {
-      if ($root.cameras[camera.id]) {
-        throw new Error('There can only be one camera with the same name')
+      if (!$scene.activeCamera) {
+        $camera.attachControl($canvas, false)
       }
-
-      $root.cameras[camera.id] = camera
-
-      $root.cameras[camera.id].setTarget(target)
-
-      $root.engine.runRenderLoop(() => {
-        $root.scene.render()
-      })
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    camera.dispose()
-    $root.cameras[camera.id] = null
+    $camera.dispose()
   })
 
-  $: if ($root.cameras[camera.id]) {
-    camera.speed = speed
+  $: if ($camera) {
+    $camera.speed = speed
 
     if (disableControl) {
-      camera.detachControl()
+      $camera.detachControl()
     } else {
-      camera.attachControl()
+      $camera.attachControl()
     }
 
-    camera.applyGravity = applyGravity
-    camera.checkCollisions = checkCollisions
-    camera.ellipsoid = ellipsoid
-    camera.minZ = minZ
-    camera.angularSensibility = angularSensibility
-    camera.parent = parent
-
-    $root.scene.render()
+    $camera.applyGravity = applyGravity
+    $camera.checkCollisions = checkCollisions
+    $camera.ellipsoid = ellipsoid
+    $camera.minZ = minZ
+    $camera.angularSensibility = angularSensibility
+    $camera.parent = parent
+    $camera.target = target
   }
 </script>

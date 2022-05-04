@@ -3,7 +3,6 @@
   The Screen component allows you to create a flying static screen on which, via a separate camera, a part of the scene is being rendered. It is recommended to use this component after the main camera.
  -->
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import type { Camera } from '@babylonjs/core/Cameras/camera'
   import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
@@ -14,10 +13,10 @@
   import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js'
   import { onDestroy, onMount } from 'svelte'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   let monitor: Mesh
-  export let parent: Camera = $root.scene.activeCamera
+  export let parent: Camera = $scene.activeCamera
 
   /**
    * Camera for texture creation. We need one to create a texture from.
@@ -30,7 +29,7 @@
       Math.PI / 4,
       10,
       Vector3.Zero(),
-      $root.scene,
+      $scene,
       false,
     )
   }
@@ -62,15 +61,15 @@
     screenTexture = new RenderTargetTexture(
       'ScreenTexture',
       size,
-      $root.scene,
+      $scene,
       generateMipMaps,
       doNotChangeAspectRatio,
     )
-    $root.scene.customRenderTargets.push(screenTexture)
+    $scene.customRenderTargets.push(screenTexture)
   })
   $: if (screenTexture) {
     screenTexture.activeCamera = screenCamera
-    screenTexture.renderList = $root.scene.meshes
+    screenTexture.renderList = $scene.meshes
   }
   onDestroy(() => {
     screenTexture.dispose()
@@ -82,7 +81,7 @@
   let screenMaterial: StandardMaterial
 
   onMount(() => {
-    screenMaterial = new StandardMaterial('screenMaterial', $root.scene)
+    screenMaterial = new StandardMaterial('screenMaterial', $scene)
     screenMaterial.diffuseColor = new Color3(1, 1, 1)
     screenMaterial.diffuseTexture = screenTexture
     screenMaterial.specularColor = Color3.Black()
@@ -107,7 +106,7 @@
         width: 0.5,
         height: 0.5,
       },
-      $root.scene,
+      $scene,
     )
   })
   onDestroy(() => {

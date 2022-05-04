@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { PhysicsImpostorParameters } from '@babylonjs/core/Physics/physicsImpostor.js'
   import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor.js'
   import { getContext, onDestroy, onMount } from 'svelte'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
   const parent = getContext('object') as {
     self: Mesh
   }
@@ -45,11 +44,11 @@
 
     delete $root.physics.impostors[name]
     if (!Object.keys($root.physics.impostors)) {
-      $root.scene.physicsEnabled = false
+      $scene.physicsEnabled = false
     }
   })
 
-  $: if ($root.scene.physicsEnabled && !$root.physics.impostors[name]) {
+  $: if ($scene.physicsEnabled && !$root.physics.impostors[name]) {
     try {
       // create the physics impostor
       $root.physics.impostors[name] = new PhysicsImpostor(
@@ -59,10 +58,10 @@
          * we overwrite some options here, setting them directly results in a jumping of some objects
          */
         { ...options, mass: 0, restitution: 0 },
-        $root.scene,
+        $scene,
       )
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }

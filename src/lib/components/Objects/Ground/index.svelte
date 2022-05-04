@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -14,7 +13,7 @@
   import { getContext, onDestroy, onMount } from 'svelte'
   import { createObjectContext } from '../createObjectContext'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'Ground'
   export let options = {} as Parameters<typeof CreateGround>[1]
@@ -31,8 +30,8 @@
     self: Mesh | AbstractMesh
   }
   export let parent: Node = parentObject?.self
-  const context = createObjectContext(CreateGround(name, options, $root.scene))
-  context.self.material = new StandardMaterial(`${name}-material`, $root.scene)
+  const context = createObjectContext(CreateGround(name, options, $scene))
+  context.self.material = new StandardMaterial(`${name}-material`, $scene)
 
   export let receiveShadows = false
   export let object = $root.objects[context.self.id]
@@ -42,7 +41,7 @@
       $root.objects[context.self.id] = context
       $root.objects[context.self.id].self.receiveShadows = true
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -157,7 +156,7 @@
     onKeyUp
   ) {
     import('@babylonjs/core/Behaviors')
-    context.self.actionManager = new ActionManager($root.scene)
+    context.self.actionManager = new ActionManager($scene)
   } else if (context.self.actionManager) {
     context.self.actionManager.dispose()
   }

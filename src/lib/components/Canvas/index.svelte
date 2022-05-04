@@ -1,149 +1,55 @@
 <script lang="ts">
-  import type RootContext from '$lib/types'
   import { Engine } from '@babylonjs/core/Engines/engine.js'
   import type { EngineOptions } from '@babylonjs/core/Engines/thinEngine'
-  import { Color3, Color4 } from '@babylonjs/core/Maths/math.color'
-  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { AmmoJSPlugin as AmmoJSPluginType } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin'
-  import type { CannonJSPlugin as CannonJSPluginType } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin'
-  import type { OimoJSPlugin as OimoJSPluginType } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
-  import { Scene, type SceneOptions } from '@babylonjs/core/scene.js'
   import { onMount, setContext } from 'svelte'
   import { writable, type Writable } from 'svelte/store'
 
   // settings
   export let antialiasing = false
   export let engineOptions: EngineOptions = undefined
-  export let sceneOptions: SceneOptions = undefined
-  export let clearColor: Color4 | Color3 = new Color4(0, 0, 0)
-  export let initialized = false
   export let displayLoadingUI = false
-  export let enablePointerLockOnClick = false
-  export let gravity = new Vector3(0, -9.81, 0)
-  export let collisionsEnabled = false
-  export let physicsEnabled = false
-  /**
-   * since we're using es6 modules we have to deal with side effects. The property "animationsEnabled" is usually required if you want to use animations in your scene. Some components are able to catch the potential error though.
-   */
-  export let animationsEnabled = false
 
   let wrapper: HTMLElement
   export let canvas: HTMLCanvasElement = undefined
-
-  export let root: Writable<RootContext> = writable({
-    engine: undefined,
-    scene: undefined,
-    canvas: {
-      element: canvas,
-      pixelRatio: typeof devicePixelRatio !== 'undefined' ? devicePixelRatio : 1,
-    },
-    cameras: {},
-    lights: {},
-    objects: {},
-    imports: {},
-    gizmos: {},
-    gui: {},
-    physics: {
-      impostors: {},
-    },
-  }) as Writable<RootContext>
-
-  setContext('root', root)
+  export let engine: Writable<Engine> = undefined
+  setContext('engine', engine)
 
   onMount(() => {
-    init()
+    engine = writable(new Engine(canvas, antialiasing, engineOptions))
+
+    window.addEventListener('resize', () => {
+      $engine.resize()
+    })
   })
 
-  function resize() {
-    $root.canvas.width = wrapper.clientWidth / $root.canvas.pixelRatio
-    $root.canvas.height = wrapper.clientHeight / $root.canvas.pixelRatio
-  }
-
-  export let physicsPlugin: AmmoJSPluginType | CannonJSPluginType | OimoJSPluginType = undefined
-
-  async function init() {
-    try {
-      $root.engine = new Engine(canvas, antialiasing, engineOptions)
-      $root.scene = new Scene($root.engine, sceneOptions)
-      $root.scene.physicsEnabled = false
-
-      // this way we prevent rendering of no camera is active
-      $root.scene.onBeforeRenderObservable.add((_scene, event) => {
-        if (!$root.scene.activeCamera) {
-          event.skipNextObservers = true
-        }
-      })
-
-      window.addEventListener('resize', () => {
-        $root.engine.resize()
-      })
-      if (animationsEnabled) {
-        await import('@babylonjs/core/Animations/animatable')
-      }
-      if (collisionsEnabled) {
-        await import('@babylonjs/core/Collisions/collisionCoordinator')
-      }
-      if (physicsEnabled && !physicsPlugin) {
-        const { CannonJSPlugin } = await import('@babylonjs/core/Physics/Plugins/cannonJSPlugin')
-        physicsPlugin = new CannonJSPlugin(true, 10, await import('cannon'))
-      }
-
-      initialized = true
-    } catch (error) {
-      console.error(error)
-    }
-  }
-  $: if ($root.scene && $root.scene.cameras.length) {
-    $root.scene.clearColor =
-      clearColor instanceof Color3
-        ? new Color4(clearColor.r, clearColor.g, clearColor.b, 1)
-        : clearColor
-    $root.scene.gravity = gravity
-    $root.scene.collisionsEnabled = collisionsEnabled
-
-    if (gravity && physicsPlugin && physicsEnabled) {
-      $root.scene.enablePhysics($root.scene.gravity, physicsPlugin)
-      $root.scene.physicsEnabled = true
-    }
-
-    $root.scene.render()
-  }
-
-  $: if ($root.engine) {
+  $: if ($engine) {
     if (displayLoadingUI) {
-      $root.engine.displayLoadingUI()
+      $engine.displayLoadingUI()
     } else {
-      $root.engine.hideLoadingUI()
+      $engine.hideLoadingUI()
     }
   }
 
-  $: if ($root?.scene && enablePointerLockOnClick) {
-    $root.scene.onPointerDown = e => {
-      if (e.button === 0) $root.engine.enterPointerlock()
-    }
-  }
+  $: pixelRatio = typeof devicePixelRatio !== 'undefined' ? devicePixelRatio : 1
 
-  $: if (canvas) {
-    $root.canvas.element = canvas
-  }
-  $: if (wrapper) {
-    $root.canvas.width = wrapper.clientWidth / $root.canvas.pixelRatio
-    $root.canvas.height = wrapper.clientHeight / $root.canvas.pixelRatio
+  function resize() {
+    canvas.width = wrapper.clientWidth / pixelRatio
+    canvas.height = wrapper.clientHeight / pixelRatio
   }
 </script>
 
 <svelte:window on:resize={resize} />
 
-<div class="wrapper" bind:this={wrapper}>
+<div bind:this={wrapper}>
   <canvas bind:this={canvas} />
 
-  {#if $root.scene}
+  {#if $engine}
     <slot />
   {/if}
 </div>
 
 <style>
-  .wrapper,
+  div,
   canvas {
     position: absolute;
     width: 100%;

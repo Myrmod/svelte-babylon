@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { AxisDragGizmo } from '@babylonjs/core/Gizmos/axisDragGizmo.js'
   import type { PositionGizmo } from '@babylonjs/core/Gizmos/positionGizmo.js'
   import type { Color3 } from '@babylonjs/core/Maths/math.color'
@@ -7,7 +6,7 @@
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'AxisDragGizmo.js'
   export let dragAxis: Vector3
@@ -24,7 +23,7 @@
 
       $root.gizmos[name] = gizmo
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -36,6 +35,6 @@
   })
 
   $: if ($root.gizmos[name]) {
-    $root.scene.render()
+    $scene.render()
   }
 </script>

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { PhotoDome } from '@babylonjs/core/Helpers/photoDome.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
@@ -7,7 +6,7 @@
 
   const dispatch = createEventDispatcher()
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'PhotoDome'
   export let options = {} as {
@@ -32,13 +31,13 @@
   export let rotation = Vector3.Zero()
   export let url: string | string[] | HTMLVideoElement
 
-  export let object = new PhotoDome(name, url, options, $root.scene, (message, exception) => {
+  export let object = new PhotoDome(name, url, options, $scene, (message, exception) => {
     dispatch('error', { message, exception })
   })
 
   onMount(() => {
     try {
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -55,7 +54,7 @@
     object.position.z = z || position.z
 
     object = object
-    $root.scene.render()
+    $scene.render()
   }
 </script>
 

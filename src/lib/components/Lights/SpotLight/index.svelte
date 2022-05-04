@@ -1,15 +1,14 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { ShadowGenerator } from '@babylonjs/core/Lights/Shadows/shadowGenerator.js'
   import { SpotLight } from '@babylonjs/core/Lights/spotLight.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import { onDestroy, onMount } from 'svelte'
-  import { createLightContext } from '../createLightContext'
+  import { onDestroy,onMount } from 'svelte'
+  import { createLightContext } from../../../utils/createLightContexteLightContext
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'SpotLight'
   export let direction = Vector3.Zero()
@@ -42,14 +41,14 @@
   export let useBlurExponentialShadowMap = false
 
   export const light = createLightContext(
-    new SpotLight(name, position, direction, angle, exponent, $root.scene),
+    new SpotLight(name, position, direction, angle, exponent, $scene),
   ) as SpotLight
 
   onMount(() => {
     try {
       $root.lights[light.id] = light
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -74,7 +73,7 @@
     light.shadowMaxZ = shadowMaxZ
     light.shadowMinZ = shadowMinZ
 
-    $root.scene.render()
+    $scene.render()
   }
 
   let shadowGenerator: ShadowGenerator
@@ -97,7 +96,7 @@
         shadowGenerator.usePoissonSampling = usePoissonSampling
         shadowGenerator.useBlurExponentialShadowMap = useBlurExponentialShadowMap
 
-        $root.scene.render()
+        $scene.render()
       }
     } catch (error) {
       console.error(error)

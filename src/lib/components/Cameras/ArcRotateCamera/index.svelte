@@ -1,11 +1,14 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { Animation } from '@babylonjs/core/Animations/animation.js'
   import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import { onDestroy, onMount, setContext } from 'svelte'
-  const root = getRoot()
+  import type { Scene } from '@babylonjs/core/scene.js'
+  import { getContext, onDestroy, onMount, setContext } from 'svelte'
+  import { writable, type Writable } from 'svelte/store'
+
+  const scene = getContext<Writable<Scene>>('scene')
+  const canvas = getContext<Writable<HTMLCanvasElement>>('canvas')
 
   export let name: string = 'ArcRotateCamera'
   export let target = Vector3.Zero()
@@ -14,19 +17,14 @@
   export let radius = 5
   export let setActiveOnSceneIfNoneActive = true
   export let speed = 1
-  export const camera = new ArcRotateCamera(
-    name,
-    alpha,
-    beta,
-    radius,
-    target,
-    $root.scene,
-    setActiveOnSceneIfNoneActive,
+  export const camera = writable(
+    new ArcRotateCamera(name, alpha, beta, radius, target, $scene, setActiveOnSceneIfNoneActive),
   )
   setContext('camera', camera)
 
   // Helper functions
-  export const getFacingDirection = () => Vector3.Normalize(camera.target.subtract(camera.position))
+  export const getFacingDirection = () =>
+    Vector3.Normalize($camera.target.subtract($camera.position))
   export const moveCamera = (alpha = 0, beta = 0, fps = 60, totalFrames = 60) => {
     const alphaAnim = new Animation(
       'alphaAnim',
@@ -44,20 +42,20 @@
     )
 
     const alphaKeys = [
-      { frame: 0, value: camera.alpha },
+      { frame: 0, value: $camera.alpha },
       { frame: totalFrames, value: alpha },
     ]
     const betaKeys = [
-      { frame: 0, value: camera.beta },
+      { frame: 0, value: $camera.beta },
       { frame: totalFrames, value: beta },
     ]
 
     alphaAnim.setKeys(alphaKeys)
     betaAnim.setKeys(betaKeys)
 
-    camera.animations.push(alphaAnim)
-    camera.animations.push(betaAnim)
-    camera._scene.beginAnimation(camera, 0, totalFrames, false)
+    $camera.animations.push(alphaAnim)
+    $camera.animations.push(betaAnim)
+    $camera._scene.beginAnimation(camera, 0, totalFrames, false)
   }
   export const rotateToFacePickedFace = async (
     e: ActionEvent,
@@ -67,7 +65,7 @@
     onAnimationEnd = undefined,
   ) => {
     try {
-      if ($root.scene.beginDirectAnimation === undefined) {
+      if ($scene.beginDirectAnimation === undefined) {
         await import('@babylonjs/core/Animations/animatable')
       }
       const mesh = e.meshUnderPointer
@@ -81,7 +79,7 @@
         'position',
         fps,
         totalFrames,
-        camera.position.clone(),
+        $camera.position.clone(),
         newPosition,
         Animation.ANIMATIONLOOPMODE_CONSTANT,
         undefined,
@@ -94,32 +92,21 @@
 
   onMount(() => {
     try {
-      if ($root.cameras[camera.id]) {
-        throw new Error('There can only be one camera with the same name')
+      if (!$scene.activeCamera) {
+        $camera.attachControl($canvas, false)
       }
-
-      $root.cameras[camera.id] = camera
-
-      $root.cameras[camera.id].attachControl($root.canvas.element, false)
-
-      $root.engine.runRenderLoop(() => {
-        $root.scene.render()
-      })
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    camera?.dispose()
-    $root.cameras[camera.id] = null
+    $camera?.dispose()
   })
 
-  $: if ($root.cameras[camera.id]) {
-    camera.speed = speed
-    camera.alpha = alpha
-    camera.beta = beta
-
-    $root.scene.render()
+  $: if ($camera) {
+    $camera.speed = speed
+    $camera.alpha = alpha
+    $camera.beta = beta
   }
 </script>

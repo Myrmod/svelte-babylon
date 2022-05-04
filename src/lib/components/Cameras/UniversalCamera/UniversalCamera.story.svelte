@@ -4,6 +4,7 @@
   import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import Box from '$lib/components/Objects/Box/index.svelte'
+  import Scene from '$lib/components/Scene/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
 </script>
 
@@ -14,8 +15,10 @@
     stencil: true,
   }}
 >
-  <HemisphericLight intensity={0.25} />
-  <DirectionalLight intensity={0.5} direction={new Vector3(-10, -20, -10)} />
-  <UniversalCamera position={new Vector3(0, 0, -10)} />
-  <Box />
+  <Scene>
+    <HemisphericLight intensity={0.25} />
+    <DirectionalLight intensity={0.5} direction={new Vector3(-10, -20, -10)} />
+    <UniversalCamera position={new Vector3(0, 0, -10)} />
+    <Box />
+  </Scene>
 </Canvas>

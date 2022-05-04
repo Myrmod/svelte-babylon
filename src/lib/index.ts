@@ -57,6 +57,7 @@ export { default as Torus } from './components/Objects/Torus/index.svelte'
 export { default as TorusKnot } from './components/Objects/TorusKnot/index.svelte'
 export { default as Tube } from './components/Objects/Tube/index.svelte'
 export { default as PhysicsImpostor } from './components/PhysicsImpostor/index.svelte'
+export { default as Scene } from './components/Scene/index.svelte'
 export { default as CubeTexture } from './components/Textures/CubeTexture.svelte'
 export { default as DynamicTexture } from './components/Textures/DynamicTexture/index.svelte'
 export { default as StandardTexture } from './components/Textures/StandardTexture/index.svelte'
@@ -65,13 +66,11 @@ export { default as Screen } from './prebuilds/Screen/index.svelte'
 export { default as Skybox } from './prebuilds/Skybox/index.svelte'
 export { default as TextPlane } from './prebuilds/TextPlane/index.svelte'
 
-import { getRoot } from './utils/context'
 import drawTextOnTexture from './utils/drawTextOnTexture'
 import degreeToRadians from './utils/Math/degreeToRadians'
 import radiansToDegrees from './utils/Math/radiansToDegree'
 export const utils = {
   drawTextOnTexture,
-  getRoot,
 }
 
 export const math = {

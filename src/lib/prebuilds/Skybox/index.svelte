@@ -1,7 +1,6 @@
 <script lang="ts">
   import { createObjectContext } from '$lib/components/Objects/createObjectContext'
   import { TextureTargets } from '$lib/types/enums/TextureTargets'
-  import { getRoot } from '$lib/utils/context'
   import { StandardMaterial as SMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
@@ -10,7 +9,7 @@
   import { onDestroy, onMount } from 'svelte'
   import { CubeTexture, StandardMaterial } from 'svelte-babylon'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'Skybox'
   export let files: Array<string> = undefined
@@ -23,8 +22,8 @@
   export let specularColor = new Color3(0, 0, 0)
   export let scaling = new Vector3(1, 1, 1)
 
-  const context = createObjectContext(MeshBuilder.CreateBox(name, options, $root.scene))
-  context.self.material = new SMaterial(`${name}-material`, $root.scene)
+  const context = createObjectContext(MeshBuilder.CreateBox(name, options, $scene))
+  context.self.material = new SMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()
   export let x: number = undefined
@@ -37,7 +36,7 @@
   onMount(() => {
     try {
       $root.objects[context.self.id] = context
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -57,7 +56,7 @@
     context.self.scaling = scaling
 
     object = context
-    $root.scene.render()
+    $scene.render()
   }
 </script>
 

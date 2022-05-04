@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
   import { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import { onDestroy, onMount, setContext } from 'svelte'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'GUI'
   export let foreground = true
@@ -15,7 +14,7 @@
   export const gui = AdvancedDynamicTexture.CreateFullscreenUI(
     name,
     foreground,
-    $root.scene,
+    $scene,
     sampling,
     adaptiveScaling,
   )
@@ -32,7 +31,7 @@
         self: gui,
         controls: {},
       }
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -44,7 +43,7 @@
   })
 
   $: if ($root.gui[name]?.self?.name === name) {
-    $root.scene.render()
+    $scene.render()
   }
 </script>
 

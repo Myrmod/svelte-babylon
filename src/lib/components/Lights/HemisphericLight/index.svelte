@@ -1,12 +1,13 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { HemisphericLight } from '@babylonjs/core/Lights/hemisphericLight.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import { onDestroy, onMount } from 'svelte'
-  import { createLightContext } from '../createLightContext'
+  import type { Scene } from '@babylonjs/core/scene.js'
+  import { getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/store'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'HemisphericLight'
   export let diffuse: Color3 = Color3.White()
@@ -20,39 +21,26 @@
   // export let radius = undefined
   // export let range = 100
   export let shadowEnabled = false
-  export const light = createLightContext(
-    new HemisphericLight(name, direction, $root.scene),
-  ) as HemisphericLight
-
-  onMount(() => {
-    try {
-      $root.lights[light.id] = light
-
-      $root.scene.render()
-    } catch (error) {
-      console.error(error)
-    }
-  })
+  export const light = createReactiveContext('light', new HemisphericLight(name, direction, $scene))
 
   onDestroy(() => {
-    light.dispose()
-    delete $root.lights[light.id]
+    $light.dispose()
   })
 
-  $: if ($root.lights[light.id]) {
-    light.diffuse = diffuse
-    light.specular = specular
-    light.groundColor = groundColor
+  $: if ($light) {
+    $light.diffuse = diffuse
+    $light.specular = specular
+    $light.groundColor = groundColor
 
-    // light.excludeWithLayerMask = excludeWithLayerMask
-    // light.falloffType = falloffType
-    light.intensity = intensity
-    // light.intensityMode = intensityMode
-    // light.radius = radius
-    // light.range = range
-    light.shadowEnabled = shadowEnabled
+    // $light.excludeWithLayerMask = excludeWithLayerMask
+    // $light.falloffType = falloffType
+    $light.intensity = intensity
+    // $light.intensityMode = intensityMode
+    // $light.radius = radius
+    // $light.range = range
+    $light.shadowEnabled = shadowEnabled
 
-    $root.scene.render()
+    $scene.render()
   }
 </script>
 

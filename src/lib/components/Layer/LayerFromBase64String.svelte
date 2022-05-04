@@ -2,14 +2,13 @@
 This represents a full screen 2d layer, that shows the stream from your web cam.
  -->
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { Layer } from '@babylonjs/core/Layers/layer.js'
   import { VideoTexture } from '@babylonjs/core/Materials/Textures/videoTexture.js'
   import type { Color4 } from '@babylonjs/core/Maths/math.color'
   import { createEventDispatcher, onDestroy, setContext } from 'svelte'
 
   const dispatch = createEventDispatcher()
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
   export let name = 'Layer'
   export let isBackground = true
   export let color: Color4 = undefined
@@ -21,7 +20,7 @@ This represents a full screen 2d layer, that shows the stream from your web cam.
   export let format: Parameters<typeof VideoTexture.CreateFromBase64String>[8] = undefined
   export let creationFlags: Parameters<typeof VideoTexture.CreateFromBase64String>[9] = undefined
 
-  export const layer = new Layer(name, null, $root.scene, isBackground, color)
+  export const layer = new Layer(name, null, $scene, isBackground, color)
   $: if (layer) {
     if (layer.texture) {
       layer.texture.dispose()
@@ -29,7 +28,7 @@ This represents a full screen 2d layer, that shows the stream from your web cam.
     layer.texture = VideoTexture.CreateFromBase64String(
       data,
       `${name}-Texture`,
-      $root.scene,
+      $scene,
       noMipmapOrOptions,
       invertY,
       samplingMode,

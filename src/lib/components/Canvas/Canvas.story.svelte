@@ -4,6 +4,7 @@
   import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import Box from '$lib/components/Objects/Box/index.svelte'
+  import Scene from '$lib/components/Scene/index.svelte'
   import { Color4 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
 </script>
@@ -23,10 +24,11 @@
     preserveDrawingBuffer,
     stencil,
   }}
-  {clearColor}
 >
-  <HemisphericLight intensity={0.25} />
-  <DirectionalLight intensity={0.5} direction={new Vector3(-10, -20, -10)} />
-  <ArcRotateCamera />
-  <Box />
+  <Scene {clearColor}>
+    <HemisphericLight intensity={0.25} />
+    <DirectionalLight intensity={0.5} direction={new Vector3(-10, -20, -10)} />
+    <ArcRotateCamera />
+    <Box />
+  </Scene>
 </Canvas>

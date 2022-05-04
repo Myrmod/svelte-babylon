@@ -1,11 +1,10 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { GizmoManager } from '@babylonjs/core/Gizmos/gizmoManager.js'
   import { RotationGizmo, type RotationGizmoOptions } from '@babylonjs/core/Gizmos/rotationGizmo.js'
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import { onDestroy, onMount } from 'svelte'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'RotationGizmo.js'
   export let gizmoLayer: UtilityLayerRenderer = undefined
@@ -13,7 +12,7 @@
   export let useEulerRotation: boolean = undefined
   export let thickness: number = undefined
   export let options: RotationGizmoOptions = undefined
-  export const gizmoManager = new GizmoManager($root.scene)
+  export const gizmoManager = new GizmoManager($scene)
 
   export const gizmo = new RotationGizmo(
     gizmoLayer,
@@ -30,7 +29,7 @@
 
       $root.gizmos[name] = gizmo
 
-      $root.scene.render()
+      $scene.render()
     } catch (error) {
       console.error(error)
     }
@@ -42,6 +41,6 @@
   })
 
   $: if ($root.gizmos[name]) {
-    $root.scene.render()
+    $scene.render()
   }
 </script>

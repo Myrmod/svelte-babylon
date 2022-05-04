@@ -1,12 +1,14 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { TargetCamera } from '@babylonjs/core/Cameras/targetCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { Viewport } from '@babylonjs/core/Maths/math.viewport'
   import type { Node } from '@babylonjs/core/node'
-  import { onDestroy, onMount, setContext } from 'svelte'
+  import type { Scene } from '@babylonjs/core/scene.js'
+  import { getContext, onDestroy, onMount, setContext } from 'svelte'
+  import { writable, type Writable } from 'svelte/store'
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
+  const canvas = getContext<Writable<HTMLCanvasElement>>('canvas')
 
   export let name: string = 'FreeCamera'
   export let position = Vector3.Zero()
@@ -16,44 +18,36 @@
   export let parent: Node
   export let viewport: Viewport = new Viewport(0, 0, 1, 0.5)
 
-  export const getFacingDirection = () => Vector3.Normalize(camera.target.subtract(camera.position))
-  export const camera = new TargetCamera(name, position, $root.scene, setActiveOnSceneIfNoneActive)
+  export const getFacingDirection = () =>
+    Vector3.Normalize($camera.target.subtract($camera.position))
+  export const camera = writable(
+    new TargetCamera(name, position, $scene, setActiveOnSceneIfNoneActive),
+  )
   setContext('camera', camera)
 
   onMount(() => {
     try {
-      if ($root.cameras[camera.id]) {
-        throw new Error('There can only be one camera with the same name')
+      if (!$scene.activeCamera) {
+        $camera.attachControl($canvas, false)
       }
-
-      $root.cameras[camera.id] = camera
-
-      $root.engine.runRenderLoop(() => {
-        if ($root.scene.cameras.length) {
-          $root.scene.render()
-        }
-      })
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    camera.dispose()
-    $root.cameras[camera.id] = null
+    $camera.dispose()
   })
 
-  $: if ($root.cameras[camera.id]) {
+  $: if ($camera) {
     if (disableControl) {
-      camera.detachControl()
+      $camera.detachControl()
     } else {
-      camera.attachControl()
+      $camera.attachControl()
     }
 
-    camera.minZ = minZ
-    camera.parent = parent
-    camera.viewport = viewport
-
-    $root.scene.render()
+    $camera.minZ = minZ
+    $camera.parent = parent
+    $camera.viewport = viewport
   }
 </script>
