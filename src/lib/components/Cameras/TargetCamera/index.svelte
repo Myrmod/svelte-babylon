@@ -1,8 +1,8 @@
 <script lang="ts">
+  import type { Mesh } from '@babylonjs/core'
   import { TargetCamera } from '@babylonjs/core/Cameras/targetCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { Viewport } from '@babylonjs/core/Maths/math.viewport'
-  import type { Node } from '@babylonjs/core/node'
   import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy, setContext } from 'svelte'
   import { writable, type Writable } from 'svelte/store'
@@ -14,7 +14,7 @@
   export let position = Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
   export let minZ = 0.45
-  const parent: Node
+  const parent = getContext<Writable<Mesh>>('object')
   export let viewport: Viewport = new Viewport(0, 0, 1, 0.5)
   export let disableControl = false
 
@@ -37,7 +37,7 @@
     }
 
     $camera.minZ = minZ
-    $camera.parent = parent
+    $camera.parent = $parent
     $camera.viewport = viewport
   }
 

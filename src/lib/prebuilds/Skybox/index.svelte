@@ -1,12 +1,15 @@
 <script lang="ts">
   import { TextureTargets } from '$lib/types/enums/TextureTargets'
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { StandardMaterial as SMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js'
-  import { onDestroy } from 'svelte'
+  import type { Scene } from '@babylonjs/core/scene'
+  import { getContext, onDestroy } from 'svelte'
   import { CubeTexture, StandardMaterial } from 'svelte-babylon'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 

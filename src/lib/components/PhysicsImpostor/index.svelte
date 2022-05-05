@@ -7,17 +7,14 @@
   import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
-  const parent = getContext('object') as {
-    self: Mesh
-  }
+  const parent = getContext<Writable<Mesh>>('object')
 
-  if (!parent) {
+  if (!$parent) {
     throw new Error(
-      'Could not find parent context. The <BeanImpostor> has to be nested inside of another Object, eg. <Box>',
+      'Could not find parent context. The <PhysicsImpostor> has to be nested inside of another Object, eg. <Box>',
     )
   }
 
-  export let name: string = `${parent.self.name}-PhysicsImpostor`
   /**
    * eg PhysicsImpostor.BoxImpostor
    * There is no proper type handling in babylonjs, might open a pull request
@@ -35,48 +32,36 @@
    * @link https://doc.babylonjs.com/divingDeeper/physics/usingPhysicsEngine#impostors
    */
   export let options: PhysicsImpostorParameters = {} as PhysicsImpostorParameters
-  export const object = $root.physics.impostors[name]
+
+  // create the physics impostor
+  export let impostor = new PhysicsImpostor(
+    $parent,
+    type,
+    /**
+     * we overwrite some options here, setting them directly results in a jumping of some objects
+     */
+    { ...options, mass: 0, restitution: 0 },
+    $scene,
+  )
 
   onMount(async () => {
     await import('@babylonjs/core/Physics')
   })
 
   onDestroy(() => {
-    $root.physics.impostors[name]?.dispose()
-
-    delete $root.physics.impostors[name]
-    if (!Object.keys($root.physics.impostors)) {
-      $scene.physicsEnabled = false
-    }
+    impostor?.dispose()
   })
-
-  $: if ($scene.physicsEnabled && !$root.physics.impostors[name]) {
-    try {
-      // create the physics impostor
-      $root.physics.impostors[name] = new PhysicsImpostor(
-        parent.self,
-        type,
-        /**
-         * we overwrite some options here, setting them directly results in a jumping of some objects
-         */
-        { ...options, mass: 0, restitution: 0 },
-        $scene,
-      )
-    } catch (error) {
-      console.error(error)
-    }
-  }
 
   /**
    * if we don't do it like this and directly
    * set the options onMount, the object might jump weirdly
    */
-  $: if ($root.physics.impostors[name]) {
-    if ($root.physics.impostors[name].mass !== options.mass) {
-      $root.physics.impostors[name].setMass(options.mass)
+  $: if (impostor) {
+    if (impostor.mass !== options.mass) {
+      impostor.setMass(options.mass)
     }
-    if ($root.physics.impostors[name].restitution !== options.restitution) {
-      $root.physics.impostors[name].restitution = options.restitution
+    if (impostor.restitution !== options.restitution) {
+      impostor.restitution = options.restitution
     }
   }
 </script>

@@ -5,6 +5,7 @@
 <script lang="ts">
   import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import type { Camera } from '@babylonjs/core/Cameras/camera'
+  import type { Engine } from '@babylonjs/core/Engines/engine'
   import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { RenderTargetTexture } from '@babylonjs/core/Materials/Textures/renderTargetTexture.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
@@ -12,10 +13,11 @@
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js'
   import type { Scene } from '@babylonjs/core/scene.js'
-  import { onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
+  const engine = getContext<Writable<Engine>>('engine')
 
   let monitor: Mesh
   const parent: Camera = $scene.activeCamera
@@ -115,10 +117,10 @@
     monitor.dispose()
   })
 
-  $: if (parent && monitor && $root.canvas.element) {
+  $: if (parent && monitor && $engine.getRenderingCanvas()) {
     monitor.position = new Vector3(
-      $root.canvas.element.clientWidth / 2000,
-      $root.canvas.element.clientHeight / 2000,
+      $engine.getRenderingCanvas().clientWidth / 2000,
+      $engine.getRenderingCanvas().clientHeight / 2000,
       1.5,
     )
     monitor.parent = parent

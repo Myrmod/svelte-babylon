@@ -3,7 +3,7 @@ The VideoTexture can be used to play videos on an Object.
 -->
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'
-  import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
+  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
   import {
     VideoTexture,
@@ -14,7 +14,10 @@ The VideoTexture can be used to play videos on an Object.
   import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
-  const parent = getContext<Writable<StandardMaterial>>('object')
+  const parent = getContext<Writable<StandardMaterial>>('material')
+  if (!($parent instanceof StandardMaterial)) {
+    throw new Error('VideoTexture requires a parent of StandardMaterial')
+  }
 
   const dispatch = createEventDispatcher()
 

@@ -5,14 +5,13 @@
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import Box from '$lib/components/Objects/Box/index.svelte'
   import Ground from '$lib/components/Objects/Ground/index.svelte'
+  import Scene from '$lib/components/Scene/index.svelte'
   import Screen from '$lib/prebuilds/Screen/index.svelte'
-  import type RootContext from '$lib/types'
   import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Scene as BScene } from '@babylonjs/core/scene'
   import type { Writable } from 'svelte/types/runtime/store'
-
-  let root: RootContext
 
   let object: Writable<Mesh>
 
@@ -24,13 +23,17 @@
     }
     shadowObjects = temp
   }
-  $: if (object && $scene) {
+
+  let scene: Writable<BScene>
+  let addedOnBeforeRenderObservable = false
+  $: if (object && $scene && !addedOnBeforeRenderObservable) {
     $scene.onBeforeRenderObservable.add(() => {
-      object.self.rotate(Vector3.Up(), 0.01)
+      $object.rotate(Vector3.Up(), 0.01)
     })
+    addedOnBeforeRenderObservable = true
   }
 
-  let mainCamera: ACamera
+  let mainCamera: Writable<ACamera>
   let showScreen = true
 </script>
 
@@ -40,19 +43,20 @@
     preserveDrawingBuffer: true,
     stencil: true,
   }}
-  bind:root
 >
-  <HemisphericLight intensity={0.5} />
-  <DirectionalLight
-    intensity={0.25}
-    direction={new Vector3(-10, -20, -10)}
-    position={new Vector3(2, 6, 2)}
-    castShadowOf={shadowObjects}
-  />
-  <ArcRotateCamera target={new Vector3(0, 3, 0)} bind:camera={mainCamera} />
-  <Box y={3} bind:object />
-  <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
-  {#if showScreen}
-    <Screen />
-  {/if}
+  <Scene bind:scene>
+    <HemisphericLight intensity={0.5} />
+    <DirectionalLight
+      intensity={0.25}
+      direction={new Vector3(-10, -20, -10)}
+      position={new Vector3(2, 6, 2)}
+      castShadowOf={shadowObjects}
+    />
+    <ArcRotateCamera target={new Vector3(0, 3, 0)} bind:camera={mainCamera} />
+    <Box y={3} bind:object />
+    <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
+    {#if showScreen}
+      <Screen />
+    {/if}
+  </Scene>
 </Canvas>

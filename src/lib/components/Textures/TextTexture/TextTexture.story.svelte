@@ -5,7 +5,7 @@
   import Scene from '$lib/components/Scene/index.svelte'
   import TextPlane from '$lib/prebuilds/TextPlane/index.svelte'
 
-  const text = 'Text Plane'
+  const text = 'TextTexture'
   const width = 16 / 5.2
   const height = 9 / 5.2
   const backgroundColor = '#ffffff'

@@ -6,6 +6,7 @@
   import Ground from '$lib/components/Objects/Ground/index.svelte'
   import Sphere from '$lib/components/Objects/Sphere/index.svelte'
   import PhysicsImpostor from '$lib/components/PhysicsImpostor/index.svelte'
+  import Scene from '$lib/components/Scene/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { PhysicsImpostor as PI } from '@babylonjs/core/Physics/physicsImpostor.js'
 </script>
@@ -22,31 +23,32 @@
     preserveDrawingBuffer,
     stencil,
   }}
-  physicsEnabled
 >
-  <HemisphericLight intensity={0.25} />
-  <DirectionalLight intensity={0.5} direction={new Vector3(-10, -20, -10)} />
-  <ArcRotateCamera radius={15} beta={1} />
-  <Sphere y={5}>
-    <PhysicsImpostor
-      type={PI.SphereImpostor}
+  <Scene physicsEnabled>
+    <HemisphericLight intensity={0.25} />
+    <DirectionalLight intensity={0.5} direction={new Vector3(-10, -20, -10)} />
+    <ArcRotateCamera radius={15} beta={1} />
+    <Sphere y={5}>
+      <PhysicsImpostor
+        type={PI.SphereImpostor}
+        options={{
+          mass: 10,
+          restitution: 0.9,
+        }}
+      />
+    </Sphere>
+    <Ground
       options={{
-        mass: 10,
-        restitution: 0.9,
+        width: 10,
+        height: 10,
       }}
-    />
-  </Sphere>
-  <Ground
-    options={{
-      width: 10,
-      height: 10,
-    }}
-  >
-    <PhysicsImpostor
-      options={{
-        mass: 0,
-        restitution: 0.9,
-      }}
-    />
-  </Ground>
+    >
+      <PhysicsImpostor
+        options={{
+          mass: 0,
+          restitution: 0.9,
+        }}
+      />
+    </Ground>
+  </Scene>
 </Canvas>

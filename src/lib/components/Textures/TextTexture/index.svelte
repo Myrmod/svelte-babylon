@@ -1,6 +1,6 @@
 <!-- @component
-The DynamicTexture can be used for creating more complex textures.
-It can be used to apply text to a material. This is used in the TextPlane component.
+The TextTexture can be used to write text on an object.
+It is used in the TextPlane component.
 -->
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'
@@ -20,11 +20,29 @@ It can be used to apply text to a material. This is used in the TextPlane compon
   }
 
   export let name = 'DynamicTexture'
-  export let options: Record<string, unknown> = {}
+  export let options: {
+    width: number
+    height?: number
+  } = {
+    width: 1,
+  }
   export let generateMipMaps = false
   export let samplingMode = Texture.TRILINEAR_SAMPLINGMODE
   export let format = Engine.TEXTUREFORMAT_RGBA
   export let invertY = false
+  export let text = 'No Text'
+  export let fontFamily = 'Arial'
+  export let textOffsetX: number = null
+  export let textOffsetY: number = null
+  /**
+   * color string eg '#000000'
+   */
+  export let color = '#000000'
+  /**
+   * color string eg '#ffffff'
+   */
+  export let backgroundColor = '#ffffff'
+  export let fontSizeMultiplier = 1
   export let textureTarget:
     | 'ambientTexture'
     | 'bumpTexture'
@@ -57,6 +75,21 @@ It can be used to apply text to a material. This is used in the TextPlane compon
     $parent[textureTarget] = null
     $texture.dispose()
   })
+
+  // draws the text
+  let invalidated = true
+  $: if (invalidated && $parent[textureTarget]) {
+    const dtContext = $texture.getContext()
+    const size = 12
+    dtContext.font = `${size}px ${fontFamily}`
+    const textWidth = dtContext.measureText(text).width
+    const ratio = textWidth / size
+    const fontSize = Math.floor(options.width / (ratio * fontSizeMultiplier))
+    const font = `${fontSize}px ${fontFamily}`
+
+    $texture.drawText(text, textOffsetX, textOffsetY, font, color, backgroundColor, true)
+    invalidated = false
+  }
 </script>
 
 <slot />
