@@ -16,7 +16,7 @@
 
   export let name: string = 'Decal'
   export let options = {} as Parameters<typeof CreateDecal>[2]
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
   if (!parent) {
     throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
   }

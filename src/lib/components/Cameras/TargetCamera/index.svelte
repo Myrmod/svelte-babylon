@@ -14,7 +14,7 @@
   export let position = Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
   export let minZ = 0.45
-  export let parent: Node
+  const parent: Node
   export let viewport: Viewport = new Viewport(0, 0, 1, 0.5)
   export let disableControl = false
 

@@ -19,7 +19,7 @@
   export let receiveShadows = false
   export let options = {} as Parameters<typeof CreatePlane>[1]
 
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
   export let object = createReactiveContext('object', CreatePlane(name, options, $scene))
   $object.material = new StandardMaterial(`${name}-material`, $scene)
 

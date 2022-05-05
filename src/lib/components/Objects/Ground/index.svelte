@@ -26,7 +26,7 @@
   export let isVisible = true
   export let rotation = Vector3.Zero()
 
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
   export let object = createReactiveContext('object', CreateGround(name, options, $scene))
   $object.material = new StandardMaterial(`${name}-material`, $scene)
   export let receiveShadows = false

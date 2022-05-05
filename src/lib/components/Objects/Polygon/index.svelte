@@ -9,6 +9,7 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { CreatePolygon } from '@babylonjs/core/Meshes/Builders/polygonBuilder.js'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
   // we need better typings for this https://github.com/mapbox/earcut
   import earcut from 'earcut'
   import { getContext, onDestroy } from 'svelte'
@@ -21,8 +22,8 @@
   export let options: Parameters<typeof CreatePolygon>[1]
   export let earcutInjection: () => unknown = earcut
 
-  export let parent = getContext<Writable<Mesh>>('object')
-  const context = createReactiveContext(
+  const parent = getContext<Writable<Mesh>>('object')
+  export let object = createReactiveContext(
     'object',
     CreatePolygon(name, options, $scene, earcutInjection),
   )

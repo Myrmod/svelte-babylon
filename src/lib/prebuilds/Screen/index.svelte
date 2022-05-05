@@ -11,13 +11,14 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
   let monitor: Mesh
-  export let parent: Camera = $scene.activeCamera
+  const parent: Camera = $scene.activeCamera
 
   /**
    * Camera for texture creation. We need one to create a texture from.

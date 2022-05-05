@@ -8,8 +8,8 @@
   import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { CreateGroundFromHeightMap } from '@babylonjs/core/Meshes/Builders/groundBuilder.js'
-  import type { GroundMesh } from '@babylonjs/core/Meshes/groundMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
 
@@ -20,13 +20,11 @@
   export let options = {} as Parameters<typeof CreateGroundFromHeightMap>[2]
   export let url: string
 
-  export let parent = getContext<Writable<Mesh>>('object')
-  const context = createReactiveContext(
+  const parent = getContext<Writable<Mesh>>('object')
+  export let object = createReactiveContext(
     'object',
     CreateGroundFromHeightMap(name, url, options, $scene),
-  ) as {
-    self: GroundMesh
-  }
+  )
   $object.material = new StandardMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()

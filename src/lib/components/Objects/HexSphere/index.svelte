@@ -9,6 +9,7 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { CreatePolyhedron } from '@babylonjs/core/Meshes/Builders/polyhedronBuilder.js'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
   import createGDMM from './createGDMM'
@@ -20,8 +21,8 @@
   export let receiveShadows = false
   export let options = {} as Parameters<typeof CreatePolyhedron>[1]
 
-  export let parent = getContext<Writable<Mesh>>('object')
-  const context = createReactiveContext(
+  const parent = getContext<Writable<Mesh>>('object')
+  export let object = createReactiveContext(
     'object',
     CreatePolyhedron(
       name,

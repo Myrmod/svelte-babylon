@@ -2,6 +2,7 @@
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { PhysicsImpostorParameters } from '@babylonjs/core/Physics/physicsImpostor.js'
   import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
 

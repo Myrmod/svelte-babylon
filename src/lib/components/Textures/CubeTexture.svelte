@@ -1,11 +1,15 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
+  import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
   import { CubeTexture } from '@babylonjs/core/Materials/Textures/cubeTexture.js'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
+  import type { Scene } from '@babylonjs/core/scene'
   import type { Nullable } from '@babylonjs/core/types'
-  import { onDestroy, onMount } from 'svelte'
-  import getParent from './getParent'
+  import { getContext, onDestroy, onMount } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
+  const parent = getContext<Writable<StandardMaterial>>('object')
 
   export let rootUrl = '/'
   export let textureTarget:
@@ -37,39 +41,41 @@
   export let wrapV = 1
   export let coordinatesMode: number = Texture.EXPLICIT_MODE
 
-  const parent = getParent()
-  export const texture = new CubeTexture(
-    rootUrl,
-    $scene,
-    extensions,
-    noMipmap,
-    files,
-    onLoad,
-    onError,
-    format,
-    prefiltered,
-    forcedExtension,
-    createPolynomoals,
-    lodScale,
-    lodOffset,
-    loaderOptions,
+  export const texture = createReactiveContext(
+    'texture',
+    new CubeTexture(
+      rootUrl,
+      $scene,
+      extensions,
+      noMipmap,
+      files,
+      onLoad,
+      onError,
+      format,
+      prefiltered,
+      forcedExtension,
+      createPolynomoals,
+      lodScale,
+      lodOffset,
+      loaderOptions,
+    ),
   )
 
   onMount(() => {
-    parent.self[textureTarget] = texture
+    $parent[textureTarget] = $texture
   })
 
   onDestroy(() => {
-    parent.self[textureTarget] = null
-    texture.dispose()
+    $parent[textureTarget] = null
+    $texture.dispose()
   })
 
-  $: if (texture && parent.self && parent.self[textureTarget]) {
-    texture.wrapR = wrapR
-    texture.wrapU = wrapU
-    texture.wrapV = wrapV
-    texture.invertZ = invertZ
-    texture.coordinatesMode = coordinatesMode
+  $: if ($texture && $parent && $parent[textureTarget]) {
+    $texture.wrapR = wrapR
+    $texture.wrapU = wrapU
+    $texture.wrapV = wrapV
+    $texture.invertZ = invertZ
+    $texture.coordinatesMode = coordinatesMode
   }
 </script>
 

@@ -20,7 +20,7 @@
   export let ellipsoid: Vector3 = undefined
   export let minZ = 0.45
   export let angularSensibility = 3000
-  export let parent: Mesh = undefined
+  const parent: Mesh = undefined
   export let setActiveOnSceneIfNoneActive = true
 
   export const getFacingDirection = () =>

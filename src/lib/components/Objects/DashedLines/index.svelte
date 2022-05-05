@@ -18,7 +18,7 @@
   export let name: string = 'DashedLines'
   export let options: Parameters<typeof CreateDashedLines>[1]
 
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
   export let object = createReactiveContext('object', CreateDashedLines(name, options, $scene))
   $object.material = new StandardMaterial(`${name}-material`, $scene)
 

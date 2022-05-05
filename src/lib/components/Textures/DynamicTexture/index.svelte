@@ -3,14 +3,17 @@ The DynamicTexture can be used for creating more complex textures.
 It can be used to apply text to a material. This is used in the TextPlane component.
 -->
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import { Engine } from '@babylonjs/core/Engines/engine.js'
+  import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { DynamicTexture } from '@babylonjs/core/Materials/Textures/dynamicTexture.js'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
-  import { onDestroy, onMount } from 'svelte'
-  import getParent from '../getParent'
+  import type { Scene } from '@babylonjs/core/scene'
+  import { getContext, onDestroy, onMount } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
-  const parent = getParent()
+  const parent = getContext<Writable<StandardMaterial>>('object')
 
   export let name = 'DynamicTexture'
   export let options: Record<string, unknown> = {}
@@ -29,23 +32,26 @@ It can be used to apply text to a material. This is used in the TextPlane compon
     | 'refractionTexture'
     | 'specularTexture' = 'diffuseTexture'
 
-  export const texture = new DynamicTexture(
-    `${name}-Texture`,
-    options,
-    $scene,
-    generateMipMaps,
-    samplingMode,
-    format,
-    invertY,
+  export const texture = createReactiveContext(
+    'texture',
+    new DynamicTexture(
+      `${name}-Texture`,
+      options,
+      $scene,
+      generateMipMaps,
+      samplingMode,
+      format,
+      invertY,
+    ),
   )
 
   onMount(() => {
-    parent.self[textureTarget] = texture
+    $parent[textureTarget] = $texture
   })
 
   onDestroy(() => {
-    parent.self[textureTarget] = null
-    texture.dispose()
+    $parent[textureTarget] = null
+    $texture.dispose()
   })
 </script>
 

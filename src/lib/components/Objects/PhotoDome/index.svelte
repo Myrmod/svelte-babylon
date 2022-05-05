@@ -2,7 +2,8 @@
   import { PhotoDome } from '@babylonjs/core/Helpers/photoDome.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
+  import type { Scene } from '@babylonjs/core/scene.js'
+  import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
 
   const dispatch = createEventDispatcher()
@@ -52,8 +53,6 @@
     object.position.x = x || position.x
     object.position.y = y || position.y
     object.position.z = z || position.z
-
-    object = object
   }
 </script>
 

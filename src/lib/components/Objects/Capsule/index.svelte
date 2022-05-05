@@ -20,7 +20,7 @@
   export let options = {} as Parameters<typeof CreateCapsule>[1]
   export let checkCollisions = false
 
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
   const object = createReactiveContext('object', CreateCapsule(name, options, $scene))
   $object.material = new StandardMaterial(`${name}-material`, $scene)
 

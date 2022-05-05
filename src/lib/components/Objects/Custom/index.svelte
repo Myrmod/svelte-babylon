@@ -19,7 +19,7 @@
   import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
 
   export let meshesNames: Array<string> | string = ''
   export let fileName: string | File

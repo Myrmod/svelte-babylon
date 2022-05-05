@@ -1,10 +1,14 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
+  import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
+  import type { Scene } from '@babylonjs/core/scene'
   import type { Nullable } from '@babylonjs/core/types'
-  import { onDestroy, onMount } from 'svelte'
-  import getParent from '../getParent'
+  import { getContext, onDestroy, onMount } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
+  const parent = getContext<Writable<StandardMaterial>>('object')
 
   export let url: string
   export let textureTarget:
@@ -46,47 +50,51 @@
   export let wrapV = 1
   export let coordinatesMode: number = Texture.EXPLICIT_MODE
 
-  const parent = getParent()
-  export const texture = new Texture(
-    url,
-    $scene,
-    noMipmap,
-    invertY,
-    samplingMode,
-    onLoad,
-    onError,
-    buffer,
-    deleteBuffer,
-    format,
-    mimeType,
-    loaderOptions,
+  export const texture = createReactiveContext(
+    'texture',
+    new Texture(
+      url,
+      $scene,
+      noMipmap,
+      invertY,
+      samplingMode,
+      onLoad,
+      onError,
+      buffer,
+      deleteBuffer,
+      format,
+      mimeType,
+      loaderOptions,
+    ),
   )
 
   onMount(() => {
-    parent.self[textureTarget] = texture
+    console.log('mount texture')
+
+    $parent[textureTarget] = $texture
   })
 
   onDestroy(() => {
-    parent.self[textureTarget] = null
-    texture.dispose()
+    $parent[textureTarget] = null
+    $texture.dispose()
   })
 
-  $: if (texture && parent.self && parent.self[textureTarget]) {
-    texture.uAng = uAng
-    texture.uOffset = uOffset
-    texture.uRotationCenter = uRotationCenter
-    texture.uScale = uScale
-    texture.vAng = vAng
-    texture.vOffset = vOffset
-    texture.vRotationCenter = vRotationCenter
-    texture.vScale = vScale
-    texture.wAng = wAng
-    texture.wRotationCenter = wRotationCenter
-    texture.wrapR = wrapR
-    texture.wrapU = wrapU
-    texture.wrapV = wrapV
-    texture.invertZ = invertZ
-    texture.coordinatesMode = coordinatesMode
+  $: if ($texture && $parent && $parent[textureTarget]) {
+    $texture.uAng = uAng
+    $texture.uOffset = uOffset
+    $texture.uRotationCenter = uRotationCenter
+    $texture.uScale = uScale
+    $texture.vAng = vAng
+    $texture.vOffset = vOffset
+    $texture.vRotationCenter = vRotationCenter
+    $texture.vScale = vScale
+    $texture.wAng = wAng
+    $texture.wRotationCenter = wRotationCenter
+    $texture.wrapR = wrapR
+    $texture.wrapU = wrapU
+    $texture.wrapV = wrapV
+    $texture.invertZ = invertZ
+    $texture.coordinatesMode = coordinatesMode
   }
 </script>
 

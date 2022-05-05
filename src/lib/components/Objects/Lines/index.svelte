@@ -9,6 +9,7 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { CreateLines } from '@babylonjs/core/Meshes/Builders/linesBuilder.js'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
 
@@ -18,7 +19,7 @@
   export let receiveShadows = false
   export let options: Parameters<typeof CreateLines>[1]
 
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
   export let object = createReactiveContext('object', CreateLines(name, options, $scene))
   $object.material = new StandardMaterial(`${name}-material`, $scene)
 

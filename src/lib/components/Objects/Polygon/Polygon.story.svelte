@@ -36,9 +36,8 @@
       position={new Vector3(2, 6, 2)}
       castShadowOf={shadowObjects}
     />
-    <ArcRotateCamera target={new Vector3(0, 3, 0)} radius={10} />
+    <ArcRotateCamera target={new Vector3(0, 0, 0)} radius={10} />
     <Polygon
-      y={1}
       bind:object
       options={{
         shape: [

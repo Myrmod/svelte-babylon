@@ -24,7 +24,7 @@
 
   export const material = createReactiveContext('material', new StandardMaterial(name, $scene))
 
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
   const multiMaterial = getContext<Writable<MultiMaterial>>('MultiMaterial')
 
   onMount(() => {

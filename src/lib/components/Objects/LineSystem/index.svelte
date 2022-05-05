@@ -5,10 +5,11 @@
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
   import type { Condition } from '@babylonjs/core/Actions/condition'
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js'
-  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
+  import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { CreateLineSystem } from '@babylonjs/core/Meshes/Builders/linesBuilder.js'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
 
@@ -17,15 +18,15 @@
   export let name: string = 'LineSystem'
   export let options: Parameters<typeof CreateLineSystem>[1]
 
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
   export let object = createReactiveContext('object', CreateLineSystem(name, options, $scene))
-  $object.material = new StandardMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()
   export let x: number = undefined
   export let y: number = undefined
   export let z: number = undefined
   export let rotation = Vector3.Zero()
+  export let color = Color3.White()
 
   onDestroy(() => {
     if ($object.actionManager) {
@@ -39,6 +40,7 @@
     $object.position.y = y || position.y
     $object.position.z = z || position.z
     $object.rotation = rotation
+    $object.color = color
   }
 
   $: if ($parent) {

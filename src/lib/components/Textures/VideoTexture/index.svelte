@@ -2,16 +2,20 @@
 The VideoTexture can be used to play videos on an Object.
 -->
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
+  import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
   import {
     VideoTexture,
     type VideoTextureSettings,
   } from '@babylonjs/core/Materials/Textures/videoTexture.js'
-  import { createEventDispatcher, onDestroy, onMount } from 'svelte'
-  import getParent from '../getParent'
+  import type { Scene } from '@babylonjs/core/scene'
+  import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
-  const parent = getParent()
+  const parent = getContext<Writable<StandardMaterial>>('object')
+
   const dispatch = createEventDispatcher()
 
   export let name = 'VideoTexture'
@@ -34,26 +38,29 @@ The VideoTexture can be used to play videos on an Object.
     | 'refractionTexture'
     | 'specularTexture' = 'diffuseTexture'
 
-  export const texture = new VideoTexture(
-    `${name}-Texture`,
-    src,
-    $scene,
-    generateMipMaps,
-    invertY,
-    samplingMode,
-    settings,
-    (message, exception) => {
-      dispatch('error', { message, exception })
-    },
+  export const texture = createReactiveContext(
+    'texture',
+    new VideoTexture(
+      `${name}-Texture`,
+      src,
+      $scene,
+      generateMipMaps,
+      invertY,
+      samplingMode,
+      settings,
+      (message, exception) => {
+        dispatch('error', { message, exception })
+      },
+    ),
   )
 
   onMount(() => {
-    parent.self[textureTarget] = texture
+    $parent[textureTarget] = $texture
   })
 
   onDestroy(() => {
-    parent.self[textureTarget] = null
-    texture.dispose()
+    $parent[textureTarget] = null
+    $texture.dispose()
   })
 </script>
 

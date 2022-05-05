@@ -22,7 +22,7 @@
 
   export const material = createReactiveContext('material', new GradientMaterial(name, $scene))
 
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
   export let multiMaterial = getContext<Writable<MultiMaterial>>('MultiMaterial')
 
   onMount(() => {

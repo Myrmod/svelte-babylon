@@ -35,7 +35,7 @@
   export let options = undefined
 
   export const material = createReactiveContext('MultiMaterial', new MultiMaterial(name, $scene))
-  export let parent = getContext<Writable<Mesh>>('object')
+  const parent = getContext<Writable<Mesh>>('object')
 
   onDestroy(() => {
     $material.dispose()
