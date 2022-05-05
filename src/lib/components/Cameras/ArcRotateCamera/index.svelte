@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { Animation } from '@babylonjs/core/Animations/animation.js'
+  import type { EasingFunction } from '@babylonjs/core/Animations/easing'
   import { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Scene } from '@babylonjs/core/scene.js'
@@ -66,6 +67,7 @@
     radius = 5,
     fps = 60,
     totalFrames = 60,
+    easingFunction: EasingFunction = undefined,
     onAnimationEnd = undefined,
   ) => {
     try {
@@ -79,14 +81,14 @@
 
       Animation.CreateAndStartAnimation(
         'anim',
-        camera,
+        $camera,
         'position',
         fps,
         totalFrames,
         $camera.position.clone(),
         newPosition,
         Animation.ANIMATIONLOOPMODE_CONSTANT,
-        undefined,
+        easingFunction,
         onAnimationEnd,
       )
     } catch (error) {

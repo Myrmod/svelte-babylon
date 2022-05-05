@@ -9,9 +9,10 @@
   import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
   import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
   import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
+  import Scene from 'svelte-babylon/components/Scene/index.svelte'
   import type { Writable } from 'svelte/types/runtime/store'
 
-  let camera: ACamera
+  let camera: Writable<ACamera>
 
   let object: Writable<Mesh>
 
@@ -30,7 +31,7 @@
     fps?: number,
     totalFrames?: number,
     onAnimationEnd?: any,
-  ) => void
+  ) => Promise<void>
 </script>
 
 <Canvas
@@ -40,14 +41,16 @@
     stencil: true,
   }}
 >
-  <HemisphericLight intensity={0.5} />
-  <DirectionalLight
-    intensity={0.25}
-    direction={new Vector3(-10, -20, -10)}
-    position={new Vector3(2, 6, 2)}
-    castShadowOf={shadowObjects}
-  />
-  <ArcRotateCamera bind:camera target={new Vector3(0, 3, 0)} bind:rotateToFacePickedFace />
-  <Box y={3} bind:object onPick={rotateToFacePickedFace} />
-  <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
+  <Scene>
+    <HemisphericLight intensity={0.5} />
+    <DirectionalLight
+      intensity={0.25}
+      direction={new Vector3(-10, -20, -10)}
+      position={new Vector3(2, 6, 2)}
+      castShadowOf={shadowObjects}
+    />
+    <ArcRotateCamera bind:camera target={new Vector3(0, 3, 0)} bind:rotateToFacePickedFace />
+    <Box y={3} bind:object onPick={rotateToFacePickedFace} />
+    <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
+  </Scene>
 </Canvas>
