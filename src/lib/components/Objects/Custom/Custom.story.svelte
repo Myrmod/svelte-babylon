@@ -34,8 +34,7 @@
     />
     <ArcRotateCamera target={new Vector3(0, 3, 0)} />
     <Custom
-      rootUrl="/assets/models/"
-      fileName="logo.glb"
+      url="/assets/models/logo.glb"
       scaling={new Vector3(5, 5, 5)}
       position={new Vector3(0, 2, 0)}
       receiveShadows

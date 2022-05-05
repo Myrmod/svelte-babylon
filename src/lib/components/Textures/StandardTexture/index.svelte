@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'
-  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
+  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
   import type { Scene } from '@babylonjs/core/scene'
   import type { Nullable } from '@babylonjs/core/types'

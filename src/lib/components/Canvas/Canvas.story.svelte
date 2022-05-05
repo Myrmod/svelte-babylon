@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
   import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
@@ -7,9 +7,7 @@
   import Scene from '$lib/components/Scene/index.svelte'
   import { Color4 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-</script>
 
-<script lang="ts">
   let antialiasing = false
   let backgroundColor = '#454545'
   let preserveDrawingBuffer = true

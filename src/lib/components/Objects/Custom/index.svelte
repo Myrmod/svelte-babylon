@@ -22,9 +22,14 @@
   const parent = getContext<Writable<Mesh>>('object')
 
   export let meshesNames: Array<string> | string = ''
-  export let fileName: string | File
+  export let url: string
+  let fileName: string
+  let rootUrl: string
+  $: {
+    fileName = url.substring(url.lastIndexOf('/') + 1)
+    rootUrl = url.substring(0, url.lastIndexOf('/') + 1)
+  }
   export let pluginExtension: string = undefined
-  export let rootUrl: string = '/'
   export let onProgress: (event: ISceneLoaderProgressEvent) => void = undefined
   export let receiveShadows = false
   /**
@@ -38,7 +43,7 @@
   export let z: number = undefined
   export let rotation = Vector3.Zero()
   export let rotationQuaternion: Quaternion = null
-  export let __root__: AbstractMesh = undefined
+  let __root__: AbstractMesh = undefined
   export const object = createReactiveContext('object', __root__)
 
   export let imports: ISceneLoaderAsyncResult = undefined
