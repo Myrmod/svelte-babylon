@@ -2,7 +2,6 @@
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
@@ -10,18 +9,17 @@
   import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
   import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
   import Ground from 'svelte-babylon/components/Objects/Ground/index.svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   let camera: ACamera
 
-  let object: {
-    self: Mesh | AbstractMesh
-  }
+  let object: Writable<Mesh>
 
-  let shadowObjects: Array<typeof object['self']>
+  let shadowObjects: Array<Mesh>
   $: {
     const temp: typeof shadowObjects = []
-    if (object?.self) {
-      temp.push(object.self)
+    if ($object) {
+      temp.push($object)
     }
     shadowObjects = temp
   }

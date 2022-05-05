@@ -6,18 +6,15 @@
   import Ribbon from '$lib/components/Objects/Ribbon/index.svelte'
   import Scene from '$lib/components/Scene/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 
-  let object: {
-    self: Mesh | AbstractMesh
-  }
+  let object: Writable<Mesh>
 
-  let shadowObjects: Array<typeof object['self']>
+  let shadowObjects: Array<Mesh>
   $: {
     const temp: typeof shadowObjects = []
-    if (object?.self) {
-      temp.push(object.self)
+    if ($object) {
+      temp.push($object)
     }
     shadowObjects = temp
   }

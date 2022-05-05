@@ -5,7 +5,7 @@
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js'
-  import { onDestroy, onMount } from 'svelte'
+  import { onDestroy } from 'svelte'
   import { CubeTexture, StandardMaterial } from 'svelte-babylon'
 
   const scene = getContext<Writable<Scene>>('scene')
@@ -21,8 +21,8 @@
   export let specularColor = new Color3(0, 0, 0)
   export let scaling = new Vector3(1, 1, 1)
 
-  const context = createReactiveContext('object', MeshBuilder.CreateBox(name, options, $scene))
-  context.self.material = new SMaterial(`${name}-material`, $scene)
+  export let object = createReactiveContext('object', MeshBuilder.CreateBox(name, options, $scene))
+  $object.material = new SMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()
   export let x: number = undefined
@@ -30,30 +30,17 @@
   export let z: number = undefined
   export let checkCollisions = false
 
-  export let object = $root.objects[context.self.id]
-
-  onMount(() => {
-    try {
-      $root.objects[context.self.id] = context
-    } catch (error) {
-      console.error(error)
-    }
-  })
-
   onDestroy(() => {
-    context.self.dispose()
-    delete $root.objects[context.self.id]
+    $object.dispose()
   })
 
-  $: if ($root.objects[context.self.id]) {
-    context.self.position.x = x || position.x
-    context.self.position.y = y || position.y
-    context.self.position.z = z || position.z
-    context.self.receiveShadows = receiveShadows
-    context.self.checkCollisions = checkCollisions
-    context.self.scaling = scaling
-
-    object = context
+  $: if ($object) {
+    $object.position.x = x || position.x
+    $object.position.y = y || position.y
+    $object.position.z = z || position.z
+    $object.receiveShadows = receiveShadows
+    $object.checkCollisions = checkCollisions
+    $object.scaling = scaling
   }
 </script>
 

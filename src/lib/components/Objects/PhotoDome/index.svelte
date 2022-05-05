@@ -3,6 +3,7 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import { createEventDispatcher, onDestroy, onMount } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const dispatch = createEventDispatcher()
 

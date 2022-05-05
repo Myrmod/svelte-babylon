@@ -12,6 +12,7 @@
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import { MeshBuilder } from '@babylonjs/core/Meshes/meshBuilder.js'
   import { onDestroy, onMount } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 

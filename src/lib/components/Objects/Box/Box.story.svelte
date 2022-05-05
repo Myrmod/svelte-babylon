@@ -8,7 +8,7 @@
   import Scene from '$lib/components/Scene/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import type { Writable } from 'svelte/store'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   let object: Writable<Mesh>
 

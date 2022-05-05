@@ -5,6 +5,7 @@
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
   import Plane from '$lib/components/Objects/Plane/index.svelte'
+  import Scene from '$lib/components/Scene/index.svelte'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
 
@@ -32,25 +33,27 @@
     stencil: true,
   }}
 >
-  <HemisphericLight intensity={0.25} />
-  <DirectionalLight
-    intensity={0.5}
-    direction={new Vector3(-10, -20, -10)}
-    position={new Vector3(2, 6, 2)}
-  />
-  <ArcRotateCamera target={Vector3.Zero()} />
-  <Plane>
-    <StandardMaterial
-      ambientColor={ambient}
-      diffuseColor={diffuse}
-      emissiveColor={emissive}
-      specularColor={specular}
-      {roughness}
-      {separateCullingPass}
-      {invertNormalMapX}
-      {invertNormalMapY}
-      {invertRefractionY}
-      {backfaceCulling}
+  <Scene>
+    <HemisphericLight intensity={0.25} />
+    <DirectionalLight
+      intensity={0.5}
+      direction={new Vector3(-10, -20, -10)}
+      position={new Vector3(2, 6, 2)}
     />
-  </Plane>
+    <ArcRotateCamera target={Vector3.Zero()} />
+    <Plane>
+      <StandardMaterial
+        ambientColor={ambient}
+        diffuseColor={diffuse}
+        emissiveColor={emissive}
+        specularColor={specular}
+        {roughness}
+        {separateCullingPass}
+        {invertNormalMapX}
+        {invertNormalMapY}
+        {invertRefractionY}
+        {backfaceCulling}
+      />
+    </Plane>
+  </Scene>
 </Canvas>

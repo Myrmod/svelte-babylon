@@ -4,7 +4,8 @@
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy, onMount, setContext } from 'svelte'
-  import { writable, type Writable } from 'svelte/store'
+  import { writable } from 'svelte/store'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
   const canvas = getContext<Writable<HTMLCanvasElement>>('canvas')

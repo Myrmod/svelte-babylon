@@ -9,7 +9,8 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { CreateTorus } from '@babylonjs/core/Meshes/Builders/torusBuilder.js'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { getContext, onDestroy } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -18,8 +19,8 @@
   export let options = {} as Parameters<typeof CreateTorus>[1]
 
   export let parent = getContext<Writable<Mesh>>('object')
-  const context = createReactiveContext('object', CreateTorus(name, options, $scene))
-  context.self.material = new StandardMaterial(`${name}-material`, $scene)
+  export let object = createReactiveContext('object', CreateTorus(name, options, $scene))
+  $object.material = new StandardMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()
   export let x: number = undefined
@@ -28,37 +29,24 @@
   export let checkCollisions = false
   export let rotation = Vector3.Zero()
 
-  export let object = $root.objects[context.self.id]
-
-  onMount(() => {
-    try {
-      $root.objects[context.self.id] = context
-    } catch (error) {
-      console.error(error)
-    }
-  })
-
   onDestroy(() => {
-    if (context.self.actionManager) {
-      context.self.actionManager.dispose()
+    if ($object.actionManager) {
+      $object.actionManager.dispose()
     }
-    context.self.dispose()
-    delete $root.objects[context.self.id]
+    $object.dispose()
   })
 
-  $: if ($root.objects[context.self.id]) {
-    context.self.position.x = x || position.x
-    context.self.position.y = y || position.y
-    context.self.position.z = z || position.z
-    context.self.receiveShadows = receiveShadows
-    context.self.checkCollisions = checkCollisions
-    context.self.rotation = rotation
-
-    object = context
+  $: if ($object) {
+    $object.position.x = x || position.x
+    $object.position.y = y || position.y
+    $object.position.z = z || position.z
+    $object.receiveShadows = receiveShadows
+    $object.checkCollisions = checkCollisions
+    $object.rotation = rotation
   }
 
-  $: if (parent) {
-    context.self.parent = parent
+  $: if ($parent) {
+    $object.parent = $parent
   }
 
   // event handling
@@ -145,152 +133,152 @@
     onKeyUp
   ) {
     import('@babylonjs/core/Behaviors')
-    context.self.actionManager = new ActionManager($scene)
-  } else if (context.self.actionManager) {
-    context.self.actionManager.dispose()
+    $object.actionManager = new ActionManager($scene)
+  } else if ($object.actionManager) {
+    $object.actionManager.dispose()
   }
 
   $: if (onPick) {
-    onPickIAction = context.self.actionManager.registerAction(
+    onPickIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onPickIAction)) {
-    context.self.actionManager.unregisterAction(onPickIAction)
+  } else if ($object.actionManager?.actions.includes(onPickIAction)) {
+    $object.actionManager.unregisterAction(onPickIAction)
     onPickIAction = null
   }
 
   $: if (onLeftPick) {
-    onLeftPickIAction = context.self.actionManager.registerAction(
+    onLeftPickIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onLeftPickCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onLeftPickIAction)) {
-    context.self.actionManager.unregisterAction(onLeftPickIAction)
+  } else if ($object.actionManager?.actions.includes(onLeftPickIAction)) {
+    $object.actionManager.unregisterAction(onLeftPickIAction)
     onLeftPickIAction = null
   }
 
   $: if (onRightPick) {
-    onRightPickIAction = context.self.actionManager.registerAction(
+    onRightPickIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onRightPickCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onRightPickIAction)) {
-    context.self.actionManager.unregisterAction(onRightPickIAction)
+  } else if ($object.actionManager?.actions.includes(onRightPickIAction)) {
+    $object.actionManager.unregisterAction(onRightPickIAction)
     onRightPickIAction = null
   }
 
   $: if (onCenterPick) {
-    onCenterPickIAction = context.self.actionManager.registerAction(
+    onCenterPickIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onCenterPickCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onCenterPickIAction)) {
-    context.self.actionManager.unregisterAction(onCenterPickIAction)
+  } else if ($object.actionManager?.actions.includes(onCenterPickIAction)) {
+    $object.actionManager.unregisterAction(onCenterPickIAction)
     onCenterPickIAction = null
   }
 
   $: if (onPickDown) {
-    onPickDownIAction = context.self.actionManager.registerAction(
+    onPickDownIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickDownCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onPickDownIAction)) {
-    context.self.actionManager.unregisterAction(onPickDownIAction)
+  } else if ($object.actionManager?.actions.includes(onPickDownIAction)) {
+    $object.actionManager.unregisterAction(onPickDownIAction)
     onPickDownIAction = null
   }
 
   $: if (onDoublePick) {
-    onDoublePickIAction = context.self.actionManager.registerAction(
+    onDoublePickIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onDoublePickCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onDoublePickIAction)) {
-    context.self.actionManager.unregisterAction(onDoublePickIAction)
+  } else if ($object.actionManager?.actions.includes(onDoublePickIAction)) {
+    $object.actionManager.unregisterAction(onDoublePickIAction)
     onDoublePickIAction = null
   }
 
   $: if (onPickUp) {
-    onPickUpIAction = context.self.actionManager.registerAction(
+    onPickUpIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickUpCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onPickUpIAction)) {
-    context.self.actionManager.unregisterAction(onPickUpIAction)
+  } else if ($object.actionManager?.actions.includes(onPickUpIAction)) {
+    $object.actionManager.unregisterAction(onPickUpIAction)
     onPickUpIAction = null
   }
 
   $: if (onPickOut) {
-    onPickOutIAction = context.self.actionManager.registerAction(
+    onPickOutIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPickOutCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onPickOutIAction)) {
-    context.self.actionManager.unregisterAction(onPickOutIAction)
+  } else if ($object.actionManager?.actions.includes(onPickOutIAction)) {
+    $object.actionManager.unregisterAction(onPickOutIAction)
     onPickOutIAction = null
   }
 
   $: if (onLongPress) {
-    onLongPressIAction = context.self.actionManager.registerAction(
+    onLongPressIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onLongPressCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onLongPressIAction)) {
-    context.self.actionManager.unregisterAction(onLongPressIAction)
+  } else if ($object.actionManager?.actions.includes(onLongPressIAction)) {
+    $object.actionManager.unregisterAction(onLongPressIAction)
     onLongPressIAction = null
   }
 
   $: if (onPointerOver) {
-    onPointerOverIAction = context.self.actionManager.registerAction(
+    onPointerOverIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPointerOverCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onPointerOverIAction)) {
-    context.self.actionManager.unregisterAction(onPointerOverIAction)
+  } else if ($object.actionManager?.actions.includes(onPointerOverIAction)) {
+    $object.actionManager.unregisterAction(onPointerOverIAction)
     onPointerOverIAction = null
   }
 
   $: if (onPointerOut) {
-    onPointerOutIAction = context.self.actionManager.registerAction(
+    onPointerOutIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onPointerOutCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onPointerOutIAction)) {
-    context.self.actionManager.unregisterAction(onPointerOutIAction)
+  } else if ($object.actionManager?.actions.includes(onPointerOutIAction)) {
+    $object.actionManager.unregisterAction(onPointerOutIAction)
     onPointerOutIAction = null
   }
 
   $: if (onEveryFrame) {
-    onEveryFrameIAction = context.self.actionManager.registerAction(
+    onEveryFrameIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onEveryFrameCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onEveryFrameIAction)) {
-    context.self.actionManager.unregisterAction(onEveryFrameIAction)
+  } else if ($object.actionManager?.actions.includes(onEveryFrameIAction)) {
+    $object.actionManager.unregisterAction(onEveryFrameIAction)
     onEveryFrameIAction = null
   }
 
   $: if (onIntersectionEnter) {
-    onIntersectionEnterIAction = context.self.actionManager.registerAction(
+    onIntersectionEnterIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onIntersectionEnterCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onIntersectionEnterIAction)) {
-    context.self.actionManager.unregisterAction(onIntersectionEnterIAction)
+  } else if ($object.actionManager?.actions.includes(onIntersectionEnterIAction)) {
+    $object.actionManager.unregisterAction(onIntersectionEnterIAction)
     onIntersectionEnterIAction = null
   }
 
   $: if (onIntersectionExit) {
-    onIntersectionExitIAction = context.self.actionManager.registerAction(
+    onIntersectionExitIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onIntersectionExitCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onIntersectionExitIAction)) {
-    context.self.actionManager.unregisterAction(onIntersectionExitIAction)
+  } else if ($object.actionManager?.actions.includes(onIntersectionExitIAction)) {
+    $object.actionManager.unregisterAction(onIntersectionExitIAction)
     onIntersectionExitIAction = null
   }
 
   $: if (onKeyDown) {
-    onKeyDownIAction = context.self.actionManager.registerAction(
+    onKeyDownIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onKeyDownCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onKeyDownIAction)) {
-    context.self.actionManager.unregisterAction(onKeyDownIAction)
+  } else if ($object.actionManager?.actions.includes(onKeyDownIAction)) {
+    $object.actionManager.unregisterAction(onKeyDownIAction)
     onKeyDownIAction = null
   }
 
   $: if (onKeyUp) {
-    onKeyUpIAction = context.self.actionManager.registerAction(
+    onKeyUpIAction = $object.actionManager.registerAction(
       new ExecuteCodeAction(ActionManager.OnPickTrigger, onPick, onKeyUpCondition),
     )
-  } else if (context.self.actionManager?.actions.includes(onKeyUpIAction)) {
-    context.self.actionManager.unregisterAction(onKeyUpIAction)
+  } else if ($object.actionManager?.actions.includes(onKeyUpIAction)) {
+    $object.actionManager.unregisterAction(onKeyUpIAction)
     onKeyUpIAction = null
   }
 </script>

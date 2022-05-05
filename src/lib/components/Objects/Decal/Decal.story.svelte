@@ -11,18 +11,16 @@
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Writable } from 'svelte/types/runtime/store'
 
-  let object: {
-    self: Mesh | AbstractMesh
-  }
+  let object: Writable<Mesh>
 
-  let shadowObjects: Array<typeof object['self']>
+  let shadowObjects: Array<Mesh>
   $: {
     const temp: typeof shadowObjects = []
-    if (object?.self) {
-      temp.push(object.self)
+    if ($object) {
+      temp.push($object)
     }
     shadowObjects = temp
   }

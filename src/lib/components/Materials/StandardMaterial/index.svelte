@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import type { MultiMaterial } from '@babylonjs/core/Materials/multiMaterial.js'
   import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import type { Color3 } from '@babylonjs/core/Maths/math.color'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy, onMount } from 'svelte'
-  import { createMaterialContext } from '../createMaterialContext'
-  import getParent from '../getParent'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -20,45 +22,47 @@
   export let invertRefractionY = false
   export let backfaceCulling = false
 
-  export const material = new StandardMaterial(name, $scene)
+  export const material = createReactiveContext('material', new StandardMaterial(name, $scene))
 
-  createMaterialContext(material)
-
-  export let parent = getParent()
-  export let multiMaterial = getContext<MultiMaterial>('MultiMaterial')
+  export let parent = getContext<Writable<Mesh>>('object')
+  const multiMaterial = getContext<Writable<MultiMaterial>>('MultiMaterial')
 
   onMount(() => {
     try {
-      if (multiMaterial) {
-        multiMaterial.subMaterials = [...multiMaterial.subMaterials, material]
+      if ($multiMaterial) {
+        $multiMaterial.subMaterials = [...$multiMaterial.subMaterials, $material]
 
         return
       }
-
-      parent.self.material = material
     } catch (error) {
       console.error(error)
     }
   })
 
-  onDestroy(() => {
-    parent.self.material = null
+  onMount(() => {
+    if (!$multiMaterial && $parent) {
+      $parent.material = $material
+    }
   })
 
-  $: if ($root.objects[parent.self.id]?.self?.material) {
-    if (specularColor) material.specularColor = specularColor
-    if (ambientColor) material.ambientColor = ambientColor
-    if (diffuseColor) material.diffuseColor = diffuseColor
-    if (emissiveColor) material.emissiveColor = emissiveColor
+  onDestroy(() => {
+    $material.dispose()
+  })
+
+  $: if ($material) {
+    if (specularColor) $material.specularColor = specularColor
+    if (ambientColor) $material.ambientColor = ambientColor
+    if (diffuseColor) $material.diffuseColor = diffuseColor
+    if (emissiveColor) $material.emissiveColor = emissiveColor
   }
 
-  $: if ($root.objects[parent.self.id]?.self?.material) {
-    material.roughness = roughness
-    material.separateCullingPass = separateCullingPass
-    material.invertNormalMapX = invertNormalMapX
-    material.invertNormalMapY = invertNormalMapY
-    material.invertRefractionY = invertRefractionY
-    material.backFaceCulling = backfaceCulling
+  $: if ($material) {
+    $material.roughness = roughness
+    $material.separateCullingPass = separateCullingPass
+    $material.invertNormalMapX = invertNormalMapX
+    $material.invertNormalMapY = invertNormalMapY
+    $material.invertRefractionY = invertRefractionY
+    $material.backFaceCulling = backfaceCulling
   }
 </script>
 

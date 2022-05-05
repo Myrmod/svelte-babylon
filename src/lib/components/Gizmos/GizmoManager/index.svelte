@@ -5,7 +5,7 @@
   import type { UtilityLayerRenderer } from '@babylonjs/core/Rendering/utilityLayerRenderer'
   import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy, onMount } from 'svelte'
-  import type { Writable } from 'svelte/store'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
   const parent = getContext<Writable<Mesh>>('object')

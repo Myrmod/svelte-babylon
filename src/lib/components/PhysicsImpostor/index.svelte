@@ -3,6 +3,7 @@
   import type { PhysicsImpostorParameters } from '@babylonjs/core/Physics/physicsImpostor.js'
   import { PhysicsImpostor } from '@babylonjs/core/Physics/physicsImpostor.js'
   import { getContext, onDestroy, onMount } from 'svelte'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
   const parent = getContext('object') as {

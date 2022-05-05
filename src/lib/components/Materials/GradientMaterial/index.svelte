@@ -1,10 +1,12 @@
 <script lang="ts">
+  import { createReactiveContext } from '$lib/utils/createReactiveContext'
   import type { MultiMaterial } from '@babylonjs/core/Materials/multiMaterial.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
+  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
+  import type { Scene } from '@babylonjs/core/scene'
   import { GradientMaterial } from '@babylonjs/materials/gradient/gradientMaterial.js'
   import { getContext, onDestroy, onMount } from 'svelte'
-  import { createMaterialContext } from '../createMaterialContext'
-  import getParent from '../getParent'
+  import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -18,41 +20,39 @@
   export let offset = 0.5
   export let smoothness = 1
 
-  export const material = new GradientMaterial(name, $scene)
+  export const material = createReactiveContext('material', new GradientMaterial(name, $scene))
 
-  createMaterialContext(material)
-
-  export let parent = getParent()
-  export let multiMaterial = getContext<MultiMaterial>('MultiMaterial')
+  export let parent = getContext<Writable<Mesh>>('object')
+  export let multiMaterial = getContext<Writable<MultiMaterial>>('MultiMaterial')
 
   onMount(() => {
     try {
-      if (multiMaterial) {
-        multiMaterial.subMaterials = [...multiMaterial.subMaterials, material]
+      if ($multiMaterial) {
+        $multiMaterial.subMaterials = [...$multiMaterial.subMaterials, $material]
 
         return
       }
 
-      parent.self.material = material
+      $parent.material = $material
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    parent.self.material = null
+    $material.dispose()
+    $parent.material = null
   })
 
-  $: if ($root.objects[parent.self.id]?.self?.material) {
-    material.separateCullingPass = separateCullingPass
-    material.backFaceCulling = backfaceCulling
-    material.topColor = topColor
-    material.topColorAlpha = topColorAlpha
-    material.bottomColor = bottomColor
-    material.bottomColorAlpha = bottomColorAlpha
-    material.offset = offset
-    material.smoothness = smoothness
-    parent.self.material = material
+  $: if ($material) {
+    $material.separateCullingPass = separateCullingPass
+    $material.backFaceCulling = backfaceCulling
+    $material.topColor = topColor
+    $material.topColorAlpha = topColorAlpha
+    $material.bottomColor = bottomColor
+    $material.bottomColorAlpha = bottomColorAlpha
+    $material.offset = offset
+    $material.smoothness = smoothness
   }
 </script>
 
