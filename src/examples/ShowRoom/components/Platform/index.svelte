@@ -7,13 +7,10 @@
   import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
   import Cylinder from 'svelte-babylon/components/Objects/Cylinder/index.svelte'
   import Plane from 'svelte-babylon/components/Objects/Plane/index.svelte'
+  import type { Writable } from 'svelte/store'
 
-  export let platform: {
-    self: Mesh
-  } = undefined
-  export let screen: {
-    self: Mesh
-  } = undefined
+  export let platform: Writable<Mesh> = undefined
+  export let screen: Writable<Mesh> = undefined
   export let position = Vector3.Zero()
   export let name = 'Platform'
   /**

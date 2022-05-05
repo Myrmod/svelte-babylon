@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { getRoot } from '$lib/utils/context'
   import { Animation } from '@babylonjs/core/Animations/animation.js'
   import type { ArcRotateCamera } from '@babylonjs/core/Cameras/arcRotateCamera.js'
   import type { Camera } from '@babylonjs/core/Cameras/camera'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
+  import type { Scene } from '@babylonjs/core/scene.js'
+  import { getContext } from 'svelte'
+  import { get, type Writable } from 'svelte/store'
 
   const buttons = [
     { name: 'Platform1Button', text: 'go to platform 1' },
@@ -13,50 +15,50 @@
     { name: 'Platform4Button', text: 'go to platform 4' },
   ]
 
-  export let screens: Array<{ self: Mesh }> = []
+  export let screens: Array<Writable<Mesh>> = []
   export let playVideo: () => void
   export let useFreeCamera: () => void
 
-  const root = getRoot()
+  const scene = getContext<Writable<Scene>>('scene')
 
   async function handleClick(id: number) {
     if (id === -1) {
-      $root.scene.beginDirectAnimation(
-        $root.scene.activeCamera,
+      $scene.beginDirectAnimation(
+        $scene.activeCamera,
         [
-          animMove($root.scene.activeCamera, new Vector3(0, 50, 0)),
-          animLookAt($root.scene.activeCamera as ArcRotateCamera, Vector3.Zero()),
+          animMove($scene.activeCamera, new Vector3(0, 50, 0)),
+          animLookAt($scene.activeCamera as ArcRotateCamera, Vector3.Zero()),
         ],
         0,
         120,
         false,
         0.5,
         () => {
-          ;($root.scene.activeCamera as ArcRotateCamera).setTarget(Vector3.Zero())
+          ;($scene.activeCamera as ArcRotateCamera).setTarget(Vector3.Zero())
         },
       )
 
       return
     }
 
-    const mesh = screens[id].self
-    const platform = mesh.parent as Mesh
-    const vector = mesh.forward.multiplyByFloats(-1, -1, -1)
-    const origin = new Vector3(platform.position.x, mesh.position.y, platform.position.z)
+    const mesh = screens[id]
+    const platform = get(mesh).parent as Mesh
+    const vector = get(mesh).forward.multiplyByFloats(-1, -1, -1)
+    const origin = new Vector3(platform.position.x, get(mesh).position.y, platform.position.z)
     const newPosition = origin.add(vector.multiplyByFloats(5, 1, 5))
 
-    $root.scene.beginDirectAnimation(
-      $root.scene.activeCamera,
+    $scene.beginDirectAnimation(
+      $scene.activeCamera,
       [
-        animMove($root.scene.activeCamera, newPosition),
-        animLookAt($root.scene.activeCamera as ArcRotateCamera, origin),
+        animMove($scene.activeCamera, newPosition),
+        animLookAt($scene.activeCamera as ArcRotateCamera, origin),
       ],
       0,
       120,
       false,
       0.5,
       () => {
-        ;($root.scene.activeCamera as ArcRotateCamera).setTarget(origin)
+        ;($scene.activeCamera as ArcRotateCamera).setTarget(origin)
       },
     )
 
