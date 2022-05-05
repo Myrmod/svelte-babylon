@@ -33,6 +33,7 @@ Run `npm run dev` to launch the documentation site.
 We try to make sure `svelte-babylon` as is being tested somewhat. So we integrated `playwright` to test and prevent common errors.
 
 To run all tests you can simply type the following command into your console:
+
 ```
 npm run test
 ```

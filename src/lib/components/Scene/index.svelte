@@ -8,7 +8,7 @@
   import type { OimoJSPlugin as OimoJSPluginType } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
   import { Scene, type SceneOptions } from '@babylonjs/core/scene.js'
   import { getContext, onMount } from 'svelte'
-  import { type Writable } from 'svelte/store'
+  import type { Writable } from 'svelte/store'
 
   // settings
   export let sceneOptions: SceneOptions = undefined
