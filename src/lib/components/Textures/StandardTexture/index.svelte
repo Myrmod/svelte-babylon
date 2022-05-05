@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'
-  import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
+  import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial'
   import { Texture } from '@babylonjs/core/Materials/Textures/texture.js'
   import type { Scene } from '@babylonjs/core/scene'
   import type { Nullable } from '@babylonjs/core/types'
@@ -8,7 +8,11 @@
   import type { Writable } from 'svelte/types/runtime/store'
 
   const scene = getContext<Writable<Scene>>('scene')
-  const parent = getContext<Writable<StandardMaterial>>('object')
+  const parent = getContext<Writable<StandardMaterial>>('material')
+
+  if (!($parent instanceof StandardMaterial)) {
+    throw new Error('StandardTexture requires a parent of StandardMaterial')
+  }
 
   export let url: string
   export let textureTarget:
@@ -69,8 +73,6 @@
   )
 
   onMount(() => {
-    console.log('mount texture')
-
     $parent[textureTarget] = $texture
   })
 

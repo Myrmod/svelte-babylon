@@ -36,7 +36,7 @@
       position={new Vector3(2, 6, 2)}
       castShadowOf={shadowObjects}
     />
-    <ArcRotateCamera target={new Vector3(0, 3, 0)} />
+    <ArcRotateCamera target={new Vector3(0, 3, 0)} radius={10} />
     <Tube
       y={3}
       bind:object
