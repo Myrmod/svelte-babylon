@@ -1,16 +1,21 @@
+<!-- @component
+An implementation of https://doc.babylonjs.com/divingDeeper/webXR/webXRSessionManagers#basic-usage-and-initialization
+ -->
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'
-  import { WebXRSessionManager } from '@babylonjs/core'
+  import {
+    WebXRManagedOutputCanvasOptions,
+    WebXRSessionManager,
+    type WebXRRenderTarget,
+  } from '@babylonjs/core'
   import type { Engine } from '@babylonjs/core/Engines/engine.js'
   import { Color3, Color4 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
   import type { AmmoJSPlugin as AmmoJSPluginType } from '@babylonjs/core/Physics/Plugins/ammoJSPlugin'
   import type { CannonJSPlugin as CannonJSPluginType } from '@babylonjs/core/Physics/Plugins/cannonJSPlugin'
   import type { OimoJSPlugin as OimoJSPluginType } from '@babylonjs/core/Physics/Plugins/oimoJSPlugin'
   import { Scene, type SceneOptions } from '@babylonjs/core/scene.js'
-  import type { WebXRDefaultExperience } from '@babylonjs/core/XR/webXRDefaultExperience'
-  import { getContext, onMount } from 'svelte'
+  import { getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
 
   // settings
@@ -37,14 +42,16 @@
     }
   })
   $scene.physicsEnabled = false
-  export let xrHelper: WebXRDefaultExperience = undefined
   export let sessionManager = createReactiveContext(
-    'WebXRSessionManager',
+    'sessionManager',
     new WebXRSessionManager($scene),
   )
   export let sessionMode: XRSessionMode = 'immersive-vr'
-  export let session = createReactiveContext<XRSession>('XRSession', undefined)
-  export let referenceSpace = createReactiveContext<XRSession>('referenceSpace', undefined)
+  export let referenceSpace = createReactiveContext<XRReferenceSpace>('referenceSpace', undefined)
+  export let referenceSpaceType: XRReferenceSpaceType = 'viewer'
+  export let renderTargetOptions: WebXRManagedOutputCanvasOptions = undefined
+  export let renderTarget = createReactiveContext<WebXRRenderTarget>('renderTarget', undefined)
+  export let xrWebGLLayer: XRWebGLLayer = undefined
 
   onMount(async () => {
     try {
@@ -73,19 +80,20 @@
       }
 
       await $sessionManager.initializeAsync()
-      $session = await $sessionManager.initializeSessionAsync(sessionMode)
+      await $sessionManager.initializeSessionAsync(sessionMode)
 
-      // setReferenceSpaceAsync is not defined for some reason
-      $referenceSpace = await $sessionManager.setReferenceSpaceAsync('local-floor')
+      $referenceSpace = await $sessionManager.setReferenceSpaceTypeAsync(referenceSpaceType)
+      $renderTarget = $sessionManager.getWebXRRenderTarget(renderTargetOptions)
+      xrWebGLLayer = await $renderTarget.initializeXRLayerAsync($sessionManager.session)
 
-      await import('@babylonjs/core/Materials/Node/Blocks')
-      await import('@babylonjs/core/Helpers/sceneHelpers.js')
+      // await import('@babylonjs/core/Materials/Node/Blocks')
+      // await import('@babylonjs/core/Helpers/sceneHelpers.js')
 
-      xrHelper = await $scene.createDefaultXRExperienceAsync()
+      // xrHelper = await $scene.createDefaultXRExperienceAsync()
 
-      if (xrHelper.baseExperience) {
-        await import('@babylonjs/loaders')
-      }
+      // if (xrHelper.baseExperience) {
+      //   await import('@babylonjs/loaders')
+      // }
 
       if (animationsEnabled) {
         await import('@babylonjs/core/Animations/animatable')
@@ -102,70 +110,83 @@
     }
   })
 
+  onDestroy(() => {
+    $renderTarget.dispose()
+    $sessionManager.dispose()
+  })
+
+  export let stop = false
+  $: if ($sessionManager && !stop) {
+    $sessionManager.runXRRenderLoop()
+  }
+  $: if ($sessionManager && stop) {
+    $sessionManager.exitXRAsync()
+  }
+
   // handle floor meshes
-  export let floorMeshes: Array<AbstractMesh> = undefined
-  export const activeFloorMeshes: Array<AbstractMesh> = []
-  let floorMeshesToRemove: Array<AbstractMesh> = []
-  $: if (xrHelper?.baseExperience) {
-    floorMeshes?.forEach(floorMesh => {
-      if (activeFloorMeshes.includes(floorMesh)) {
-        return
-      }
-      activeFloorMeshes.push(floorMesh)
-      xrHelper.teleportation.addFloorMesh(floorMesh)
-    })
-    floorMeshesToRemove = activeFloorMeshes.filter(
-      activeFloorMesh => !floorMeshes?.includes(activeFloorMesh),
-    )
-  }
-  $: if (xrHelper?.baseExperience && floorMeshesToRemove.length) {
-    floorMeshesToRemove.forEach(floorMesh => xrHelper.teleportation.removeFloorMesh(floorMesh))
-    floorMeshesToRemove = []
-  }
+  // export let floorMeshes: Array<AbstractMesh> = undefined
+  // export const activeFloorMeshes: Array<AbstractMesh> = []
+  // let floorMeshesToRemove: Array<AbstractMesh> = []
+  // $: if (xrHelper?.baseExperience) {
+  //   floorMeshes?.forEach(floorMesh => {
+  //     if (activeFloorMeshes.includes(floorMesh)) {
+  //       return
+  //     }
+  //     activeFloorMeshes.push(floorMesh)
+  //     xrHelper.teleportation.addFloorMesh(floorMesh)
+  //   })
+  //   floorMeshesToRemove = activeFloorMeshes.filter(
+  //     activeFloorMesh => !floorMeshes?.includes(activeFloorMesh),
+  //   )
+  // }
+  // $: if (xrHelper?.baseExperience && floorMeshesToRemove.length) {
+  //   floorMeshesToRemove.forEach(floorMesh => xrHelper.teleportation.removeFloorMesh(floorMesh))
+  //   floorMeshesToRemove = []
+  // }
 
-  // handle blocker meshes
-  export let blockerMeshes: Array<AbstractMesh> = undefined
-  export const activeBlockerMeshes: Array<AbstractMesh> = []
-  let blockerMeshesToRemove: Array<AbstractMesh> = []
-  $: if (xrHelper?.baseExperience) {
-    blockerMeshes?.forEach(blockerMesh => {
-      if (activeBlockerMeshes.includes(blockerMesh)) {
-        return
-      }
-      activeBlockerMeshes.push(blockerMesh)
-      xrHelper.teleportation.addBlockerMesh(blockerMesh)
-    })
-    blockerMeshesToRemove = activeBlockerMeshes.filter(
-      activeBlockerMesh => !blockerMeshes?.includes(activeBlockerMesh),
-    )
-  }
-  $: if (xrHelper?.baseExperience && blockerMeshesToRemove.length) {
-    blockerMeshesToRemove.forEach(blockerMesh =>
-      xrHelper.teleportation.removeBlockerMesh(blockerMesh),
-    )
-    blockerMeshesToRemove = []
-  }
+  // // handle blocker meshes
+  // export let blockerMeshes: Array<AbstractMesh> = undefined
+  // export const activeBlockerMeshes: Array<AbstractMesh> = []
+  // let blockerMeshesToRemove: Array<AbstractMesh> = []
+  // $: if (xrHelper?.baseExperience) {
+  //   blockerMeshes?.forEach(blockerMesh => {
+  //     if (activeBlockerMeshes.includes(blockerMesh)) {
+  //       return
+  //     }
+  //     activeBlockerMeshes.push(blockerMesh)
+  //     xrHelper.teleportation.addBlockerMesh(blockerMesh)
+  //   })
+  //   blockerMeshesToRemove = activeBlockerMeshes.filter(
+  //     activeBlockerMesh => !blockerMeshes?.includes(activeBlockerMesh),
+  //   )
+  // }
+  // $: if (xrHelper?.baseExperience && blockerMeshesToRemove.length) {
+  //   blockerMeshesToRemove.forEach(blockerMesh =>
+  //     xrHelper.teleportation.removeBlockerMesh(blockerMesh),
+  //   )
+  //   blockerMeshesToRemove = []
+  // }
 
-  // handle snap points
-  export let snapPoints: Array<Vector3> = undefined
-  export const activeSnapPoints: Array<Vector3> = []
-  let snapPointsToRemove: Array<Vector3> = []
-  $: if (xrHelper?.baseExperience) {
-    snapPoints?.forEach(snapPoint => {
-      if (activeSnapPoints.includes(snapPoint)) {
-        return
-      }
-      activeSnapPoints.push(snapPoint)
-      xrHelper.teleportation.addSnapPoint(snapPoint)
-    })
-    snapPointsToRemove = activeSnapPoints.filter(
-      activeBlockerMesh => !snapPoints?.includes(activeBlockerMesh),
-    )
-  }
-  $: if (xrHelper?.baseExperience && snapPointsToRemove.length) {
-    snapPointsToRemove.forEach(snapPoint => xrHelper.teleportation.removeSnapPoint(snapPoint))
-    snapPointsToRemove = []
-  }
+  // // handle snap points
+  // export let snapPoints: Array<Vector3> = undefined
+  // export const activeSnapPoints: Array<Vector3> = []
+  // let snapPointsToRemove: Array<Vector3> = []
+  // $: if (xrHelper?.baseExperience) {
+  //   snapPoints?.forEach(snapPoint => {
+  //     if (activeSnapPoints.includes(snapPoint)) {
+  //       return
+  //     }
+  //     activeSnapPoints.push(snapPoint)
+  //     xrHelper.teleportation.addSnapPoint(snapPoint)
+  //   })
+  //   snapPointsToRemove = activeSnapPoints.filter(
+  //     activeBlockerMesh => !snapPoints?.includes(activeBlockerMesh),
+  //   )
+  // }
+  // $: if (xrHelper?.baseExperience && snapPointsToRemove.length) {
+  //   snapPointsToRemove.forEach(snapPoint => xrHelper.teleportation.removeSnapPoint(snapPoint))
+  //   snapPointsToRemove = []
+  // }
 
   // general stuff
   $: if ($scene && $scene.cameras.length) {
