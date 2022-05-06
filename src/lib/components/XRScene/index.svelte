@@ -72,6 +72,7 @@
         throw new Error(`"${sessionMode}" is not supported on your device`)
       }
 
+      await $sessionManager.initializeAsync()
       $session = await $sessionManager.initializeSessionAsync(sessionMode)
 
       // setReferenceSpaceAsync is not defined for some reason
