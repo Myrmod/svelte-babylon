@@ -1,16 +1,12 @@
 <script context="module">
   export const prerender = true
-
-  export const load = createKitDocsLoader({ sidebar: '/docs' })
-</script>
-
-<script>
   import {
     Button,
     createKitDocsLoader,
     createSidebarContext,
     KitDocs,
     KitDocsLayout,
+    SocialLink,
   } from '@svelteness/kit-docs'
   import '@svelteness/kit-docs/client/polyfills/index.js'
   import '@svelteness/kit-docs/client/styles/fonts.css'
@@ -18,6 +14,10 @@
   import '@svelteness/kit-docs/client/styles/theme.css'
   import '@svelteness/kit-docs/client/styles/vars.css'
 
+  export const load = createKitDocsLoader({ sidebar: '/docs' })
+</script>
+
+<script>
   /** @type {import('@svelteness/kit-docs').MarkdownMeta} */
   export let meta
 
@@ -45,14 +45,8 @@
       </Button>
     </div>
     <div slot="navbar-right-alt">
-      <a
-        href="https://github.com/Myrmod/svelte-babylon"
-        title="open GitHub repository"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <img src="/assets/icons/github.svg" alt="GitHub Repository" />
-      </a>
+      <SocialLink type="twitter" href="https://twitter.com/myrmod" />
+      <SocialLink type="gitHub" href="https://github.com/Myrmod/svelte-babylon" />
     </div>
 
     <footer slot="main-bottom">
@@ -94,5 +88,8 @@
   .logo {
     height: 2.5rem;
     object-fit: contain;
+  }
+  :global([slot='navbar-right-alt']) {
+    display: flex;
   }
 </style>
