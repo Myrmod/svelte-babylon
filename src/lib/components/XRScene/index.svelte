@@ -1,5 +1,5 @@
 <!-- @component
-An implementation of https://doc.babylonjs.com/divingDeeper/webXR/webXRSessionManagers#basic-usage-and-initialization
+An implementation of https://doc.babylonjs.com/divingDeeper/webXR/webXRExperienceHelpers
  -->
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'

@@ -7,28 +7,14 @@
   import Ground from '$lib/components/Objects/Ground/index.svelte'
   import XRScene from '$lib/components/XRScene/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh'
-  import type { Writable } from 'svelte/store'
-
-  let antialiasing = false
-  let preserveDrawingBuffer = true
-  let stencil = true
-
-  let ground: Writable<Mesh>
 </script>
 
-<Canvas
-  {antialiasing}
-  engineOptions={{
-    preserveDrawingBuffer,
-    stencil,
-  }}
->
-  <XRScene collisionsEnabled floorMeshes={[$ground]}>
+<Canvas antialiasing>
+  <XRScene>
     <HemisphericLight intensity={0.25} />
     <DirectionalLight intensity={0.5} direction={new Vector3(-10, -20, -10)} />
     <ArcRotateCamera />
     <Box checkCollisions />
-    <Ground checkCollisions bind:object={ground} options={{ width: 50, height: 50 }} y={-0.5} />
+    <Ground checkCollisions options={{ width: 50, height: 50 }} y={-0.5} />
   </XRScene>
 </Canvas>
