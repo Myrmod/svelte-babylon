@@ -183,11 +183,14 @@ test.describe('Components throw no error upon initialization', () => {
       url: '/docs/components/layer',
       component: 'LayerFromBase64StringStory',
     },
-    // this test currently doesn'T work since we don't have the WebXR API in place.
-    // {
-    //   name: 'XRScene',
-    //   url: '/docs/components/xr-ar-v',
-    // },
+    {
+      name: 'Instance',
+      url: '/docs/components/instance',
+    },
+    {
+      name: 'XRScene',
+      url: '/docs/components/xr-ar-vr',
+    },
   ].forEach(({ name, url, component }) => {
     test(name, async ({ page }) => {
       page.on('console', message => {
