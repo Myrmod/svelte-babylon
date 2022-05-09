@@ -185,11 +185,15 @@ test.describe('Components throw no error upon initialization', () => {
     },
     {
       name: 'Instance',
-      url: '/docs/components/instance',
+      url: '/docs/components/misc/instance',
     },
     {
       name: 'XRScene',
       url: '/docs/components/xr-ar-vr',
+    },
+    {
+      name: 'XRScene',
+      url: '/docs/components/misc/inspector',
     },
   ].forEach(({ name, url, component }) => {
     test(name, async ({ page }) => {
