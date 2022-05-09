@@ -3,7 +3,7 @@ allows you to create a debug layer on top of your scene
  -->
 <script lang="ts">
   import { Scene, type IInspectorOptions } from '@babylonjs/core'
-  import '@babylonjs/core/Debug/debugLayer'
+  import '@babylonjs/core/Debug/debugLayer.js'
   import '@babylonjs/core/Meshes/instancedMesh.js'
   import { getContext, onMount } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
