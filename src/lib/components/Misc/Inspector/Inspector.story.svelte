@@ -6,7 +6,6 @@
   import Inspector from '$lib/components/Misc/Inspector/index.svelte'
   import Box from '$lib/components/Objects/Box/index.svelte'
   import Scene from '$lib/components/Scene/index.svelte'
-  import '@babylonjs/core/Debug/debugLayer'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
 </script>
 
