@@ -192,7 +192,7 @@ test.describe('Components throw no error upon initialization', () => {
       url: '/docs/components/xr-ar-vr',
     },
     {
-      name: 'XRScene',
+      name: 'Inspector',
       url: '/docs/components/misc/inspector',
     },
   ].forEach(({ name, url, component }) => {
