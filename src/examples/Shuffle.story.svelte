@@ -1,4 +1,5 @@
 <script lang="ts">
+  import TextButton from '$lib/components/GUI/TextButton/index.svelte'
   import { Animation } from '@babylonjs/core/Animations/animation.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
@@ -6,7 +7,6 @@
   import type { Scene as BScene } from '@babylonjs/core/scene.js'
   import { ArcRotateCamera } from 'svelte-babylon'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
-  import Button from 'svelte-babylon/components/GUI/Button/index.svelte'
   import GUI from 'svelte-babylon/components/GUI/index.svelte'
   import DirectionalLight from 'svelte-babylon/components/Lights/DirectionalLight/index.svelte'
   import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
@@ -114,7 +114,7 @@
       {/each}
     {/each}
     <GUI>
-      <Button
+      <TextButton
         text="shuffle"
         onPointerUp={() => {
           newPositionMatrix = shuffle(matrix)

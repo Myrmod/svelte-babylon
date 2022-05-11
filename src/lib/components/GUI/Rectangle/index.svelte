@@ -4,26 +4,30 @@
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
   import type { Grid } from '@babylonjs/gui/2D/controls/grid'
-  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js'
+  import { Rectangle } from '@babylonjs/gui/2D/controls/rectangle.js'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
   import { getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
 
-  export let name = 'TextBlock'
-  export let text = 'Hello Svelte-Babylon'
-  export let color: TextBlock['color'] = 'white'
-  export let fontSize: TextBlock['fontSize'] = 24
-  export let fontFamily: TextBlock['fontFamily'] = 'Arial'
-  export let fontStyle: TextBlock['fontStyle'] = 'normal'
-  export let fontWeight: TextBlock['fontWeight'] = '600'
-  export let fontSizeInPixels: TextBlock['fontSizeInPixels'] = undefined
-  export let fontOffset: TextBlock['fontOffset'] = undefined
-  export let paddingBottom: TextBlock['paddingBottom'] = '0px'
-  export let paddingTop: TextBlock['paddingTop'] = '0px'
-  export let paddingLeft: TextBlock['paddingLeft'] = '0px'
-  export let paddingRight: TextBlock['paddingRight'] = '0px'
-  export let top: TextBlock['top'] = 0
-  export let left: TextBlock['left'] = 0
+  export let name = 'Rectangle'
+  export let width: number | string = 1
+  export let height: number | string = 1
+  export let background: Rectangle['background'] = 'black'
+  export let color: Rectangle['color'] = 'white'
+  /**
+   * Thickness of the border
+   */
+  export let thickness = 1
+  /**
+   * Size in pixel of each corner. Used to create rounded rectangles
+   */
+  export let cornerRadius = 0
+  export let paddingBottom: Rectangle['paddingBottom'] = '0px'
+  export let paddingTop: Rectangle['paddingTop'] = '0px'
+  export let paddingLeft: Rectangle['paddingLeft'] = '0px'
+  export let paddingRight: Rectangle['paddingRight'] = '0px'
+  export let top: Rectangle['top'] = 0
+  export let left: Rectangle['left'] = 0
 
   const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
   const grid = getContext<Writable<Grid>>('grid')
@@ -35,8 +39,7 @@
    * only applicable if the parent is a Grid
    */
   export let column = 0
-
-  export let guiElement = new TextBlock(name, text)
+  export let guiElement = new Rectangle(name)
 
   onMount(() => {
     try {
@@ -87,19 +90,17 @@
 
   $: if (guiElement) {
     guiElement.color = color
-    guiElement.fontFamily = fontFamily
-    guiElement.fontOffset = fontOffset
-    guiElement.fontSize = fontSize
-    guiElement.fontSizeInPixels = fontSizeInPixels
-    guiElement.fontStyle = fontStyle
-    guiElement.fontWeight = fontWeight
+    guiElement.background = background
     guiElement.name = name
-    guiElement.text = text
+    guiElement.width = width
+    guiElement.height = height
     guiElement.paddingBottom = paddingBottom
     guiElement.paddingTop = paddingTop
     guiElement.paddingLeft = paddingLeft
     guiElement.paddingRight = paddingRight
     guiElement.top = top
     guiElement.left = left
+    guiElement.thickness = thickness
+    guiElement.cornerRadius = cornerRadius
   }
 </script>

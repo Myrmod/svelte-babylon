@@ -4,26 +4,32 @@
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
   import type { Grid } from '@babylonjs/gui/2D/controls/grid'
-  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js'
+  import { InputText } from '@babylonjs/gui/2D/controls/inputText.js'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
 
-  export let name = 'TextBlock'
-  export let text = 'Hello Svelte-Babylon'
-  export let color: TextBlock['color'] = 'white'
-  export let fontSize: TextBlock['fontSize'] = 24
-  export let fontFamily: TextBlock['fontFamily'] = 'Arial'
-  export let fontStyle: TextBlock['fontStyle'] = 'normal'
-  export let fontWeight: TextBlock['fontWeight'] = '600'
-  export let fontSizeInPixels: TextBlock['fontSizeInPixels'] = undefined
-  export let fontOffset: TextBlock['fontOffset'] = undefined
-  export let paddingBottom: TextBlock['paddingBottom'] = '0px'
-  export let paddingTop: TextBlock['paddingTop'] = '0px'
-  export let paddingLeft: TextBlock['paddingLeft'] = '0px'
-  export let paddingRight: TextBlock['paddingRight'] = '0px'
-  export let top: TextBlock['top'] = 0
-  export let left: TextBlock['left'] = 0
+  const dispatch = createEventDispatcher()
+
+  export let name = 'InputText'
+  export let text = ''
+  export let color: InputText['color'] = 'white'
+  export let fontSize: InputText['fontSize'] = 24
+  export let fontFamily: InputText['fontFamily'] = 'Arial'
+  export let fontStyle: InputText['fontStyle'] = 'normal'
+  export let fontWeight: InputText['fontWeight'] = '600'
+  export let fontSizeInPixels: InputText['fontSizeInPixels'] = undefined
+  export let fontOffset: InputText['fontOffset'] = undefined
+  export let paddingBottom: InputText['paddingBottom'] = '0px'
+  export let paddingTop: InputText['paddingTop'] = '0px'
+  export let paddingLeft: InputText['paddingLeft'] = '0px'
+  export let paddingRight: InputText['paddingRight'] = '0px'
+  export let top: InputText['top'] = 0
+  export let left: InputText['left'] = 0
+  export let maxWidth: number | string = undefined
+  export let width: number | string = undefined
+  export let height: number | string = undefined
+  export let value = ''
 
   const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
   const grid = getContext<Writable<Grid>>('grid')
@@ -36,7 +42,7 @@
    */
   export let column = 0
 
-  export let guiElement = new TextBlock(name, text)
+  export let guiElement = new InputText(name, text)
 
   onMount(() => {
     try {
@@ -45,6 +51,13 @@
       } else {
         $parent.addControl(guiElement)
       }
+      if (value) {
+        guiElement.text = value
+      }
+      guiElement.onTextChangedObservable.add(input => {
+        value = input.text
+        dispatch('change', value)
+      })
     } catch (error) {
       console.error(error)
     }
@@ -101,5 +114,8 @@
     guiElement.paddingRight = paddingRight
     guiElement.top = top
     guiElement.left = left
+    if (maxWidth) guiElement.maxWidth = maxWidth
+    if (width) guiElement.width = width
+    if (height) guiElement.height = height
   }
 </script>

@@ -1,8 +1,8 @@
 <script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
-  import Button from '$lib/components/GUI/Button/index.svelte'
   import GUI from '$lib/components/GUI/index.svelte'
+  import TextBlock from '$lib/components/GUI/TextBlock/index.svelte'
   import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import Box from '$lib/components/Objects/Box/index.svelte'
@@ -11,10 +11,6 @@
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Writable } from 'svelte/types/runtime/store'
-
-  function handleClick() {
-    alert('clicked button')
-  }
 
   let object: Writable<Mesh>
 
@@ -27,12 +23,12 @@
     shadowObjects = temp
   }
 
-  const width = '150px'
-  const height = '40px'
+  const text = 'Hello Svelte-Babylon'
   const color = '#ffffff'
-  const cornerRadius = 20
-  const background = '#aaaa00'
-  const text = 'Click Me'
+  const fontSize = 24
+  const fontFamily = 'Arial'
+  const fontStyle = 'normal'
+  const fontWeight = '600'
 </script>
 
 <Canvas
@@ -54,15 +50,7 @@
     <Box y={3} bind:object />
     <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
     <GUI>
-      <Button
-        onPointerUp={handleClick}
-        {width}
-        {height}
-        {color}
-        {cornerRadius}
-        {background}
-        {text}
-      />
+      <TextBlock {text} {color} {fontSize} {fontFamily} {fontStyle} {fontWeight} />
     </GUI>
   </Scene>
 </Canvas>

@@ -4,26 +4,32 @@
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
   import type { Grid } from '@babylonjs/gui/2D/controls/grid'
-  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js'
+  import { InputPassword } from '@babylonjs/gui/2D/controls/inputPassword.js'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
 
-  export let name = 'TextBlock'
-  export let text = 'Hello Svelte-Babylon'
-  export let color: TextBlock['color'] = 'white'
-  export let fontSize: TextBlock['fontSize'] = 24
-  export let fontFamily: TextBlock['fontFamily'] = 'Arial'
-  export let fontStyle: TextBlock['fontStyle'] = 'normal'
-  export let fontWeight: TextBlock['fontWeight'] = '600'
-  export let fontSizeInPixels: TextBlock['fontSizeInPixels'] = undefined
-  export let fontOffset: TextBlock['fontOffset'] = undefined
-  export let paddingBottom: TextBlock['paddingBottom'] = '0px'
-  export let paddingTop: TextBlock['paddingTop'] = '0px'
-  export let paddingLeft: TextBlock['paddingLeft'] = '0px'
-  export let paddingRight: TextBlock['paddingRight'] = '0px'
-  export let top: TextBlock['top'] = 0
-  export let left: TextBlock['left'] = 0
+  const dispatch = createEventDispatcher()
+
+  export let name = 'InputPassword'
+  export let text = ''
+  export let color: InputPassword['color'] = 'white'
+  export let fontSize: InputPassword['fontSize'] = 24
+  export let fontFamily: InputPassword['fontFamily'] = 'Arial'
+  export let fontStyle: InputPassword['fontStyle'] = 'normal'
+  export let fontWeight: InputPassword['fontWeight'] = '600'
+  export let fontSizeInPixels: InputPassword['fontSizeInPixels'] = undefined
+  export let fontOffset: InputPassword['fontOffset'] = undefined
+  export let paddingBottom: InputPassword['paddingBottom'] = '0px'
+  export let paddingTop: InputPassword['paddingTop'] = '0px'
+  export let paddingLeft: InputPassword['paddingLeft'] = '0px'
+  export let paddingRight: InputPassword['paddingRight'] = '0px'
+  export let top: InputPassword['top'] = 0
+  export let left: InputPassword['left'] = 0
+  export let maxWidth: number | string = undefined
+  export let width: number | string = undefined
+  export let height: number | string = undefined
+  export let value = ''
 
   const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
   const grid = getContext<Writable<Grid>>('grid')
@@ -36,7 +42,7 @@
    */
   export let column = 0
 
-  export let guiElement = new TextBlock(name, text)
+  export let guiElement = new InputPassword(name, text)
 
   onMount(() => {
     try {
@@ -45,6 +51,13 @@
       } else {
         $parent.addControl(guiElement)
       }
+      if (value) {
+        guiElement.text = value
+      }
+      guiElement.onTextChangedObservable.add(input => {
+        value = input.text
+        dispatch('change', value)
+      })
     } catch (error) {
       console.error(error)
     }
@@ -101,5 +114,8 @@
     guiElement.paddingRight = paddingRight
     guiElement.top = top
     guiElement.left = left
+    if (maxWidth) guiElement.maxWidth = maxWidth
+    if (width) guiElement.width = width
+    if (height) guiElement.height = height
   }
 </script>

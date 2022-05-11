@@ -1,29 +1,20 @@
 <script lang="ts">
+  import { Color3 } from '@babylonjs/core'
   import type { Vector2 } from '@babylonjs/core/Maths/math.vector'
   import type { EventState } from '@babylonjs/core/Misc/observable'
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
+  import { ColorPicker } from '@babylonjs/gui/2D/controls/colorpicker.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
   import type { Grid } from '@babylonjs/gui/2D/controls/grid'
-  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
+  const dispatch = createEventDispatcher()
 
-  export let name = 'TextBlock'
-  export let text = 'Hello Svelte-Babylon'
-  export let color: TextBlock['color'] = 'white'
-  export let fontSize: TextBlock['fontSize'] = 24
-  export let fontFamily: TextBlock['fontFamily'] = 'Arial'
-  export let fontStyle: TextBlock['fontStyle'] = 'normal'
-  export let fontWeight: TextBlock['fontWeight'] = '600'
-  export let fontSizeInPixels: TextBlock['fontSizeInPixels'] = undefined
-  export let fontOffset: TextBlock['fontOffset'] = undefined
-  export let paddingBottom: TextBlock['paddingBottom'] = '0px'
-  export let paddingTop: TextBlock['paddingTop'] = '0px'
-  export let paddingLeft: TextBlock['paddingLeft'] = '0px'
-  export let paddingRight: TextBlock['paddingRight'] = '0px'
-  export let top: TextBlock['top'] = 0
-  export let left: TextBlock['left'] = 0
+  export let name = 'ColorPicker'
+  export let color = Color3.Gray()
+  export let top: ColorPicker['top'] = 0
+  export let left: ColorPicker['left'] = 0
 
   const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
   const grid = getContext<Writable<Grid>>('grid')
@@ -36,10 +27,17 @@
    */
   export let column = 0
 
-  export let guiElement = new TextBlock(name, text)
+  export let guiElement = new ColorPicker(name)
 
   onMount(() => {
     try {
+      guiElement.value = color
+
+      guiElement.onValueChangedObservable.add(value => {
+        color = value
+        dispatch('change', value)
+      })
+
       if (grid) {
         $grid.addControl(guiElement, row, column)
       } else {
@@ -86,19 +84,7 @@
   }
 
   $: if (guiElement) {
-    guiElement.color = color
-    guiElement.fontFamily = fontFamily
-    guiElement.fontOffset = fontOffset
-    guiElement.fontSize = fontSize
-    guiElement.fontSizeInPixels = fontSizeInPixels
-    guiElement.fontStyle = fontStyle
-    guiElement.fontWeight = fontWeight
     guiElement.name = name
-    guiElement.text = text
-    guiElement.paddingBottom = paddingBottom
-    guiElement.paddingTop = paddingTop
-    guiElement.paddingLeft = paddingLeft
-    guiElement.paddingRight = paddingRight
     guiElement.top = top
     guiElement.left = left
   }

@@ -1,20 +1,17 @@
 <script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
+  import Checkbox from '$lib/components/GUI/Checkbox/index.svelte'
   import GUI from '$lib/components/GUI/index.svelte'
-  import TextBlock from '$lib/components/GUI/TextBlock/index.svelte'
   import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
   import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
   import Box from '$lib/components/Objects/Box/index.svelte'
+  import Sphere from '$lib/components/Objects/Sphere/index.svelte'
   import Scene from '$lib/components/Scene/index.svelte'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
 
-  const text = 'Hello Svelte-Babylon'
   const color = '#ffffff'
-  const fontSize = 24
-  const fontFamily = 'Arial'
-  const fontStyle = 'normal'
-  const fontWeight = '600'
+  let showBox = true
 </script>
 
 <Canvas
@@ -32,9 +29,13 @@
       position={new Vector3(2, 6, 2)}
     />
     <ArcRotateCamera />
-    <Box />
+    {#if showBox}
+      <Box />
+    {:else}
+      <Sphere />
+    {/if}
     <GUI>
-      <TextBlock {text} {color} {fontSize} {fontFamily} {fontStyle} {fontWeight} />
+      <Checkbox {color} width="50px" height="50px" on:change={() => (showBox = !showBox)} />
     </GUI>
   </Scene>
 </Canvas>

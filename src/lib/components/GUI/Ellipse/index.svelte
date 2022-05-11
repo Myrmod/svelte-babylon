@@ -3,27 +3,24 @@
   import type { EventState } from '@babylonjs/core/Misc/observable'
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
+  import { Ellipse } from '@babylonjs/gui/2D/controls/ellipse.js'
   import type { Grid } from '@babylonjs/gui/2D/controls/grid'
-  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
   import { getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
 
-  export let name = 'TextBlock'
-  export let text = 'Hello Svelte-Babylon'
-  export let color: TextBlock['color'] = 'white'
-  export let fontSize: TextBlock['fontSize'] = 24
-  export let fontFamily: TextBlock['fontFamily'] = 'Arial'
-  export let fontStyle: TextBlock['fontStyle'] = 'normal'
-  export let fontWeight: TextBlock['fontWeight'] = '600'
-  export let fontSizeInPixels: TextBlock['fontSizeInPixels'] = undefined
-  export let fontOffset: TextBlock['fontOffset'] = undefined
-  export let paddingBottom: TextBlock['paddingBottom'] = '0px'
-  export let paddingTop: TextBlock['paddingTop'] = '0px'
-  export let paddingLeft: TextBlock['paddingLeft'] = '0px'
-  export let paddingRight: TextBlock['paddingRight'] = '0px'
-  export let top: TextBlock['top'] = 0
-  export let left: TextBlock['left'] = 0
+  export let name = 'Ellipse'
+  export let width: number | string = 1
+  export let height: number | string = 1
+  export let background: Ellipse['background'] = 'black'
+  export let color: Ellipse['color'] = 'white'
+  export let thickness = 1
+  export let paddingBottom: Ellipse['paddingBottom'] = '0px'
+  export let paddingTop: Ellipse['paddingTop'] = '0px'
+  export let paddingLeft: Ellipse['paddingLeft'] = '0px'
+  export let paddingRight: Ellipse['paddingRight'] = '0px'
+  export let top: Ellipse['top'] = 0
+  export let left: Ellipse['left'] = 0
 
   const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
   const grid = getContext<Writable<Grid>>('grid')
@@ -35,8 +32,7 @@
    * only applicable if the parent is a Grid
    */
   export let column = 0
-
-  export let guiElement = new TextBlock(name, text)
+  export let guiElement = new Ellipse(name)
 
   onMount(() => {
     try {
@@ -87,19 +83,16 @@
 
   $: if (guiElement) {
     guiElement.color = color
-    guiElement.fontFamily = fontFamily
-    guiElement.fontOffset = fontOffset
-    guiElement.fontSize = fontSize
-    guiElement.fontSizeInPixels = fontSizeInPixels
-    guiElement.fontStyle = fontStyle
-    guiElement.fontWeight = fontWeight
+    guiElement.background = background
     guiElement.name = name
-    guiElement.text = text
+    guiElement.width = width
+    guiElement.height = height
     guiElement.paddingBottom = paddingBottom
     guiElement.paddingTop = paddingTop
     guiElement.paddingLeft = paddingLeft
     guiElement.paddingRight = paddingRight
     guiElement.top = top
     guiElement.left = left
+    guiElement.thickness = thickness
   }
 </script>

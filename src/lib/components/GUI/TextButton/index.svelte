@@ -4,6 +4,7 @@
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import { Button } from '@babylonjs/gui/2D/controls/button.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
+  import type { Grid } from '@babylonjs/gui/2D/controls/grid'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
   import { getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
@@ -23,19 +24,36 @@
   export let left: Button['left'] = 0
 
   const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
+  const grid = getContext<Writable<Grid>>('grid')
+  /**
+   * only applicable if the parent is a Grid
+   */
+  export let row = 0
+  /**
+   * only applicable if the parent is a Grid
+   */
+  export let column = 0
 
   export let guiElement = Button.CreateSimpleButton(name, text)
 
   onMount(() => {
     try {
-      $parent.addControl(guiElement)
+      if (grid) {
+        $grid.addControl(guiElement, row, column)
+      } else {
+        $parent.addControl(guiElement)
+      }
     } catch (error) {
       console.error(error)
     }
   })
 
   onDestroy(() => {
-    $parent.removeControl(guiElement)
+    if (grid) {
+      $grid.removeControl(guiElement)
+    } else {
+      $parent.removeControl(guiElement)
+    }
     guiElement.dispose()
   })
 

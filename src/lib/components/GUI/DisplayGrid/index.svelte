@@ -3,27 +3,53 @@
   import type { EventState } from '@babylonjs/core/Misc/observable'
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
+  import { DisplayGrid } from '@babylonjs/gui/2D/controls/displayGrid.js'
   import type { Grid } from '@babylonjs/gui/2D/controls/grid'
-  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
   import { getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
 
-  export let name = 'TextBlock'
-  export let text = 'Hello Svelte-Babylon'
-  export let color: TextBlock['color'] = 'white'
-  export let fontSize: TextBlock['fontSize'] = 24
-  export let fontFamily: TextBlock['fontFamily'] = 'Arial'
-  export let fontStyle: TextBlock['fontStyle'] = 'normal'
-  export let fontWeight: TextBlock['fontWeight'] = '600'
-  export let fontSizeInPixels: TextBlock['fontSizeInPixels'] = undefined
-  export let fontOffset: TextBlock['fontOffset'] = undefined
-  export let paddingBottom: TextBlock['paddingBottom'] = '0px'
-  export let paddingTop: TextBlock['paddingTop'] = '0px'
-  export let paddingLeft: TextBlock['paddingLeft'] = '0px'
-  export let paddingRight: TextBlock['paddingRight'] = '0px'
-  export let top: TextBlock['top'] = 0
-  export let left: TextBlock['left'] = 0
+  export let name = 'DisplayGrid'
+  /**
+   * Defines the color of the grid background
+   */
+  export let background = 'Black'
+  /**
+   * Defines the width of each cell
+   */
+  export let cellWidth = 20
+  /**
+   * Defines the height of each cell
+   */
+  export let cellHeight = 20
+  /**
+   * Defines the tickness of minor lines
+   */
+  export let minorLineTickness = 1
+  /**
+   * Defines the color of the minor lines
+   */
+  export let minorLineColor = 'DarkGray'
+  /**
+   * Defines the tickness of major lines
+   */
+  export let majorLineTickness = 2
+  /**
+   * Defines the color of the major lines
+   */
+  export let majorLineColor = 'White'
+  /**
+   * Defines the frequency of major lines
+   */
+  export let majorLineFrequency = 5
+  export let width: number | string = 1
+  export let height: number | string = 1
+  export let paddingBottom: DisplayGrid['paddingBottom'] = '0px'
+  export let paddingTop: DisplayGrid['paddingTop'] = '0px'
+  export let paddingLeft: DisplayGrid['paddingLeft'] = '0px'
+  export let paddingRight: DisplayGrid['paddingRight'] = '0px'
+  export let top: DisplayGrid['top'] = 0
+  export let left: DisplayGrid['left'] = 0
 
   const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
   const grid = getContext<Writable<Grid>>('grid')
@@ -36,7 +62,7 @@
    */
   export let column = 0
 
-  export let guiElement = new TextBlock(name, text)
+  export let guiElement = new DisplayGrid(name)
 
   onMount(() => {
     try {
@@ -86,20 +112,22 @@
   }
 
   $: if (guiElement) {
-    guiElement.color = color
-    guiElement.fontFamily = fontFamily
-    guiElement.fontOffset = fontOffset
-    guiElement.fontSize = fontSize
-    guiElement.fontSizeInPixels = fontSizeInPixels
-    guiElement.fontStyle = fontStyle
-    guiElement.fontWeight = fontWeight
+    guiElement.background = background
+    guiElement.cellHeight = cellHeight
+    guiElement.cellWidth = cellWidth
+    guiElement.height = height
+    guiElement.left = left
+    guiElement.majorLineColor = majorLineColor
+    guiElement.majorLineFrequency = majorLineFrequency
+    guiElement.majorLineTickness = majorLineTickness
+    guiElement.minorLineColor = minorLineColor
+    guiElement.minorLineTickness = minorLineTickness
     guiElement.name = name
-    guiElement.text = text
     guiElement.paddingBottom = paddingBottom
-    guiElement.paddingTop = paddingTop
     guiElement.paddingLeft = paddingLeft
     guiElement.paddingRight = paddingRight
+    guiElement.paddingTop = paddingTop
     guiElement.top = top
-    guiElement.left = left
+    guiElement.width = width
   }
 </script>

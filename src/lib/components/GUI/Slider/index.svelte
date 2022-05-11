@@ -4,26 +4,33 @@
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
   import type { Grid } from '@babylonjs/gui/2D/controls/grid'
-  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js'
+  import { Slider } from '@babylonjs/gui/2D/controls/sliders/slider.js'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
 
-  export let name = 'TextBlock'
-  export let text = 'Hello Svelte-Babylon'
-  export let color: TextBlock['color'] = 'white'
-  export let fontSize: TextBlock['fontSize'] = 24
-  export let fontFamily: TextBlock['fontFamily'] = 'Arial'
-  export let fontStyle: TextBlock['fontStyle'] = 'normal'
-  export let fontWeight: TextBlock['fontWeight'] = '600'
-  export let fontSizeInPixels: TextBlock['fontSizeInPixels'] = undefined
-  export let fontOffset: TextBlock['fontOffset'] = undefined
-  export let paddingBottom: TextBlock['paddingBottom'] = '0px'
-  export let paddingTop: TextBlock['paddingTop'] = '0px'
-  export let paddingLeft: TextBlock['paddingLeft'] = '0px'
-  export let paddingRight: TextBlock['paddingRight'] = '0px'
-  export let top: TextBlock['top'] = 0
-  export let left: TextBlock['left'] = 0
+  const dispatch = createEventDispatcher()
+
+  export let name = 'Slider'
+  export let color: Slider['color'] = 'white'
+  export let fontSize: Slider['fontSize'] = 24
+  export let fontFamily: Slider['fontFamily'] = 'Arial'
+  export let fontStyle: Slider['fontStyle'] = 'normal'
+  export let fontWeight: Slider['fontWeight'] = '600'
+  export let fontSizeInPixels: Slider['fontSizeInPixels'] = undefined
+  export let fontOffset: Slider['fontOffset'] = undefined
+  export let paddingBottom: Slider['paddingBottom'] = '0px'
+  export let paddingTop: Slider['paddingTop'] = '0px'
+  export let paddingLeft: Slider['paddingLeft'] = '0px'
+  export let paddingRight: Slider['paddingRight'] = '0px'
+  export let top: Slider['top'] = 0
+  export let left: Slider['left'] = 0
+  export let width: number | string = undefined
+  export let height: number | string = undefined
+  export let value = 0
+  export let minimum = 0
+  export let maximum = 100
+  export let step = 0
 
   const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
   const grid = getContext<Writable<Grid>>('grid')
@@ -36,7 +43,7 @@
    */
   export let column = 0
 
-  export let guiElement = new TextBlock(name, text)
+  export let guiElement = new Slider(name)
 
   onMount(() => {
     try {
@@ -45,6 +52,11 @@
       } else {
         $parent.addControl(guiElement)
       }
+      guiElement.value = value
+      guiElement.onValueChangedObservable.add(v => {
+        value = v
+        dispatch('change', v)
+      })
     } catch (error) {
       console.error(error)
     }
@@ -94,12 +106,16 @@
     guiElement.fontStyle = fontStyle
     guiElement.fontWeight = fontWeight
     guiElement.name = name
-    guiElement.text = text
     guiElement.paddingBottom = paddingBottom
     guiElement.paddingTop = paddingTop
     guiElement.paddingLeft = paddingLeft
     guiElement.paddingRight = paddingRight
     guiElement.top = top
     guiElement.left = left
+    guiElement.minimum = minimum
+    guiElement.maximum = maximum
+    guiElement.step = step
+    if (width) guiElement.width = width
+    if (height) guiElement.height = height
   }
 </script>
