@@ -19,7 +19,88 @@ test.describe('Components throw no error upon initialization', () => {
       url: '/docs/components/gizmos',
     },
     {
-      name: 'GUI',
+      name: 'GUI/CheckboxStory',
+      component: 'CheckboxStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/ColorPickerStory',
+      component: 'ColorPickerStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/DisplayGridStory',
+      component: 'DisplayGridStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/EllipseStory',
+      component: 'EllipseStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/GridStory',
+      component: 'GridStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/ImageStory',
+      component: 'ImageStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/InputPasswordStory',
+      component: 'InputPasswordStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/InputTextStory',
+      component: 'InputTextStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/LineStory',
+      component: 'LineStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/RadioButtonStory',
+      component: 'RadioButtonStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/RectangleStory',
+      component: 'RectangleStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/ScrollViewerStory',
+      component: 'ScrollViewerStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/SliderStory',
+      component: 'SliderStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/StackPanelStory',
+      component: 'StackPanelStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/TextBlockStory',
+      component: 'TextBlockStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/TextButtonStory',
+      component: 'TextButtonStory',
+      url: '/docs/components/GUI',
+    },
+    {
+      name: 'GUI/VirtualKeyboardStory',
+      component: 'VirtualKeyboardStory',
       url: '/docs/components/GUI',
     },
     {
