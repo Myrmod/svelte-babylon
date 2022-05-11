@@ -4,26 +4,43 @@
   import type { AdvancedDynamicTexture } from '@babylonjs/gui/2D/advancedDynamicTexture.js'
   import type { Control } from '@babylonjs/gui/2D/controls/control'
   import type { Grid } from '@babylonjs/gui/2D/controls/grid'
-  import { TextBlock } from '@babylonjs/gui/2D/controls/textBlock.js'
+  import {
+    VirtualKeyboard,
+    type KeyPropertySet,
+  } from '@babylonjs/gui/2D/controls/virtualKeyboard.js'
   import type { Vector2WithInfo } from '@babylonjs/gui/2D/math2D'
-  import { getContext, onDestroy, onMount } from 'svelte'
+  import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/store'
 
-  export let name = 'TextBlock'
-  export let text = 'Hello Svelte-Babylon'
-  export let color: TextBlock['color'] = 'white'
-  export let fontSize: TextBlock['fontSize'] = 24
-  export let fontFamily: TextBlock['fontFamily'] = 'Arial'
-  export let fontStyle: TextBlock['fontStyle'] = 'normal'
-  export let fontWeight: TextBlock['fontWeight'] = '600'
-  export let fontSizeInPixels: TextBlock['fontSizeInPixels'] = undefined
-  export let fontOffset: TextBlock['fontOffset'] = undefined
-  export let paddingBottom: TextBlock['paddingBottom'] = '0px'
-  export let paddingTop: TextBlock['paddingTop'] = '0px'
-  export let paddingLeft: TextBlock['paddingLeft'] = '0px'
-  export let paddingRight: TextBlock['paddingRight'] = '0px'
-  export let top: TextBlock['top'] = 0
-  export let left: TextBlock['left'] = 0
+  const dispatch = createEventDispatcher()
+
+  export let name = 'VirtualKeyboard'
+  export let fontSize: VirtualKeyboard['fontSize'] = 24
+  export let fontFamily: VirtualKeyboard['fontFamily'] = 'Arial'
+  export let fontStyle: VirtualKeyboard['fontStyle'] = 'normal'
+  export let fontWeight: VirtualKeyboard['fontWeight'] = '600'
+  export let fontSizeInPixels: VirtualKeyboard['fontSizeInPixels'] = undefined
+  export let fontOffset: VirtualKeyboard['fontOffset'] = undefined
+  export let paddingBottom: VirtualKeyboard['paddingBottom'] = '0px'
+  export let paddingTop: VirtualKeyboard['paddingTop'] = '0px'
+  export let paddingLeft: VirtualKeyboard['paddingLeft'] = '0px'
+  export let paddingRight: VirtualKeyboard['paddingRight'] = '0px'
+  export let top: VirtualKeyboard['top'] = 0
+  export let left: VirtualKeyboard['left'] = 0
+  export let width: number | string = 1
+  export let height: number | string = 1
+  export let isVertical = true
+  export let defaultButtonWidth = '40px'
+  export let defaultButtonHeight = '40px'
+  export let defaultButtonPaddingLeft = '2px'
+  export let defaultButtonPaddingRight = '2px'
+  export let defaultButtonPaddingTop = '2px'
+  export let defaultButtonPaddingBottom = '2px'
+  export let defaultButtonColor = '#DDD'
+  export let defaultButtonBackground = '#070707'
+  export let keyRows: Array<
+    Array<string> | { vals: Array<string>; propertySets?: Array<KeyPropertySet> }
+  > = undefined
 
   const parent = getContext<Writable<AdvancedDynamicTexture>>('gui')
   const grid = getContext<Writable<Grid>>('grid')
@@ -36,7 +53,7 @@
    */
   export let column = 0
 
-  export let guiElement = new TextBlock(name, text)
+  export let guiElement = new VirtualKeyboard(name)
 
   onMount(() => {
     try {
@@ -45,6 +62,23 @@
       } else {
         $parent.addControl(guiElement)
       }
+
+      keyRows?.forEach(row => {
+        if (typeof row[0] !== 'string') {
+          const casted = row as { vals: Array<string>; propertySets?: Array<KeyPropertySet> }
+
+          guiElement.addKeysRow(casted.vals, casted.propertySets)
+          return
+        }
+
+        const casted = row as Array<string>
+
+        guiElement.addKeysRow(casted)
+      })
+
+      guiElement.onKeyPressObservable.add(value => {
+        dispatch('keyPress', value)
+      })
     } catch (error) {
       console.error(error)
     }
@@ -86,7 +120,6 @@
   }
 
   $: if (guiElement) {
-    guiElement.color = color
     guiElement.fontFamily = fontFamily
     guiElement.fontOffset = fontOffset
     guiElement.fontSize = fontSize
@@ -94,12 +127,22 @@
     guiElement.fontStyle = fontStyle
     guiElement.fontWeight = fontWeight
     guiElement.name = name
-    guiElement.text = text
     guiElement.paddingBottom = paddingBottom
     guiElement.paddingTop = paddingTop
     guiElement.paddingLeft = paddingLeft
     guiElement.paddingRight = paddingRight
     guiElement.top = top
     guiElement.left = left
+    guiElement.width = width
+    guiElement.height = height
+    guiElement.isVertical = isVertical
+    guiElement.defaultButtonWidth = defaultButtonWidth
+    guiElement.defaultButtonHeight = defaultButtonHeight
+    guiElement.defaultButtonPaddingLeft = defaultButtonPaddingLeft
+    guiElement.defaultButtonPaddingRight = defaultButtonPaddingRight
+    guiElement.defaultButtonPaddingTop = defaultButtonPaddingTop
+    guiElement.defaultButtonPaddingBottom = defaultButtonPaddingBottom
+    guiElement.defaultButtonColor = defaultButtonColor
+    guiElement.defaultButtonBackground = defaultButtonBackground
   }
 </script>

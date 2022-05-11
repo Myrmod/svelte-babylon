@@ -1,56 +1,23 @@
 <script lang="ts">
   import ArcRotateCamera from '$lib/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from '$lib/components/Canvas/index.svelte'
+  import Ellipse from '$lib/components/GUI/Ellipse/index.svelte'
+  import Image from '$lib/components/GUI/Image/index.svelte'
   import GUI from '$lib/components/GUI/index.svelte'
-  import TextBlock from '$lib/components/GUI/TextBlock/index.svelte'
-  import DirectionalLight from '$lib/components/Lights/DirectionalLight/index.svelte'
-  import HemisphericLight from '$lib/components/Lights/HemisphericLight/index.svelte'
-  import Box from '$lib/components/Objects/Box/index.svelte'
-  import Ground from '$lib/components/Objects/Ground/index.svelte'
+  import Rectangle from '$lib/components/GUI/Rectangle/index.svelte'
+  import StackPanel from '$lib/components/GUI/StackPanel/index.svelte'
   import Scene from '$lib/components/Scene/index.svelte'
-  import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import type { Writable } from 'svelte/types/runtime/store'
-
-  let object: Writable<Mesh>
-
-  let shadowObjects: Array<Mesh>
-  $: {
-    const temp: typeof shadowObjects = []
-    if ($object) {
-      temp.push($object)
-    }
-    shadowObjects = temp
-  }
-
-  const text = 'Hello Svelte-Babylon'
-  const color = '#ffffff'
-  const fontSize = 24
-  const fontFamily = 'Arial'
-  const fontStyle = 'normal'
-  const fontWeight = '600'
 </script>
 
-<Canvas
-  antialiasing={true}
-  engineOptions={{
-    preserveDrawingBuffer: true,
-    stencil: true,
-  }}
->
+<Canvas>
   <Scene>
-    <HemisphericLight intensity={0.5} />
-    <DirectionalLight
-      intensity={0.25}
-      direction={new Vector3(-10, -20, -10)}
-      position={new Vector3(2, 6, 2)}
-      castShadowOf={shadowObjects}
-    />
-    <ArcRotateCamera target={new Vector3(0, 3, 0)} />
-    <Box y={3} bind:object />
-    <Ground options={{ width: 6, height: 6, subdivisions: 2 }} receiveShadows y={1} />
+    <ArcRotateCamera />
     <GUI>
-      <TextBlock {text} {color} {fontSize} {fontFamily} {fontStyle} {fontWeight} />
+      <StackPanel width="100px">
+        <Image src="/svelte-babylon-logo.png" width="100px" height="100px" />
+        <Ellipse width="100px" height="100px" background="blue" color="blue" />
+        <Rectangle width="100px" height="100px" background="green" color="green" />
+      </StackPanel>
     </GUI>
   </Scene>
 </Canvas>
