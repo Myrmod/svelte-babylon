@@ -12,7 +12,7 @@
   import { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
-  import type { Writable } from 'svelte/types/runtime/store'
+  import type { Writable } from 'svelte/store'
 
   let object: Writable<Mesh>
 

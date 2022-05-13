@@ -21,6 +21,9 @@
   export let invertNormalMapY = false
   export let invertRefractionY = false
   export let backfaceCulling = false
+  export let disableLighting = false
+  export let disableColorWrite = false
+  export let disableDepthWrite = false
 
   export const material = createReactiveContext('material', new StandardMaterial(name, $scene))
 
@@ -63,6 +66,9 @@
     $material.invertNormalMapY = invertNormalMapY
     $material.invertRefractionY = invertRefractionY
     $material.backFaceCulling = backfaceCulling
+    $material.disableLighting = disableLighting
+    $material.disableColorWrite = disableColorWrite
+    $material.disableDepthWrite = disableDepthWrite
   }
 </script>
 

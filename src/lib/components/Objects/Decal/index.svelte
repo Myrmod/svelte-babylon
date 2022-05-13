@@ -1,5 +1,6 @@
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'
+  import type { Node } from '@babylonjs/core'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -7,16 +8,15 @@
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js'
   import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
   import { CreateDecal } from '@babylonjs/core/Meshes/Builders/decalBuilder.js'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy } from 'svelte'
-  import type { Writable } from 'svelte/types/runtime/store'
+  import type { Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
   export let name: string = 'Decal'
   export let options = {} as Parameters<typeof CreateDecal>[2]
-  const parent = getContext<Writable<Mesh>>('object')
+  export let parent = getContext<Writable<Node>>('object')
   if (!parent) {
     throw new Error('The <Decal> components has to be nested inside of another Object, eg. <Box>.')
   }

@@ -19,6 +19,9 @@
   export let bottomColorAlpha = 1
   export let offset = 0.5
   export let smoothness = 1
+  export let disableLighting = false
+  export let disableColorWrite = false
+  export let disableDepthWrite = false
 
   export const material = createReactiveContext('material', new GradientMaterial(name, $scene))
 
@@ -53,6 +56,9 @@
     $material.bottomColorAlpha = bottomColorAlpha
     $material.offset = offset
     $material.smoothness = smoothness
+    $material.disableLighting = disableLighting
+    $material.disableColorWrite = disableColorWrite
+    $material.disableDepthWrite = disableDepthWrite
   }
 </script>
 

@@ -1,17 +1,18 @@
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'
+  import type { Node } from '@babylonjs/core'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
   import type { Condition } from '@babylonjs/core/Actions/condition'
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js'
   import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
+  import type { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { CreateLines } from '@babylonjs/core/Meshes/Builders/linesBuilder.js'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy } from 'svelte'
-  import type { Writable } from 'svelte/types/runtime/store'
+  import type { Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -19,7 +20,7 @@
   export let receiveShadows = false
   export let options: Parameters<typeof CreateLines>[1]
 
-  const parent = getContext<Writable<Mesh>>('object')
+  export let parent = getContext<Writable<Node>>('object')
   export let object = createReactiveContext('object', CreateLines(name, options, $scene))
   $object.material = new StandardMaterial(`${name}-material`, $scene)
 
@@ -28,6 +29,10 @@
   export let y: number = undefined
   export let z: number = undefined
   export let rotation = Vector3.Zero()
+  export let isVisible = true
+  export let renderOutline = false
+  export let outlineColor: Color3 = undefined
+  export let outlineWidth: number = undefined
 
   onDestroy(() => {
     if ($object.actionManager) {
@@ -41,7 +46,12 @@
     $object.position.y = y || position.y
     $object.position.z = z || position.z
     $object.receiveShadows = receiveShadows
+
     $object.rotation = rotation
+    $object.isVisible = isVisible
+    $object.renderOutline = renderOutline
+    if (outlineColor) $object.outlineColor = outlineColor
+    if (outlineWidth) $object.outlineWidth = outlineWidth
   }
 
   $: if ($parent) {

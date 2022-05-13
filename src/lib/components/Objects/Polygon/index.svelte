@@ -1,19 +1,20 @@
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'
+  import type { Node } from '@babylonjs/core'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
   import type { Condition } from '@babylonjs/core/Actions/condition'
   import { ExecuteCodeAction } from '@babylonjs/core/Actions/directActions.js'
   import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial.js'
+  import type { Color3 } from '@babylonjs/core/Maths/math.color'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
   import { CreatePolygon } from '@babylonjs/core/Meshes/Builders/polygonBuilder.js'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Scene } from '@babylonjs/core/scene.js'
   // we need better typings for this https://github.com/mapbox/earcut
   import earcut from 'earcut'
   import { getContext, onDestroy } from 'svelte'
-  import type { Writable } from 'svelte/types/runtime/store'
+  import type { Writable } from 'svelte/store'
 
   const scene = getContext<Writable<Scene>>('scene')
 
@@ -22,7 +23,7 @@
   export let options: Parameters<typeof CreatePolygon>[1]
   export let earcutInjection: () => unknown = earcut
 
-  const parent = getContext<Writable<Mesh>>('object')
+  export let parent = getContext<Writable<Node>>('object')
   export let object = createReactiveContext(
     'object',
     CreatePolygon(name, options, $scene, earcutInjection),
@@ -35,6 +36,10 @@
   export let z: number = undefined
   export let checkCollisions = false
   export let rotation = Vector3.Zero()
+  export let isVisible = true
+  export let renderOutline = false
+  export let outlineColor: Color3 = undefined
+  export let outlineWidth: number = undefined
 
   onDestroy(() => {
     if ($object.actionManager) {
@@ -49,7 +54,12 @@
     $object.position.z = z || position.z
     $object.receiveShadows = receiveShadows
     $object.checkCollisions = checkCollisions
+
     $object.rotation = rotation
+    $object.isVisible = isVisible
+    $object.renderOutline = renderOutline
+    if (outlineColor) $object.outlineColor = outlineColor
+    if (outlineWidth) $object.outlineWidth = outlineWidth
   }
 
   $: if ($parent) {

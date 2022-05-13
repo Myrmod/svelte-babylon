@@ -7,13 +7,13 @@
 
   const object = getContext<Writable<Mesh>>('object')
   export let number = 1
-  export let onCreated: (instance: InstancedMesh) => void = undefined
+  export let onCreated: (instance: InstancedMesh, index: number) => void = undefined
   export let instances: Array<InstancedMesh> = []
 
   $: if ($object && number && browser) {
     for (let i = 0; i < number; i++) {
       instances[i] = $object.createInstance(`${$object.name}-${i}`)
-      onCreated(instances[i])
+      onCreated(instances[i], i)
     }
   }
 </script>

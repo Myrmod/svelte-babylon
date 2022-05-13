@@ -4,7 +4,7 @@
   import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Scene } from '@babylonjs/core/scene.js'
   import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
-  import type { Writable } from 'svelte/types/runtime/store'
+  import type { Writable } from 'svelte/store'
 
   const dispatch = createEventDispatcher()
 
@@ -31,6 +31,10 @@
   export let y: number = undefined
   export let z: number = undefined
   export let rotation = Vector3.Zero()
+  export let isVisible = true
+  export let renderOutline = false
+  export let outlineColor: Color3 = undefined
+  export let outlineWidth: number = undefined
   export let url: string | string[] | HTMLVideoElement
 
   export let object = new PhotoDome(name, url, options, $scene, (message, exception) => {
