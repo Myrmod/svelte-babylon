@@ -123,8 +123,16 @@
           break
 
         case PointerEventTypes.POINTERUP:
+          if (!firstPick?.parent) return
+
           endPoint.x = eventData.event.clientX
           endPoint.y = eventData.event.clientY
+
+          if (
+            Math.abs(startPoint.x - endPoint.x) <= 10 &&
+            Math.abs(startPoint.y - endPoint.y) <= 10
+          )
+            return
 
           const movementVector = getMovementVector(startPoint, endPoint)
 
