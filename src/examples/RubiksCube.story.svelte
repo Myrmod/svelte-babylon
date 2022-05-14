@@ -1,7 +1,15 @@
 <script lang="ts">
   import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
   import Instance from '$lib/components/Misc/Instance/index.svelte'
-  import type { InstancedMesh, TransformNode as BTransformNode } from '@babylonjs/core'
+  import degreeToRadians from '$lib/utils/Math/degreeToRadians'
+  import {
+    PointerEventTypes,
+    type AbstractMesh,
+    type Engine,
+    type InstancedMesh,
+    type TransformNode as BTransformNode,
+  } from '@babylonjs/core'
+  import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera'
   import { Color3 } from '@babylonjs/core/Maths/math.color.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector.js'
   import type { Scene as BScene } from '@babylonjs/core/scene.js'
@@ -19,34 +27,36 @@
   let scene: Writable<BScene>
   let enabled = false
   let transformNode: Writable<BTransformNode>
+  let camera: Writable<ACamera>
+  let engine: Writable<Engine>
   const planeDetailsArray = [
     {
-      color: new Color3(255 / 255, 255 / 255, 255 / 255),
+      color: new Color3(1, 1, 1), // white
       rotation: new Vector3(Math.PI / 2, 0, 0),
       normal: new Vector3(0, 1, 0),
     },
     {
-      color: new Color3(255 / 255, 213 / 255, 0 / 255),
+      color: new Color3(1, 0, 0), // red
       rotation: new Vector3(-Math.PI / 2, 0, 0),
       normal: new Vector3(0, -1, 0),
     },
     {
-      color: new Color3(0 / 255, 70 / 255, 173 / 255),
+      color: new Color3(0, 1, 0), // green
       rotation: new Vector3(0, -Math.PI / 2, 0),
       normal: new Vector3(1, 0, 0),
     },
     {
-      color: new Color3(0 / 255, 155 / 255, 72 / 255),
+      color: new Color3(0, 0, 1), // blue
       rotation: new Vector3(0, Math.PI / 2, 0),
       normal: new Vector3(-1, 0, 0),
     },
     {
-      color: new Color3(255 / 255, 88 / 255, 0 / 255),
+      color: new Color3(1, 120 / 255, 180 / 255), // rosé
       rotation: new Vector3(Math.PI, 0, 0),
       normal: new Vector3(0, 0, 1),
     },
     {
-      color: new Color3(183 / 255, 18 / 255, 52 / 255),
+      color: new Color3(200 / 255 / 255, 200 / 255, 1), // cyan
       rotation: new Vector3(0, 0, 0),
       normal: new Vector3(0, 0, -1),
     },
@@ -90,8 +100,96 @@
     }
   }
 
-  function setupDragCallbacks() {}
+  let eventAdded = false
+  let firstPick: AbstractMesh = undefined
+  let startPoint = {
+    x: 0,
+    y: 0,
+  }
+  let endPoint = {
+    x: 0,
+    y: 0,
+  }
+  $: if ($scene && !eventAdded) {
+    eventAdded = true
+    $scene.onPointerObservable.add(eventData => {
+      switch (eventData.type) {
+        case PointerEventTypes.POINTERDOWN:
+          startPoint.x = eventData.event.clientX
+          startPoint.y = eventData.event.clientY
 
+          firstPick = $scene.pick($scene.pointerX, $scene.pointerY).pickedMesh
+          if (firstPick) $camera.detachControl()
+          break
+
+        case PointerEventTypes.POINTERUP:
+          endPoint.x = eventData.event.clientX
+          endPoint.y = eventData.event.clientY
+
+          const movementVector = getMovementVector(startPoint, endPoint)
+
+          const cubesToRotate = getCubesToRotate(firstPick.parent as AbstractMesh, movementVector)
+
+          const cubeToRotateAround = getCubeToRotateAround(cubesToRotate, movementVector)
+
+          cubesToRotate?.forEach(cube => {
+            if (movementVector.x) {
+              cube.rotateAround(
+                cubeToRotateAround.position,
+                Vector3.Up(),
+                degreeToRadians(90 * movementVector.x * -1),
+              )
+            } else {
+              cube.rotateAround(
+                cubeToRotateAround.position,
+                Vector3.Left(),
+                degreeToRadians(90 * movementVector.y * -1),
+              )
+            }
+          })
+
+          firstPick = null
+          $camera.attachControl()
+          break
+        default:
+          break
+      }
+    })
+  }
+
+  function getMovementVector(
+    start: { x: number; y: number },
+    end: { x: number; y: number },
+  ): Vector3 {
+    if (Math.abs(start.y - end.y) > Math.abs(start.x - end.x)) {
+      return start.y - end.y < 0 ? Vector3.Down() : Vector3.Up()
+    }
+
+    return start.x - end.x > 0 ? Vector3.Left() : Vector3.Right()
+  }
+
+  function getCubesToRotate(base: AbstractMesh, direction: Vector3) {
+    try {
+      if (direction.x) {
+        return cubes.filter(cube => cube.position.y === base.position.y)
+      }
+
+      return cubes.filter(cube => cube.position.x === base.position.x)
+    } catch (error) {}
+  }
+
+  function getCubeToRotateAround(
+    cubesToRotate: Array<InstancedMesh>,
+    direction: Vector3,
+  ): InstancedMesh {
+    try {
+      if (direction.x) {
+        return cubesToRotate.find(cube => cube.position.x === 1 && cube.position.z === 1)
+      }
+
+      return cubesToRotate.find(cube => cube.position.y === 1 && cube.position.z === 1)
+    } catch (error) {}
+  }
   function findCubesByPlaneDetails(planeDetails: typeof planeDetailsArray[0]) {
     return cubes.filter(
       cube => !cubes.some(ocube => ocube.position.equals(cube.position.add(planeDetails.normal))),
@@ -105,10 +203,12 @@
     preserveDrawingBuffer: true,
     stencil: true,
   }}
+  bind:engine
 >
   <Scene bind:scene clearColor={Color3.White()}>
     <HemisphericLight />
     <ArcRotateCamera
+      bind:camera
       radius={10}
       target={new Vector3(Math.floor(width / 2), Math.floor(width / 2), Math.floor(width / 2))}
     />
