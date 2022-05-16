@@ -3,6 +3,7 @@
   import Instance from '$lib/components/Misc/Instance/index.svelte'
   import degreeToRadians from '$lib/utils/Math/degreeToRadians'
   import {
+    Animation,
     PointerEventTypes,
     type AbstractMesh,
     type Engine,
@@ -29,6 +30,11 @@
   let transformNode: Writable<BTransformNode>
   let camera: Writable<ACamera>
   let engine: Writable<Engine>
+  const centerOfCube = new Vector3(
+    Math.floor(width / 2),
+    Math.floor(width / 2),
+    Math.floor(width / 2),
+  )
   const planeDetailsArray = [
     {
       color: new Color3(1, 1, 1), // white
@@ -63,25 +69,26 @@
   ]
 
   let cubes: Array<InstancedMesh> = []
-
   function handleBoxInstanceCreation(instance: InstancedMesh, _index: number) {
     if (cubes.length === Math.pow(width, 3)) {
       return
     }
-    instance.isVisible = true
+    // does not work
+    // instance.isVisible = true
+
     instance.parent = $transformNode
     cubes = [...cubes, instance]
   }
 
   function handlePlaneInstanceCreation(
     instance: InstancedMesh,
-    _index: number,
+    index: number,
     planeDetails: typeof planeDetailsArray[0],
     cube: InstancedMesh,
   ) {
-    instance.isVisible = true
     instance.isPickable = true
     instance.parent = cube
+    instance.name = `${cube}-Plane-${index}`
     instance.position = planeDetails.normal.scale(0.501).clone()
     instance.rotation = planeDetails.rotation.clone()
     instance.renderOutline = true
@@ -94,6 +101,7 @@
       for (let y = 0; y < width; y++) {
         for (let z = 0; z < width; z++) {
           cubes[counter].position = new Vector3(x, y, z)
+          cubes[counter].parent = null
           counter++
         }
       }
@@ -138,23 +146,37 @@
 
           const cubesToRotate = getCubesToRotate(firstPick.parent as AbstractMesh, movementVector)
 
-          const cubeToRotateAround = getCubeToRotateAround(cubesToRotate, movementVector)
-
+          // set temporary parent
           cubesToRotate?.forEach(cube => {
-            if (movementVector.x) {
-              cube.rotateAround(
-                cubeToRotateAround.position,
-                Vector3.Up(),
-                degreeToRadians(90 * movementVector.x * -1),
-              )
-            } else {
-              cube.rotateAround(
-                cubeToRotateAround.position,
-                Vector3.Left(),
-                degreeToRadians(90 * movementVector.y * -1),
-              )
-            }
+            const position = cube.getAbsolutePosition()
+            cube.parent = $transformNode
+            cube.setAbsolutePosition(position)
           })
+
+          Animation.CreateAndStartAnimation(
+            'rotate',
+            $transformNode,
+            movementVector.x ? 'rotation.y' : 'rotation.x',
+            60,
+            15,
+            0,
+            degreeToRadians(90 * (movementVector.x * -1 || movementVector.y)),
+            0,
+          ).onAnimationEnd = () => {
+            cubesToRotate?.forEach(cube => {
+              const position = cube.getAbsolutePosition()
+              cube.parent = null
+              cube.position.set(
+                Math.round(position.x),
+                Math.round(position.y),
+                Math.round(position.z),
+              )
+              cube.rotate(
+                movementVector.x ? Vector3.Up() : Vector3.Right(),
+                degreeToRadians(90 * (movementVector.x * -1 || movementVector.y)),
+              )
+            })
+          }
 
           firstPick = null
           $camera.attachControl()
@@ -186,18 +208,6 @@
     } catch (error) {}
   }
 
-  function getCubeToRotateAround(
-    cubesToRotate: Array<InstancedMesh>,
-    direction: Vector3,
-  ): InstancedMesh {
-    try {
-      if (direction.x) {
-        return cubesToRotate.find(cube => cube.position.x === 1 && cube.position.z === 1)
-      }
-
-      return cubesToRotate.find(cube => cube.position.y === 1 && cube.position.z === 1)
-    } catch (error) {}
-  }
   function findCubesByPlaneDetails(planeDetails: typeof planeDetailsArray[0]) {
     return cubes.filter(
       cube => !cubes.some(ocube => ocube.position.equals(cube.position.add(planeDetails.normal))),
@@ -213,14 +223,10 @@
   }}
   bind:engine
 >
-  <Scene bind:scene clearColor={Color3.White()}>
+  <Scene bind:scene clearColor={Color3.White()} animationsEnabled>
     <HemisphericLight />
-    <ArcRotateCamera
-      bind:camera
-      radius={10}
-      target={new Vector3(Math.floor(width / 2), Math.floor(width / 2), Math.floor(width / 2))}
-    />
-    <TransformNode bind:object={transformNode}>
+    <ArcRotateCamera bind:camera radius={10} target={centerOfCube} />
+    <TransformNode bind:object={transformNode} position={centerOfCube}>
       {#if cubes.length === Math.pow(width, 3)}
         {#each planeDetailsArray as planeDetails}
           <Plane options={{ size: 0.96 }}>
@@ -234,7 +240,8 @@
           </Plane>
         {/each}
       {/if}
-      <Box isVisible={false}>
+      <!-- we position the box far away (out of rendering range) to hide it, this way we don't -->
+      <Box position={new Vector3(-9999, -9999, -9999)}>
         <StandardMaterial diffuseColor={Color3.Black()} specularColor={Color3.Black()} />
         <Instance number={Math.pow(width, 3)} onCreated={handleBoxInstanceCreation} />
       </Box>

@@ -24,6 +24,7 @@
   export let disableLighting = false
   export let disableColorWrite = false
   export let disableDepthWrite = false
+  export let alpha: number = undefined
 
   export const material = createReactiveContext('material', new StandardMaterial(name, $scene))
 
@@ -53,13 +54,6 @@
   })
 
   $: if ($material) {
-    if (specularColor) $material.specularColor = specularColor
-    if (ambientColor) $material.ambientColor = ambientColor
-    if (diffuseColor) $material.diffuseColor = diffuseColor
-    if (emissiveColor) $material.emissiveColor = emissiveColor
-  }
-
-  $: if ($material) {
     $material.roughness = roughness
     $material.separateCullingPass = separateCullingPass
     $material.invertNormalMapX = invertNormalMapX
@@ -69,6 +63,11 @@
     $material.disableLighting = disableLighting
     $material.disableColorWrite = disableColorWrite
     $material.disableDepthWrite = disableDepthWrite
+    if (alpha) $material.alpha = alpha
+    if (specularColor) $material.specularColor = specularColor
+    if (ambientColor) $material.ambientColor = ambientColor
+    if (diffuseColor) $material.diffuseColor = diffuseColor
+    if (emissiveColor) $material.emissiveColor = emissiveColor
   }
 </script>
 
