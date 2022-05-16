@@ -88,7 +88,7 @@
   ) {
     instance.isPickable = true
     instance.parent = cube
-    instance.name = `${cube}-Plane-${index}`
+    instance.name = `${cube.name}-Plane-${index}`
     instance.position = planeDetails.normal.scale(0.501).clone()
     instance.rotation = planeDetails.rotation.clone()
     instance.renderOutline = true
