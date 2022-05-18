@@ -276,6 +276,31 @@ test.describe('Components throw no error upon initialization', () => {
       name: 'Inspector',
       url: '/docs/components/misc/inspector',
     },
+    // Examples
+    {
+      name: "Rubik's Cube",
+      url: '/docs/examples/rubiks-cube',
+    },
+    {
+      name: 'Showroom',
+      url: '/docs/examples/showroom',
+    },
+    {
+      name: 'Shuffle',
+      url: '/docs/examples/shuffle',
+    },
+    {
+      name: 'first-person-no-physics',
+      url: '/docs/examples/first-person-no-physics',
+    },
+    {
+      name: 'Room',
+      url: '/docs/examples/room',
+    },
+    {
+      name: 'Rotate camera to clicked face',
+      url: '/docs/examples/rotate-camera-to-clicked-face',
+    },
   ].forEach(({ name, url, component }) => {
     test(name, async ({ page }) => {
       page.on('console', message => {

@@ -112,6 +112,7 @@
     $camera.beta = beta
     $camera.wheelPrecision = wheelPrecision
     $camera.wheelDeltaPercentage = wheelDeltaPercentage
+    $camera.setTarget(target)
   }
 
   $: if ($camera === $scene.activeCamera) {

@@ -31,10 +31,6 @@
   export let y: number = undefined
   export let z: number = undefined
   export let rotation = Vector3.Zero()
-  export let isVisible = true
-  export let renderOutline = false
-  export let outlineColor: Color3 = undefined
-  export let outlineWidth: number = undefined
   export let url: string | string[] | HTMLVideoElement
 
   export let object = new PhotoDome(name, url, options, $scene, (message, exception) => {
@@ -57,6 +53,7 @@
     object.position.x = x || position.x
     object.position.y = y || position.y
     object.position.z = z || position.z
+    object.rotation = rotation
   }
 </script>
 

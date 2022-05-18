@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createReactiveContext } from '$lib/utils/createReactiveContext'
-  import type { Node } from '@babylonjs/core'
+  import type { Color3, Node } from '@babylonjs/core'
   import type { IAction } from '@babylonjs/core/Actions/action'
   import type { ActionEvent } from '@babylonjs/core/Actions/actionEvent'
   import { ActionManager } from '@babylonjs/core/Actions/actionManager.js'
@@ -101,9 +101,11 @@
     $object.position.z = z || position.z
     $object.receiveShadows = receiveShadows
     $object.rotationQuaternion = rotationQuaternion
-    $object.rotation.x = rotation.x
-    $object.rotation.y = rotation.y
-    $object.rotation.z = rotation.z
+    $object.rotation = rotation
+    $object.isVisible = isVisible
+    $object.renderOutline = renderOutline
+    if (outlineColor) $object.outlineColor = outlineColor
+    if (outlineWidth) $object.outlineWidth = outlineWidth
   }
 
   $: if (meshes) {

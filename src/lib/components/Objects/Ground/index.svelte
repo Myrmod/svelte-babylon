@@ -28,11 +28,7 @@
   export let renderOutline = false
   export let outlineColor: Color3 = undefined
   export let outlineWidth: number = undefined
-  export let isVisible = true
-  export let renderOutline = false
-  export let outlineColor: Color3 = undefined
-  export let outlineWidth: number = undefinedr3.Zero()
-  export let isVisible = true
+  export let rotation = Vector3.Zero()
 
   export let parent = getContext<Writable<Node>>('object')
   export let object = createReactiveContext('object', CreateGround(name, options, $scene))
@@ -52,11 +48,6 @@
     $object.position.y = y || position.y
     $object.position.z = z || position.z
     $object.checkCollisions = checkCollisions
-    $object.isVisible = isVisible
-    $object.renderOutline = renderOutline
-    if (outlineColor) $object.outlineColor = outlineColor
-    if (outlineWidth) $object.outlineWidth = outlineWidth
-
     $object.rotation = rotation
     $object.isVisible = isVisible
     $object.renderOutline = renderOutline

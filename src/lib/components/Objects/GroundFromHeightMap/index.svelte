@@ -55,6 +55,11 @@
     $object.position.z = z || position.z
     $object.receiveShadows = receiveShadows
     $object.checkCollisions = checkCollisions
+    $object.rotation = rotation
+    $object.isVisible = isVisible
+    $object.renderOutline = renderOutline
+    if (outlineColor) $object.outlineColor = outlineColor
+    if (outlineWidth) $object.outlineWidth = outlineWidth
   }
 
   $: if ($parent) {

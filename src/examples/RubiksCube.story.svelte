@@ -1,40 +1,38 @@
 <script lang="ts">
-  import StandardMaterial from '$lib/components/Materials/StandardMaterial/index.svelte'
-  import Instance from '$lib/components/Misc/Instance/index.svelte'
-  import degreeToRadians from '$lib/utils/Math/degreeToRadians'
-  import {
-    Animation,
-    PointerEventTypes,
-    type AbstractMesh,
-    type Engine,
-    type InstancedMesh,
-    type TransformNode as BTransformNode,
+  import type {
+    AbstractMesh,
+    Engine,
+    InstancedMesh,
+    TransformNode as BTransformNode,
   } from '@babylonjs/core'
+  import { Animation } from '@babylonjs/core/Animations/animation.js'
+  // this import is required for the rotation to work
+  import '@babylonjs/core/Behaviors/Meshes/pointerDragBehavior.js'
   import type { ArcRotateCamera as ACamera } from '@babylonjs/core/Cameras/arcRotateCamera'
+  import { PointerEventTypes } from '@babylonjs/core/Events/pointerEvents.js'
   import { Color3 } from '@babylonjs/core/Maths/math.color.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector.js'
   import type { Scene as BScene } from '@babylonjs/core/scene.js'
   import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
   import HemisphericLight from 'svelte-babylon/components/Lights/HemisphericLight/index.svelte'
+  import StandardMaterial from 'svelte-babylon/components/Materials/StandardMaterial/index.svelte'
+  import Instance from 'svelte-babylon/components/Misc/Instance/index.svelte'
   import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
   import Plane from 'svelte-babylon/components/Objects/Plane/index.svelte'
   import Scene from 'svelte-babylon/components/Scene/index.svelte'
   import TransformNode from 'svelte-babylon/components/TransformNode/index.svelte'
+  import degreeToRadians from 'svelte-babylon/utils/Math/degreeToRadians'
   import type { Writable } from 'svelte/types/runtime/store'
 
   let width = 3
-  let shuffleCount = 10
   let scene: Writable<BScene>
-  let enabled = false
   let transformNode: Writable<BTransformNode>
   let camera: Writable<ACamera>
   let engine: Writable<Engine>
-  const centerOfCube = new Vector3(
-    Math.floor(width / 2),
-    Math.floor(width / 2),
-    Math.floor(width / 2),
-  )
+  let cubeWidth = 1
+  let centerOfCube = Vector3.Zero()
+
   const planeDetailsArray = [
     {
       color: new Color3(1, 1, 1), // white
@@ -73,10 +71,7 @@
     if (cubes.length === Math.pow(width, 3)) {
       return
     }
-    // does not work
-    // instance.isVisible = true
 
-    instance.parent = $transformNode
     cubes = [...cubes, instance]
   }
 
@@ -101,11 +96,15 @@
       for (let y = 0; y < width; y++) {
         for (let z = 0; z < width; z++) {
           cubes[counter].position = new Vector3(x, y, z)
-          cubes[counter].parent = null
+          cubes[counter].setParent(null)
           counter++
         }
       }
     }
+
+    centerOfCube = cubes
+      .reduce((total, cube) => total.addInPlace(cube.position), Vector3.Zero())
+      .scale(1 / cubes.length)
   }
 
   let eventAdded = false
@@ -148,38 +147,29 @@
 
           // set temporary parent
           cubesToRotate?.forEach(cube => {
-            const position = cube.getAbsolutePosition()
-            cube.parent = $transformNode
-            cube.setAbsolutePosition(position)
+            cube.setParent($transformNode)
           })
 
+          const from = movementVector.x ? $transformNode.rotation.y : $transformNode.rotation.x
+          const to = from + degreeToRadians(90 * (movementVector.x * -1 || movementVector.y))
           Animation.CreateAndStartAnimation(
             'rotate',
             $transformNode,
             movementVector.x ? 'rotation.y' : 'rotation.x',
             60,
             15,
-            0,
-            degreeToRadians(90 * (movementVector.x * -1 || movementVector.y)),
+            from,
+            to,
             0,
           ).onAnimationEnd = () => {
             cubesToRotate?.forEach(cube => {
-              const position = cube.getAbsolutePosition()
-              cube.parent = null
-              cube.position.set(
-                Math.round(position.x),
-                Math.round(position.y),
-                Math.round(position.z),
-              )
-              cube.rotate(
-                movementVector.x ? Vector3.Up() : Vector3.Right(),
-                degreeToRadians(90 * (movementVector.x * -1 || movementVector.y)),
-              )
+              cube.setParent(null)
             })
+
+            firstPick = null
+            $camera.attachControl()
           }
 
-          firstPick = null
-          $camera.attachControl()
           break
         default:
           break
@@ -225,7 +215,7 @@
 >
   <Scene bind:scene clearColor={Color3.White()} animationsEnabled>
     <HemisphericLight />
-    <ArcRotateCamera bind:camera radius={10} target={centerOfCube} />
+    <ArcRotateCamera bind:camera radius={10} target={centerOfCube} alpha={Math.PI / 2} />
     <TransformNode bind:object={transformNode} position={centerOfCube}>
       {#if cubes.length === Math.pow(width, 3)}
         {#each planeDetailsArray as planeDetails}
@@ -241,7 +231,7 @@
         {/each}
       {/if}
       <!-- we position the box far away (out of rendering range) to hide it, this way we don't -->
-      <Box position={new Vector3(-9999, -9999, -9999)}>
+      <Box position={new Vector3(-9999, -9999, -9999)} options={{ size: cubeWidth }}>
         <StandardMaterial diffuseColor={Color3.Black()} specularColor={Color3.Black()} />
         <Instance number={Math.pow(width, 3)} onCreated={handleBoxInstanceCreation} />
       </Box>

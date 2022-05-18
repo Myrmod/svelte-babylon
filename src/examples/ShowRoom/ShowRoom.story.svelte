@@ -85,7 +85,7 @@
     stencil: true,
   }}
 >
-  <Scene enablePointerLockOnClick={useFreeCamera} collisionsEnabled animationsEnabled>
+  <Scene enablePointerLockOnClick={useFreeCamera} collisionsEnabled animationsEnabled bind:scene>
     <HemisphericLight intensity={1} />
     <DirectionalLight
       intensity={0.25}
@@ -118,8 +118,7 @@
       name="Platform1 Object"
     >
       <Custom
-        rootUrl="/assets/models/"
-        fileName="logo.glb"
+        url="/assets/models/logo.glb"
         scaling={new Vector3(7, 7, 7)}
         position={new Vector3(0, 2, 0)}
         receiveShadows

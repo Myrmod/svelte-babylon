@@ -56,7 +56,7 @@
     $camera.minZ = minZ
     $camera.angularSensibility = angularSensibility
     $camera.parent = parent
-    $camera.target = target
+    $camera.setTarget(target)
   }
 
   $: if ($camera === $scene.activeCamera) {

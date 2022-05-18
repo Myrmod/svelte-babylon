@@ -10,13 +10,14 @@
   const scene = getContext<Writable<Scene>>('scene')
   const canvas = getContext<Writable<HTMLCanvasElement>>('canvas')
 
-  export let name: string = 'FreeCamera'
+  export let name: string = 'TargetCamera'
   export let position = Vector3.Zero()
   export let setActiveOnSceneIfNoneActive = true
   export let minZ = 0.45
   const parent = getContext<Writable<Mesh>>('object')
   export let viewport: Viewport = new Viewport(0, 0, 1, 0.5)
   export let disableControl = false
+  export let target = Vector3.Zero()
 
   export const getFacingDirection = () =>
     Vector3.Normalize($camera.target.subtract($camera.position))
@@ -39,6 +40,7 @@
     $camera.minZ = minZ
     $camera.parent = $parent
     $camera.viewport = viewport
+    $camera.setTarget(target)
   }
 
   $: if ($camera === $scene.activeCamera) {
