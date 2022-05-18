@@ -1,7 +1,7 @@
 <script lang="ts">
   import { ArcFollowCamera } from '@babylonjs/core/Cameras/followCamera.js'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh'
+  import { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh.js'
   import type { Scene } from '@babylonjs/core/scene.js'
   import { getContext, onDestroy, onMount, setContext } from 'svelte'
   import { writable, type Writable } from 'svelte/store'
