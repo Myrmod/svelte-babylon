@@ -33,8 +33,8 @@
 </script>
 
 <svelte:head>
-  <title>{$activeCategory}: {meta.title} | KitDocs</title>
-  <meta name="description" content={meta.description} />
+  <title>{$activeCategory}: {meta?.title || 'Svelte-Babylon'}</title>
+  <meta name="description" content={meta?.description} />
 </svelte:head>
 
 <KitDocs {meta}>
