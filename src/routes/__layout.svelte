@@ -50,8 +50,8 @@
     </div>
 
     <footer slot="main-bottom">
-      <a href="/privacy" sveltekit:reload>Privacy</a>
-      <a href="/sitemap.xml" sveltekit:reload>Sitemap</a>
+      <a href="/privacy" sveltekit:prefetch>Privacy</a>
+      <a href="/sitemap.xml" sveltekit:prefetch>Sitemap</a>
     </footer>
     <slot />
   </KitDocsLayout>

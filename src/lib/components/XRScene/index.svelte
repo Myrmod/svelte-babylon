@@ -48,7 +48,7 @@ An implementation of https://doc.babylonjs.com/divingDeeper/webXR/webXRExperienc
   onMount(async () => {
     try {
       // polyfill
-      await new Promise(resolve => {
+      await new Promise<void>(resolve => {
         if (navigator.xr) {
           return resolve()
         }

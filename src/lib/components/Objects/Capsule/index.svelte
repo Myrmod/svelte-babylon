@@ -22,7 +22,7 @@
   export let checkCollisions = false
 
   export let parent = getContext<Writable<Node>>('object')
-  const object = createReactiveContext('object', CreateCapsule(name, options, $scene))
+  export let object = createReactiveContext('object', CreateCapsule(name, options, $scene))
   $object.material = new StandardMaterial(`${name}-material`, $scene)
 
   export let position = Vector3.Zero()

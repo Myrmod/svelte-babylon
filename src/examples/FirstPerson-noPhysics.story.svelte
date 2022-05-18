@@ -49,12 +49,6 @@
       ellipsoid={new Vector3(0.01, 1, 0.01)}
       bind:camera
     />
-    <Custom
-      rootUrl="/assets/models/"
-      fileName="Prototype_Level.glb"
-      bind:meshes
-      receiveShadows
-      checkCollisions
-    />
+    <Custom url="/assets/models/Prototype_Level.glb" bind:meshes receiveShadows checkCollisions />
   </Scene>
 </Canvas>

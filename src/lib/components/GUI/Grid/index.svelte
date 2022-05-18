@@ -99,7 +99,7 @@
   }
 
   $: if ($guiElement) {
-    columnDefinitions.forEach((definition, index) => {
+    columnDefinitions.forEach((definition, _index) => {
       // if ($guiElement.getColumnDefinition(index)) {
       //   if (typeof definition === 'number') {
       //     $guiElement.setColumnDefinition(index, definition)
@@ -118,7 +118,7 @@
   }
 
   $: if ($guiElement) {
-    rowDefinitions.forEach((definition, index) => {
+    rowDefinitions.forEach((definition, _index) => {
       // if ($guiElement.getRowDefinition(index)) {
       //   if (typeof definition === 'number') {
       //     $guiElement.setRowDefinition(index, definition)

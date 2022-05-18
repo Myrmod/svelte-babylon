@@ -37,7 +37,7 @@
     "tslib": "^2.3.1",
     "typescript": "^4.6.3",
     "unplugin-icons": "^0.14.1",
-    "vite": "^2.9.5"
+    "vite": "^2.9.9"
   },
   "license": "MIT (modified)",
   "type": "module",

@@ -10,9 +10,15 @@
   import { createEventDispatcher, getContext, onDestroy, onMount } from 'svelte'
   import type { Writable } from 'svelte/types/runtime/store'
 
-  type $$props =
-    | {
-        name: string
+  type DefaultProps = {
+    name: string
+    renderAs: typeof renderAs
+    materialApplied: boolean
+    material: Writable<MultiMaterial>
+    options?: Record<string, unknown>
+  }
+  type $$Props =
+    | ({
         renderAs: 'chessboard'
         options: {
           grid: {
@@ -20,11 +26,8 @@
             h: number
           }
         }
-      }
-    | {
-        name: string
-        renderAs: 'custom'
-      }
+      } & DefaultProps)
+    | DefaultProps
 
   const dispatch = createEventDispatcher()
   const scene = getContext<Writable<Scene>>('scene')
@@ -33,6 +36,7 @@
 
   export let renderAs: 'chessboard' | 'custom' = 'chessboard'
   export let options = undefined
+  export let materialApplied = false
 
   export const material = createReactiveContext('MultiMaterial', new MultiMaterial(name, $scene))
   const parent = getContext<Writable<Mesh>>('object')
@@ -45,7 +49,6 @@
     $parent.material = $material
   })
 
-  export let materialApplied = false
   $: if ($material && $parent.material && $material.subMaterials?.length && !materialApplied) {
     if (!$parent.subMeshes) {
       $parent.subMeshes = []

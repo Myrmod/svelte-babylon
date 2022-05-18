@@ -6,13 +6,13 @@
   import DashedLines from '$lib/components/Objects/DashedLines/index.svelte'
   import Ground from '$lib/components/Objects/Ground/index.svelte'
   import Scene from '$lib/components/Scene/index.svelte'
+  import type { LinesMesh } from '@babylonjs/core'
   import { Vector3 } from '@babylonjs/core/Maths/math.vector'
-  import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
   import type { Writable } from 'svelte/store'
 
-  let object: Writable<Mesh>
+  let object: Writable<LinesMesh>
 
-  let shadowObjects: Array<Mesh>
+  let shadowObjects: Array<LinesMesh>
   $: {
     const temp: typeof shadowObjects = []
     if ($object) {
