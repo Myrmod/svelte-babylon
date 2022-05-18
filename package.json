@@ -20,7 +20,7 @@
     "@sveltejs/adapter-static": "^1.0.0-next.29",
     "@sveltejs/kit": "^1.0.0-next.320",
     "@sveltejs/vite-plugin-svelte": "^1.0.0-next.36",
-    "@svelteness/kit-docs": "0.22.11",
+    "@svelteness/kit-docs": "0.22.12",
     "@types/cannon": "^0.1.8",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
