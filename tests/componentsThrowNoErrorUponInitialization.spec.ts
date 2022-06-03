@@ -104,6 +104,11 @@ test.describe('Components throw no error upon initialization', () => {
       url: '/docs/components/gui',
     },
     {
+      name: 'GUI/XMLLoaderStory',
+      component: 'XMLLoaderStory',
+      url: '/docs/components/gui',
+    },
+    {
       name: 'Lights',
       url: '/docs/components/lights',
     },

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<root>
+  <Rectangle id="firstContainer" verticalAlignment="Control.HORIZONTAL_ALIGNMENT_CENTER" background="yellow" width=".8" height=".4" color="Orange">
+    <Button id="imageButton" name="imageButton" width="0.2" background="red" height="0.3">
+      <Image id="image" source="/svelte-babylon-icon.png" width="1" height="1" name="image" stretch="Image.STRETCH_FILL" horizontalAlignment="Control.HORIZONTAL_ALIGNMENT_LEFT" />
+    </Button>
+  </Rectangle>
+</root>
