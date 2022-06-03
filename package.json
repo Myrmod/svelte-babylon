@@ -1,6 +1,6 @@
 {
   "name": "svelte-babylon",
-  "version": "0.28.0",
+  "version": "0.29.0",
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
@@ -42,14 +42,14 @@
   "license": "MIT (modified)",
   "type": "module",
   "dependencies": {
-    "@babylonjs/core": "^5.8.2",
-    "@babylonjs/gui": "^5.8.2",
-    "@babylonjs/inspector": "^5.8.2",
-    "@babylonjs/loaders": "^5.8.2",
-    "@babylonjs/materials": "^5.8.2",
-    "@babylonjs/post-processes": "^5.8.2",
-    "@babylonjs/procedural-textures": "^5.8.2",
-    "@babylonjs/serializers": "^5.8.2",
+    "@babylonjs/core": "^5.9.0",
+    "@babylonjs/gui": "^5.9.0",
+    "@babylonjs/inspector": "^5.9.0",
+    "@babylonjs/loaders": "^5.9.0",
+    "@babylonjs/materials": "^5.9.0",
+    "@babylonjs/post-processes": "^5.9.0",
+    "@babylonjs/procedural-textures": "^5.9.0",
+    "@babylonjs/serializers": "^5.9.0",
     "ammo.js": "^0.0.10",
     "cannon": "^0.6.2",
     "earcut": "^2.2.3"
