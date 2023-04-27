@@ -1,4 +1,4 @@
 /// <reference types="@sveltejs/kit" />
+/// <reference types="@svelteness/kit-docs/globals" />
 
 declare module 'earcut'
-declare module '@svelteness/kit-docs/client/polyfills/index.js'
