@@ -1,26 +1,27 @@
-import { sveltekit } from '@sveltejs/kit/vite'
-import { kitDocsPlugin } from '@svelteness/kit-docs/node'
+import { sveltepress } from '@sveltepress/vite'
 import path from 'path'
-import Icons from 'unplugin-icons/vite'
+import { defaultTheme } from '@sveltepress/theme-default'
+import navbar from './config/navbar'
+import sidebar from './config/sidebar'
 
 /** @type {import('vite').UserConfig} */
 const config = {
 	plugins: [
-		Icons({ compiler: 'svelte' }),
-		kitDocsPlugin({
-			shiki: {
-				theme: 'material-ocean',
+		sveltepress({
+			theme: defaultTheme({
+				navbar,
+				sidebar,
+				logo: '/svelte-babylon-logo.png',
+				github: 'https://github.com/Myrmod/svelte-babylon',
+				twitter: 'https://twitter.com/myrmod',
+			}),
+			siteConfig: {
+				title: 'Svelte-Babylon',
+				description:
+					'The documentation of the npm library "svelte-babylon", which can be used to create web-based 3D applications.',
 			},
 		}),
-		sveltekit(),
 	],
-	css: {
-		preprocessorOptions: {
-			scss: {
-				additionalData: `@use "sass:color";@import "schwabeo-ui/styles/mixins.scss";`,
-			},
-		},
-	},
 	server: {
 		port: 3000,
 	},

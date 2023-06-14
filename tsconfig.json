@@ -1,61 +1,37 @@
 {
-  "extends": "./.svelte-kit/tsconfig.json",
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "module": "ESNext",
-    "lib": [
-      "ESNext",
-      "DOM"
-    ],
-    "target": "ES2022",
-    /**
+	"extends": "./.svelte-kit/tsconfig.json",
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"module": "ESNext",
+		"lib": ["ESNext", "DOM"],
+		"target": "ES2022",
+		/**
 			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
 			to enforce using \`import type\` instead of \`import\` for Types.
 			*/
-    "importsNotUsedAsValues": "error",
-    "isolatedModules": true,
-    "resolveJsonModule": true,
-    /**
+		"importsNotUsedAsValues": "error",
+		"isolatedModules": true,
+		"resolveJsonModule": true,
+		/**
 			To have warnings/errors of the Svelte compiler at the correct position,
 			enable source maps by default.
 			*/
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "allowJs": true,
-    "checkJs": true,
-    "paths": {
-      "$lib": [
-        "src/lib"
-      ],
-      "$lib/*": [
-        "src/lib/*"
-      ],
-      "$docs": [
-        "src/docs"
-      ],
-      "$docs/*": [
-        "src/docs/*"
-      ],
-      "svelte-babylon": [
-        "src/lib"
-      ],
-      "svelte-babylon/*": [
-        "src/lib/*"
-      ]
-    },
-    "types": [
-      "babylonjs",
-      "babylonjs-loaders",
-      "babylonjs-gui"
-    ]
-  },
-  "include": [
-    "src/**/*.d.ts",
-    "src/**/*.js",
-    "src/**/*.ts",
-    "src/**/*.svelte"
-  ]
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"baseUrl": ".",
+		"allowJs": true,
+		"checkJs": true,
+		"paths": {
+			"$lib": ["src/lib"],
+			"$lib/*": ["src/lib/*"],
+			"$docs": ["src/docs"],
+			"$docs/*": ["src/docs/*"],
+			"svelte-babylon": ["src/lib"],
+			"svelte-babylon/*": ["src/lib/*"]
+		},
+		"types": ["babylonjs", "babylonjs-loaders", "babylonjs-gui"]
+	},
+	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
 }
