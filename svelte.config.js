@@ -17,9 +17,6 @@ const config = {
 			entries: ['*'],
 		},
 	},
-	package: {
-		files: id => !id.includes('.story.svelte') && !id.includes('docs') && !id.includes('fonts'),
-	},
-}
+	}
 
 export default config

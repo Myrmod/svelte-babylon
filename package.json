@@ -4,7 +4,7 @@
 	"scripts": {
 		"dev": "vite dev --port 3000",
 		"build": "vite build",
-		"package": "svelte-kit package",
+		"package": "svelte-package -o package",
 		"preview": "vite preview --port 3000",
 		"check": "svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
@@ -18,6 +18,7 @@
 		"@sveltejs/adapter-auto": "^2.0.1",
 		"@sveltejs/adapter-static": "^1.0.6",
 		"@sveltejs/kit": "^1.20.2",
+		"@sveltejs/package": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^2.1.1",
 		"@sveltepress/theme-default": "^1.12.1",
 		"@sveltepress/vite": "^0.23.0",
@@ -31,7 +32,6 @@
 		"prettier": "^2.8.8",
 		"prettier-plugin-svelte": "^2.10.0",
 		"shiki": "^0.14.1",
-		"svelte": "^3.59.1",
 		"svelte-check": "^2.10.3",
 		"svelte-preprocess": "^4.10.7",
 		"svelte2tsx": "^0.4.14",
@@ -50,12 +50,809 @@
 		"@babylonjs/serializers": "^6.7.0",
 		"ammo.js": "^0.0.10",
 		"cannon": "^0.6.2",
-		"earcut": "^2.2.4"
+		"earcut": "^2.2.4",
+		"esm-env": "^1.0.0",
+		"svelte": "^3.59.1"
 	},
 	"license": "MIT (modified)",
 	"type": "module",
 	"engines": {
 		"node": "^18"
 	},
-	"engineStrict": true
+	"engineStrict": true,
+	"exports": {
+		"./package.json": "./package.json",
+		"./components/Cameras/ArcFollowCamera.svelte": {
+			"types": "./package/components/Cameras/ArcFollowCamera.svelte.d.ts",
+			"svelte": "./package/components/Cameras/ArcFollowCamera.svelte",
+			"default": "./package/components/Cameras/ArcFollowCamera.svelte"
+		},
+		"./components/Cameras/ArcRotateCamera/index.svelte": {
+			"types": "./package/components/Cameras/ArcRotateCamera/index.svelte.d.ts",
+			"svelte": "./package/components/Cameras/ArcRotateCamera/index.svelte",
+			"default": "./package/components/Cameras/ArcRotateCamera/index.svelte"
+		},
+		"./components/Cameras/FlyCamera.svelte": {
+			"types": "./package/components/Cameras/FlyCamera.svelte.d.ts",
+			"svelte": "./package/components/Cameras/FlyCamera.svelte",
+			"default": "./package/components/Cameras/FlyCamera.svelte"
+		},
+		"./components/Cameras/FollowCamera.svelte": {
+			"types": "./package/components/Cameras/FollowCamera.svelte.d.ts",
+			"svelte": "./package/components/Cameras/FollowCamera.svelte",
+			"default": "./package/components/Cameras/FollowCamera.svelte"
+		},
+		"./components/Cameras/FreeCamera/index.svelte": {
+			"types": "./package/components/Cameras/FreeCamera/index.svelte.d.ts",
+			"svelte": "./package/components/Cameras/FreeCamera/index.svelte",
+			"default": "./package/components/Cameras/FreeCamera/index.svelte"
+		},
+		"./components/Cameras/TargetCamera/index.svelte": {
+			"types": "./package/components/Cameras/TargetCamera/index.svelte.d.ts",
+			"svelte": "./package/components/Cameras/TargetCamera/index.svelte",
+			"default": "./package/components/Cameras/TargetCamera/index.svelte"
+		},
+		"./components/Cameras/UniversalCamera/index.svelte": {
+			"types": "./package/components/Cameras/UniversalCamera/index.svelte.d.ts",
+			"svelte": "./package/components/Cameras/UniversalCamera/index.svelte",
+			"default": "./package/components/Cameras/UniversalCamera/index.svelte"
+		},
+		"./components/Cameras/WebXRCamera/index.svelte": {
+			"types": "./package/components/Cameras/WebXRCamera/index.svelte.d.ts",
+			"svelte": "./package/components/Cameras/WebXRCamera/index.svelte",
+			"default": "./package/components/Cameras/WebXRCamera/index.svelte"
+		},
+		"./components/Canvas/index.svelte": {
+			"types": "./package/components/Canvas/index.svelte.d.ts",
+			"svelte": "./package/components/Canvas/index.svelte",
+			"default": "./package/components/Canvas/index.svelte"
+		},
+		"./components/GUI/Checkbox/index.svelte": {
+			"types": "./package/components/GUI/Checkbox/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/Checkbox/index.svelte",
+			"default": "./package/components/GUI/Checkbox/index.svelte"
+		},
+		"./components/GUI/ColorPicker/index.svelte": {
+			"types": "./package/components/GUI/ColorPicker/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/ColorPicker/index.svelte",
+			"default": "./package/components/GUI/ColorPicker/index.svelte"
+		},
+		"./components/GUI/DisplayGrid/index.svelte": {
+			"types": "./package/components/GUI/DisplayGrid/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/DisplayGrid/index.svelte",
+			"default": "./package/components/GUI/DisplayGrid/index.svelte"
+		},
+		"./components/GUI/Ellipse/index.svelte": {
+			"types": "./package/components/GUI/Ellipse/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/Ellipse/index.svelte",
+			"default": "./package/components/GUI/Ellipse/index.svelte"
+		},
+		"./components/GUI/Grid/index.svelte": {
+			"types": "./package/components/GUI/Grid/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/Grid/index.svelte",
+			"default": "./package/components/GUI/Grid/index.svelte"
+		},
+		"./components/GUI/Image/index.svelte": {
+			"types": "./package/components/GUI/Image/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/Image/index.svelte",
+			"default": "./package/components/GUI/Image/index.svelte"
+		},
+		"./components/GUI/InputPassword/index.svelte": {
+			"types": "./package/components/GUI/InputPassword/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/InputPassword/index.svelte",
+			"default": "./package/components/GUI/InputPassword/index.svelte"
+		},
+		"./components/GUI/InputText/index.svelte": {
+			"types": "./package/components/GUI/InputText/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/InputText/index.svelte",
+			"default": "./package/components/GUI/InputText/index.svelte"
+		},
+		"./components/GUI/Line/index.svelte": {
+			"types": "./package/components/GUI/Line/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/Line/index.svelte",
+			"default": "./package/components/GUI/Line/index.svelte"
+		},
+		"./components/GUI/RadioButton/index.svelte": {
+			"types": "./package/components/GUI/RadioButton/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/RadioButton/index.svelte",
+			"default": "./package/components/GUI/RadioButton/index.svelte"
+		},
+		"./components/GUI/Rectangle/index.svelte": {
+			"types": "./package/components/GUI/Rectangle/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/Rectangle/index.svelte",
+			"default": "./package/components/GUI/Rectangle/index.svelte"
+		},
+		"./components/GUI/ScrollViewer/index.svelte": {
+			"types": "./package/components/GUI/ScrollViewer/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/ScrollViewer/index.svelte",
+			"default": "./package/components/GUI/ScrollViewer/index.svelte"
+		},
+		"./components/GUI/Slider/index.svelte": {
+			"types": "./package/components/GUI/Slider/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/Slider/index.svelte",
+			"default": "./package/components/GUI/Slider/index.svelte"
+		},
+		"./components/GUI/StackPanel/index.svelte": {
+			"types": "./package/components/GUI/StackPanel/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/StackPanel/index.svelte",
+			"default": "./package/components/GUI/StackPanel/index.svelte"
+		},
+		"./components/GUI/TextBlock/index.svelte": {
+			"types": "./package/components/GUI/TextBlock/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/TextBlock/index.svelte",
+			"default": "./package/components/GUI/TextBlock/index.svelte"
+		},
+		"./components/GUI/TextButton/index.svelte": {
+			"types": "./package/components/GUI/TextButton/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/TextButton/index.svelte",
+			"default": "./package/components/GUI/TextButton/index.svelte"
+		},
+		"./components/GUI/VirtualKeyboard/index.svelte": {
+			"types": "./package/components/GUI/VirtualKeyboard/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/VirtualKeyboard/index.svelte",
+			"default": "./package/components/GUI/VirtualKeyboard/index.svelte"
+		},
+		"./components/GUI/XMLLoader/index.svelte": {
+			"types": "./package/components/GUI/XMLLoader/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/XMLLoader/index.svelte",
+			"default": "./package/components/GUI/XMLLoader/index.svelte"
+		},
+		"./components/GUI/index.svelte": {
+			"types": "./package/components/GUI/index.svelte.d.ts",
+			"svelte": "./package/components/GUI/index.svelte",
+			"default": "./package/components/GUI/index.svelte"
+		},
+		"./components/Gizmos/AxisDragGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/AxisDragGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/AxisDragGizmo/index.svelte",
+			"default": "./package/components/Gizmos/AxisDragGizmo/index.svelte"
+		},
+		"./components/Gizmos/AxisScaleGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/AxisScaleGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/AxisScaleGizmo/index.svelte",
+			"default": "./package/components/Gizmos/AxisScaleGizmo/index.svelte"
+		},
+		"./components/Gizmos/BoundingBoxGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/BoundingBoxGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/BoundingBoxGizmo/index.svelte",
+			"default": "./package/components/Gizmos/BoundingBoxGizmo/index.svelte"
+		},
+		"./components/Gizmos/CameraGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/CameraGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/CameraGizmo/index.svelte",
+			"default": "./package/components/Gizmos/CameraGizmo/index.svelte"
+		},
+		"./components/Gizmos/GizmoManager/index.svelte": {
+			"types": "./package/components/Gizmos/GizmoManager/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/GizmoManager/index.svelte",
+			"default": "./package/components/Gizmos/GizmoManager/index.svelte"
+		},
+		"./components/Gizmos/LightGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/LightGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/LightGizmo/index.svelte",
+			"default": "./package/components/Gizmos/LightGizmo/index.svelte"
+		},
+		"./components/Gizmos/PlaneDragGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/PlaneDragGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/PlaneDragGizmo/index.svelte",
+			"default": "./package/components/Gizmos/PlaneDragGizmo/index.svelte"
+		},
+		"./components/Gizmos/PlaneRotationGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/PlaneRotationGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/PlaneRotationGizmo/index.svelte",
+			"default": "./package/components/Gizmos/PlaneRotationGizmo/index.svelte"
+		},
+		"./components/Gizmos/PositionGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/PositionGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/PositionGizmo/index.svelte",
+			"default": "./package/components/Gizmos/PositionGizmo/index.svelte"
+		},
+		"./components/Gizmos/RotationGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/RotationGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/RotationGizmo/index.svelte",
+			"default": "./package/components/Gizmos/RotationGizmo/index.svelte"
+		},
+		"./components/Gizmos/ScaleGizmo/index.svelte": {
+			"types": "./package/components/Gizmos/ScaleGizmo/index.svelte.d.ts",
+			"svelte": "./package/components/Gizmos/ScaleGizmo/index.svelte",
+			"default": "./package/components/Gizmos/ScaleGizmo/index.svelte"
+		},
+		"./components/Layer/LayerFromBase64String.svelte": {
+			"types": "./package/components/Layer/LayerFromBase64String.svelte.d.ts",
+			"svelte": "./package/components/Layer/LayerFromBase64String.svelte",
+			"default": "./package/components/Layer/LayerFromBase64String.svelte"
+		},
+		"./components/Layer/LayerFromWebCam.svelte": {
+			"types": "./package/components/Layer/LayerFromWebCam.svelte.d.ts",
+			"svelte": "./package/components/Layer/LayerFromWebCam.svelte",
+			"default": "./package/components/Layer/LayerFromWebCam.svelte"
+		},
+		"./components/Layer/index.svelte": {
+			"types": "./package/components/Layer/index.svelte.d.ts",
+			"svelte": "./package/components/Layer/index.svelte",
+			"default": "./package/components/Layer/index.svelte"
+		},
+		"./components/Lights/DirectionalLight/index.svelte": {
+			"types": "./package/components/Lights/DirectionalLight/index.svelte.d.ts",
+			"svelte": "./package/components/Lights/DirectionalLight/index.svelte",
+			"default": "./package/components/Lights/DirectionalLight/index.svelte"
+		},
+		"./components/Lights/HemisphericLight/index.svelte": {
+			"types": "./package/components/Lights/HemisphericLight/index.svelte.d.ts",
+			"svelte": "./package/components/Lights/HemisphericLight/index.svelte",
+			"default": "./package/components/Lights/HemisphericLight/index.svelte"
+		},
+		"./components/Lights/PointLight/index.svelte": {
+			"types": "./package/components/Lights/PointLight/index.svelte.d.ts",
+			"svelte": "./package/components/Lights/PointLight/index.svelte",
+			"default": "./package/components/Lights/PointLight/index.svelte"
+		},
+		"./components/Lights/SpotLight/index.svelte": {
+			"types": "./package/components/Lights/SpotLight/index.svelte.d.ts",
+			"svelte": "./package/components/Lights/SpotLight/index.svelte",
+			"default": "./package/components/Lights/SpotLight/index.svelte"
+		},
+		"./components/Materials/GradientMaterial/index.svelte": {
+			"types": "./package/components/Materials/GradientMaterial/index.svelte.d.ts",
+			"svelte": "./package/components/Materials/GradientMaterial/index.svelte",
+			"default": "./package/components/Materials/GradientMaterial/index.svelte"
+		},
+		"./components/Materials/MultiMaterial/index.svelte": {
+			"types": "./package/components/Materials/MultiMaterial/index.svelte.d.ts",
+			"svelte": "./package/components/Materials/MultiMaterial/index.svelte",
+			"default": "./package/components/Materials/MultiMaterial/index.svelte"
+		},
+		"./components/Materials/StandardMaterial/index.svelte": {
+			"types": "./package/components/Materials/StandardMaterial/index.svelte.d.ts",
+			"svelte": "./package/components/Materials/StandardMaterial/index.svelte",
+			"default": "./package/components/Materials/StandardMaterial/index.svelte"
+		},
+		"./components/Misc/Inspector/index.svelte": {
+			"types": "./package/components/Misc/Inspector/index.svelte.d.ts",
+			"svelte": "./package/components/Misc/Inspector/index.svelte",
+			"default": "./package/components/Misc/Inspector/index.svelte"
+		},
+		"./components/Misc/Instance/index.svelte": {
+			"types": "./package/components/Misc/Instance/index.svelte.d.ts",
+			"svelte": "./package/components/Misc/Instance/index.svelte",
+			"default": "./package/components/Misc/Instance/index.svelte"
+		},
+		"./components/Objects/Box/index.svelte": {
+			"types": "./package/components/Objects/Box/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Box/index.svelte",
+			"default": "./package/components/Objects/Box/index.svelte"
+		},
+		"./components/Objects/Capsule/index.svelte": {
+			"types": "./package/components/Objects/Capsule/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Capsule/index.svelte",
+			"default": "./package/components/Objects/Capsule/index.svelte"
+		},
+		"./components/Objects/Custom/index.svelte": {
+			"types": "./package/components/Objects/Custom/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Custom/index.svelte",
+			"default": "./package/components/Objects/Custom/index.svelte"
+		},
+		"./components/Objects/Cylinder/index.svelte": {
+			"types": "./package/components/Objects/Cylinder/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Cylinder/index.svelte",
+			"default": "./package/components/Objects/Cylinder/index.svelte"
+		},
+		"./components/Objects/DashedLines/index.svelte": {
+			"types": "./package/components/Objects/DashedLines/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/DashedLines/index.svelte",
+			"default": "./package/components/Objects/DashedLines/index.svelte"
+		},
+		"./components/Objects/Decal/index.svelte": {
+			"types": "./package/components/Objects/Decal/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Decal/index.svelte",
+			"default": "./package/components/Objects/Decal/index.svelte"
+		},
+		"./components/Objects/Disc/index.svelte": {
+			"types": "./package/components/Objects/Disc/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Disc/index.svelte",
+			"default": "./package/components/Objects/Disc/index.svelte"
+		},
+		"./components/Objects/Ground/index.svelte": {
+			"types": "./package/components/Objects/Ground/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Ground/index.svelte",
+			"default": "./package/components/Objects/Ground/index.svelte"
+		},
+		"./components/Objects/GroundFromHeightMap/index.svelte": {
+			"types": "./package/components/Objects/GroundFromHeightMap/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/GroundFromHeightMap/index.svelte",
+			"default": "./package/components/Objects/GroundFromHeightMap/index.svelte"
+		},
+		"./components/Objects/HexSphere/GDToGP": {
+			"types": "./package/components/Objects/HexSphere/GDToGP.d.ts",
+			"default": "./package/components/Objects/HexSphere/GDToGP.js"
+		},
+		"./components/Objects/HexSphere/createGDMM": {
+			"types": "./package/components/Objects/HexSphere/createGDMM.d.ts",
+			"default": "./package/components/Objects/HexSphere/createGDMM.js"
+		},
+		"./components/Objects/HexSphere/index.svelte": {
+			"types": "./package/components/Objects/HexSphere/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/HexSphere/index.svelte",
+			"default": "./package/components/Objects/HexSphere/index.svelte"
+		},
+		"./components/Objects/HexSphere/setOrder": {
+			"types": "./package/components/Objects/HexSphere/setOrder.d.ts",
+			"default": "./package/components/Objects/HexSphere/setOrder.js"
+		},
+		"./components/Objects/IcoSphere/index.svelte": {
+			"types": "./package/components/Objects/IcoSphere/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/IcoSphere/index.svelte",
+			"default": "./package/components/Objects/IcoSphere/index.svelte"
+		},
+		"./components/Objects/Lathe/index.svelte": {
+			"types": "./package/components/Objects/Lathe/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Lathe/index.svelte",
+			"default": "./package/components/Objects/Lathe/index.svelte"
+		},
+		"./components/Objects/LineSystem/index.svelte": {
+			"types": "./package/components/Objects/LineSystem/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/LineSystem/index.svelte",
+			"default": "./package/components/Objects/LineSystem/index.svelte"
+		},
+		"./components/Objects/Lines/index.svelte": {
+			"types": "./package/components/Objects/Lines/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Lines/index.svelte",
+			"default": "./package/components/Objects/Lines/index.svelte"
+		},
+		"./components/Objects/PhotoDome/index.svelte": {
+			"types": "./package/components/Objects/PhotoDome/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/PhotoDome/index.svelte",
+			"default": "./package/components/Objects/PhotoDome/index.svelte"
+		},
+		"./components/Objects/Plane/index.svelte": {
+			"types": "./package/components/Objects/Plane/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Plane/index.svelte",
+			"default": "./package/components/Objects/Plane/index.svelte"
+		},
+		"./components/Objects/Polygon/index.svelte": {
+			"types": "./package/components/Objects/Polygon/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Polygon/index.svelte",
+			"default": "./package/components/Objects/Polygon/index.svelte"
+		},
+		"./components/Objects/Polyhedron/index.svelte": {
+			"types": "./package/components/Objects/Polyhedron/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Polyhedron/index.svelte",
+			"default": "./package/components/Objects/Polyhedron/index.svelte"
+		},
+		"./components/Objects/Ribbon/index.svelte": {
+			"types": "./package/components/Objects/Ribbon/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Ribbon/index.svelte",
+			"default": "./package/components/Objects/Ribbon/index.svelte"
+		},
+		"./components/Objects/Sphere/index.svelte": {
+			"types": "./package/components/Objects/Sphere/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Sphere/index.svelte",
+			"default": "./package/components/Objects/Sphere/index.svelte"
+		},
+		"./components/Objects/TiledBox/index.svelte": {
+			"types": "./package/components/Objects/TiledBox/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/TiledBox/index.svelte",
+			"default": "./package/components/Objects/TiledBox/index.svelte"
+		},
+		"./components/Objects/TiledGround/index.svelte": {
+			"types": "./package/components/Objects/TiledGround/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/TiledGround/index.svelte",
+			"default": "./package/components/Objects/TiledGround/index.svelte"
+		},
+		"./components/Objects/TiledPlane/index.svelte": {
+			"types": "./package/components/Objects/TiledPlane/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/TiledPlane/index.svelte",
+			"default": "./package/components/Objects/TiledPlane/index.svelte"
+		},
+		"./components/Objects/Torus/index.svelte": {
+			"types": "./package/components/Objects/Torus/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Torus/index.svelte",
+			"default": "./package/components/Objects/Torus/index.svelte"
+		},
+		"./components/Objects/TorusKnot/index.svelte": {
+			"types": "./package/components/Objects/TorusKnot/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/TorusKnot/index.svelte",
+			"default": "./package/components/Objects/TorusKnot/index.svelte"
+		},
+		"./components/Objects/Tube/index.svelte": {
+			"types": "./package/components/Objects/Tube/index.svelte.d.ts",
+			"svelte": "./package/components/Objects/Tube/index.svelte",
+			"default": "./package/components/Objects/Tube/index.svelte"
+		},
+		"./components/PhysicsImpostor/index.svelte": {
+			"types": "./package/components/PhysicsImpostor/index.svelte.d.ts",
+			"svelte": "./package/components/PhysicsImpostor/index.svelte",
+			"default": "./package/components/PhysicsImpostor/index.svelte"
+		},
+		"./components/Scene/index.svelte": {
+			"types": "./package/components/Scene/index.svelte.d.ts",
+			"svelte": "./package/components/Scene/index.svelte",
+			"default": "./package/components/Scene/index.svelte"
+		},
+		"./components/Textures/CubeTexture.svelte": {
+			"types": "./package/components/Textures/CubeTexture.svelte.d.ts",
+			"svelte": "./package/components/Textures/CubeTexture.svelte",
+			"default": "./package/components/Textures/CubeTexture.svelte"
+		},
+		"./components/Textures/DynamicTexture/index.svelte": {
+			"types": "./package/components/Textures/DynamicTexture/index.svelte.d.ts",
+			"svelte": "./package/components/Textures/DynamicTexture/index.svelte",
+			"default": "./package/components/Textures/DynamicTexture/index.svelte"
+		},
+		"./components/Textures/StandardTexture/index.svelte": {
+			"types": "./package/components/Textures/StandardTexture/index.svelte.d.ts",
+			"svelte": "./package/components/Textures/StandardTexture/index.svelte",
+			"default": "./package/components/Textures/StandardTexture/index.svelte"
+		},
+		"./components/Textures/TextTexture/index.svelte": {
+			"types": "./package/components/Textures/TextTexture/index.svelte.d.ts",
+			"svelte": "./package/components/Textures/TextTexture/index.svelte",
+			"default": "./package/components/Textures/TextTexture/index.svelte"
+		},
+		"./components/Textures/VideoTexture/index.svelte": {
+			"types": "./package/components/Textures/VideoTexture/index.svelte.d.ts",
+			"svelte": "./package/components/Textures/VideoTexture/index.svelte",
+			"default": "./package/components/Textures/VideoTexture/index.svelte"
+		},
+		"./components/TransformNode/index.svelte": {
+			"types": "./package/components/TransformNode/index.svelte.d.ts",
+			"svelte": "./package/components/TransformNode/index.svelte",
+			"default": "./package/components/TransformNode/index.svelte"
+		},
+		"./components/XRScene/index.svelte": {
+			"types": "./package/components/XRScene/index.svelte.d.ts",
+			"svelte": "./package/components/XRScene/index.svelte",
+			"default": "./package/components/XRScene/index.svelte"
+		},
+		".": {
+			"types": "./package/index.d.ts",
+			"svelte": "./package/index.js",
+			"default": "./package/index.js"
+		},
+		"./prebuilds/Screen/index.svelte": {
+			"types": "./package/prebuilds/Screen/index.svelte.d.ts",
+			"svelte": "./package/prebuilds/Screen/index.svelte",
+			"default": "./package/prebuilds/Screen/index.svelte"
+		},
+		"./prebuilds/Skybox/index.svelte": {
+			"types": "./package/prebuilds/Skybox/index.svelte.d.ts",
+			"svelte": "./package/prebuilds/Skybox/index.svelte",
+			"default": "./package/prebuilds/Skybox/index.svelte"
+		},
+		"./prebuilds/TextPlane/index.svelte": {
+			"types": "./package/prebuilds/TextPlane/index.svelte.d.ts",
+			"svelte": "./package/prebuilds/TextPlane/index.svelte",
+			"default": "./package/prebuilds/TextPlane/index.svelte"
+		},
+		"./types/enums/TextureTargets": {
+			"types": "./package/types/enums/TextureTargets.d.ts",
+			"default": "./package/types/enums/TextureTargets.js"
+		},
+		"./types": {
+			"types": "./package/types/index.d.ts",
+			"svelte": "./package/types/index.js",
+			"default": "./package/types/index.js"
+		},
+		"./utils/Math/degreeToRadians": {
+			"types": "./package/utils/Math/degreeToRadians.d.ts",
+			"default": "./package/utils/Math/degreeToRadians.js"
+		},
+		"./utils/Math/radiansToDegree": {
+			"types": "./package/utils/Math/radiansToDegree.d.ts",
+			"default": "./package/utils/Math/radiansToDegree.js"
+		},
+		"./utils/createReactiveContext": {
+			"types": "./package/utils/createReactiveContext.d.ts",
+			"default": "./package/utils/createReactiveContext.js"
+		},
+		"./utils/mounted": {
+			"types": "./package/utils/mounted.d.ts",
+			"default": "./package/utils/mounted.js"
+		}
+	},
+	"files": [
+		"package"
+	],
+	"svelte": "./package/index.js",
+	"typesVersions": {
+		">4.0": {
+			"components/Cameras/ArcFollowCamera.svelte": [
+				"./package/components/Cameras/ArcFollowCamera.svelte.d.ts"
+			],
+			"components/Cameras/ArcRotateCamera/index.svelte": [
+				"./package/components/Cameras/ArcRotateCamera/index.svelte.d.ts"
+			],
+			"components/Cameras/FlyCamera.svelte": [
+				"./package/components/Cameras/FlyCamera.svelte.d.ts"
+			],
+			"components/Cameras/FollowCamera.svelte": [
+				"./package/components/Cameras/FollowCamera.svelte.d.ts"
+			],
+			"components/Cameras/FreeCamera/index.svelte": [
+				"./package/components/Cameras/FreeCamera/index.svelte.d.ts"
+			],
+			"components/Cameras/TargetCamera/index.svelte": [
+				"./package/components/Cameras/TargetCamera/index.svelte.d.ts"
+			],
+			"components/Cameras/UniversalCamera/index.svelte": [
+				"./package/components/Cameras/UniversalCamera/index.svelte.d.ts"
+			],
+			"components/Cameras/WebXRCamera/index.svelte": [
+				"./package/components/Cameras/WebXRCamera/index.svelte.d.ts"
+			],
+			"components/Canvas/index.svelte": [
+				"./package/components/Canvas/index.svelte.d.ts"
+			],
+			"components/GUI/Checkbox/index.svelte": [
+				"./package/components/GUI/Checkbox/index.svelte.d.ts"
+			],
+			"components/GUI/ColorPicker/index.svelte": [
+				"./package/components/GUI/ColorPicker/index.svelte.d.ts"
+			],
+			"components/GUI/DisplayGrid/index.svelte": [
+				"./package/components/GUI/DisplayGrid/index.svelte.d.ts"
+			],
+			"components/GUI/Ellipse/index.svelte": [
+				"./package/components/GUI/Ellipse/index.svelte.d.ts"
+			],
+			"components/GUI/Grid/index.svelte": [
+				"./package/components/GUI/Grid/index.svelte.d.ts"
+			],
+			"components/GUI/Image/index.svelte": [
+				"./package/components/GUI/Image/index.svelte.d.ts"
+			],
+			"components/GUI/InputPassword/index.svelte": [
+				"./package/components/GUI/InputPassword/index.svelte.d.ts"
+			],
+			"components/GUI/InputText/index.svelte": [
+				"./package/components/GUI/InputText/index.svelte.d.ts"
+			],
+			"components/GUI/Line/index.svelte": [
+				"./package/components/GUI/Line/index.svelte.d.ts"
+			],
+			"components/GUI/RadioButton/index.svelte": [
+				"./package/components/GUI/RadioButton/index.svelte.d.ts"
+			],
+			"components/GUI/Rectangle/index.svelte": [
+				"./package/components/GUI/Rectangle/index.svelte.d.ts"
+			],
+			"components/GUI/ScrollViewer/index.svelte": [
+				"./package/components/GUI/ScrollViewer/index.svelte.d.ts"
+			],
+			"components/GUI/Slider/index.svelte": [
+				"./package/components/GUI/Slider/index.svelte.d.ts"
+			],
+			"components/GUI/StackPanel/index.svelte": [
+				"./package/components/GUI/StackPanel/index.svelte.d.ts"
+			],
+			"components/GUI/TextBlock/index.svelte": [
+				"./package/components/GUI/TextBlock/index.svelte.d.ts"
+			],
+			"components/GUI/TextButton/index.svelte": [
+				"./package/components/GUI/TextButton/index.svelte.d.ts"
+			],
+			"components/GUI/VirtualKeyboard/index.svelte": [
+				"./package/components/GUI/VirtualKeyboard/index.svelte.d.ts"
+			],
+			"components/GUI/XMLLoader/index.svelte": [
+				"./package/components/GUI/XMLLoader/index.svelte.d.ts"
+			],
+			"components/GUI/index.svelte": [
+				"./package/components/GUI/index.svelte.d.ts"
+			],
+			"components/Gizmos/AxisDragGizmo/index.svelte": [
+				"./package/components/Gizmos/AxisDragGizmo/index.svelte.d.ts"
+			],
+			"components/Gizmos/AxisScaleGizmo/index.svelte": [
+				"./package/components/Gizmos/AxisScaleGizmo/index.svelte.d.ts"
+			],
+			"components/Gizmos/BoundingBoxGizmo/index.svelte": [
+				"./package/components/Gizmos/BoundingBoxGizmo/index.svelte.d.ts"
+			],
+			"components/Gizmos/CameraGizmo/index.svelte": [
+				"./package/components/Gizmos/CameraGizmo/index.svelte.d.ts"
+			],
+			"components/Gizmos/GizmoManager/index.svelte": [
+				"./package/components/Gizmos/GizmoManager/index.svelte.d.ts"
+			],
+			"components/Gizmos/LightGizmo/index.svelte": [
+				"./package/components/Gizmos/LightGizmo/index.svelte.d.ts"
+			],
+			"components/Gizmos/PlaneDragGizmo/index.svelte": [
+				"./package/components/Gizmos/PlaneDragGizmo/index.svelte.d.ts"
+			],
+			"components/Gizmos/PlaneRotationGizmo/index.svelte": [
+				"./package/components/Gizmos/PlaneRotationGizmo/index.svelte.d.ts"
+			],
+			"components/Gizmos/PositionGizmo/index.svelte": [
+				"./package/components/Gizmos/PositionGizmo/index.svelte.d.ts"
+			],
+			"components/Gizmos/RotationGizmo/index.svelte": [
+				"./package/components/Gizmos/RotationGizmo/index.svelte.d.ts"
+			],
+			"components/Gizmos/ScaleGizmo/index.svelte": [
+				"./package/components/Gizmos/ScaleGizmo/index.svelte.d.ts"
+			],
+			"components/Layer/LayerFromBase64String.svelte": [
+				"./package/components/Layer/LayerFromBase64String.svelte.d.ts"
+			],
+			"components/Layer/LayerFromWebCam.svelte": [
+				"./package/components/Layer/LayerFromWebCam.svelte.d.ts"
+			],
+			"components/Layer/index.svelte": [
+				"./package/components/Layer/index.svelte.d.ts"
+			],
+			"components/Lights/DirectionalLight/index.svelte": [
+				"./package/components/Lights/DirectionalLight/index.svelte.d.ts"
+			],
+			"components/Lights/HemisphericLight/index.svelte": [
+				"./package/components/Lights/HemisphericLight/index.svelte.d.ts"
+			],
+			"components/Lights/PointLight/index.svelte": [
+				"./package/components/Lights/PointLight/index.svelte.d.ts"
+			],
+			"components/Lights/SpotLight/index.svelte": [
+				"./package/components/Lights/SpotLight/index.svelte.d.ts"
+			],
+			"components/Materials/GradientMaterial/index.svelte": [
+				"./package/components/Materials/GradientMaterial/index.svelte.d.ts"
+			],
+			"components/Materials/MultiMaterial/index.svelte": [
+				"./package/components/Materials/MultiMaterial/index.svelte.d.ts"
+			],
+			"components/Materials/StandardMaterial/index.svelte": [
+				"./package/components/Materials/StandardMaterial/index.svelte.d.ts"
+			],
+			"components/Misc/Inspector/index.svelte": [
+				"./package/components/Misc/Inspector/index.svelte.d.ts"
+			],
+			"components/Misc/Instance/index.svelte": [
+				"./package/components/Misc/Instance/index.svelte.d.ts"
+			],
+			"components/Objects/Box/index.svelte": [
+				"./package/components/Objects/Box/index.svelte.d.ts"
+			],
+			"components/Objects/Capsule/index.svelte": [
+				"./package/components/Objects/Capsule/index.svelte.d.ts"
+			],
+			"components/Objects/Custom/index.svelte": [
+				"./package/components/Objects/Custom/index.svelte.d.ts"
+			],
+			"components/Objects/Cylinder/index.svelte": [
+				"./package/components/Objects/Cylinder/index.svelte.d.ts"
+			],
+			"components/Objects/DashedLines/index.svelte": [
+				"./package/components/Objects/DashedLines/index.svelte.d.ts"
+			],
+			"components/Objects/Decal/index.svelte": [
+				"./package/components/Objects/Decal/index.svelte.d.ts"
+			],
+			"components/Objects/Disc/index.svelte": [
+				"./package/components/Objects/Disc/index.svelte.d.ts"
+			],
+			"components/Objects/Ground/index.svelte": [
+				"./package/components/Objects/Ground/index.svelte.d.ts"
+			],
+			"components/Objects/GroundFromHeightMap/index.svelte": [
+				"./package/components/Objects/GroundFromHeightMap/index.svelte.d.ts"
+			],
+			"components/Objects/HexSphere/GDToGP": [
+				"./package/components/Objects/HexSphere/GDToGP.d.ts"
+			],
+			"components/Objects/HexSphere/createGDMM": [
+				"./package/components/Objects/HexSphere/createGDMM.d.ts"
+			],
+			"components/Objects/HexSphere/index.svelte": [
+				"./package/components/Objects/HexSphere/index.svelte.d.ts"
+			],
+			"components/Objects/HexSphere/setOrder": [
+				"./package/components/Objects/HexSphere/setOrder.d.ts"
+			],
+			"components/Objects/IcoSphere/index.svelte": [
+				"./package/components/Objects/IcoSphere/index.svelte.d.ts"
+			],
+			"components/Objects/Lathe/index.svelte": [
+				"./package/components/Objects/Lathe/index.svelte.d.ts"
+			],
+			"components/Objects/LineSystem/index.svelte": [
+				"./package/components/Objects/LineSystem/index.svelte.d.ts"
+			],
+			"components/Objects/Lines/index.svelte": [
+				"./package/components/Objects/Lines/index.svelte.d.ts"
+			],
+			"components/Objects/PhotoDome/index.svelte": [
+				"./package/components/Objects/PhotoDome/index.svelte.d.ts"
+			],
+			"components/Objects/Plane/index.svelte": [
+				"./package/components/Objects/Plane/index.svelte.d.ts"
+			],
+			"components/Objects/Polygon/index.svelte": [
+				"./package/components/Objects/Polygon/index.svelte.d.ts"
+			],
+			"components/Objects/Polyhedron/index.svelte": [
+				"./package/components/Objects/Polyhedron/index.svelte.d.ts"
+			],
+			"components/Objects/Ribbon/index.svelte": [
+				"./package/components/Objects/Ribbon/index.svelte.d.ts"
+			],
+			"components/Objects/Sphere/index.svelte": [
+				"./package/components/Objects/Sphere/index.svelte.d.ts"
+			],
+			"components/Objects/TiledBox/index.svelte": [
+				"./package/components/Objects/TiledBox/index.svelte.d.ts"
+			],
+			"components/Objects/TiledGround/index.svelte": [
+				"./package/components/Objects/TiledGround/index.svelte.d.ts"
+			],
+			"components/Objects/TiledPlane/index.svelte": [
+				"./package/components/Objects/TiledPlane/index.svelte.d.ts"
+			],
+			"components/Objects/Torus/index.svelte": [
+				"./package/components/Objects/Torus/index.svelte.d.ts"
+			],
+			"components/Objects/TorusKnot/index.svelte": [
+				"./package/components/Objects/TorusKnot/index.svelte.d.ts"
+			],
+			"components/Objects/Tube/index.svelte": [
+				"./package/components/Objects/Tube/index.svelte.d.ts"
+			],
+			"components/PhysicsImpostor/index.svelte": [
+				"./package/components/PhysicsImpostor/index.svelte.d.ts"
+			],
+			"components/Scene/index.svelte": [
+				"./package/components/Scene/index.svelte.d.ts"
+			],
+			"components/Textures/CubeTexture.svelte": [
+				"./package/components/Textures/CubeTexture.svelte.d.ts"
+			],
+			"components/Textures/DynamicTexture/index.svelte": [
+				"./package/components/Textures/DynamicTexture/index.svelte.d.ts"
+			],
+			"components/Textures/StandardTexture/index.svelte": [
+				"./package/components/Textures/StandardTexture/index.svelte.d.ts"
+			],
+			"components/Textures/TextTexture/index.svelte": [
+				"./package/components/Textures/TextTexture/index.svelte.d.ts"
+			],
+			"components/Textures/VideoTexture/index.svelte": [
+				"./package/components/Textures/VideoTexture/index.svelte.d.ts"
+			],
+			"components/TransformNode/index.svelte": [
+				"./package/components/TransformNode/index.svelte.d.ts"
+			],
+			"components/XRScene/index.svelte": [
+				"./package/components/XRScene/index.svelte.d.ts"
+			],
+			"index": [
+				"./package/index.d.ts"
+			],
+			"prebuilds/Screen/index.svelte": [
+				"./package/prebuilds/Screen/index.svelte.d.ts"
+			],
+			"prebuilds/Skybox/index.svelte": [
+				"./package/prebuilds/Skybox/index.svelte.d.ts"
+			],
+			"prebuilds/TextPlane/index.svelte": [
+				"./package/prebuilds/TextPlane/index.svelte.d.ts"
+			],
+			"types/enums/TextureTargets": [
+				"./package/types/enums/TextureTargets.d.ts"
+			],
+			"types": [
+				"./package/types/index.d.ts"
+			],
+			"utils/Math/degreeToRadians": [
+				"./package/utils/Math/degreeToRadians.d.ts"
+			],
+			"utils/Math/radiansToDegree": [
+				"./package/utils/Math/radiansToDegree.d.ts"
+			],
+			"utils/createReactiveContext": [
+				"./package/utils/createReactiveContext.d.ts"
+			],
+			"utils/mounted": [
+				"./package/utils/mounted.d.ts"
+			]
+		}
+	}
 }
