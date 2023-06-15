@@ -1,3 +1,5 @@
+export const prerender = true
+
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
 	const staticPages = Object.keys(import.meta.glob('/src/routes/**/!(_)*.md'))
