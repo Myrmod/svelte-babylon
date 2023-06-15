@@ -3,10 +3,7 @@
 	"compilerOptions": {
 		"moduleResolution": "node",
 		"module": "ESNext",
-		"lib": [
-			"ESNext",
-			"DOM"
-		],
+		"lib": ["ESNext", "DOM"],
 		"target": "ES2022",
 		/**
 			svelte-preprocess cannot figure out whether you have a value or a type, so tell TypeScript
@@ -27,35 +24,14 @@
 		"allowJs": true,
 		"checkJs": true,
 		"paths": {
-			"$lib": [
-				"src/lib"
-			],
-			"$lib/*": [
-				"src/lib/*"
-			],
-			"$docs": [
-				"src/docs"
-			],
-			"$docs/*": [
-				"src/docs/*"
-			],
-			"svelte-babylon": [
-				"src/lib"
-			],
-			"svelte-babylon/*": [
-				"src/lib/*"
-			]
+			"$lib": ["src/lib"],
+			"$lib/*": ["src/lib/*"],
+			"$docs": ["src/docs"],
+			"$docs/*": ["src/docs/*"],
+			"svelte-babylon": ["src/lib"],
+			"svelte-babylon/*": ["src/lib/*"]
 		},
-		"types": [
-			"babylonjs",
-			"babylonjs-loaders",
-			"babylonjs-gui"
-		]
+		"types": ["babylonjs", "babylonjs-loaders", "babylonjs-gui"]
 	},
-	"include": [
-		"src/**/*.d.ts",
-		"src/**/*.js",
-		"src/**/*.ts",
-		"src/**/*.svelte"
-	]
+	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]
 }
