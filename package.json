@@ -1,6 +1,6 @@
 {
 	"name": "svelte-babylon",
-	"version": "0.41.0",
+	"version": "0.42.0",
 	"scripts": {
 		"dev": "vite dev --port 3000",
 		"build": "vite build",
@@ -40,14 +40,14 @@
 		"vite": "^4.3.9"
 	},
 	"dependencies": {
-		"@babylonjs/core": "^6.7.0",
-		"@babylonjs/gui": "^6.7.0",
-		"@babylonjs/inspector": "^6.7.0",
-		"@babylonjs/loaders": "^6.7.0",
-		"@babylonjs/materials": "^6.7.0",
-		"@babylonjs/post-processes": "^6.7.0",
-		"@babylonjs/procedural-textures": "^6.7.0",
-		"@babylonjs/serializers": "^6.7.0",
+		"@babylonjs/core": "^6.8.0",
+		"@babylonjs/gui": "^6.8.0",
+		"@babylonjs/inspector": "^6.8.0",
+		"@babylonjs/loaders": "^6.8.0",
+		"@babylonjs/materials": "^6.8.0",
+		"@babylonjs/post-processes": "^6.8.0",
+		"@babylonjs/procedural-textures": "^6.8.0",
+		"@babylonjs/serializers": "^6.8.0",
 		"ammo.js": "^0.0.10",
 		"cannon": "^0.6.2",
 		"earcut": "^2.2.4",
