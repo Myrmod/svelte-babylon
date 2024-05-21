@@ -21,12 +21,12 @@
 	import Skybox from 'svelte-babylon/prebuilds/Skybox/index.svelte'
 	import TextPlane from 'svelte-babylon/prebuilds/TextPlane/index.svelte'
 	import type { Writable } from 'svelte/store'
-	import { get } from 'svelte/store'
+	import { get, writable } from 'svelte/store'
 	import GUI from './components/GUI/index.svelte'
 	import Platform from './components/Platform/index.svelte'
 
 	const platforms: Array<Writable<Mesh>> = []
-	let screens: Array<Writable<Mesh>> = []
+	let screens: Array<Writable<Mesh>> = [writable(null)]
 
 	let arcCamera: Writable<ACamera>
 	let freeCamera: Writable<FCamera>

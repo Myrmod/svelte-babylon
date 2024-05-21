@@ -1,32 +1,23 @@
 {
 	"compilerOptions": {
 		"paths": {
-			"$lib": [
-				"../src/lib"
-			],
-			"$lib/*": [
-				"../src/lib/*"
-			]
+			"$lib": ["../src/lib"],
+			"$lib/*": ["../src/lib/*"]
 		},
-		"rootDirs": [
-			"..",
-			"./types"
-		],
-		"importsNotUsedAsValues": "error",
+		"rootDirs": ["..", "./types"],
+		"verbatimModuleSyntax": true,
 		"isolatedModules": true,
-		"preserveValueImports": true,
-		"lib": [
-			"esnext",
-			"DOM",
-			"DOM.Iterable"
-		],
-		"moduleResolution": "node",
+		"lib": ["esnext", "DOM", "DOM.Iterable"],
+		"moduleResolution": "bundler",
 		"module": "esnext",
+		"noEmit": true,
 		"target": "esnext"
 	},
 	"include": [
 		"ambient.d.ts",
+		"non-ambient.d.ts",
 		"./types/**/$types.d.ts",
+		"../vite.config.js",
 		"../vite.config.ts",
 		"../src/**/*.js",
 		"../src/**/*.ts",
@@ -37,7 +28,6 @@
 	],
 	"exclude": [
 		"../node_modules/**",
-		"./[!ambient.d.ts]**",
 		"../src/service-worker.js",
 		"../src/service-worker.ts",
 		"../src/service-worker.d.ts"

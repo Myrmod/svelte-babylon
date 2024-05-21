@@ -15,7 +15,7 @@ If you find anything not working as expected, it would be great for you to open 
 ## Creating a project
 
 ```bash
-npm create svelte@latest my-new-app
+pnpm create svelte@latest my-new-app
 cd my-new-app
 npm install
 npm run dev
@@ -56,7 +56,7 @@ This context is bindable, eg. via `<Canvas bind:engine>`. This allows you to use
 
 Let's add `Ground` and adjust the positions of the box. We also add some settings to the `Canvas` to make the scene look a little sharper.
 
-```diff
+```js
 <script lang="ts">
   import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
   import Canvas from 'svelte-babylon/components/Canvas/index.svelte'
@@ -99,7 +99,7 @@ Using BabylonJS itself we can create a 3D-Vector (a point in the 3D space) which
 
 Now we can add some shadow
 
-```diff
+```js
 <script lang="ts">
   import ArcRotateCamera from 'svelte-babylon/components/Cameras/ArcRotateCamera/index.svelte'
   import Box from 'svelte-babylon/components/Objects/Box/index.svelte'

@@ -846,7 +846,7 @@ When you want to create GUI layouts in an easy and structured way you may want t
 </Canvas>
 ```
 
-```xml
+```js
 <?xml version="1.0"?>
 <root>
   <Rectangle id="firstContainer" verticalAlignment="Control.HORIZONTAL_ALIGNMENT_CENTER" background="yellow" width=".8" height=".4" color="Orange">

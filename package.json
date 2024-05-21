@@ -1,6 +1,6 @@
 {
-	"name": "svelte-babylon",
-	"version": "0.42.0",
+	"name": "svelte-babylonjs",
+	"version": "0.1.4",
 	"scripts": {
 		"dev": "vite dev --port 3000",
 		"build": "vite build",
@@ -14,51 +14,53 @@
 		"test": "playwright test"
 	},
 	"devDependencies": {
-		"@playwright/test": "^1.33.0",
-		"@sveltejs/adapter-auto": "^2.0.1",
-		"@sveltejs/adapter-static": "^1.0.6",
-		"@sveltejs/kit": "^1.20.2",
-		"@sveltejs/package": "^2.0.0",
-		"@sveltejs/vite-plugin-svelte": "^2.1.1",
-		"@sveltepress/theme-default": "^1.12.1",
-		"@sveltepress/vite": "^0.23.0",
-		"@types/cannon": "^0.1.8",
-		"@typescript-eslint/eslint-plugin": "^4.33.0",
-		"@typescript-eslint/parser": "^4.33.0",
-		"clsx": "^1.2.1",
-		"eslint": "^7.32.0",
-		"eslint-config-prettier": "^8.8.0",
-		"eslint-plugin-svelte3": "^3.4.1",
-		"prettier": "^2.8.8",
-		"prettier-plugin-svelte": "^2.10.0",
-		"shiki": "^0.14.1",
-		"svelte-check": "^2.10.3",
-		"svelte-preprocess": "^4.10.7",
-		"svelte2tsx": "^0.4.14",
-		"tslib": "^2.5.0",
-		"typescript": "^4.9.5",
-		"vite": "^4.3.9"
+		"@playwright/test": "^1.44.0",
+		"@sveltejs/adapter-auto": "^3.2.0",
+		"@sveltejs/adapter-static": "^3.0.1",
+		"@sveltejs/kit": "^2.5.9",
+		"@sveltejs/package": "^2.3.1",
+		"@sveltejs/vite-plugin-svelte": "^3.1.0",
+		"@sveltepress/theme-default": "^2.0.4",
+		"@sveltepress/vite": "^0.33.2",
+		"@types/babylonjs": "^2.4.1",
+		"@types/cannon": "^0.1.12",
+		"@typescript-eslint/eslint-plugin": "^7.10.0",
+		"@typescript-eslint/parser": "^7.10.0",
+		"clsx": "^2.1.1",
+		"eslint": "^9.3.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte3": "^4.0.0",
+		"prettier": "^3.2.5",
+		"prettier-plugin-svelte": "^3.2.3",
+		"shiki": "^1.6.0",
+		"svelte-check": "^3.7.1",
+		"svelte-preprocess": "^5.1.4",
+		"svelte2tsx": "^0.7.8",
+		"tslib": "^2.6.2",
+		"typescript": "^5.4.5",
+		"vite": "^5.2.11"
 	},
 	"dependencies": {
-		"@babylonjs/core": "^6.8.0",
-		"@babylonjs/gui": "^6.8.0",
-		"@babylonjs/inspector": "^6.8.0",
-		"@babylonjs/loaders": "^6.8.0",
-		"@babylonjs/materials": "^6.8.0",
-		"@babylonjs/post-processes": "^6.8.0",
-		"@babylonjs/procedural-textures": "^6.8.0",
-		"@babylonjs/serializers": "^6.8.0",
+		"@babylonjs/core": "^7.7.0",
+		"@babylonjs/gui": "^7.7.0",
+		"@babylonjs/inspector": "^7.7.0",
+		"@babylonjs/loaders": "^7.7.0",
+		"@babylonjs/materials": "^7.7.0",
+		"@babylonjs/post-processes": "^7.7.0",
+		"@babylonjs/procedural-textures": "^7.7.0",
+		"@babylonjs/serializers": "^7.7.0",
 		"ammo.js": "^0.0.10",
 		"cannon": "^0.6.2",
 		"earcut": "^2.2.4",
 		"esm-env": "^1.0.0",
-		"svelte": "^3.59.1"
+		"svelte": "^4.2.17"
 	},
 	"license": "MIT (modified)",
 	"type": "module",
 	"engines": {
-		"node": "^18"
+		"node": "^20"
 	},
+  "main": "./package/index.ts",
 	"engineStrict": true,
 	"exports": {
 		"./package.json": "./package.json",
@@ -364,11 +366,11 @@
 		},
 		"./components/Objects/HexSphere/GDToGP": {
 			"types": "./package/components/Objects/HexSphere/GDToGP.d.ts",
-			"default": "./package/components/Objects/HexSphere/GDToGP.js"
+			"default": "./package/components/Objects/HexSphere/GDToGP.ts"
 		},
 		"./components/Objects/HexSphere/createGDMM": {
 			"types": "./package/components/Objects/HexSphere/createGDMM.d.ts",
-			"default": "./package/components/Objects/HexSphere/createGDMM.js"
+			"default": "./package/components/Objects/HexSphere/createGDMM.ts"
 		},
 		"./components/Objects/HexSphere/index.svelte": {
 			"types": "./package/components/Objects/HexSphere/index.svelte.d.ts",
@@ -377,7 +379,7 @@
 		},
 		"./components/Objects/HexSphere/setOrder": {
 			"types": "./package/components/Objects/HexSphere/setOrder.d.ts",
-			"default": "./package/components/Objects/HexSphere/setOrder.js"
+			"default": "./package/components/Objects/HexSphere/setOrder.ts"
 		},
 		"./components/Objects/IcoSphere/index.svelte": {
 			"types": "./package/components/Objects/IcoSphere/index.svelte.d.ts",
@@ -506,8 +508,8 @@
 		},
 		".": {
 			"types": "./package/index.d.ts",
-			"svelte": "./package/index.js",
-			"default": "./package/index.js"
+			"svelte": "./package/index.ts",
+			"default": "./package/index.ts"
 		},
 		"./prebuilds/Screen/index.svelte": {
 			"types": "./package/prebuilds/Screen/index.svelte.d.ts",
@@ -526,34 +528,34 @@
 		},
 		"./types/enums/TextureTargets": {
 			"types": "./package/types/enums/TextureTargets.d.ts",
-			"default": "./package/types/enums/TextureTargets.js"
+			"default": "./package/types/enums/TextureTargets.ts"
 		},
 		"./types": {
 			"types": "./package/types/index.d.ts",
-			"svelte": "./package/types/index.js",
-			"default": "./package/types/index.js"
+			"svelte": "./package/types/index.ts",
+			"default": "./package/types/index.ts"
 		},
 		"./utils/Math/degreeToRadians": {
 			"types": "./package/utils/Math/degreeToRadians.d.ts",
-			"default": "./package/utils/Math/degreeToRadians.js"
+			"default": "./package/utils/Math/degreeToRadians.ts"
 		},
 		"./utils/Math/radiansToDegree": {
 			"types": "./package/utils/Math/radiansToDegree.d.ts",
-			"default": "./package/utils/Math/radiansToDegree.js"
+			"default": "./package/utils/Math/radiansToDegree.ts"
 		},
 		"./utils/createReactiveContext": {
 			"types": "./package/utils/createReactiveContext.d.ts",
-			"default": "./package/utils/createReactiveContext.js"
+			"default": "./package/utils/createReactiveContext.ts"
 		},
 		"./utils/mounted": {
 			"types": "./package/utils/mounted.d.ts",
-			"default": "./package/utils/mounted.js"
+			"default": "./package/utils/mounted.ts"
 		}
 	},
 	"files": [
 		"package"
 	],
-	"svelte": "./package/index.js",
+	"svelte": "./package/index.ts",
 	"typesVersions": {
 		">4.0": {
 			"components/Cameras/ArcFollowCamera.svelte": [

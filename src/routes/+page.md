@@ -2,7 +2,6 @@
 heroImage: /svelte-babylon-logo.png
 ---
 
-
 <script>
   import BoxStory from 'svelte-babylon/components/Objects/Box/Box.story.svelte'
 </script>

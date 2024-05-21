@@ -6,7 +6,7 @@
 	import type { Mesh } from '@babylonjs/core/Meshes/mesh.js'
 	import type { Scene } from '@babylonjs/core/scene.js'
 	import { getContext } from 'svelte'
-	import { get, type Writable } from 'svelte/store'
+	import { get, type Writable , writable} from 'svelte/store'
 
 	const buttons = [
 		{ name: 'Platform1Button', text: 'go to platform 1' },
@@ -19,7 +19,7 @@
 	export let playVideo: () => void
 	export let useFreeCamera: () => void
 
-	const scene = getContext<Writable<Scene>>('scene')
+	const scene = getContext<Writable<Scene>>(writable('scene'))
 
 	async function handleClick(id: number) {
 		if (id === -1) {

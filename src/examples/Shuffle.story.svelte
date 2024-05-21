@@ -13,11 +13,11 @@
 	import StandardMaterial from 'svelte-babylon/components/Materials/StandardMaterial/index.svelte'
 	import Box from 'svelte-babylon/components/Objects/Box/index.svelte'
 	import Scene from 'svelte-babylon/components/Scene/index.svelte'
-	import { get, type Writable } from 'svelte/store'
+	import { get, writable, type Writable } from 'svelte/store'
 
 	let scene: Writable<BScene>
 
-	let boxes: Array<Array<Writable<Mesh>>> = [[], [], []]
+	let boxes: Array<Array<Writable<Mesh>>> =Array.from({length: 3}, () => Array.from({length: 3}, () => writable(null)))
 	const matrix = [
 		[
 			{ x: 0, y: 0 },
